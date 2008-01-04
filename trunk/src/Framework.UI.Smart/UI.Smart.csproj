@@ -1,0 +1,114 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1FB3293D-07F4-46FE-B86D-5897879CCB9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XEVA.Framework.UI.Smart</RootNamespace>
+    <AssemblyName>XEVA.Framework.UI.Smart</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Binding\BindingAdapter.cs" />
+    <Compile Include="Binding\BindingFilter.cs" />
+    <Compile Include="Binding\BindingFilterExpression.cs" />
+    <Compile Include="Binding\IBindingFilter.cs" />
+    <Compile Include="Command\CommandAttribute.cs" />
+    <Compile Include="Command\CommandDelegate.cs" />
+    <Compile Include="Command\Command.cs" />
+    <Compile Include="Command\LinkedCommand.cs" />
+    <Compile Include="Controller\CommandNotFoundException.cs" />
+    <Compile Include="Controller\IDynamicController.cs" />
+    <Compile Include="IControl.cs" />
+    <Compile Include="Layout\ILayoutLocator.cs" />
+    <Compile Include="Controller\RequiresViewCommandException.cs" />
+    <Compile Include="Controller\UnspecifiedDefaultCommand.cs" />
+    <Compile Include="Layout\DefaultLayoutResolver.cs" />
+    <Compile Include="Layout\InternalResolver.cs" />
+    <Compile Include="Layout\SharedLayoutResolver.cs" />
+    <Compile Include="Link.cs" />
+    <Compile Include="Presenter\FormBuilder.cs" />
+    <Compile Include="Presenter\ICallbacks.cs" />
+    <Compile Include="Presenter\IFormBuilder.cs" />
+    <Compile Include="Presenter\PresenterState.cs" />
+    <Compile Include="Services\XmlFileLabelStore.cs" />
+    <Compile Include="Services\ILabelLookupService.cs" />
+    <Compile Include="Services\ILabelStore.cs" />
+    <Compile Include="Services\LabelLookupService.cs" />
+    <Compile Include="Controller\IController.cs" />
+    <Compile Include="Controller\ControllerBuilder.cs" />
+    <Compile Include="Services\ComponentKeyLookupService.cs" />
+    <Compile Include="Controller\ControllerMethodChain.cs" />
+    <Compile Include="Command\ICommandScanner.cs" />
+    <Compile Include="Controller\IContext.cs" />
+    <Compile Include="Layout\ILayoutResolver.cs" />
+    <Compile Include="Layout\NewTemporaryLayoutResolver.cs" />
+    <Compile Include="Command\ViewCommand.cs" />
+    <Compile Include="Presenter\Presenter.cs" />
+    <Compile Include="Command\CommandScanner.cs" />
+    <Compile Include="Command\ICommand.cs" />
+    <Compile Include="Layout\ILayoutCommandAdapter.cs" />
+    <Compile Include="Controller\IControllerItem.cs" />
+    <Compile Include="Layout\ILayout.cs" />
+    <Compile Include="Presenter\IPresenter.cs" />
+    <Compile Include="Presenter\IView.cs" />
+    <Compile Include="Presenter\ParameterAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controller\Context.cs" />
+    <Compile Include="Controller\ContextStateNotFoundException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Shared\Shared.csproj">
+      <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
