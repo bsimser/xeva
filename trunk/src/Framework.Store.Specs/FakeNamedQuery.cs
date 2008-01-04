@@ -2,7 +2,7 @@ using XEVA.Framework.Model;
 
 namespace XEVA.Framework.Store
 {
-   public class FakeNamedQuery : NamedQueryBase
+   public class FakeNamedQuery : NamedQuery
    {
       public FakeNamedQuery()
       {

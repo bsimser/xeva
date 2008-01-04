@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace XEVA.Framework.Model
 {
-   public class NamedQueryBase : INamedQuery
+   public class NamedQuery : INamedQuery
    {
       private string _name = "Unknown";
       private readonly IDictionary<string, object> _parameters = new Dictionary<string, object>();
