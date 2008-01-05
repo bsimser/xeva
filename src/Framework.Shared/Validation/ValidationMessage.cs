@@ -3,36 +3,38 @@ using System;
 namespace XEVA.Framework.Validation
 {
    [Serializable]
-   public class NotificationMessage
+   public class ValidationMessage
    {
       private string _property;
       private string _message;
 
-      public NotificationMessage() {}
-
-      public NotificationMessage(string property, string message)
+      public ValidationMessage()
       {
-         this._property = property;
-         this._message = message;
+      }
+
+      public ValidationMessage(string property, string message)
+      {
+         _property = property;
+         _message = message;
       }
 
       public string Property
       {
-         get { return this._property; }
-         set { this._property = value; }
+         get { return _property; }
+         set { _property = value; }
       }
 
       public string Message
       {
-         get { return this._message; }
-         set { this._message = value; }
+         get { return _message; }
+         set { _message = value; }
       }
 
       public override bool Equals(object obj)
       {
          if (this == obj) return true;
 
-         NotificationMessage message = obj as NotificationMessage;
+         ValidationMessage message = obj as ValidationMessage;
          if (message == null) return false;
          return (Equals(_property, message._property) && Equals(_message, message._message));
       }

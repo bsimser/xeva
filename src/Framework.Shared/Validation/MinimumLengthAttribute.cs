@@ -14,12 +14,12 @@ namespace XEVA.Framework.Validation
          _minimumLength = minimumLength;
       }
 
-      protected override void Validate(object target, object rawValue, Notification notification)
+      protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
          if (!(rawValue is string)) return;
 
          if (rawValue.ToString().Length < _minimumLength)
-            AddMessage(notification, string.Format("Must be {0} or more characters.", _minimumLength));
+            AddMessage(validationResult, string.Format("Must be {0} or more characters.", _minimumLength));
       }
    }
 }

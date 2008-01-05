@@ -12,14 +12,14 @@ namespace XEVA.Framework.Validation
       + @"\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+"
       + @"[a-zA-Z]{2,}))$";
 
-      protected override void Validate(object target, object rawValue, Notification notification)
+      protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
 
          string stringValue = rawValue as string;
 
          if (stringValue == null)
          {
-            AddMessage(notification, ERROR_MESSAGE);
+            AddMessage(validationResult, ERROR_MESSAGE);
             return;
          }
 
@@ -27,7 +27,7 @@ namespace XEVA.Framework.Validation
 
          if (!emailRegex.IsMatch(stringValue))
          {
-            AddMessage(notification, ERROR_MESSAGE);
+            AddMessage(validationResult, ERROR_MESSAGE);
          }
       }
    }

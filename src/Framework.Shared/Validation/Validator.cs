@@ -11,12 +11,12 @@ namespace XEVA.Framework.Validation
 
       public Validator() {}
 
-      public Notification Validate(object target, Dictionary<string, IValidationObject> validationObjects)
+      public ValidationResult Validate(object target, Dictionary<string, IValidationObject> validationObjects)
       {
          Type targetType = target.GetType();
          IList<ValidationAttribute> validations = ScanTypeForValidationAttributes(targetType);
 
-         Notification result = new Notification();
+         ValidationResult result = new ValidationResult();
 
          foreach (ValidationAttribute attribute in validations)
             attribute.Validate(target, result);
@@ -58,13 +58,13 @@ namespace XEVA.Framework.Validation
          return result;
       }
 
-      private void DisplayErrorNotifications(Notification notification, Dictionary<string, IValidationObject> validationObjects)
+      private void DisplayErrorNotifications(ValidationResult validationResult, Dictionary<string, IValidationObject> validationObjects)
       {
-         List<NotificationMessage> messages = new List<NotificationMessage>(notification.Messages);
+         List<ValidationMessage> messages = new List<ValidationMessage>(validationResult.Messages);
 
          foreach (KeyValuePair<string, IValidationObject> validationObject in validationObjects)
          {
-            NotificationMessage message = messages.Find(delegate(NotificationMessage match)
+            ValidationMessage message = messages.Find(delegate(ValidationMessage match)
                                                            {
                                                               return match.Property == validationObject.Key;
                                                            });

@@ -8,18 +8,18 @@ namespace XEVA.Framework.Validation
    {
       private PropertyInfo _property;
 
-      public void Validate(object target, Notification notification)
+      public void Validate(object target, ValidationResult validationResult)
       {
          object rawValue = _property.GetValue(target, null);
-         Validate(target, rawValue, notification);
+         Validate(target, rawValue, validationResult);
       }
 
-      protected void AddMessage(Notification notification, string message)
+      protected void AddMessage(ValidationResult validationResult, string message)
       {
-         notification.AddMessage(Property.Name, message);
+         validationResult.AddMessage(Property.Name, message);
       }
 
-      protected abstract void Validate(object target, object rawValue, Notification notification);
+      protected abstract void Validate(object target, object rawValue, ValidationResult validationResult);
 
       public PropertyInfo Property
       {

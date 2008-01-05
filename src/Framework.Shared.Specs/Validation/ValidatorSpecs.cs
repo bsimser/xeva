@@ -14,9 +14,9 @@ namespace Specs_for_Validator
       {
          Validator validator = new Validator();
          ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
-         Notification notification = validator.Validate(sample1, new Dictionary<string, IValidationObject>());
-         Assert.IsFalse(notification.IsValid);
-         Assert.AreEqual(1, notification.Messages.Count);
+         ValidationResult validationResult = validator.Validate(sample1, new Dictionary<string, IValidationObject>());
+         Assert.IsFalse(validationResult.IsValid);
+         Assert.AreEqual(1, validationResult.Messages.Count);
       }
 
       [Test]
