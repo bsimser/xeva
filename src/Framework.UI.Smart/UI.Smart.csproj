@@ -71,6 +71,7 @@
     <Compile Include="Presenter\ICallbacks.cs" />
     <Compile Include="Presenter\IFormBuilder.cs" />
     <Compile Include="Presenter\PresenterState.cs" />
+    <Compile Include="Request.cs" />
     <Compile Include="Services\XmlFileLabelStore.cs" />
     <Compile Include="Services\ILabelLookupService.cs" />
     <Compile Include="Services\ILabelStore.cs" />

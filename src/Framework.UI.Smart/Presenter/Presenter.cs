@@ -69,6 +69,21 @@ namespace XEVA.Framework.UI.Smart
          _isStarted = true;
       }
 
+      public void Start(Request request)
+      {
+         if (_isStarted) return;
+         
+         //TODO: Run each item through the validator
+         Validate(request);
+
+         Start();
+      }
+
+      protected virtual void Validate(Request data)
+      {
+         
+      }
+
       public void Finish()
       {
          if (!_isStarted) return;

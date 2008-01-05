@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Castle.Windsor;
 using NUnit.Framework;
@@ -234,6 +235,17 @@ namespace XEVA.Framework.UI.Smart
          sample.AddValidationObject("test", null);
          Assert.AreEqual(sample.ValidatoinObjects.Count, 1);
       }
+
+      [Test]
+      public void Will_validate_if_started_with_a_request()
+      {
+         SamplePresenter presenter = new SamplePresenter();
+
+         presenter.Start(new Request(null));
+         
+         Assert.IsTrue(presenter.WasValidateCalled);
+         
+      }
    }
 
    public class SamplePresenter : Presenter<ISampleView>
@@ -241,6 +253,7 @@ namespace XEVA.Framework.UI.Smart
       public int CustomStartCalls = 0;
       public int CustomFinishCalls = 0;
       private string _field1;
+      public bool WasValidateCalled = false;
 
       [Parameter("Field1")]
       public string Field1
@@ -259,6 +272,11 @@ namespace XEVA.Framework.UI.Smart
       {
          base.CustomFinish();
          CustomFinishCalls += 1;
+      }
+
+      protected override void Validate(Request data)
+      {
+         WasValidateCalled = true;
       }
    }
 
