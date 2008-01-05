@@ -28,6 +28,5 @@ namespace XEVA.Framework.Validation
          get { return _guidProperty; }
          set { _guidProperty = value; }
       }
-
    }
 }

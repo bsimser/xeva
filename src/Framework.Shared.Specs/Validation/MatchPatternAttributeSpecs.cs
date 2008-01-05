@@ -4,6 +4,7 @@ using XEVA.Framework.Specs;
 using XEVA.Framework.Validation;
 
 // TODO: This should be refactored to a RegExAttribute
+
 namespace Specs_for_MatchPatternAttribute
 {
    [TestFixture]
@@ -22,8 +23,8 @@ namespace Specs_for_MatchPatternAttribute
       public void Should_fail_if_the_property_does_not_match_the_regular_expression_provided()
       {
          _sample.StringProperty = "~test";
-         
-         IList<NotificationMessage> messages = 
+
+         IList<NotificationMessage> messages =
             _validator.Validate(_sample, new Dictionary<string, IValidationObject>()).Messages;
 
          Assert.AreEqual(1, messages.Count);
@@ -49,6 +50,5 @@ namespace Specs_for_MatchPatternAttribute
          get { return _stringProperty; }
          set { _stringProperty = value; }
       }
-
    }
 }

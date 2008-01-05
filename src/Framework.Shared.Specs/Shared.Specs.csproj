@@ -63,7 +63,7 @@
     <Compile Include="Validation\RequiredNonEmptyListAttributeTests.cs" />
     <Compile Include="Validation\RequiredNonEmptyGuidAttributeTests.cs" />
     <Compile Include="Validation\RequiredNonEmptyStringAttributeTests.cs" />
-    <Compile Include="Validation\EmailFormatAttributeTests.cs" />
+    <Compile Include="Validation\EmailFormatAttributeSpecs.cs" />
     <Compile Include="Validation\MinimumLengthAttributeTests.cs" />
     <Compile Include="Validation\NotificationMessageTests.cs" />
     <Compile Include="Validation\NotificationSpecs.cs" />
