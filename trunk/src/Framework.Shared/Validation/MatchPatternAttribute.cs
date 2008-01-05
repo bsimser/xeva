@@ -13,14 +13,14 @@ namespace XEVA.Framework.Validation
          _pattern = pattern;
       }
 
-      protected override void Validate(object target, object rawValue, Notification notification)
+      protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
          string stringValue = rawValue as string;
 
          Regex charRegex = new Regex(_pattern);
 
          if (!charRegex.IsMatch(stringValue))
-            AddMessage(notification, ERROR_MESSAGE);
+            AddMessage(validationResult, ERROR_MESSAGE);
       }
    }
 }

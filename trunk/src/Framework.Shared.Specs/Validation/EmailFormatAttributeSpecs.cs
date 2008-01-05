@@ -6,7 +6,7 @@ using XEVA.Framework.Validation;
 namespace Specs_for_EmailFormatAttribute
 {
    [TestFixture]
-   public class When_validating_a_property : Spec
+   public class When_validating : Spec
    {
       private Validator _validator;
 
@@ -21,7 +21,7 @@ namespace Specs_for_EmailFormatAttribute
          ExampleWithStringProperty example = new ExampleWithStringProperty();
          example.StringProperty = "dave@xs-go.com";
 
-         IList<NotificationMessage> messages =
+         IList<ValidationMessage> messages =
             _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
 
          Assert.AreEqual(0, messages.Count);
@@ -33,7 +33,7 @@ namespace Specs_for_EmailFormatAttribute
          ExampleWithNonStringProperty example = new ExampleWithNonStringProperty();
          example.NonStringProperty = 42;
 
-         IList<NotificationMessage> messages =
+         IList<ValidationMessage> messages =
             _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
 
          Assert.AreEqual(1, messages.Count);
@@ -45,7 +45,7 @@ namespace Specs_for_EmailFormatAttribute
          ExampleWithStringProperty example = new ExampleWithStringProperty();
          example.StringProperty = null;
 
-         IList<NotificationMessage> messages =
+         IList<ValidationMessage> messages =
             _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
 
          Assert.AreEqual(1, messages.Count);

@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Web;
-// rhino commons credit
 
 namespace XEVA.Framework
 {
+
+   /// <summary>
+   /// A global, thread-safe hashtable.
+   /// </summary>
    public class Globals
    {
       private static ILocalData current = new LocalData();
@@ -18,14 +21,14 @@ namespace XEVA.Framework
       private class LocalData : ILocalData
       {
          [ThreadStatic]
-         private static Hashtable _threadHashtable;
+         private static Hashtable _hashtable;
 
          private static Hashtable LocalHashtable
          {
             get
             {
                if (HttpContext.Current == null)
-                  return _threadHashtable ?? (_threadHashtable = new Hashtable());
+                  return _hashtable ?? (_hashtable = new Hashtable());
                return GetWebHashtable();
             }
          }
@@ -44,14 +47,21 @@ namespace XEVA.Framework
             set
             {
                LocalHashtable[key] = value;
-               ;
             }
          }
 
          public void Clear()
          {
+
             LocalHashtable.Clear();
          }
       }
+   }
+
+   public interface ILocalData
+   {
+      object this[object key] { get; set; }
+
+      void Clear();
    }
 }

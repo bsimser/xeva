@@ -7,6 +7,6 @@ namespace XEVA.Framework.Validation
    {
       void ResetNotification();
 
-      Notification Notification { set; }
+      ValidationResult ValidationResult { set; }
    }
 }

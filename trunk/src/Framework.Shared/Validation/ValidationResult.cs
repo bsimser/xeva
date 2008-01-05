@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace XEVA.Framework.Validation
 {
-   public class Notification
+   public class ValidationResult
    {
-      private List<NotificationMessage> _messages = new List<NotificationMessage>();
+      private List<ValidationMessage> _messages = new List<ValidationMessage>();
 
       public virtual bool IsValid
       {
          get { return _messages.Count == 0; }
       }
 
-      public virtual IList<NotificationMessage> Messages
+      public virtual IList<ValidationMessage> Messages
       {
          get { return this._messages; }
       }
@@ -21,7 +21,7 @@ namespace XEVA.Framework.Validation
       {
          string result = String.Empty;
 
-         foreach (NotificationMessage message in _messages)
+         foreach (ValidationMessage message in _messages)
          {
             result += message.Property + ": " + message.Message + "\r\n";
          }
@@ -29,7 +29,7 @@ namespace XEVA.Framework.Validation
          return result;
       }
 
-      public virtual void AddMessage(NotificationMessage message)
+      public virtual void AddMessage(ValidationMessage message)
       {
          if (!_messages.Contains(message))
             _messages.Add(message);
@@ -37,8 +37,8 @@ namespace XEVA.Framework.Validation
 
       public virtual void AddMessage(string property, string message)
       {
-         NotificationMessage notificationMessage = new NotificationMessage(property, message);
-         this.AddMessage(notificationMessage);
+         ValidationMessage validationMessage = new ValidationMessage(property, message);
+         this.AddMessage(validationMessage);
       }
    }
 }

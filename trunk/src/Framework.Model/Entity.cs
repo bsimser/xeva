@@ -42,6 +42,6 @@ namespace XEVA.Framework.Model
          return (this.ID == entity.ID) && (this.Version == entity.Version);
       }
 
-      public virtual void Validate(Notification notifications) {}
+      public virtual void Validate(ValidationResult validationResults) {}
    }
 }

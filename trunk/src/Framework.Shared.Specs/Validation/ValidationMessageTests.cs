@@ -9,12 +9,12 @@ namespace XEVA.Framework.Validation
       [Test]
       public void NotificationMessage_TwoMessagesAreComparableBasedOnPropertyAndMessage()
       {
-         NotificationMessage message1 = new NotificationMessage("Property", "Message");
-         List<NotificationMessage> list = new List<NotificationMessage>();
+         ValidationMessage message1 = new ValidationMessage("Property", "Message");
+         List<ValidationMessage> list = new List<ValidationMessage>();
 
          list.Add(message1);
 
-         NotificationMessage message2 = new NotificationMessage("Property", "Message");
+         ValidationMessage message2 = new ValidationMessage("Property", "Message");
 
          Assert.Contains(message2, list);
       }
@@ -22,7 +22,7 @@ namespace XEVA.Framework.Validation
       [Test]
       public void NotificationMessage_ToStringOverridenForConvenience()
       {
-         NotificationMessage message1 = new NotificationMessage("x", "y");
+         ValidationMessage message1 = new ValidationMessage("x", "y");
          Assert.AreEqual("Property: x, Message: y", message1.ToString());
       }
    }

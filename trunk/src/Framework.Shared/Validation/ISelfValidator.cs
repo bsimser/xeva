@@ -4,6 +4,6 @@ namespace XEVA.Framework.Validation
 {
    public interface ISelfValidator
    {
-      void Validate(Notification notifications);
+      void Validate(ValidationResult validationResults);
    }
 }

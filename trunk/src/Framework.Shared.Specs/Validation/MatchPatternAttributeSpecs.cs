@@ -3,12 +3,10 @@ using NUnit.Framework;
 using XEVA.Framework.Specs;
 using XEVA.Framework.Validation;
 
-// TODO: This should be refactored to a RegExAttribute
-
 namespace Specs_for_MatchPatternAttribute
 {
    [TestFixture]
-   public class When_validating_an_object : Spec
+   public class When_validating : Spec
    {
       private Validator _validator;
       private RequiredNonSpecialStringAttributeSample _sample;
@@ -24,7 +22,7 @@ namespace Specs_for_MatchPatternAttribute
       {
          _sample.StringProperty = "~test";
 
-         IList<NotificationMessage> messages =
+         IList<ValidationMessage> messages =
             _validator.Validate(_sample, new Dictionary<string, IValidationObject>()).Messages;
 
          Assert.AreEqual(1, messages.Count);
@@ -35,7 +33,7 @@ namespace Specs_for_MatchPatternAttribute
       {
          _sample.StringProperty = "test123";
 
-         IList<NotificationMessage> messages =
+         IList<ValidationMessage> messages =
             _validator.Validate(_sample, new Dictionary<string, IValidationObject>()).Messages;
       }
    }
