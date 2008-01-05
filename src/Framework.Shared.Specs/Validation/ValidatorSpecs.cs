@@ -1,72 +1,74 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using Rhino.Mocks;
+using XEVA.Framework.Specs;
+using XEVA.Framework.Validation;
 
-namespace XEVA.Framework.Validation
+namespace Specs_for_Validator
 {
    [TestFixture]
-   public class ValidatorTests
+   public class When_an_object_with_validated_properties_fails_validation : Spec
    {
       [Test]
-      public void Validator_ShouldFindOneRequiredFieldValidationError()
+      public void Add_a_message_to_the_notification()
       {
          Validator validator = new Validator();
-         SampleValidatedClass sample1 = new SampleValidatedClass();
+         ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
          Notification notification = validator.Validate(sample1, new Dictionary<string, IValidationObject>());
          Assert.IsFalse(notification.IsValid);
          Assert.AreEqual(1, notification.Messages.Count);
       }
 
       [Test]
-      public void Should_display_error_message_on_validation_object()
+      public void Show_an_error_on_the_validation_controls()
       {
-         MockRepository mocks = new MockRepository();
-         IValidationObject validationObject = mocks.DynamicMock<IValidationObject>();
+         IValidationObject validationObject = Mock<IValidationObject>();
 
          Validator validator = new Validator();
-         SampleValidatedClass sample1 = new SampleValidatedClass();
+         ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
          Dictionary<string, IValidationObject> validationObjects = new Dictionary<string, IValidationObject>();
          validationObjects.Add("ReqField", validationObject);
 
-
-         using (mocks.Record())
+         using (Record)
          {
             validationObject.ShowError("Some Message");
             LastCall.IgnoreArguments();
          }
 
-         using (mocks.Playback())
-         {
-            validator.Validate(sample1, validationObjects);
-         }
-      }
-
-      [Test]
-      public void Should_clear_error_message_on_validation_object()
-      {
-         MockRepository mocks = new MockRepository();
-         IValidationObject validationObject = mocks.DynamicMock<IValidationObject>();
-
-         Validator validator = new Validator();
-         SampleValidatedClass sample1 = new SampleValidatedClass();
-         sample1.ReqField = "Some String";
-         Dictionary<string, IValidationObject> validationObjects = new Dictionary<string, IValidationObject>();
-         validationObjects.Add("ReqField", validationObject);
-
-
-         using (mocks.Record())
-         {
-            validationObject.ClearError();
-         }
-
-         using (mocks.Playback())
+         using (Playback)
          {
             validator.Validate(sample1, validationObjects);
          }
       }
    }
 
-   public class SampleValidatedClass
+   [TestFixture]
+   public class When_an_object_with_validated_properties_passes_validation : Spec
+   {
+      [Test]
+      public void Clear_any_errors_on_validation_controls()
+      {
+         IValidationObject validationObject = Mock<IValidationObject>();
+
+         Validator validator = new Validator();
+         ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
+         sample1.ReqField = "Some String";
+         Dictionary<string, IValidationObject> validationObjects = new Dictionary<string, IValidationObject>();
+         validationObjects.Add("ReqField", validationObject);
+
+         using (Record)
+         {
+            validationObject.ClearError();
+         }
+
+         using (Playback)
+         {
+            validator.Validate(sample1, validationObjects);
+         }
+      }
+   }
+
+   public class ExampleClassWithValidatedProperties
    {
       private string _requiredField;
       private string _someEmail;

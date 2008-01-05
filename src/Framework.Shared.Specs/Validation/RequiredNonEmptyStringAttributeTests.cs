@@ -24,7 +24,7 @@ namespace XEVA.Framework.Validation
    {
       private string _stringProperty;
 
-      [RequiredNonSpecialCharacter]
+      [RequiredNonEmptyString]
       public string StringProperty
       {
          get { return _stringProperty; }
