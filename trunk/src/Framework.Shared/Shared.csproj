@@ -55,7 +55,7 @@
     <Compile Include="IoC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\RequiredNonEmptyListAttribute.cs" />
-    <Compile Include="Validation\RequiredNonEmtpyGuidAttribute.cs" />
+    <Compile Include="Validation\RequiredNonEmptyGuidAttribute.cs" />
     <Compile Include="Validation\IValidationObject.cs" />
     <Compile Include="Validation\RequiredNonEmptyStringAttribute.cs" />
     <Compile Include="Validation\EmailFormatAttribute.cs" />
@@ -66,7 +66,7 @@
     <Compile Include="Validation\Notification.cs" />
     <Compile Include="Validation\NotificationMessage.cs" />
     <Compile Include="Validation\RequiredAttribute.cs" />
-    <Compile Include="Validation\RequiredNonSpecialCharacterAttribute.cs" />
+    <Compile Include="Validation\MatchPatternAttribute.cs" />
     <Compile Include="Validation\ValidationAttribute.cs" />
     <Compile Include="Validation\Validator.cs" />
   </ItemGroup>
