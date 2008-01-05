@@ -10,7 +10,7 @@ namespace XEVA.Framework.UI.Smart
       private byte[] _icon;
       private string _caption;
       private string _key;
-      private IDictionary<string, object> _request;
+      private IDictionary<string, object> _parameters;
 
       public static Link To(string key, string caption)
       {
@@ -21,10 +21,10 @@ namespace XEVA.Framework.UI.Smart
          return result;
       }
 
-      public static Link To(string key, string caption, IDictionary<string, object> request)
+      public static Link To(string key, string caption, IDictionary<string, object> parameters)
       {
          Link result = To(key, caption);
-         result._request = request;
+         result._parameters = parameters;
          return result;
       }
 
@@ -46,12 +46,9 @@ namespace XEVA.Framework.UI.Smart
          set { _key = value; }
       }
 
-      public IDictionary<string, object> Request
+      public IDictionary<string, object> Parameters
       {
-         get { return _request; }
-         set { _request = value; }
+         get { return _parameters; }
       }
-
-
    }
 }
