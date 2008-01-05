@@ -11,7 +11,7 @@ namespace XEVA.Framework.Validation
       {
          Validator v = new Validator();
          RequiredNonEmptyStringAttributeSample sample = new RequiredNonEmptyStringAttributeSample();
-         
+
          sample.StringProperty = string.Empty;
          Assert.AreEqual(1, v.Validate(sample, new Dictionary<string, IValidationObject>()).Messages.Count);
 
@@ -30,6 +30,5 @@ namespace XEVA.Framework.Validation
          get { return _stringProperty; }
          set { _stringProperty = value; }
       }
-
    }
 }

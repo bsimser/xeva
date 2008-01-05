@@ -4,9 +4,8 @@ using XEVA.Framework.Validation;
 
 namespace Specs_for_Notification
 {
-
    [TestFixture]
-   public class When_evaluating_validity: Spec
+   public class When_evaluating_validity : Spec
    {
       private Notification _notification;
 
@@ -26,7 +25,6 @@ namespace Specs_for_Notification
          Assert.IsFalse(_notification.IsValid);
          Assert.AreEqual(1, _notification.Messages.Count);
       }
-
    }
 
    [TestFixture]
@@ -46,7 +44,7 @@ namespace Specs_for_Notification
          _notification.AddMessage(new NotificationMessage("Date", "Is required"));
 
          Assert.AreEqual(_notification.DetailedErrorMessage(),
-            "Name: Is required\r\nDate: Is required\r\n");
+                         "Name: Is required\r\nDate: Is required\r\n");
       }
    }
 }

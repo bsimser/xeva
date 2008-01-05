@@ -27,6 +27,5 @@ namespace XEVA.Framework.Validation
          get { return _listProperty; }
          set { _listProperty = value; }
       }
-
    }
 }

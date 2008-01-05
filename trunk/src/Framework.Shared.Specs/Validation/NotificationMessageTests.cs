@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace XEVA.Framework.Validation
 {
-   
    [TestFixture]
    public class NotificationMessageTests
    {
