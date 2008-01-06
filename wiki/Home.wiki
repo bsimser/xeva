@@ -1,6 +1,9 @@
 A list of [NextActions is available here]. 
 
-1. Goals
-2. Roadmap
-3. Support
-4. History
+# About
+# Project Goals
+# Releases & Roadmap
+# Getting Started
+# Specifications
+# Support
+# Contributions
