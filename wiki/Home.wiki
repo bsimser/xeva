@@ -1,9 +1,9 @@
 A list of [NextActions is available here]. 
 
-# About
-# Project Goals
-# Releases & Roadmap
-# Getting Started
-# Specifications
-# Support
-# Contributions
+ # About
+ # Project Goals
+ # Releases & Roadmap
+ # Getting Started
+ # Specifications
+ # Support
+ # Contributions
