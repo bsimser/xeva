@@ -1,1 +1,6 @@
-under construction
+A list of [NextActions is available here]. 
+
+1. Goals
+2. Roadmap
+3. Support
+4. History
