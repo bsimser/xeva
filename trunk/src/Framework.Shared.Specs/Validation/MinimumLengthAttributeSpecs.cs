@@ -20,7 +20,7 @@ namespace Specs_for_MinimumLengthAttribute
       {
          MinimumLengthExample example = new MinimumLengthExample();
          example.SomeString = "1234567";
-         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages.Count);
+         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors.Count);
       }
 
       [Test]
@@ -28,7 +28,7 @@ namespace Specs_for_MinimumLengthAttribute
       {
          MinimumLengthExample example = new MinimumLengthExample();
          example.SomeString = "123456";
-         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages.Count);
+         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors.Count);
       }
 
       [Test]
@@ -36,7 +36,7 @@ namespace Specs_for_MinimumLengthAttribute
       {
          MinimumLengthExample example = new MinimumLengthExample();
          example.SomeString = "12345"; 
-         Assert.AreEqual(1, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages.Count);
+         Assert.AreEqual(1, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors.Count);
       }
 
       [Test]
@@ -44,7 +44,7 @@ namespace Specs_for_MinimumLengthAttribute
       {
          MinimumLengthExampleNonString example = new MinimumLengthExampleNonString();
          example.SomeInt = 57042;
-         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages.Count);
+         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors.Count);
       }
    }
 

@@ -60,11 +60,11 @@ namespace XEVA.Framework.Validation
 
       private void DisplayErrorNotifications(ValidationResult validationResult, Dictionary<string, IValidationObject> validationObjects)
       {
-         List<ValidationMessage> messages = new List<ValidationMessage>(validationResult.Messages);
+         List<ValidatonError> messages = new List<ValidatonError>(validationResult.Errors);
 
          foreach (KeyValuePair<string, IValidationObject> validationObject in validationObjects)
          {
-            ValidationMessage message = messages.Find(delegate(ValidationMessage match)
+            ValidatonError message = messages.Find(delegate(ValidatonError match)
                                                            {
                                                               return match.Property == validationObject.Key;
                                                            });

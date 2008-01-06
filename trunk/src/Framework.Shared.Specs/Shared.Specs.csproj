@@ -63,7 +63,7 @@
     <Compile Include="Validation\NotEmptyAttributeSpecs.cs" />
     <Compile Include="Validation\EmailFormatAttributeSpecs.cs" />
     <Compile Include="Validation\MinimumLengthAttributeSpecs.cs" />
-    <Compile Include="Validation\ValidationMessageTests.cs" />
+    <Compile Include="Validation\ValidationErrorSpecs.cs" />
     <Compile Include="Validation\ValidationResultSpecs.cs" />
     <Compile Include="Validation\MatchPatternAttributeSpecs.cs" />
     <Compile Include="Validation\ValidatorSpecs.cs" />
