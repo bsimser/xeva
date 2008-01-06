@@ -5,23 +5,23 @@ namespace XEVA.Framework.Validation
 {
    public class ValidationResult
    {
-      private List<ValidationMessage> _messages = new List<ValidationMessage>();
+      private readonly List<ValidatonError> _errors = new List<ValidatonError>();
 
       public virtual bool IsValid
       {
-         get { return _messages.Count == 0; }
+         get { return _errors.Count == 0; }
       }
 
-      public virtual IList<ValidationMessage> Messages
+      public virtual IList<ValidatonError> Errors
       {
-         get { return this._messages; }
+         get { return this._errors; }
       }
 
       public virtual string DetailedErrorMessage()
       {
          string result = String.Empty;
 
-         foreach (ValidationMessage message in _messages)
+         foreach (ValidatonError message in _errors)
          {
             result += message.Property + ": " + message.Message + "\r\n";
          }
@@ -29,16 +29,16 @@ namespace XEVA.Framework.Validation
          return result;
       }
 
-      public virtual void AddMessage(ValidationMessage message)
+      public virtual void AddError(ValidatonError message)
       {
-         if (!_messages.Contains(message))
-            _messages.Add(message);
+         if (!_errors.Contains(message))
+            _errors.Add(message);
       }
 
-      public virtual void AddMessage(string property, string message)
+      public virtual void AddError(string property, string message)
       {
-         ValidationMessage validationMessage = new ValidationMessage(property, message);
-         this.AddMessage(validationMessage);
+         ValidatonError validationMessage = new ValidatonError(property, message);
+         this.AddError(validationMessage);
       }
    }
 }

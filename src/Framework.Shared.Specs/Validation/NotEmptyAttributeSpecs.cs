@@ -23,8 +23,8 @@ namespace Specs_for_NotEmptyAttribute
          NotEmptyExampleWithGuid example = new NotEmptyExampleWithGuid();
          example.Guid = Guid.Empty;
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -35,8 +35,8 @@ namespace Specs_for_NotEmptyAttribute
          NotEmptyExampleWithGuid example = new NotEmptyExampleWithGuid();
          example.Guid = Guid.NewGuid();
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }
@@ -61,8 +61,8 @@ namespace Specs_for_NotEmptyAttribute
          // no elements in list!
          example.List = list;
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -77,8 +77,8 @@ namespace Specs_for_NotEmptyAttribute
 
          example.List = list;
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }
@@ -101,8 +101,8 @@ namespace Specs_for_NotEmptyAttribute
 
          example.String = string.Empty;
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -114,8 +114,8 @@ namespace Specs_for_NotEmptyAttribute
 
          example.String = null;
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -127,8 +127,8 @@ namespace Specs_for_NotEmptyAttribute
 
          example.String = "something";
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }

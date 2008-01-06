@@ -61,7 +61,7 @@
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\MinimumLengthAttribute.cs" />
     <Compile Include="Validation\ValidationResult.cs" />
-    <Compile Include="Validation\ValidationMessage.cs" />
+    <Compile Include="Validation\ValidatonError.cs" />
     <Compile Include="Validation\RequiredAttribute.cs" />
     <Compile Include="Validation\MatchPatternAttribute.cs" />
     <Compile Include="Validation\ValidationAttribute.cs" />

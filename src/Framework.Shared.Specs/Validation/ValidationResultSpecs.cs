@@ -19,11 +19,11 @@ namespace Specs_for_ValidationResult
       {
          Assert.IsTrue(_validationResult.IsValid);
 
-         _validationResult.AddMessage(new ValidationMessage("Name", "Is required"));
-         _validationResult.AddMessage("Name", "Is required");
+         _validationResult.AddError(new ValidatonError("Name", "Is required"));
+         _validationResult.AddError("Name", "Is required");
 
          Assert.IsFalse(_validationResult.IsValid);
-         Assert.AreEqual(1, _validationResult.Messages.Count);
+         Assert.AreEqual(1, _validationResult.Errors.Count);
       }
    }
 
@@ -40,8 +40,8 @@ namespace Specs_for_ValidationResult
       [Test]
       public void Concatenate_all_messages_placing_a_new_line_between_each()
       {
-         _validationResult.AddMessage(new ValidationMessage("Name", "Is required"));
-         _validationResult.AddMessage(new ValidationMessage("Date", "Is required"));
+         _validationResult.AddError(new ValidatonError("Name", "Is required"));
+         _validationResult.AddError(new ValidatonError("Date", "Is required"));
 
          Assert.AreEqual(_validationResult.DetailedErrorMessage(),
                          "Name: Is required\r\nDate: Is required\r\n");

@@ -21,8 +21,8 @@ namespace Specs_for_EmailFormatAttribute
          ExampleWithStringProperty example = new ExampleWithStringProperty();
          example.StringProperty = "dave@xs-go.com";
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }
@@ -33,8 +33,8 @@ namespace Specs_for_EmailFormatAttribute
          ExampleWithNonStringProperty example = new ExampleWithNonStringProperty();
          example.NonStringProperty = 42;
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -45,8 +45,8 @@ namespace Specs_for_EmailFormatAttribute
          ExampleWithStringProperty example = new ExampleWithStringProperty();
          example.StringProperty = null;
 
-         IList<ValidationMessage> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Messages;
+         IList<ValidatonError> messages =
+            _validator.Validate(example, new Dictionary<string, IValidationObject>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }

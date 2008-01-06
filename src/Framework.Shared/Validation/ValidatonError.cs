@@ -3,16 +3,16 @@ using System;
 namespace XEVA.Framework.Validation
 {
    [Serializable]
-   public class ValidationMessage
+   public class ValidatonError
    {
       private string _property;
       private string _message;
 
-      public ValidationMessage()
+      public ValidatonError()
       {
       }
 
-      public ValidationMessage(string property, string message)
+      public ValidatonError(string property, string message)
       {
          _property = property;
          _message = message;
@@ -34,7 +34,7 @@ namespace XEVA.Framework.Validation
       {
          if (this == obj) return true;
 
-         ValidationMessage message = obj as ValidationMessage;
+         ValidatonError message = obj as ValidatonError;
          if (message == null) return false;
          return (Equals(_property, message._property) && Equals(_message, message._message));
       }

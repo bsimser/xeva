@@ -16,7 +16,7 @@ namespace XEVA.Framework.Validation
 
       protected void AddMessage(ValidationResult validationResult, string message)
       {
-         validationResult.AddMessage(Property.Name, message);
+         validationResult.AddError(Property.Name, message);
       }
 
       protected abstract void Validate(object target, object rawValue, ValidationResult validationResult);
