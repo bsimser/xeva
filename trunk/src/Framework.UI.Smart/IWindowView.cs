@@ -9,12 +9,6 @@ namespace XEVA.Framework.UI.Smart
    {
       void Show();
 
-      void Hide();
-
       void Close();
-
-      event CancelEventHandler Closing;
-
-      event EventHandler Closed;
    }
 }

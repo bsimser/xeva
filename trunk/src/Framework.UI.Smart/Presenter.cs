@@ -32,16 +32,16 @@ namespace XEVA.Framework.UI.Smart
       public void Start(IRequest request)
       {
          if (_isStarted) return;
-
          if (View == null) throw new ViewNotAvailableException();
-
          if (!ValidateRequest(request)) throw new InvalidRequestException();
 
          TCallbacks callbacks = this as TCallbacks;
          if (callbacks == null) throw new NoCallbacksImplementationException();
-         View.Attach(callbacks);
          
-         CustomStart();
+         EvaluateShowWindow();
+
+         View.Attach(callbacks);
+         CustomStart(request);
 
          _isStarted = true;
       }
@@ -56,6 +56,7 @@ namespace XEVA.Framework.UI.Smart
          if (!_isStarted) return;
          if (_isFinished) return;
          CustomFinish();
+         EvaluateCloseWindow();
          _isFinished = true;
       }
 
@@ -68,7 +69,7 @@ namespace XEVA.Framework.UI.Smart
          }
       }
 
-      public virtual void CustomStart()
+      public virtual void CustomStart(IRequest request)
       {
       }
 
@@ -90,6 +91,24 @@ namespace XEVA.Framework.UI.Smart
       public void RegisterControl(string property, IControl control)
       {
          _controls.Add(property, control);
+      }
+
+      private void EvaluateShowWindow()
+      {
+         if (View is IWindowView<TCallbacks>)
+         {
+            IWindowView<TCallbacks> window = View as IWindowView<TCallbacks>;
+            window.Show();
+         }
+      }
+
+      private void EvaluateCloseWindow()
+      {
+         if (View is IWindowView<TCallbacks>)
+         {
+            IWindowView<TCallbacks> window = View as IWindowView<TCallbacks>;
+            window.Close();
+         }
       }
    }
 }

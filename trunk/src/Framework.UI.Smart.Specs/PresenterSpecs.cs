@@ -46,6 +46,11 @@ namespace Specs_for_Presenter
          Assert.AreEqual(1, _presenter.StartCount);
       }
 
+      public void Provide_the_request_to_specific_startup_code()
+      {
+         Assert.AreEqual(string.Empty, _presenter.RequestDataFromCustomStartup);
+      }
+
       [Test]
       public void Validate_request_data()
       {
@@ -83,6 +88,100 @@ namespace Specs_for_Presenter
       {
          _presenter.Start(new NullRequest());
          Assert.AreEqual(1, _presenter.StartCount);
+      }
+   }
+
+   [TestFixture]
+   public class When_starting_a_presenter_associated_with_a_windowed_view : Spec
+   {
+      private ExampleWindowedPresenter _presenter;
+
+      protected override void Before_each_spec()
+      {
+         _presenter = Create<ExampleWindowedPresenter>();
+      }
+
+      [Test]
+      public void Show_the_window()
+      {
+         using (Record)
+         {
+            Get<IExampleWindowedView>().Show();  
+         }
+         using (Playback)
+         {
+            _presenter.Start(new NullRequest());
+         }
+      }
+   }
+
+   [TestFixture]
+   public class When_finishing_a_presenter : Spec
+   {
+      private ExampleWidgetPresenter _presenter;
+      private IRequest _request;
+
+      protected override void Before_each_spec()
+      {
+         _presenter = Create<ExampleWidgetPresenter>();
+
+         _request = new Request();
+         _request.SetItem<string>("data", "test");
+      }
+
+      [Test]
+      public void Call_custom_finishing_code()
+      {
+         _presenter.Start(_request);
+         Assert.AreEqual(0, _presenter.FinishCount);
+         _presenter.Finish();
+         Assert.AreEqual(1, _presenter.FinishCount);
+      }
+
+      [Test]
+      public void Do_not_finish_if_never_started()
+      {
+         Assert.AreEqual(0, _presenter.FinishCount);
+         _presenter.Finish();
+         Assert.AreEqual(0, _presenter.FinishCount);
+      }
+
+      [Test]
+      public void Do_not_finished_if_previously_finished()
+      {
+         _presenter.Start(_request);
+         Assert.AreEqual(0, _presenter.FinishCount);
+         
+         _presenter.Finish();
+         Assert.AreEqual(1, _presenter.FinishCount);
+
+         _presenter.Finish();         
+         Assert.AreEqual(1, _presenter.FinishCount);
+      }
+   }
+
+   [TestFixture]
+   public class When_finishing_a_presenter_associated_with_a_windowed_view : Spec
+   {
+      private ExampleWindowedPresenter _presenter;
+
+      protected override void Before_each_spec()
+      {
+         _presenter = Create<ExampleWindowedPresenter>();
+      }
+
+      [Test]
+      public void Show_the_window()
+      {
+         using (Record)
+         {
+            Get<IExampleWindowedView>().Close();
+         }
+         using (Playback)
+         {
+            _presenter.Start(new NullRequest());
+            _presenter.Finish();
+         }
       }
    }
 
