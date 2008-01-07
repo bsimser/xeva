@@ -11,7 +11,7 @@ namespace XEVA.Framework.Validation
 
       public Validator() {}
 
-      public ValidationResult Validate(object target, Dictionary<string, IValidationObject> validationObjects)
+      public ValidationResult Validate(object target, Dictionary<string, IValidationAware> validationObjects)
       {
          Type targetType = target.GetType();
          IList<ValidationAttribute> validations = ScanTypeForValidationAttributes(targetType);
@@ -58,11 +58,11 @@ namespace XEVA.Framework.Validation
          return result;
       }
 
-      private void DisplayErrorNotifications(ValidationResult validationResult, Dictionary<string, IValidationObject> validationObjects)
+      private void DisplayErrorNotifications(ValidationResult validationResult, Dictionary<string, IValidationAware> validationObjects)
       {
          List<ValidatonError> messages = new List<ValidatonError>(validationResult.Errors);
 
-         foreach (KeyValuePair<string, IValidationObject> validationObject in validationObjects)
+         foreach (KeyValuePair<string, IValidationAware> validationObject in validationObjects)
          {
             ValidatonError message = messages.Find(delegate(ValidatonError match)
                                                            {

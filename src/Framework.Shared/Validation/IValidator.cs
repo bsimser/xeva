@@ -4,6 +4,6 @@ namespace XEVA.Framework.Validation
 {
    public interface IValidator
    {
-      ValidationResult Validate(object target, Dictionary<string, IValidationObject> validationObjects);
+      ValidationResult Validate(object target, Dictionary<string, IValidationAware> validationObjects);
    }
 }
