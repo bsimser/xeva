@@ -60,6 +60,7 @@
     <Compile Include="Binding\BindingAdapterTests.cs" />
     <Compile Include="Binding\BindingFilterTests.cs" />
     <Compile Include="Binding\FakeObject.cs" />
+    <Compile Include="ExampleWindowedPresenter.cs" />
     <Compile Include="ExampleInvalidPresenter.cs" />
     <Compile Include="ExampleWidgetPresenter.cs" />
     <Compile Include="PresenterSpecs.cs" />

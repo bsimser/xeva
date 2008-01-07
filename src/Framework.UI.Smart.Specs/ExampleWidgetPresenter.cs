@@ -11,11 +11,8 @@ namespace XEVA.Framework.UI.Smart
    {
       private int _startCount = 0;
       private int _validateCount = 0;
-
-      public override void CustomStart()
-      {
-         _startCount += 1;
-      }
+      private string _requestData = string.Empty;
+      private int _finishCount = 0;
 
       protected override bool ValidateRequest(IRequest request)
       {
@@ -32,6 +29,17 @@ namespace XEVA.Framework.UI.Smart
          }
       }
 
+      public override void CustomStart(IRequest request)
+      {
+         _startCount += 1;
+         _requestData = request.GetItem<string>("data", string.Empty);
+      }
+
+      public override void CustomFinish()
+      {
+         _finishCount += 1;
+      }
+
       public int StartCount
       {
          get { return _startCount; }
@@ -40,6 +48,16 @@ namespace XEVA.Framework.UI.Smart
       public int ValidateCount
       {
          get { return _validateCount; }
+      }
+
+      public string RequestDataFromCustomStartup
+      {
+         get { return _requestData; }
+      }
+
+      public int FinishCount
+      {
+         get { return _finishCount; }
       }
    }
 
