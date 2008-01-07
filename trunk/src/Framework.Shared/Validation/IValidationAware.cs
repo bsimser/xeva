@@ -4,7 +4,7 @@ using System.Text;
 
 namespace XEVA.Framework.Validation
 {
-   public interface IValidationObject
+   public interface IValidationAware
    {
       void ShowError(string messsage);
 

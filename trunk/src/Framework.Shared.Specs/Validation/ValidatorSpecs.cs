@@ -14,7 +14,7 @@ namespace Specs_for_Validator
       {
          Validator validator = new Validator();
          ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
-         ValidationResult validationResult = validator.Validate(sample1, new Dictionary<string, IValidationObject>());
+         ValidationResult validationResult = validator.Validate(sample1, new Dictionary<string, IValidationAware>());
          Assert.IsFalse(validationResult.IsValid);
          Assert.AreEqual(1, validationResult.Errors.Count);
       }
@@ -22,16 +22,16 @@ namespace Specs_for_Validator
       [Test]
       public void Show_an_error_on_the_validation_controls()
       {
-         IValidationObject validationObject = Mock<IValidationObject>();
+         IValidationAware controlElement = Mock<IValidationAware>();
 
          Validator validator = new Validator();
          ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
-         Dictionary<string, IValidationObject> validationObjects = new Dictionary<string, IValidationObject>();
-         validationObjects.Add("ReqField", validationObject);
+         Dictionary<string, IValidationAware> validationObjects = new Dictionary<string, IValidationAware>();
+         validationObjects.Add("ReqField", controlElement);
 
          using (Record)
          {
-            validationObject.ShowError("Some Message");
+            controlElement.ShowError("Some Message");
             LastCall.IgnoreArguments();
          }
 
@@ -48,17 +48,17 @@ namespace Specs_for_Validator
       [Test]
       public void Clear_any_errors_on_validation_controls()
       {
-         IValidationObject validationObject = Mock<IValidationObject>();
+         IValidationAware controlElement = Mock<IValidationAware>();
 
          Validator validator = new Validator();
          ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
          sample1.ReqField = "Some String";
-         Dictionary<string, IValidationObject> validationObjects = new Dictionary<string, IValidationObject>();
-         validationObjects.Add("ReqField", validationObject);
+         Dictionary<string, IValidationAware> validationObjects = new Dictionary<string, IValidationAware>();
+         validationObjects.Add("ReqField", controlElement);
 
          using (Record)
          {
-            validationObject.ClearError();
+            controlElement.ClearError();
          }
 
          using (Playback)

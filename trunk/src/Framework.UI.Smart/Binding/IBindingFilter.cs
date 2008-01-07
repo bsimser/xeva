@@ -3,11 +3,11 @@ using System.ComponentModel;
 
 namespace XEVA.Framework.UI.Smart
 {
-   public interface IBindingFilter<FIlteredType>
+   public interface IBindingFilter<T>
    {
       string FilterString { get; }
       List<PropertyDescriptor> Properties { get; }
       void Initialize(string filterString);
-      bool IncludeItem(FIlteredType item);
+      bool IncludeItem(T item);
    }
 }

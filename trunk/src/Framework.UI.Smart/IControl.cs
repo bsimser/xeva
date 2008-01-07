@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using XEVA.Framework.Validation;
 
 namespace XEVA.Framework.UI.Smart
 {
-   public interface IControl
+   public interface IControl : IValidationAware
    {
-      string LabelText { get; set; }
+      string Label { get; set; }
 
       object Value { get; set; }
 

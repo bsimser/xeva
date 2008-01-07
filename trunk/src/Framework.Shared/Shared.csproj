@@ -54,7 +54,7 @@
     <Compile Include="IoC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\NotEmptyAttribute.cs" />
-    <Compile Include="Validation\IValidationObject.cs" />
+    <Compile Include="Validation\IValidationAware.cs" />
     <Compile Include="Validation\EmailFormatAttribute.cs" />
     <Compile Include="Validation\INotificationAware.cs" />
     <Compile Include="Validation\ISelfValidator.cs" />

@@ -59,28 +59,20 @@
   <ItemGroup>
     <Compile Include="Binding\BindingAdapterTests.cs" />
     <Compile Include="Binding\BindingFilterTests.cs" />
-    <Compile Include="Command\LinkedCommandTests.cs" />
-    <Compile Include="Controller\ControllerTests.cs" />
-    <Compile Include="Layout\LayoutBehaviorTests.cs" />
-    <Compile Include="Layout\SharedLayoutResolverTests.cs" />
-    <Compile Include="Presenter\ParameterAttributeTests.cs" />
-    <Compile Include="Services\ComponentKeyLookupServiceTests.cs" />
-    <Compile Include="Layout\DefaultLayoutResolverTests.cs" />
     <Compile Include="Binding\FakeObject.cs" />
-    <Compile Include="Services\LabelLookupServiceTests.cs" />
-    <Compile Include="Layout\NewTemporaryLayoutBehavior.cs" />
-    <Compile Include="Presenter\PresenterTests.cs" />
-    <Compile Include="Command\CommandScannerTests.cs" />
-    <Compile Include="Command\CommandTests.cs" />
-    <Compile Include="Command\ViewCommandTests.cs" />
-    <Compile Include="Command\PresenterWithCallbackCommands.cs" />
+    <Compile Include="ExampleInvalidPresenter.cs" />
+    <Compile Include="ExampleWidgetPresenter.cs" />
+    <Compile Include="PresenterSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controller\ContextTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
       <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>
       <Name>Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Specs\Specs.csproj">
+      <Project>{46EC28CD-E062-482D-A33B-288F59C0B6A9}</Project>
+      <Name>Specs</Name>
     </ProjectReference>
     <ProjectReference Include="..\Framework.UI.Smart\UI.Smart.csproj">
       <Project>{1FB3293D-07F4-46FE-B86D-5897879CCB9C}</Project>

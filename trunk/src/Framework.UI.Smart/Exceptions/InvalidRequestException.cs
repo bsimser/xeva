@@ -2,8 +2,7 @@ using System;
 
 namespace XEVA.Framework.UI.Smart
 {
-   public interface ILayoutResolver
+   public class InvalidRequestException : Exception
    {
-      ILayout GetLayout();
    }
 }

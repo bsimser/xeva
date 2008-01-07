@@ -1,118 +1,45 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using XEVA.Framework.UI.Smart;
 
 namespace XEVA.Framework.UI.Smart
 {
-   public class Request : IDictionary<string, object>
+   public class Request : IRequest
    {
-      private IDictionary<string, object> _internalDictionary;
+      private readonly List<KeyValuePair<string, Type>> _index;
+      private readonly Dictionary<KeyValuePair<string, Type>, object> _values;
 
-      public Request(IDictionary<string, object> parameters)
+      public Request()
       {
-         _internalDictionary = parameters;
+         _index = new List<KeyValuePair<string, Type>>();
+         _values = new Dictionary<KeyValuePair<string, Type>, object>();
       }
 
-      public static Request From(Link link)
+      public virtual bool IsNull
       {
-         Request request = new Request(link.Parameters);
-         return request;
+         get { return false; }
       }
 
-      #region IDictionary<string,object> Members
-
-      public bool ContainsKey(string key)
+      public T GetItem<T>(string key, T empty)
       {
-         return _internalDictionary.ContainsKey(key);
+         KeyValuePair<string, Type> indexKey = new KeyValuePair<string, Type>(key, typeof(T));
+         if (!_index.Contains(indexKey)) return empty;
+         T result = (T)_values[indexKey];
+         return result;
       }
 
-      public void Add(string key, object value)
+      public void SetItem<T>(string key, T value)
       {
-         _internalDictionary.Add(key, value);
+         KeyValuePair<string, Type> indexKey = new KeyValuePair<string, Type>(key, typeof(T));
+         if (!_index.Contains(indexKey)) _index.Add(indexKey);
+         if (_values.ContainsKey(indexKey))
+         {
+            _values[indexKey] = value;
+         }
+         else
+         {
+            _values.Add(indexKey, value);
+         }
       }
-
-      public bool Remove(string key)
-      {
-         return _internalDictionary.Remove(key);
-      }
-
-      public bool TryGetValue(string key, out object value)
-      {
-         return _internalDictionary.TryGetValue(key, out value);
-      }
-
-      public object this[string key]
-      {
-         get { return _internalDictionary[key]; }
-         set { _internalDictionary[key] = value; }
-      }
-
-      public ICollection<string> Keys
-      {
-         get { return _internalDictionary.Keys; }
-      }
-
-      public ICollection<object> Values
-      {
-         get { return _internalDictionary.Values; }
-      }
-
-      #endregion
-
-      #region ICollection<KeyValuePair<string,object>> Members
-
-      public void Add(KeyValuePair<string, object> item)
-      {
-         _internalDictionary.Add(item);
-      }
-
-      public void Clear()
-      {
-         _internalDictionary.Clear();
-      }
-
-      public bool Contains(KeyValuePair<string, object> item)
-      {
-         return _internalDictionary.Contains(item);
-      }
-
-      public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
-      {
-         _internalDictionary.CopyTo(array, arrayIndex);
-      }
-
-      public bool Remove(KeyValuePair<string, object> item)
-      {
-         return _internalDictionary.Remove(item);
-      }
-
-      public int Count
-      {
-         get { return _internalDictionary.Count; }
-      }
-
-      public bool IsReadOnly
-      {
-         get { return _internalDictionary.IsReadOnly; }
-      }
-
-      #endregion
-
-      #region IEnumerable<KeyValuePair<string,object>> Members
-
-      IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
-      {
-         return _internalDictionary.GetEnumerator();
-      }
-
-      #endregion
-
-      #region IEnumerable Members
-
-      public IEnumerator GetEnumerator()
-      {
-         return _internalDictionary.GetEnumerator();
-      }
-
-      #endregion
    }
 }
