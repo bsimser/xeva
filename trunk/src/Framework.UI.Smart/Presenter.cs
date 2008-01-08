@@ -39,7 +39,7 @@ namespace XEVA.Framework.UI.Smart
          EvaluateShowWindow();
 
          View.Attach(callbacks);
-         CustomStart(request);
+         CustomStart();
 
          _isStarted = true;
       }
@@ -64,7 +64,7 @@ namespace XEVA.Framework.UI.Smart
          }
       }
 
-      public virtual void CustomStart(IRequest request)
+      public virtual void CustomStart()
       {
       }
 
