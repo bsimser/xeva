@@ -52,15 +52,15 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Validate_request_data()
+      public void Initialize_request_data()
       {
-         Assert.AreEqual(0, _presenter.ValidateCount);
+         Assert.AreEqual(0, _presenter.InitializeCount);
          _presenter.Start(_request);
-         Assert.AreEqual(1, _presenter.ValidateCount);
+         Assert.AreEqual(1, _presenter.InitializeCount);
       }
 
-      [Test, ExpectedException(typeof(InvalidRequestException))]
-      public void Throw_an_invalid_request_exception_if_validation_fails()
+      [Test, ExpectedException(typeof(MissingRequiredRequestItemException))]
+      public void Throw_an_exception_if_data_is_missing_from_the_request()
       {
          Request invalidRequest = new Request();
          _presenter.Start(invalidRequest);

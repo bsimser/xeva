@@ -10,23 +10,15 @@ namespace XEVA.Framework.UI.Smart
       IExampleWidgetCallbacks
    {
       private int _startCount = 0;
-      private int _validateCount = 0;
+      private int _initializeCount = 0;
       private string _requestData = string.Empty;
       private int _finishCount = 0;
 
-      protected override bool ValidateRequest(IRequest request)
+      protected override void InitializeRequest(IRequest request)
       {
-         string data = request.GetItem<string>("data", string.Empty);
+         string data = request.GetItem<string>("data", string.Empty, true);
 
-         if (data == "test")
-         {
-            _validateCount += 1;
-            return true;
-         }
-         else
-         {
-            throw new InvalidRequestException();
-         }
+         _initializeCount += 1;
       }
 
       public override void CustomStart(IRequest request)
@@ -45,9 +37,9 @@ namespace XEVA.Framework.UI.Smart
          get { return _startCount; }
       }
 
-      public int ValidateCount
+      public int InitializeCount
       {
-         get { return _validateCount; }
+         get { return _initializeCount; }
       }
 
       public string RequestDataFromCustomStartup
