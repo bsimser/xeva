@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using XEVA.Framework.Validation;
 
-namespace Specs_for_NotEmptyAttribute
+namespace XEVA.Framework.Validation
 {
    public class NotEmptyAttribute : ValidationAttribute
    {
