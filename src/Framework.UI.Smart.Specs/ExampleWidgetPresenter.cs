@@ -16,15 +16,13 @@ namespace XEVA.Framework.UI.Smart
 
       protected override void InitializeRequest(IRequest request)
       {
-         string data = request.GetItem<string>("data", string.Empty, true);
-
+         _requestData = request.GetItem<string>("data", string.Empty, true);
          _initializeCount += 1;
       }
 
-      public override void CustomStart(IRequest request)
+      public override void CustomStart()
       {
          _startCount += 1;
-         _requestData = request.GetItem<string>("data", string.Empty);
       }
 
       public override void CustomFinish()
