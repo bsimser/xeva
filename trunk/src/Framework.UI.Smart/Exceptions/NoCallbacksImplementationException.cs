@@ -1,6 +1,6 @@
 using System;
 
-namespace Specs_for_Presenter
+namespace XEVA.Framework.UI.Smart
 {
    public class NoCallbacksImplementationException : Exception
    {

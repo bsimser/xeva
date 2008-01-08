@@ -28,6 +28,17 @@ namespace XEVA.Framework.UI.Smart
          return result;
       }
 
+      public T GetItem<T>(string key, T empty, bool required)
+      {
+         T result = GetItem<T>(key, empty);
+
+         if (!result.Equals(empty)) return result;
+         if (!required) return empty;
+
+         throw new MissingRequiredRequestItemException(key, typeof(T));
+      }
+
+
       public void SetItem<T>(string key, T value)
       {
          KeyValuePair<string, Type> indexKey = new KeyValuePair<string, Type>(key, typeof(T));

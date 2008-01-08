@@ -54,6 +54,7 @@
     <Compile Include="Binding\BindingFilterExpression.cs" />
     <Compile Include="Binding\IBindingFilter.cs" />
     <Compile Include="Exceptions\InvalidRequestException.cs" />
+    <Compile Include="Exceptions\MissingRequiredRequestItemException.cs" />
     <Compile Include="Exceptions\ViewNotAvailableException.cs" />
     <Compile Include="IControl.cs" />
     <Compile Include="IRequest.cs" />

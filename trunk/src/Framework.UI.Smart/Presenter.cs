@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Reflection;
-using Specs_for_Presenter;
 using XEVA.Framework.UI.Smart;
-using XEVA.Framework.Validation;
 
 namespace XEVA.Framework.UI.Smart
 {
@@ -33,7 +30,8 @@ namespace XEVA.Framework.UI.Smart
       {
          if (_isStarted) return;
          if (View == null) throw new ViewNotAvailableException();
-         if (!ValidateRequest(request)) throw new InvalidRequestException();
+         
+         InitializeRequest(request);
 
          TCallbacks callbacks = this as TCallbacks;
          if (callbacks == null) throw new NoCallbacksImplementationException();
@@ -46,10 +44,7 @@ namespace XEVA.Framework.UI.Smart
          _isStarted = true;
       }
 
-      protected virtual bool ValidateRequest(IRequest request)
-      {
-         return true;
-      }
+      protected virtual void InitializeRequest(IRequest request) { }
 
       public void Finish()
       {

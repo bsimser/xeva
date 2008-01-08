@@ -6,6 +6,8 @@ namespace XEVA.Framework.UI.Smart
 
       T GetItem<T>(string key, T empty);
 
+      T GetItem<T>(string key, T empty, bool required);
+
       void SetItem<T>(string key, T value);
    }
 }
