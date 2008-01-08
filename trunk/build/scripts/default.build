@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<project name="XEVA Framework Build"
+			default="build"
+			basedir=".">
+
+  <property name="project-name" value="XEVA Framework" overwrite="false" />
+  <property name="project-config" value="Debug" />
+  <property name="version-number" value="0.2.0.0" />
+  <property name="build-package-dir" value="..\package\" overwrite="false" />
+  <property name="build-source-dir" value="..\..\src" overwrite="false" />
+  <property name="build-lib-dir" value="..\..\lib" overwrite="false" />
+  <property name="build-package-dir" value="..\out\package" overwrite="false" />
+  <property name="tools-dir" value="..\..\tools" />
+  <property name="build-verbosity" value="Minimal" />
+
+  <loadtasks>
+    <fileset>
+      <include name="${tools-dir}\ncoverexplorer-nant-tasks-1.4\NCoverExplorer.NAntTasks.dll" />
+      <include name="${tools-dir}\nantcontrib-0.85\NAnt.Contrib.Tasks.dll" />
+    </fileset>
+  </loadtasks>
+
+  <target name="build">
+    <call target="clean" />
+    <call target="compile" />
+    <call target="package" />
+  </target>
+  
+  <target name="clean">
+    <delete dir="${build-package-dir}" failonerror="false" />
+  </target>
+
+  <target name="compile">
+
+    <msbuild project="${build-source-dir}\Framework.Specs\Specs.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Shared\Shared.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Shared.Specs\Shared.Specs.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Model\Model.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Model.Specs\Model.Specs.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Store\Store.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Store.Specs\Store.Specs.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Services\Services.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.Services.Specs\Services.Specs.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.UI.Smart\UI.Smart.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Framework.UI.Smart.Specs\UI.Smart.Specs.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+  </target>
+
+  <target name="package">
+
+    <mkdir dir="${build-package-dir}" failonerror="false" />
+
+    <copy todir="${build-package-dir}">
+      <fileset>
+        <include name="${build-lib-dir}/**/*.dll" />
+        <include name="${build-lib-dir}/**/*.pdb" />
+      </fileset>
+    </copy>
+
+    <copy file="${build-source-dir}\Framework.Specs\bin\${project-config}\XEVA.Framework.Specs.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Specs\bin\${project-config}\XEVA.Framework.Specs.pdb" todir="${build-package-dir}"/>
+
+    <copy file="${build-source-dir}\Framework.Shared\bin\${project-config}\XEVA.Framework.Shared.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Shared\bin\${project-config}\XEVA.Framework.Shared.pdb" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Shared.Specs\bin\${project-config}\XEVA.Framework.Shared.Specs.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Shared.Specs\bin\${project-config}\XEVA.Framework.Shared.Specs.pdb" todir="${build-package-dir}"/>
+
+    <copy file="${build-source-dir}\Framework.Model\bin\${project-config}\XEVA.Framework.Model.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Model\bin\${project-config}\XEVA.Framework.Model.pdb" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Model.Specs\bin\${project-config}\XEVA.Framework.Model.Specs.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Model.Specs\bin\${project-config}\XEVA.Framework.Model.Specs.pdb" todir="${build-package-dir}"/>
+
+    <copy file="${build-source-dir}\Framework.Store\bin\${project-config}\XEVA.Framework.Store.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Store\bin\${project-config}\XEVA.Framework.Store.pdb" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Store.Specs\bin\${project-config}\XEVA.Framework.Store.Specs.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Store.Specs\bin\${project-config}\XEVA.Framework.Store.Specs.pdb" todir="${build-package-dir}"/>
+
+    <copy file="${build-source-dir}\Framework.Services\bin\${project-config}\XEVA.Framework.Services.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Services\bin\${project-config}\XEVA.Framework.Services.pdb" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Services.Specs\bin\${project-config}\XEVA.Framework.Services.Specs.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.Services.Specs\bin\${project-config}\XEVA.Framework.Services.Specs.pdb" todir="${build-package-dir}"/>
+
+    <copy file="${build-source-dir}\Framework.UI.Smart\bin\${project-config}\XEVA.Framework.UI.Smart.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.UI.Smart\bin\${project-config}\XEVA.Framework.UI.Smart.pdb" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.UI.Smart.Specs\bin\${project-config}\XEVA.Framework.UI.Smart.Specs.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Framework.UI.Smart.Specs\bin\${project-config}\XEVA.Framework.UI.Smart.Specs.pdb" todir="${build-package-dir}"/>
+  
+  </target>
+
+</project>
