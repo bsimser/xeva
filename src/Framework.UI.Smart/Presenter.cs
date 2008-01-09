@@ -4,11 +4,11 @@ using XEVA.Framework.UI.Smart;
 namespace XEVA.Framework.UI.Smart
 {
    public abstract class Presenter<TView, TCallbacks> : IPresenter
-      where TCallbacks : class, IPresenterCallbacks
+      where TCallbacks : class, IViewCallbacks
       where TView : class, IView<TCallbacks>
    {
       private TView _view;
-      private IValidationService _validationService;
+      private IPresenterValidator _presenterValidator;
       private bool _isStarted = false;
       private bool _isFinished = false;
       private string _key;
@@ -27,9 +27,14 @@ namespace XEVA.Framework.UI.Smart
          set { _label = value; }
       }
 
-      public IValidationService ValidationService
+      public void Start()
       {
-         get { return _validationService; }
+         Start(new NullRequest());
+      }
+
+      public IPresenterValidator PresenterValidator
+      {
+         get { return _presenterValidator; }
       }
 
       public void Start(IRequest request)
@@ -52,10 +57,10 @@ namespace XEVA.Framework.UI.Smart
 
       protected virtual void InitializeRequest(IRequest request) { }
 
-      public virtual void InitializeValidationService(IValidationService validationService)
+      public virtual void InitializeValidator(IPresenterValidator presenterValidator)
       {
-         if (_validationService == null)
-            _validationService = validationService;
+         if (_presenterValidator == null)
+            _presenterValidator = presenterValidator;
       }
 
       public void Finish()
@@ -102,9 +107,9 @@ namespace XEVA.Framework.UI.Smart
 
       public bool Validate(object target)
       {
-         InitializeValidationService(new ValidationService());
+         InitializeValidator(new PresenterValidator());
 
-         return _validationService.Validate(target, _controls);
+         return _presenterValidator.Validate(target, _controls);
       }
 
       private void EvaluateShowWindow()

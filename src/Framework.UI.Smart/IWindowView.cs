@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace XEVA.Framework.UI.Smart
 {
    public interface IWindowView<TCallbacks> : IView<TCallbacks>
-      where TCallbacks : IPresenterCallbacks
+      where TCallbacks : IViewCallbacks
 
    {
       void Show();

@@ -1,6 +1,6 @@
 namespace XEVA.Framework.UI.Smart
 {
-   public interface IPresenterCallbacks
+   public interface IViewCallbacks
    {
       void RegisterControl(string property, IControl control);
    }
