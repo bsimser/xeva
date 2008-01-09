@@ -93,30 +93,6 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
-   public class When_starting_a_presenter_associated_with_a_windowed_view : Spec
-   {
-      private ExampleWindowedPresenter _presenter;
-
-      protected override void Before_each_spec()
-      {
-         _presenter = Create<ExampleWindowedPresenter>();
-      }
-
-      [Test]
-      public void Show_the_window()
-      {
-         using (Record)
-         {
-            Get<IExampleWindowedView>().Show();  
-         }
-         using (Playback)
-         {
-            _presenter.Start(new NullRequest());
-         }
-      }
-   }
-
-   [TestFixture]
    public class When_finishing_a_presenter : Spec
    {
       private ExampleWidgetPresenter _presenter;
@@ -164,12 +140,12 @@ namespace Specs_for_Presenter
    [TestFixture]
    public class When_validating_an_object_used_in_the_presenter : Spec
    {
-      private ExampleWindowedPresenter _presenter;
+      private ExampleWidgetPresenter _presenter;
       private IPresenterValidator _presenterValidator;
  
       protected override void Before_each_spec()
       {
-         _presenter = Create<ExampleWindowedPresenter>();
+         _presenter = Create<ExampleWidgetPresenter>();
          _presenterValidator = Mock<IPresenterValidator>();
          _presenter.InitializeValidator(_presenterValidator);
       }
@@ -208,32 +184,7 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
-   public class When_finishing_a_presenter_associated_with_a_windowed_view : Spec
-   {
-      private ExampleWindowedPresenter _presenter;
-
-      protected override void Before_each_spec()
-      {
-         _presenter = Create<ExampleWindowedPresenter>();
-      }
-
-      [Test]
-      public void Show_the_window()
-      {
-         using (Record)
-         {
-            Get<IExampleWindowedView>().Close();
-         }
-         using (Playback)
-         {
-            _presenter.Start(new NullRequest());
-            _presenter.Finish();
-         }
-      }
-   }
-
-   [TestFixture]
-   public class When_starting_an_presenter_that_does_not_implement_a_callbacks_interface : Spec
+   public class When_starting_a_presenter_without_a_view_callback_implementation : Spec
    {
       private ExampleInvalidPresenter _presenter;
 
