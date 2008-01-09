@@ -32,6 +32,7 @@ namespace XEVA.Framework.UI.Smart
       {
          T result = GetItem<T>(key, empty);
 
+         if (result == null) return empty;
          if (!result.Equals(empty)) return result;
          if (!required) return empty;
 
