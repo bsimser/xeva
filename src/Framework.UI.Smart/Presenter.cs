@@ -42,8 +42,6 @@ namespace XEVA.Framework.UI.Smart
          TCallbacks callbacks = this as TCallbacks;
          if (callbacks == null) throw new NoCallbacksImplementationException();
          
-         EvaluateShowWindow();
-
          View.Attach(callbacks);
          CustomStart();
 
@@ -63,7 +61,6 @@ namespace XEVA.Framework.UI.Smart
          if (!_isStarted) return;
          if (_isFinished) return;
          CustomFinish();
-         EvaluateCloseWindow();
          _isFinished = true;
       }
 
@@ -76,11 +73,11 @@ namespace XEVA.Framework.UI.Smart
          }
       }
 
-      public virtual void CustomStart()
+      protected virtual void CustomStart()
       {
       }
 
-      public virtual void CustomFinish()
+      protected virtual void CustomFinish()
       {
       }
 
@@ -105,24 +102,6 @@ namespace XEVA.Framework.UI.Smart
          InitializeValidator(new PresenterValidator());
 
          return _presenterValidator.Validate(target, _controls);
-      }
-
-      private void EvaluateShowWindow()
-      {
-         if (View is IWindowView<TCallbacks>)
-         {
-            IWindowView<TCallbacks> window = View as IWindowView<TCallbacks>;
-            window.Show();
-         }
-      }
-
-      private void EvaluateCloseWindow()
-      {
-         if (View is IWindowView<TCallbacks>)
-         {
-            IWindowView<TCallbacks> window = View as IWindowView<TCallbacks>;
-            window.Close();
-         }
       }
    }
 }

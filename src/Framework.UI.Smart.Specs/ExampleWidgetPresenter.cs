@@ -20,12 +20,12 @@ namespace XEVA.Framework.UI.Smart
          _initializeCount += 1;
       }
 
-      public override void CustomStart()
+      protected override void CustomStart()
       {
          _startCount += 1;
       }
 
-      public override void CustomFinish()
+      protected override void CustomFinish()
       {
          _finishCount += 1;
       }
