@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using XEVA.Framework.UI.Smart;
 
@@ -14,6 +15,7 @@ namespace XEVA.Framework.UI.Smart
       private string _key;
       private string _label;
       private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
+      private IWindow _window;
 
       public string Key
       {
@@ -45,6 +47,8 @@ namespace XEVA.Framework.UI.Smart
          View.Attach(callbacks);
          CustomStart();
 
+         Window.Show();
+
          _isStarted = true;
       }
 
@@ -58,11 +62,22 @@ namespace XEVA.Framework.UI.Smart
 
       public void Finish()
       {
+         Finish(false);
+      }
+
+      private void Finish(bool windowInitiated)
+      {
          if (!_isStarted) return;
          if (_isFinished) return;
+         if (!windowInitiated && (_window != null))
+         {
+            _window.Closed -= OnWindowClosed;
+            _window.Close();
+         }
          CustomFinish();
          _isFinished = true;
       }
+
 
       public virtual object UI
       {
@@ -79,6 +94,27 @@ namespace XEVA.Framework.UI.Smart
 
       protected virtual void CustomFinish()
       {
+      }
+
+      public void DisplayIn(IWindow window)
+      {
+         if (this.UI == null) throw new NoUserInterfaceObjectException();
+         _window = window;
+         _window.InitializeUI(this.UI);
+         window.Closed += OnWindowClosed;
+      }
+
+      public IWindowController Window
+      {
+         get
+         {
+            return (IWindowController)_window ?? new NoWindowControls();
+         }
+      }
+
+      private void OnWindowClosed(object sender, EventArgs e)
+      {
+         Finish(true);
       }
 
       public TView View

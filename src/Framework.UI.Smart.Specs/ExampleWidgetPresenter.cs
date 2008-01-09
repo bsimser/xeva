@@ -13,6 +13,7 @@ namespace XEVA.Framework.UI.Smart
       private int _initializeCount = 0;
       private string _requestData = string.Empty;
       private int _finishCount = 0;
+      private object _ui = new object();
 
       protected override void InitializeRequest(IRequest request)
       {
@@ -48,6 +49,19 @@ namespace XEVA.Framework.UI.Smart
       public int FinishCount
       {
          get { return _finishCount; }
+      }
+
+      public void SetNullWindowUI()
+      {
+         _ui = null;
+      }
+
+      public override object UI
+      {
+         get
+         {
+            return _ui;
+         }
       }
    }
 

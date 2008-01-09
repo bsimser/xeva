@@ -3,13 +3,11 @@ using System.ComponentModel;
 
 namespace XEVA.Framework.UI.Smart
 {
-   public interface IWindow
+   public interface IWindow : IWindowController
    {
-      void Show();
-
-      void Hide();
-
       void Close();
+
+      event EventHandler Closed;
 
       void InitializeUI(object ui);
    }
