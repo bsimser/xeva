@@ -170,16 +170,15 @@ namespace Specs_for_Presenter
       protected override void Before_each_spec()
       {
          _presenter = Create<ExampleWindowedPresenter>();
-         _presenterValidator = Mock<IPresenterValidator>(); // this was the problem
-         _presenter.InitializeValidator(_presenterValidator); // and this
+         _presenterValidator = Mock<IPresenterValidator>();
+         _presenter.InitializeValidator(_presenterValidator);
       }
 
       [Test]
-      public void Return_true_if_no_validation_controls_have_been_added()
+      public void Return_true_if_the_target_object_is_valid()
       {
          using (Record)
          {
-            // and you want to use the mock here
             Expect.Call(_presenterValidator.Validate(null, null))
                .IgnoreArguments()
                .Return(true);
@@ -188,6 +187,22 @@ namespace Specs_for_Presenter
          using (Playback)
          {
             Assert.IsTrue(_presenter.Validate(null));
+         }
+      }
+
+      [Test]
+      public void Return_false_if_the_target_object_is_not_valid()
+      {
+         using (Record)
+         {
+            Expect.Call(_presenterValidator.Validate(null, null))
+               .IgnoreArguments()
+               .Return(false);
+         }
+
+         using (Playback)
+         {
+            Assert.IsFalse(_presenter.Validate(null));
          }
       }
    }

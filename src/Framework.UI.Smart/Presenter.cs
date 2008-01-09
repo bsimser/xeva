@@ -32,11 +32,6 @@ namespace XEVA.Framework.UI.Smart
          Start(new NullRequest());
       }
 
-      public IPresenterValidator PresenterValidator
-      {
-         get { return _presenterValidator; }
-      }
-
       public void Start(IRequest request)
       {
          if (_isStarted) return;
