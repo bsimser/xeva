@@ -1,5 +1,7 @@
 using NUnit.Framework;
+using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
+using Rhino.Mocks.Interfaces;
 using XEVA.Framework.Specs;
 using XEVA.Framework.UI.Smart;
 
@@ -197,6 +199,139 @@ namespace Specs_for_Presenter
       public void Throw_an_exception()
       {
          _presenter.Start(new NullRequest());
+      }
+   }
+
+   [TestFixture]
+   public class When_a_presenter_is_displayed_in_a_window : Spec
+   {
+      private ExampleWidgetPresenter _presenter;
+      private IWindow _window;
+      private IRequest _request;
+
+      protected override void Before_each_spec()
+      {
+         _presenter = Create<ExampleWidgetPresenter>();
+         _window = Mock<IWindow>();
+         _request = new Request();
+         _request.SetItem<string>("data", "test");
+      }
+
+      [Test]
+      public void Insert_the_presenter_UI_into_the_window()
+      {
+         using (Record)
+         {
+            _window.InitializeUI(_presenter.UI);
+         }
+         using (Playback)
+         {
+            _presenter.DisplayIn(_window);
+         }
+      }
+
+      [Test, ExpectedException(typeof(NoUserInterfaceObjectException))]
+      public void Throw_an_exception_if_the_window_ui_is_null()
+      {
+         using (Record)
+         {
+            _window.InitializeUI(_presenter.UI);
+         }
+         using (Playback)
+         {
+            _presenter.SetNullWindowUI();
+            _presenter.DisplayIn(_window);
+         }
+      }
+
+      [Test]
+      public void Provide_a_means_of_controlling_the_window_from_the_presenter()
+      {
+         Assert.That(_presenter.Window, Is.TypeOf(typeof(NoWindowControls)));
+         _presenter.DisplayIn(_window);
+         Assert.That(_presenter.Window, Is.Not.TypeOf(typeof(NoWindowControls)));
+      }
+
+      [Test]
+      public void Show_the_window_when_the_presenter_is_started()
+      {
+         using (Record)
+         {
+            _window.Show();
+         }
+         using (Playback)
+         {
+            _presenter.DisplayIn(_window);
+            _presenter.Start(_request);
+         }
+      }
+
+      [Test]
+      public void Stop_tracking_the_window_when_the_presenter_is_closed()
+      {
+         using (Record)
+         {
+            _window.Closed -= null;
+            LastCall.IgnoreArguments();
+         }
+         using (Playback)
+         {
+            Assert.AreEqual(0, _presenter.FinishCount);
+            _presenter.DisplayIn(_window);
+            _presenter.Start(_request);
+            _presenter.Finish();
+         }
+      }
+
+      [Test]
+      public void Close_the_window_when_the_presenter_is_finished()
+      {
+         using (Record)
+         {
+            _window.Close();
+         }
+         using (Playback)
+         {
+            Assert.AreEqual(0, _presenter.FinishCount);
+            _presenter.DisplayIn(_window);
+            _presenter.Start(_request);
+            _presenter.Finish();
+         }
+      }
+
+      [Test]
+      public void Track_when_the_window_is_closed()
+      {
+         using (Record)
+         {
+            _window.Closed += null;
+            LastCall.IgnoreArguments();
+         }
+         using (Playback)
+         {
+           _presenter.DisplayIn(_window);
+         }
+      }
+
+      [Test]
+      public void Finish_the_presenter_when_the_window_is_closed()
+      {
+         IEventRaiser raiser;
+
+         using (Record)
+         {
+            _window.Closed += null;
+            LastCall.IgnoreArguments();
+            raiser = LastCall.GetEventRaiser();
+         }
+         using (Playback)
+         {
+            Assert.AreEqual(0, _presenter.FinishCount);
+            _presenter.DisplayIn(_window);
+            _presenter.Start(_request);
+            raiser.Raise(null, null);
+            Assert.AreEqual(1, _presenter.FinishCount);
+         }
       }
    }
 }

@@ -29,37 +29,7 @@ namespace Specs_for_WindowManager
          }
          using (Playback)
          {
-            _windowManager.Create(_presenter);
-         }
-      }
-
-      [Test]
-      public void Insert_the_presenter_UI_into_the_new_window()
-      {
-         object ui = new object();
-         using (Record)
-         {
-            SetupResult.For(Get<IWindowAdapter>().NewWindow()).Return(_window);
-            SetupResult.For(_presenter.UI).Return(ui);
-            _window.InitializeUI(ui);
-         }
-         using (Playback)
-         {
-            _windowManager.Create(_presenter);
-         }
-      }
-
-      [Test, ExpectedException(typeof(NoUserInterfaceObjectException))]
-      public void Throw_an_error_if_the_presenter_UI_is_null()
-      {
-         using (Record)
-         {
-            SetupResult.For(Get<IWindowAdapter>().NewWindow()).Return(_window);
-            Expect.Call(_presenter.UI).Return(null);
-         }
-         using (Playback)
-         {
-            _windowManager.Create(_presenter);
+            _windowManager.Create();
          }
       }
 

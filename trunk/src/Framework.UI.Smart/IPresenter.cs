@@ -12,6 +12,8 @@ namespace XEVA.Framework.UI.Smart
 
       object UI { get; }
 
+      void DisplayIn(IWindow window);
+
       string Key
       {
          get;
@@ -22,6 +24,11 @@ namespace XEVA.Framework.UI.Smart
       {
          get;
          set;
+      }
+
+      IWindowController Window
+      {
+         get;
       }
    }
 }

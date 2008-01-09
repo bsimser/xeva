@@ -62,10 +62,12 @@
     <Compile Include="IPresenterValidator.cs" />
     <Compile Include="IWindowAdapter.cs" />
     <Compile Include="IWindow.cs" />
+    <Compile Include="IWindowController.cs" />
     <Compile Include="IWindowManager.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="IViewCallbacks.cs" />
     <Compile Include="Exceptions\NoCallbacksImplementationException.cs" />
+    <Compile Include="NoWindowControls.cs" />
     <Compile Include="NullRequest.cs" />
     <Compile Include="Presenter.cs" />
     <Compile Include="IPresenter.cs" />
