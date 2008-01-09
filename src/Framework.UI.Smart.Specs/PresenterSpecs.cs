@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Rhino.Mocks;
 using XEVA.Framework.Specs;
 using XEVA.Framework.UI.Smart;
 
@@ -157,6 +158,37 @@ namespace Specs_for_Presenter
 
          _presenter.Finish();         
          Assert.AreEqual(1, _presenter.FinishCount);
+      }
+   }
+
+   [TestFixture]
+   public class When_validating_an_object_used_in_the_presenter : Spec
+   {
+      private ExampleWindowedPresenter _presenter;
+      private IValidationService _validationService;
+ 
+      protected override void Before_each_spec()
+      {
+         _presenter = Create<ExampleWindowedPresenter>();
+         _validationService = Create<IValidationService>();
+
+         _presenter.InitializeValidationService(Get<IValidationService>());
+      }
+
+      [Test]
+      public void Return_true_if_no_validation_controls_have_been_added()
+      {
+         using (Record)
+         {
+            Expect.Call(Get<IValidationService>().Validate(null, null))
+               .IgnoreArguments()
+               .Return(true);
+         }
+
+         using (Playback)
+         {
+            Assert.IsTrue(_presenter.Validate(null));
+         }
       }
    }
 

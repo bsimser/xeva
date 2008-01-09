@@ -8,6 +8,7 @@ namespace XEVA.Framework.UI.Smart
       where TView : class, IView<TCallbacks>
    {
       private TView _view;
+      private IValidationService _validationService;
       private bool _isStarted = false;
       private bool _isFinished = false;
       private string _key;
@@ -24,6 +25,11 @@ namespace XEVA.Framework.UI.Smart
       {
          get { return _label; }
          set { _label = value; }
+      }
+
+      public IValidationService ValidationService
+      {
+         get { return _validationService; }
       }
 
       public void Start(IRequest request)
@@ -45,6 +51,12 @@ namespace XEVA.Framework.UI.Smart
       }
 
       protected virtual void InitializeRequest(IRequest request) { }
+
+      public virtual void InitializeValidationService(IValidationService validationService)
+      {
+         if (_validationService == null)
+            _validationService = validationService;
+      }
 
       public void Finish()
       {
@@ -86,6 +98,13 @@ namespace XEVA.Framework.UI.Smart
       public void RegisterControl(string property, IControl control)
       {
          _controls.Add(property, control);
+      }
+
+      public bool Validate(object target)
+      {
+         InitializeValidationService(new ValidationService());
+
+         return _validationService.Validate(target, _controls);
       }
 
       private void EvaluateShowWindow()
