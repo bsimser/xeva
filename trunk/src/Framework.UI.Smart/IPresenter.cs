@@ -2,8 +2,10 @@ using System;
 
 namespace XEVA.Framework.UI.Smart
 {
-   public interface IPresenter : IPresenterCallbacks
+   public interface IPresenter : IViewCallbacks
    {
+      void Start();
+
       void Start(IRequest request);
 
       void Finish();

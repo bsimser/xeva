@@ -3,7 +3,7 @@ using XEVA.Framework.Validation;
 
 namespace XEVA.Framework.UI.Smart
 {
-   public class ValidationService : IValidationService
+   public class PresenterValidator : IPresenterValidator
    {
       public virtual bool Validate(object target, Dictionary<string, IControl> controls)
       {

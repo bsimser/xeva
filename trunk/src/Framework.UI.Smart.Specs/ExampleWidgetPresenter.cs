@@ -55,7 +55,7 @@ namespace XEVA.Framework.UI.Smart
    {
    }
 
-   public interface IExampleWidgetCallbacks : IPresenterCallbacks
+   public interface IExampleWidgetCallbacks : IViewCallbacks
    {
    }
 }

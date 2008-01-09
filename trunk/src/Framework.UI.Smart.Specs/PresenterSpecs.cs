@@ -165,14 +165,13 @@ namespace Specs_for_Presenter
    public class When_validating_an_object_used_in_the_presenter : Spec
    {
       private ExampleWindowedPresenter _presenter;
-      private IValidationService _validationService;
+      private IPresenterValidator _presenterValidator;
  
       protected override void Before_each_spec()
       {
          _presenter = Create<ExampleWindowedPresenter>();
-         _validationService = Create<IValidationService>();
-
-         _presenter.InitializeValidationService(Get<IValidationService>());
+         _presenterValidator = Mock<IPresenterValidator>(); // this was the problem
+         _presenter.InitializeValidator(_presenterValidator); // and this
       }
 
       [Test]
@@ -180,7 +179,8 @@ namespace Specs_for_Presenter
       {
          using (Record)
          {
-            Expect.Call(Get<IValidationService>().Validate(null, null))
+            // and you want to use the mock here
+            Expect.Call(_presenterValidator.Validate(null, null))
                .IgnoreArguments()
                .Return(true);
          }
