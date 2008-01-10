@@ -50,11 +50,10 @@ namespace XEVA.Framework
 
       public static void Reset()
       {
-         IWindsorContainer windsorContainer = GlobalContainer;
-         if (windsorContainer != null)
+         if (GlobalContainer != null)
          {
-            windsorContainer.Dispose();
-            windsorContainer = null;
+            GlobalContainer.Dispose();
+            GlobalContainer = null;
          }
       }
 

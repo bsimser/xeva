@@ -203,7 +203,7 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
-   public class When_a_presenter_is_displayed_in_a_window : Spec
+   public class When_a_presenter_displaying_a_presenter_in_a_window : Spec
    {
       private ExampleWidgetPresenter _presenter;
       private IWindow _window;
