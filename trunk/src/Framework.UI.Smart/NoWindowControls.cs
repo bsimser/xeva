@@ -6,6 +6,16 @@ namespace XEVA.Framework.UI.Smart
       {
       }
 
+      public void ShowModal()
+      {
+         
+      }
+
+      public void ShowModal(int width, int height)
+      {
+         
+      }
+
       public void Hide()
       {
       }
