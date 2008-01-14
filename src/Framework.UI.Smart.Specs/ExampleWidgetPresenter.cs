@@ -6,8 +6,7 @@ using Specs_for_Presenter;
 namespace XEVA.Framework.UI.Smart
 {
    public class ExampleWidgetPresenter : 
-      Presenter<IExampleWidgetView, IExampleWidgetCallbacks>, 
-      IExampleWidgetCallbacks
+      Presenter<IExampleWidgetView, IExampleWidgetCallbacks>, IExampleWidgetPresenter
    {
       private int _startCount = 0;
       private int _initializeCount = 0;
