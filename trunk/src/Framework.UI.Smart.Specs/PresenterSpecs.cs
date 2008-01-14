@@ -27,7 +27,6 @@ namespace Specs_for_Presenter
          {
             Get<IExampleWidgetView>().Attach(_presenter);
          }
-
          using (Playback)
          {
             _presenter.Start(_request);
@@ -49,6 +48,7 @@ namespace Specs_for_Presenter
          Assert.AreEqual(1, _presenter.StartCount);
       }
 
+      [Test]
       public void Provide_the_request_to_specific_startup_code()
       {
          Assert.AreEqual(string.Empty, _presenter.RequestDataFromCustomStartup);

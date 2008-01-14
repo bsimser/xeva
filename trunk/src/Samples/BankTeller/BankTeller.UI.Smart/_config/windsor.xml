@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<castle>
+  <components>
+
+    <component
+			id="Presenters.Login"
+			lifestyle="transient"
+      service="BankTeller.UI.Smart.Presenters.ILoginPresenter, BankTeller.UI.Smart"
+      type="BankTeller.UI.Smart.Presenters.LoginPresenter, BankTeller.UI.Smart">
+      <parameters>
+        <Key>Presenter.Login</Key>
+        <Label>Login</Label>
+      </parameters>
+    </component>
+
+    <component
+      id="Views.Login"
+      lifestyle="transient"
+      service="BankTeller.UI.Smart.Presenters.ILoginView, BankTeller.UI.Smart"
+      type="BankTeller.UI.Smart.Views.LoginView, BankTeller.UI.Smart">
+    </component>
+
+    <component
+      id="Services.LabelLookup"
+      lifestyle="singleton"
+      service="BankTeller.UI.Smart.Services.ILabelLookup, BankTeller.UI.Smart"
+      type="BankTeller.UI.Smart.Services.LabelLookup, BankTeller.UI.Smart">
+    </component>
+
+    <component
+      id="Services.Authentication"
+      lifestyle="singleton"
+      service="BankTeller.UI.Smart.Services.IAuthenticationService, BankTeller.UI.Smart"
+      type="BankTeller.UI.Smart.Services.AuthenticationService, BankTeller.UI.Smart">
+    </component>
+
+    <component
+      id="Framework.WindowManager"
+      lifestyle="singleton"
+      service="XEVA.Framework.UI.Smart.IWindowManager, XEVA.Framework.UI.Smart"
+      type="XEVA.Framework.UI.Smart.WindowManager, XEVA.Framework.UI.Smart">
+    </component>
+
+    <component
+      id="Framework.WindowAdapter"
+      lifestyle="singleton"
+      service="XEVA.Framework.UI.Smart.IWindowAdapter, XEVA.Framework.UI.Smart"
+      type="BankTeller.UI.Smart.WindowAdapter, BankTeller.UI.Smart">
+    </component>
+    
+  </components>
+</castle>
