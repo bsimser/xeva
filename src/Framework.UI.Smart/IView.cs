@@ -5,6 +5,9 @@ namespace XEVA.Framework.UI.Smart
       where TCallbacks : IViewCallbacks
    {
       object UI { get; }
+
       void Attach(TCallbacks callback);
+      void Show();
+      void Hide();
    }
 }

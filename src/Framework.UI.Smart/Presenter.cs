@@ -29,6 +29,16 @@ namespace XEVA.Framework.UI.Smart
          set { _label = value; }
       }
 
+      protected bool HasStarted
+      {
+         get { return _isStarted; }
+      }
+
+      protected bool HasFinished
+      {
+         get { return _isFinished; }
+      }
+
       public void Start()
       {
          Start(new NullRequest());

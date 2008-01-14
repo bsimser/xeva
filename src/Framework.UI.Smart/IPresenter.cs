@@ -30,5 +30,6 @@ namespace XEVA.Framework.UI.Smart
       {
          get;
       }
+
    }
 }
