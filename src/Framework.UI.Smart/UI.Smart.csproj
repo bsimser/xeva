@@ -57,13 +57,13 @@
     <Compile Include="Exceptions\MissingRequiredRequestItemException.cs" />
     <Compile Include="Exceptions\NoUserInterfaceObjectException.cs" />
     <Compile Include="Exceptions\ViewNotAvailableException.cs" />
-    <Compile Include="IControl.cs" />
+    <Compile Include="Windows\IControl.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="IPresenterValidator.cs" />
-    <Compile Include="IWindowAdapter.cs" />
-    <Compile Include="IWindow.cs" />
-    <Compile Include="IWindowController.cs" />
-    <Compile Include="IWindowManager.cs" />
+    <Compile Include="Windows\IWindowAdapter.cs" />
+    <Compile Include="Windows\IWindow.cs" />
+    <Compile Include="Windows\IWindowController.cs" />
+    <Compile Include="Windows\IWindowManager.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="IViewCallbacks.cs" />
     <Compile Include="Exceptions\NoCallbacksImplementationException.cs" />
@@ -75,7 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="PresenterValidator.cs" />
-    <Compile Include="WindowManager.cs" />
+    <Compile Include="Windows\WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">

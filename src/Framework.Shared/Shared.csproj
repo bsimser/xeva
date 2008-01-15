@@ -56,7 +56,6 @@
     <Compile Include="Validation\NotEmptyAttribute.cs" />
     <Compile Include="Validation\IValidationAware.cs" />
     <Compile Include="Validation\EmailFormatAttribute.cs" />
-    <Compile Include="Validation\INotificationAware.cs" />
     <Compile Include="Validation\ISelfValidator.cs" />
     <Compile Include="Validation\IValidator.cs" />
     <Compile Include="Validation\MinimumLengthAttribute.cs" />
