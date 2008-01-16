@@ -1,6 +1,6 @@
 using System;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public class ViewNotAvailableException : Exception
    {

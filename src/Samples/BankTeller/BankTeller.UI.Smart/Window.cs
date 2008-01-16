@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using XEVA.Framework.UI.Smart;
+using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart
 {

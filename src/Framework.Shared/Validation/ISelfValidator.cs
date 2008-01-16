@@ -1,6 +1,6 @@
-using XEVA.Framework.Validation;
+using XF.Validation;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    public interface ISelfValidator
    {

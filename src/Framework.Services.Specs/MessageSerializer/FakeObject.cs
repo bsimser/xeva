@@ -1,6 +1,6 @@
 using System;
 
-namespace XEVA.Framework.Services
+namespace XF.Services
 {
    [Serializable]
    public class FakeObject

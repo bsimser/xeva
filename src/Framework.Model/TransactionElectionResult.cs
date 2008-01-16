@@ -1,4 +1,4 @@
-namespace XEVA.Framework.Model.UnitOfWorkImpl
+namespace XF.Model.UnitOfWorkImpl
 {
    public enum TransactionElectionResult
    {

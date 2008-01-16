@@ -1,6 +1,6 @@
 using System;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    [Serializable]
    public class ValidatonError

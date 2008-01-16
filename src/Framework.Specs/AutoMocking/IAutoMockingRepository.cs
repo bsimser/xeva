@@ -2,7 +2,7 @@ using System;
 using Castle.MicroKernel;
 using Rhino.Mocks;
 
-namespace XEVA.Framework.Specs.AutoMocking
+namespace XF.Specs.AutoMocking
 {
     public interface IAutoMockingRepository
     {

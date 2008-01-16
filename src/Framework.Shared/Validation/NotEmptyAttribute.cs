@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
-using XEVA.Framework.Validation;
+using XF.Validation;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    public class NotEmptyAttribute : ValidationAttribute
    {

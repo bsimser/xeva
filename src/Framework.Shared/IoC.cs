@@ -3,7 +3,7 @@ using Castle.MicroKernel;
 using Castle.Windsor;
 // ayende credit
 
-namespace XEVA.Framework
+namespace XF
 {
    public static class IoC
    {

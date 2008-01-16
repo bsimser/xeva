@@ -1,7 +1,7 @@
 using System;
-using XEVA.Framework.Validation;
+using XF.Validation;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public abstract class Entity : IEntity, ISelfValidator
    {

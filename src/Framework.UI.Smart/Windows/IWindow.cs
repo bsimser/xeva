@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public interface IWindow : IWindowController
    {

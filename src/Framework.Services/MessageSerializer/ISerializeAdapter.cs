@@ -1,6 +1,6 @@
 using System;
 
-namespace XEVA.Framework.Services
+namespace XF.Services
 {
    public interface ISerializeAdapter
    {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace XEVA.Framework.Model.UnitOfWorkImpl
+namespace XF.Model.UnitOfWorkImpl
 {
    [Serializable]
    public class TransactionElection : ITransaction

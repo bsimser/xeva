@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public class BindingFilterExpression
    {

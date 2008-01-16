@@ -1,7 +1,7 @@
 using System;
 using Castle.MicroKernel;
 
-namespace XEVA.Framework.Specs.AutoMocking
+namespace XF.Specs.AutoMocking
 {
     public class NonMockedStrategy : AbstractMockingStrategy
     {

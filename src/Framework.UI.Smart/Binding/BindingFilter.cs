@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public class BindingFilter<FilteredType> : IBindingFilter<FilteredType>
    {

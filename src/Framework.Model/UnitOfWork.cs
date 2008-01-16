@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using XEVA.Framework.Model.UnitOfWorkImpl;
+using XF.Model.UnitOfWorkImpl;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public static class UnitOfWork
    {

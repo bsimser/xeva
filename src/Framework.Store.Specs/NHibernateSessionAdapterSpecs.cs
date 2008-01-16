@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using NHibernate;
 using NUnit.Framework;
 using Rhino.Mocks;
-using XEVA.Framework.Model;
-using XEVA.Framework.Specs;
+using XF.Model;
+using XF.Specs;
 using ITransaction=NHibernate.ITransaction;
 
-namespace XEVA.Framework.Store
+namespace XF.Store
 {
    [TestFixture]
    public class When_saving_an_entity : Spec

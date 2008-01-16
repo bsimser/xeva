@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Castle.Windsor;
-using XEVA.Framework;
+using XF;
 
 namespace BankTeller.UI.Smart
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public interface ITransaction : IDisposable
    {

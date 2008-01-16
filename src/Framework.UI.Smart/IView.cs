@@ -1,5 +1,5 @@
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public interface IView<TCallbacks> 
       where TCallbacks : IViewCallbacks

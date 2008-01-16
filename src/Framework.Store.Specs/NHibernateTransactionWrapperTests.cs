@@ -2,7 +2,7 @@ using NHibernate;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace XEVA.Framework.Store
+namespace XF.Store
 {
    [TestFixture]
    public class NHibernateTransactionWrapperTests

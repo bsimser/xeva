@@ -2,7 +2,7 @@ using Castle.Core;
 using Castle.Core.Configuration;
 using Castle.MicroKernel;
 
-namespace XEVA.Framework.Specs.AutoMocking
+namespace XF.Specs.AutoMocking
 {
     public class AutoMockingFacility : IFacility
     {

@@ -2,8 +2,8 @@ using BankTeller.UI.Smart.Presenters;
 using BankTeller.UI.Smart.Services;
 using NUnit.Framework;
 using Rhino.Mocks;
-using XEVA.Framework.Specs;
-using XEVA.Framework.UI.Smart;
+using XF.Specs;
+using XF.UI.Smart;
 
 namespace Specs_for_LoginPresenter
 {

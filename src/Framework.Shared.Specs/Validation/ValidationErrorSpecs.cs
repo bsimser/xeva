@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using XEVA.Framework.Specs;
-using XEVA.Framework.Validation;
+using XF.Specs;
+using XF.Validation;
 
 namespace Specs_for_ValidationError
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    [AttributeUsage(AttributeTargets.Property)]
    public class RequiredAttribute : ValidationAttribute

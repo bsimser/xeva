@@ -1,6 +1,6 @@
-using XEVA.Framework.Model;
+using XF.Model;
 
-namespace XEVA.Framework.Store
+namespace XF.Store
 {
    public class FakeNamedQuery : NamedQuery
    {

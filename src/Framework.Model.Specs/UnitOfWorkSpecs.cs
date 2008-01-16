@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 using Rhino.Mocks;
-using XEVA.Framework.Specs;
+using XF.Specs;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
 
    [TestFixture]

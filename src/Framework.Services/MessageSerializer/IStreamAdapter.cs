@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace XEVA.Framework.Services
+namespace XF.Services
 {
    public interface IStreamAdapter
    {

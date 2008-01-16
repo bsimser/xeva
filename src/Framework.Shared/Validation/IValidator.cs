@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    public interface IValidator
    {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using XEVA.Framework.Model;
+using XF.Model;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    /// <summary>
    /// Abstract representation of storage, retrieval, caching, etc. of 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    public class Validator : IValidator
    {

@@ -1,8 +1,8 @@
 using System;
-using XEVA.Framework.Model;
+using XF.Model;
 using NHTransaction = NHibernate.ITransaction;
 
-namespace XEVA.Framework.Store
+namespace XF.Store
 {
    /// <summary>
    /// An adapter to an underlying NHibernate ITransaction

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using XEVA.Framework.UI.Smart;
+using XF.UI.Smart;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public abstract class Presenter<TView, TCallbacks> : IPresenter
       where TCallbacks : class, IViewCallbacks

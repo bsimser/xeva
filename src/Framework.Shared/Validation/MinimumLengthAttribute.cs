@@ -1,6 +1,6 @@
 using System;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    public class MinimumLengthAttribute : ValidationAttribute
    {

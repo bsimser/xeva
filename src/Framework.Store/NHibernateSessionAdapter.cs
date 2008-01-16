@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using NHibernate;
 using NHibernate.Expression;
-using XEVA.Framework.Model;
-using ITransaction=XEVA.Framework.Model.ITransaction;
+using XF.Model;
+using ITransaction=XF.Model.ITransaction;
 using NHQuery = NHibernate.IQuery;
 using NHSessionFactory = NHibernate.ISessionFactory;
 using NHTransaction = NHibernate.ITransaction;
@@ -12,7 +12,7 @@ using NHSession = NHibernate.ISession;
 using NHUnresolvableObjectException = NHibernate.UnresolvableObjectException;
 using NHFlushMode = NHibernate.FlushMode;
 
-namespace XEVA.Framework.Store
+namespace XF.Store
 {
    public class NHibernateSessionAdapter : IStore
    {
