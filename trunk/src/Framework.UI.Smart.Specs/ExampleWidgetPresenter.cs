@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Specs_for_Presenter;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public class ExampleWidgetPresenter : 
       Presenter<IExampleWidgetView, IExampleWidgetCallbacks>, IExampleWidgetPresenter

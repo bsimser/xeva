@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace XEVA.Framework.Specs.AutoMocking
+namespace XF.Specs.AutoMocking
 {
     public class TypeMarker
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public class Link
    {

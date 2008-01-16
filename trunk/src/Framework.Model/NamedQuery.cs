@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public class NamedQuery : INamedQuery
    {

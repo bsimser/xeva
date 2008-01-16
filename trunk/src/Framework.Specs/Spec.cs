@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 using Rhino.Mocks;
-using XEVA.Framework.Specs.AutoMocking;
+using XF.Specs.AutoMocking;
 
-namespace XEVA.Framework.Specs
+namespace XF.Specs
 {
    [TestFixture]
    public class Spec

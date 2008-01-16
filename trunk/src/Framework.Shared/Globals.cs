@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Web;
 
-namespace XEVA.Framework
+namespace XF
 {
 
    /// <summary>

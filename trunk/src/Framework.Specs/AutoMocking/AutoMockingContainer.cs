@@ -6,7 +6,7 @@ using Castle.MicroKernel.SubSystems.Naming;
 using Castle.Windsor;
 using Rhino.Mocks;
 
-namespace XEVA.Framework.Specs.AutoMocking
+namespace XF.Specs.AutoMocking
 {
     public class AutoMockingContainer : WindsorContainer, IAutoMockingRepository, IGenericMockingRepository
     {

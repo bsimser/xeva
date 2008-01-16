@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    public class MatchPatternAttribute : ValidationAttribute
    {

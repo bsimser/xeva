@@ -2,8 +2,8 @@ using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
 using Rhino.Mocks.Interfaces;
-using XEVA.Framework.Specs;
-using XEVA.Framework.UI.Smart;
+using XF.Specs;
+using XF.UI.Smart;
 
 namespace Specs_for_Presenter
 {

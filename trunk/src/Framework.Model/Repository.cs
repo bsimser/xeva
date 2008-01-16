@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using XEVA.Framework.Model;
+using XF.Model;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public abstract class Repository<TEntity> : IRepository<TEntity>
       where TEntity : Entity, new()

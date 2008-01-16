@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace XEVA.Framework.Services
+namespace XF.Services
 {
    [TestFixture]
    public class MessageSerializerFactoryTests

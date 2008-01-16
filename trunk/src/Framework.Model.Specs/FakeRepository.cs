@@ -1,6 +1,6 @@
-using XEVA.Framework.Model;
+using XF.Model;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public class FakeRepository : Repository<FakeEntity>
    {

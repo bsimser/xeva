@@ -1,4 +1,4 @@
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public interface IWindowController
    {

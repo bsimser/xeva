@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public class EntityNotFoundException : Exception
    {

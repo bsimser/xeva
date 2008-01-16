@@ -2,7 +2,7 @@ using Castle.Core;
 using Castle.MicroKernel;
 using Castle.MicroKernel.SubSystems.Naming;
 
-namespace XEVA.Framework.Specs.AutoMocking
+namespace XF.Specs.AutoMocking
 {
     public class AutoMockingDependencyResolver : ISubDependencyResolver
     {

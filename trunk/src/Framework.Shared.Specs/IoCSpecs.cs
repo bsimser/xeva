@@ -1,8 +1,8 @@
 using System;
 using Castle.Windsor;
 using NUnit.Framework;
-using XEVA.Framework;
-using XEVA.Framework.Specs;
+using XF;
+using XF.Specs;
 
 namespace Specs_for_IoC
 {

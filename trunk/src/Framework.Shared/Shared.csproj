@@ -7,8 +7,8 @@
     <ProjectGuid>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XEVA.Framework</RootNamespace>
-    <AssemblyName>XEVA.Framework.Shared</AssemblyName>
+    <RootNamespace>XF</RootNamespace>
+    <AssemblyName>XF.Shared</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

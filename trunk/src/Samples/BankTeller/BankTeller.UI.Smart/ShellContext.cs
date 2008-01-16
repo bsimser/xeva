@@ -1,8 +1,8 @@
 using System.Windows.Forms;
 using BankTeller.UI.Smart.Presenters;
 using Castle.Windsor;
-using XEVA.Framework;
-using XEVA.Framework.UI.Smart;
+using XF;
+using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart
 {

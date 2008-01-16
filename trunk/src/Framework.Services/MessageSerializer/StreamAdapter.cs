@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace XEVA.Framework.Services
+namespace XF.Services
 {
    public class StreamAdapter : IStreamAdapter
    {

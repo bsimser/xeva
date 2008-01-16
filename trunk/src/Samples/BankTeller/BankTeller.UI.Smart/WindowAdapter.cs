@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using XEVA.Framework.UI.Smart;
+using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart
 {

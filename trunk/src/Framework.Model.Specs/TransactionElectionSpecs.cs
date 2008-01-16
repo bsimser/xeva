@@ -1,9 +1,9 @@
 using System;
 using NUnit.Framework;
 using Rhino.Mocks;
-using XEVA.Framework.Model.UnitOfWorkImpl;
-using XEVA.Framework.Specs;
-using XEVA.Framework.Model;
+using XF.Model.UnitOfWorkImpl;
+using XF.Specs;
+using XF.Model;
 
 namespace Specs_for_TransactionElection
 {

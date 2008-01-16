@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Rhino.Mocks;
-using XEVA.Framework.Model;
-using XEVA.Framework.Specs;
+using XF.Model;
+using XF.Specs;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    [TestFixture]
    public class When_finding_an_individual_entity_by_ID : Spec

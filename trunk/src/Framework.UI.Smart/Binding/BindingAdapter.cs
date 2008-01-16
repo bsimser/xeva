@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public class BindingAdapter<BindingType> : BindingList<BindingType>, IBindingListView, IRaiseItemChangedEvents
    {

@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 
-namespace XEVA.Framework.Validation
+namespace XF.Validation
 {
    [AttributeUsage(AttributeTargets.Property)]
    public abstract class ValidationAttribute : Attribute

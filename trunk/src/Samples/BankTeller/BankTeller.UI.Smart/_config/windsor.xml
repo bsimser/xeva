@@ -37,14 +37,14 @@
     <component
       id="Framework.WindowManager"
       lifestyle="singleton"
-      service="XEVA.Framework.UI.Smart.IWindowManager, XEVA.Framework.UI.Smart"
-      type="XEVA.Framework.UI.Smart.WindowManager, XEVA.Framework.UI.Smart">
+      service="XF.UI.Smart.IWindowManager, XF.UI.Smart"
+      type="XF.UI.Smart.WindowManager, XF.UI.Smart">
     </component>
 
     <component
       id="Framework.WindowAdapter"
       lifestyle="singleton"
-      service="XEVA.Framework.UI.Smart.IWindowAdapter, XEVA.Framework.UI.Smart"
+      service="XF.UI.Smart.IWindowAdapter, XF.UI.Smart"
       type="BankTeller.UI.Smart.WindowAdapter, BankTeller.UI.Smart">
     </component>
     

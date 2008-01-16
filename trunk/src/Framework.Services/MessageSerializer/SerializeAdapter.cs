@@ -1,7 +1,7 @@
 using System;
 using System.Xml.Serialization;
 
-namespace XEVA.Framework.Services
+namespace XF.Services
 {
    public class SerializeAdapter : ISerializeAdapter
    {

@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    [TestFixture]
    public class BindingFilterTests

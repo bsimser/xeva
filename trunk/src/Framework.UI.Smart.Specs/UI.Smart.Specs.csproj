@@ -7,8 +7,8 @@
     <ProjectGuid>{66F0ECDF-F389-4CA8-84C1-91E9BE980314}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XEVA.Framework.UI.Smart</RootNamespace>
-    <AssemblyName>XEVA.Framework.UI.Smart.Specs</AssemblyName>
+    <RootNamespace>XF.UI.Smart</RootNamespace>
+    <AssemblyName>XF.UI.Smart.Specs</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

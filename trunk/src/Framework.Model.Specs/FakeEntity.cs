@@ -1,7 +1,7 @@
 using System;
-using XEVA.Framework.Model;
+using XF.Model;
 
-namespace XEVA.Framework.Model
+namespace XF.Model
 {
    public class FakeEntity : Entity
    {

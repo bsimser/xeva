@@ -1,6 +1,6 @@
-using XEVA.Framework.Validation;
+using XF.Validation;
 
-namespace XEVA.Framework.UI.Smart
+namespace XF.UI.Smart
 {
    public interface IControl : IValidationAware
    {

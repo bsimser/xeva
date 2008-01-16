@@ -1,5 +1,5 @@
 using BankTeller.UI.Smart.Services;
-using XEVA.Framework.UI.Smart;
+using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart.Presenters
 {
