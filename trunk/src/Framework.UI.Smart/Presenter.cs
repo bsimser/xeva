@@ -84,6 +84,7 @@ namespace XF.UI.Smart
             _window.Closed -= OnWindowClosed;
             _window.Close();
          }
+         _window = null;
          CustomFinish();
          _isFinished = true;
       }
