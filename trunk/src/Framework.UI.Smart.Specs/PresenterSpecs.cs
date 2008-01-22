@@ -17,7 +17,7 @@ namespace Specs_for_Presenter
       {
          _presenter = Create<ExampleWidgetPresenter>();
          _request = new Request();
-         _request.SetItem<string>("data", "test");
+         _request.SetItem("data", "test");
       }
 
       [Test]
@@ -62,7 +62,7 @@ namespace Specs_for_Presenter
          Assert.AreEqual(1, _presenter.InitializeCount);
       }
 
-      [Test, ExpectedException(typeof(MissingRequiredRequestItemException))]
+      [Test, ExpectedException(typeof(RequestItemRequiredException))]
       public void Throw_an_exception_if_data_is_missing_from_the_request()
       {
          Request invalidRequest = new Request();
@@ -81,7 +81,7 @@ namespace Specs_for_Presenter
          _presenter = Create<ExampleWidgetPresenter>();
          
          _request = new Request();
-         _request.SetItem<string>("data", "test");
+         _request.SetItem("data", "test");
 
          _presenter.Start(_request);
       }
@@ -105,7 +105,7 @@ namespace Specs_for_Presenter
          _presenter = Create<ExampleWidgetPresenter>();
 
          _request = new Request();
-         _request.SetItem<string>("data", "test");
+         _request.SetItem("data", "test");
       }
 
       [Test]
@@ -214,7 +214,7 @@ namespace Specs_for_Presenter
          _presenter = Create<ExampleWidgetPresenter>();
          _window = Mock<IWindow>();
          _request = new Request();
-         _request.SetItem<string>("data", "test");
+         _request.SetItem("data", "test");
       }
 
       [Test]
