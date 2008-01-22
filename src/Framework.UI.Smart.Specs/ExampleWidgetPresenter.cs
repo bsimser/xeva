@@ -16,7 +16,7 @@ namespace XF.UI.Smart
 
       protected override void InitializeRequest(IRequest request)
       {
-         _requestData = request.GetItem<string>("data", string.Empty, true);
+         _requestData = request.GetRequiredItem<string>("data", string.Empty);
          _initializeCount += 1;
       }
 

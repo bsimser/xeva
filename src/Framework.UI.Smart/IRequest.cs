@@ -4,10 +4,16 @@ namespace XF.UI.Smart
    {
       bool IsNull { get; }
 
-      T GetItem<T>(string key, T empty);
+      T GetOptionalItem<T>(string key, T defaultValue);
 
-      T GetItem<T>(string key, T empty, bool required);
+      T GetOptionalItem<T>(T defaultValue);
+      
+      T GetRequiredItem<T>(string key, T emptyValue);
 
-      void SetItem<T>(string key, T value);
+      T GetRequiredItem<T>(T emptyValue);
+
+      void SetItem(string key, object value);
+
+      void SetItem(object value);
    }
 }

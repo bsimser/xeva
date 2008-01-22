@@ -46,7 +46,7 @@ namespace XF.UI.Smart
 
       public void Start(IRequest request)
       {
-         if (_isStarted) return;
+         if (HasStarted) return;
          if (View == null) throw new ViewNotAvailableException();
          
          InitializeRequest(request);
@@ -77,8 +77,8 @@ namespace XF.UI.Smart
 
       private void Finish(bool windowInitiated)
       {
-         if (!_isStarted) return;
-         if (_isFinished) return;
+         if (!HasStarted) return;
+         if (HasFinished) return;
          if (!windowInitiated && (_window != null))
          {
             _window.Closed -= OnWindowClosed;
