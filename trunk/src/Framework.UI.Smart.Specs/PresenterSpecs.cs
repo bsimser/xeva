@@ -140,7 +140,7 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
-   public class When_validating_an_object_used_in_the_presenter : Spec
+   public class When_validating_data_used_in_the_presenter : Spec
    {
       private ExampleWidgetPresenter _presenter;
       private IPresenterValidator _presenterValidator;
@@ -186,7 +186,7 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
-   public class When_starting_a_presenter_without_a_view_callback_implementation : Spec
+   public class When_starting_a_presenter_that_does_not_implement_a_view_callback : Spec
    {
       private ExampleInvalidPresenter _presenter;
 
@@ -203,7 +203,7 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
-   public class When_a_presenter_displaying_a_presenter_in_a_window : Spec
+   public class When_a_presenter_is_displayed_in_a_window : Spec
    {
       private ExampleWidgetPresenter _presenter;
       private IWindow _window;
@@ -253,21 +253,7 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Show_the_window_when_the_presenter_is_started()
-      {
-         using (Record)
-         {
-            _window.Show();
-         }
-         using (Playback)
-         {
-            _presenter.DisplayIn(_window);
-            _presenter.Start(_request);
-         }
-      }
-
-      [Test]
-      public void Stop_tracking_the_window_when_the_presenter_is_closed()
+      public void Stop_tracking_window_closure_when_the_presenter_is_closed()
       {
          using (Record)
          {
