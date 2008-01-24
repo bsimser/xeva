@@ -57,6 +57,8 @@ namespace XF.UI.Smart
          View.Attach(callbacks);
          CustomStart();
 
+         Window.Show();
+
          _isStarted = true;
       }
 
@@ -110,7 +112,8 @@ namespace XF.UI.Smart
          if (this.UI == null) throw new NoUserInterfaceObjectException();
          _window = window;
          _window.InitializeUI(this.UI);
-         window.Closed += OnWindowClosed;
+         _window.Closed += OnWindowClosed;
+         if (HasStarted) _window.Show();
       }
 
       public IWindowController Window

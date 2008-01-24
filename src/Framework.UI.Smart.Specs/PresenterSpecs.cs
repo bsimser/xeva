@@ -41,7 +41,7 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Call_specific_startup_code()
+      public void Call_custom_startup_code()
       {
          Assert.AreEqual(0, _presenter.StartCount);
          _presenter.Start(_request);
@@ -49,9 +49,10 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Provide_the_request_to_specific_startup_code()
+      public void Only_start_once()
       {
-         Assert.AreEqual(string.Empty, _presenter.RequestDataFromCustomStartup);
+         _presenter.Start(new NullRequest());
+         Assert.AreEqual(1, _presenter.StartCount);
       }
 
       [Test]
@@ -67,30 +68,6 @@ namespace Specs_for_Presenter
       {
          Request invalidRequest = new Request();
          _presenter.Start(invalidRequest);
-      }
-   }
-
-   [TestFixture]
-   public class When_starting_an_already_started_presenter : Spec
-   {
-      private ExampleWidgetPresenter _presenter;
-      private IRequest _request;
-
-      protected override void Before_each_spec()
-      {
-         _presenter = Create<ExampleWidgetPresenter>();
-         
-         _request = new Request();
-         _request.SetItem("data", "test");
-
-         _presenter.Start(_request);
-      }
-
-      [Test]
-      public void Ensure_the_presenter_is_only_started_once()
-      {
-         _presenter.Start(new NullRequest());
-         Assert.AreEqual(1, _presenter.StartCount);
       }
    }
 
@@ -126,7 +103,7 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Do_not_finished_if_previously_finished()
+      public void Only_finish_once()
       {
          _presenter.Start(_request);
          Assert.AreEqual(0, _presenter.FinishCount);
@@ -153,7 +130,7 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Return_true_if_the_target_object_is_valid()
+      public void Return_true_if_the_data_is_valid()
       {
          using (Record)
          {
@@ -169,7 +146,7 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Return_false_if_the_target_object_is_not_valid()
+      public void Return_false_if_the_data_is_not_valid()
       {
          using (Record)
          {
@@ -317,6 +294,48 @@ namespace Specs_for_Presenter
             _presenter.Start(_request);
             raiser.Raise(null, null);
             Assert.AreEqual(1, _presenter.FinishCount);
+         }
+      }
+
+      [Test]
+      public void Show_the_window_if_the_presenter_has_started()
+      {
+         using (Record)
+         {
+            _window.Show();
+         }
+         using (Playback)
+         {
+            _presenter.Start();
+            _presenter.DisplayIn(_window);
+         }
+      }
+
+      [Test]
+      public void Do_not_show_the_window_if_the_presenter_has_not_started()
+      {
+         using (Record)
+         {
+            _window.Show();
+            LastCall.Repeat.Never();
+         }
+         using (Playback)
+         {
+            _presenter.DisplayIn(_window);
+         }
+      }
+
+      [Test]
+      public void Show_an_existing_window_after_the_presenter_has_started()
+      {
+         using (Record)
+         {
+            _window.Show();
+         }
+         using (Playback)
+         {
+            _presenter.DisplayIn(_window);
+            _presenter.Start();
          }
       }
    }
