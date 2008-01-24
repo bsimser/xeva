@@ -57,8 +57,6 @@ namespace XF.UI.Smart
          View.Attach(callbacks);
          CustomStart();
 
-         Window.Show();
-
          _isStarted = true;
       }
 
