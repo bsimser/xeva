@@ -1,3 +1,4 @@
+using System.Drawing;
 using NUnit.Framework;
 using Rhino.Mocks;
 using XF.Specs;
@@ -10,13 +11,13 @@ namespace Specs_for_WindowManager
    {
       private WindowManager _windowManager;
       private IPresenter _presenter;
-      private IWindow _window;
+      private IWindowAdapter _windowAdapter;
 
       protected override void Before_each_spec()
       {
          _windowManager = Create<WindowManager>();
          _presenter = Mock<IPresenter>();
-         _window = Mock<IWindow>();
+         _windowAdapter = Mock<IWindowAdapter>();
       }
 
       [Test]
@@ -25,11 +26,26 @@ namespace Specs_for_WindowManager
          using (Record)
          {
             SetupResult.For(_presenter.UI).Return(new object());
-            Expect.Call(Get<IWindowAdapter>().NewWindow()).Return(_window);
+            Expect.Call(Get<IWindowFactory>().Create()).Return(_windowAdapter);
          }
          using (Playback)
          {
             _windowManager.Create();
+         }
+      }
+
+      [Test]
+      public void Apply_window_options_to_the_window()
+      {
+         WindowOptions options = Mock<WindowOptions>();
+         using (Record)
+         {
+            SetupResult.For(Get<IWindowFactory>().Create()).Return(_windowAdapter);
+            options.ApplyOptionsTo(_windowAdapter);
+         }
+         using (Playback)
+         {
+            _windowManager.Create(options);
          }
       }
 

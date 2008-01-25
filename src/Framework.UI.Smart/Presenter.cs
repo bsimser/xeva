@@ -15,7 +15,7 @@ namespace XF.UI.Smart
       private string _key;
       private string _label;
       private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
-      private IWindow _window;
+      private IWindowAdapter _windowAdapter;
 
       public string Key
       {
@@ -79,12 +79,12 @@ namespace XF.UI.Smart
       {
          if (!HasStarted) return;
          if (HasFinished) return;
-         if (!windowInitiated && (_window != null))
+         if (!windowInitiated && (_windowAdapter != null))
          {
-            _window.Closed -= OnWindowClosed;
-            _window.Close();
+            _windowAdapter.Closed -= OnWindowClosed;
+            _windowAdapter.Close();
          }
-         _window = null;
+         _windowAdapter = null;
          CustomFinish();
          _isFinished = true;
       }
@@ -107,20 +107,20 @@ namespace XF.UI.Smart
       {
       }
 
-      public void DisplayIn(IWindow window)
+      public void DisplayIn(IWindowAdapter windowAdapter)
       {
          if (this.UI == null) throw new NoUserInterfaceObjectException();
-         _window = window;
-         _window.InitializeUI(this.UI);
-         _window.Closed += OnWindowClosed;
-         if (HasStarted) _window.Show();
+         _windowAdapter = windowAdapter;
+         _windowAdapter.InitializeUI(this.UI);
+         _windowAdapter.Closed += OnWindowClosed;
+         if (HasStarted) _windowAdapter.Show();
       }
 
       public IWindowController Window
       {
          get
          {
-            return (IWindowController)_window ?? new NoWindowControls();
+            return (IWindowController)_windowAdapter ?? new NoWindowControls();
          }
       }
 

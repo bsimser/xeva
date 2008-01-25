@@ -5,7 +5,7 @@ using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart
 {
-   public partial class Window : Form, IWindow
+   public partial class Window : Form
    {
       public Window()
       {
@@ -22,20 +22,5 @@ namespace BankTeller.UI.Smart
          control.Dock = DockStyle.Fill;
       }
 
-      public void ShowModal()
-      {
-         ShowDialog();
-      }
-
-      public void ShowModal(int width, int height)
-      {
-         Size = new Size(width, height);
-         ShowDialog();
-      }
-
-      public void ChangeCaption(string caption)
-      {
-         Text = caption;
-      }
    }
 }

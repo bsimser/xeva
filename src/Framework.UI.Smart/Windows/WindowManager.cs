@@ -4,16 +4,23 @@ namespace XF.UI.Smart
 {
    public class WindowManager : IWindowManager
    {
-      private readonly IWindowAdapter _windowAdapter;
+      private readonly IWindowFactory _windowFactory;
 
-      public WindowManager(IWindowAdapter windowAdapter)
+      public WindowManager(IWindowFactory windowFactory)
       {
-         _windowAdapter = windowAdapter;
+         _windowFactory = windowFactory;
       }
 
-      public IWindow Create()
+      public IWindowAdapter Create()
       {
-         return _windowAdapter.NewWindow();
+         return _windowFactory.Create();
+      }
+
+      public IWindowAdapter Create(WindowOptions options)
+      {
+         IWindowAdapter result = Create();
+         options.ApplyOptionsTo(result);
+         return result;
       }
    }
 }

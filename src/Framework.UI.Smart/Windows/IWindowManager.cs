@@ -2,6 +2,7 @@ namespace XF.UI.Smart
 {
    public interface IWindowManager
    {
-      IWindow Create();
+      IWindowAdapter Create();
+      IWindowAdapter Create(WindowOptions options);
    }
 }
