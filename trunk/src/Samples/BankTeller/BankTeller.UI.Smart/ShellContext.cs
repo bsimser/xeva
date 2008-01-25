@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Forms;
 using BankTeller.UI.Smart.Presenters;
 using Castle.Windsor;
@@ -18,10 +19,17 @@ namespace BankTeller.UI.Smart
          _loginPresenter = IoC.Resolve<ILoginPresenter>();
          _windowManager = IoC.Resolve<IWindowManager>();
 
-         _loginPresenter.DisplayIn(_windowManager.Create());
+         IWindowAdapter windowAdapter = _windowManager.Create(new WindowOptions(true, 400, 300));
+         windowAdapter.Closed += OnWindowAdapterClosed;
+
+         _loginPresenter.DisplayIn(windowAdapter);
          _loginPresenter.Start();
       }
 
+      private void OnWindowAdapterClosed(object sender, EventArgs e)
+      {
+         Application.Exit();
+      }
 
       private void InitializeContainer()
       {

@@ -1,7 +1,14 @@
+using System;
+using System.ComponentModel;
+
 namespace XF.UI.Smart
 {
-   public interface IWindowAdapter
+   public interface IWindowAdapter : IWindowController, IWindowOptions
    {
-      IWindow NewWindow();
+      void Close();
+
+      event EventHandler Closed;
+
+      void InitializeUI(object ui);
    }
 }

@@ -12,7 +12,7 @@ namespace XF.UI.Smart
 
       object UI { get; }
 
-      void DisplayIn(IWindow window);
+      void DisplayIn(IWindowAdapter windowAdapter);
 
       string Key
       {

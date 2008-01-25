@@ -44,8 +44,8 @@
     <component
       id="Framework.WindowAdapter"
       lifestyle="singleton"
-      service="XF.UI.Smart.IWindowAdapter, XF.UI.Smart"
-      type="BankTeller.UI.Smart.WindowAdapter, BankTeller.UI.Smart">
+      service="XF.UI.Smart.IWindowFactory, XF.UI.Smart"
+      type="BankTeller.UI.Smart.WindowFactory, BankTeller.UI.Smart">
     </component>
     
   </components>
