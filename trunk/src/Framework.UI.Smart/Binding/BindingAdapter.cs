@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using DynamicComparer;
 
 namespace XF.UI.Smart
 {
@@ -36,7 +37,7 @@ namespace XF.UI.Smart
 
       public bool SupportsAdvancedSorting
       {
-         get { return false; }
+         get { return true; }
       }
 
       public bool SupportsFiltering
@@ -69,7 +70,24 @@ namespace XF.UI.Smart
 
       public void ApplySort(ListSortDescriptionCollection sorts)
       {
+         string sort = string.Empty;
+         foreach (ListSortDescription sortDescription in sorts)
+         {
+            sort += sortDescription.PropertyDescriptor.Name + " " + 
+               (sortDescription.SortDirection.ToString() == "Descending" ? "DESC" : "ASC") + ",";
+         }
 
+         List<BindingType> sortedList = new List<BindingType>(base.Items);
+         DynamicComparer<BindingType> comparer = new DynamicComparer<BindingType>(sort.TrimEnd(','));
+         sortedList.Sort(comparer);
+
+         _internalList = sortedList;
+
+         Clear();
+         foreach (BindingType type in _internalList)
+         {
+            base.Items.Add(type);
+         }
       }
 
       public void RemoveFilter()
