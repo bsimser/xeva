@@ -7,11 +7,13 @@ namespace XF.Services
       bool IsOpen { get; }
       Stream Stream { get; }
 
-      string Read();
+      string ReadString();
+      byte[] ReadBinary();
 
       void Close();
 
-      void Write(string xmlDocument);
+      void WriteString(string xmlArgument);
+      void WriteBinary(byte[] binaryArgument);
 
       void Initialize();
    }

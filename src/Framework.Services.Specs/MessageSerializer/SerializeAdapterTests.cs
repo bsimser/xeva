@@ -19,7 +19,7 @@ namespace XF.Services
       [Test]
       public void Should_be_able_to_initialize_an_SerializeAdapter_with_a_given_type()
       {
-         ISerializeAdapter theUnit = new SerializeAdapter();
+         ISerializeAdapter theUnit = new XMLSerializeAdapter();
          theUnit.Initialize(typeof(string));
       }
 
@@ -51,7 +51,7 @@ namespace XF.Services
          fakey.ObjectDescription = "Test object";
          fakey.ObjectID = Guid.NewGuid();
 
-         ISerializeAdapter theUnit = new SerializeAdapter();
+         ISerializeAdapter theUnit = new XMLSerializeAdapter();
          theUnit.Initialize(typeof(FakeObject));
          theUnit.Serialize(streamAdapter, fakey);
         
@@ -64,7 +64,7 @@ namespace XF.Services
          streamAdapter.Initialize();
          streamAdapter.Close();
 
-         string xmlResult = streamAdapter.Read();
+         string xmlResult = streamAdapter.ReadString();
       }
 
       [Test]
@@ -76,14 +76,14 @@ namespace XF.Services
          fakey.ObjectDescription = "Test object";
          fakey.ObjectID = Guid.NewGuid();
 
-         ISerializeAdapter theUnit = new SerializeAdapter();
+         ISerializeAdapter theUnit = new XMLSerializeAdapter();
          theUnit.Initialize(typeof(FakeObject));
          theUnit.Serialize(streamAdapter, fakey);
-         string xmlResult = streamAdapter.Read();
+         string xmlResult = streamAdapter.ReadString();
 
          streamAdapter.Initialize();
          streamAdapter.Close();
-         streamAdapter.Write(xmlResult);
+         streamAdapter.WriteString(xmlResult);
          object result = theUnit.Deserialize(streamAdapter);
 
       }
@@ -99,13 +99,13 @@ namespace XF.Services
          fakey.ObjectDescription = "Test object";
          fakey.ObjectID = Guid.NewGuid();
 
-         ISerializeAdapter theUnit = new SerializeAdapter();
+         ISerializeAdapter theUnit = new XMLSerializeAdapter();
          theUnit.Initialize(typeof(FakeObject));
          theUnit.Serialize(streamAdapter, fakey);
-         string xmlResult = streamAdapter.Read();
+         string xmlResult = streamAdapter.ReadString();
 
          streamAdapter.Initialize();
-         streamAdapter.Write(xmlResult);
+         streamAdapter.WriteString(xmlResult);
          object result = theUnit.Deserialize(streamAdapter);
 
       }

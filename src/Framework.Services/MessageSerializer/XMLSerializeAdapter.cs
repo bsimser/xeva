@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace XF.Services
 {
-   public class SerializeAdapter : ISerializeAdapter
+   public class XMLSerializeAdapter : ISerializeAdapter
    {
       private XmlSerializer _serializer;
 

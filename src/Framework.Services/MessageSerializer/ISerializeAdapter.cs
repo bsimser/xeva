@@ -9,5 +9,6 @@ namespace XF.Services
       void Serialize(IStreamAdapter streamAdapter, object messageDTO);
 
       object Deserialize(IStreamAdapter streamAdapter);
+
    }
 }

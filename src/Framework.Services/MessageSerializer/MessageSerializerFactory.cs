@@ -4,9 +4,17 @@ namespace XF.Services
 {
    public static class MessageSerializerFactory
    {
-      public static IMessageSerializer Create(Type messageType)
+      public static IXMLMessageSerializer CreateXMLSerializer(Type messageType)
       {
-         IMessageSerializer result = new MessageSerializer(new StreamAdapter(), new SerializeAdapter());
+         IXMLMessageSerializer result = new XMLMessageSerializer(new StreamAdapter(), new XMLSerializeAdapter());
+         result.Initialize(messageType);
+
+         return result;
+      }
+
+      public static IBinaryMessageSerializer CreateBinarySerializer(Type messageType)
+      {
+         IBinaryMessageSerializer result = new BinaryMessageSerializer(new StreamAdapter(), new BinarySerializeAdapter());
          result.Initialize(messageType);
 
          return result;

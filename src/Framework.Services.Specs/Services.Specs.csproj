@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageChannelSpecs\FakeProxy.cs" />
+    <Compile Include="MessageChannelSpecs\MessageChanneSpecs.cs" />
     <Compile Include="MessageSerializer\FakeObject.cs" />
     <Compile Include="MessageSerializer\MessageSerializerFactoryTests.cs" />
     <Compile Include="MessageSerializer\MessageSerializerTests.cs" />
@@ -68,6 +70,10 @@
     <ProjectReference Include="..\Framework.Services\Services.csproj">
       <Project>{568B6293-E3CC-4E1F-AECC-D8996821BE02}</Project>
       <Name>Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Specs\Specs.csproj">
+      <Project>{46EC28CD-E062-482D-A33B-288F59C0B6A9}</Project>
+      <Name>Specs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
