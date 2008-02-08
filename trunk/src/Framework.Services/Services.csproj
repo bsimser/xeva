@@ -49,14 +49,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MessageSerializer\IMessageSerializer.cs" />
+    <Compile Include="CredentialsProvider.cs" />
+    <Compile Include="ICredentialsProvider.cs" />
+    <Compile Include="MessageChannel\ChannelIntercept.cs" />
+    <Compile Include="MessageChannel\ResponseState.cs" />
+    <Compile Include="MessageChannel\ExceptionMessage.cs" />
+    <Compile Include="MessageChannel\Filters\ComposeRequestFilter.cs" />
+    <Compile Include="MessageChannel\Filters\DefaultErrorFilter.cs" />
+    <Compile Include="MessageChannel\Filters\DeserializeResponseFilter.cs" />
+    <Compile Include="MessageChannel\Filters\InsertCredentialsFilter.cs" />
+    <Compile Include="MessageChannel\Filters\InvocationReturnFilter.cs" />
+    <Compile Include="MessageChannel\FilterType.cs" />
+    <Compile Include="MessageChannel\IChannelFilter.cs" />
+    <Compile Include="MessageChannel\IChannelIntercept.cs" />
+    <Compile Include="MessageChannel\ITransport.cs" />
+    <Compile Include="MessageChannel\IMessageChannel.cs" />
+    <Compile Include="MessageChannel\MessageArgument.cs" />
+    <Compile Include="MessageChannel\RequestMessage.cs" />
+    <Compile Include="MessageChannel\ResponseMessage.cs" />
+    <Compile Include="MessageChannel\MessageChannel.cs" />
+    <Compile Include="MessageChannel\Filters\SerializeRequestFilter.cs" />
+    <Compile Include="MessageChannel\RequestState.cs" />
+    <Compile Include="MessageChannel\Transport.cs" />
+    <Compile Include="MessageSerializer\BinaryMessageSerializer.cs" />
+    <Compile Include="MessageSerializer\BinarySerializeAdapter.cs" />
+    <Compile Include="MessageSerializer\IBinaryMessageSerializer.cs" />
+    <Compile Include="MessageSerializer\IXMLMessageSerializer.cs" />
     <Compile Include="MessageSerializer\ISerializeAdapter.cs" />
     <Compile Include="MessageSerializer\IStreamAdapter.cs" />
-    <Compile Include="MessageSerializer\MessageSerializer.cs" />
+    <Compile Include="MessageSerializer\XMLMessageSerializer.cs" />
     <Compile Include="MessageSerializer\MessageSerializerFactory.cs" />
-    <Compile Include="MessageSerializer\SerializeAdapter.cs" />
+    <Compile Include="MessageSerializer\XMLSerializeAdapter.cs" />
     <Compile Include="MessageSerializer\StreamAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyGeneratorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">

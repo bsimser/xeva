@@ -24,7 +24,7 @@ namespace XF.Services
       [Test]
       public void A_new_MessageSerializer_can_be_initialize_with_an_IStreamAdapter_and_an_ISerializeAdapter()
       {
-         using (IMessageSerializer theUnit = new MessageSerializer(_streamAdapter, _serializeAdapter))
+         using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
          {
          }
       }
@@ -42,7 +42,7 @@ namespace XF.Services
 
          using (_mocks.Playback())
          {
-            using (IMessageSerializer theUnit = new MessageSerializer(_streamAdapter, _serializeAdapter))
+            using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
             {
             }
          }
@@ -57,13 +57,13 @@ namespace XF.Services
                .For(_streamAdapter.Stream)
                .Return(new MemoryStream());
             SetupResult
-               .For(_streamAdapter.Read())
+               .For(_streamAdapter.ReadString())
                .Return("xmlText");
          }
 
          using (_mocks.Playback())
          {
-            using (IMessageSerializer theUnit = new MessageSerializer(_streamAdapter, _serializeAdapter))
+            using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
             {
                theUnit.Serialize(Guid.NewGuid());
             }
@@ -75,7 +75,7 @@ namespace XF.Services
       {
          using (_mocks.Record())
          {
-            _streamAdapter.Write("xmlDocument");
+            _streamAdapter.WriteString("xmlDocument");
             SetupResult
                .For(_serializeAdapter.Deserialize(_streamAdapter))
                .Return(Guid.NewGuid());
@@ -83,7 +83,7 @@ namespace XF.Services
 
          using (_mocks.Playback())
          {
-            using (IMessageSerializer theUnit = new MessageSerializer(_streamAdapter, _serializeAdapter))
+            using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
             {
                theUnit.Deserialize("xmlDocument");
             }

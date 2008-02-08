@@ -17,7 +17,7 @@ namespace XF.Services
       [Test]
       public void Should_return_a_new_IMessageSerialzer()
       {
-         IMessageSerializer result = MessageSerializerFactory.Create(typeof(string));
+         IXMLMessageSerializer result = MessageSerializerFactory.CreateXMLSerializer(typeof(string));
       }
    }
 }

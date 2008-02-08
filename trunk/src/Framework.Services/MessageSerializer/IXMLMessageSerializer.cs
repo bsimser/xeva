@@ -2,7 +2,7 @@ using System;
 
 namespace XF.Services
 {
-   public interface IMessageSerializer : IDisposable
+   public interface IXMLMessageSerializer : IDisposable
    {
       void Initialize(Type messageType);
 

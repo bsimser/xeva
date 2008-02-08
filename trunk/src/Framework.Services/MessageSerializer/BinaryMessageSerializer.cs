@@ -2,12 +2,12 @@ using System;
 
 namespace XF.Services
 {
-   public class MessageSerializer : IMessageSerializer
+   public class BinaryMessageSerializer : IBinaryMessageSerializer
    {
       private readonly ISerializeAdapter _serializer;
       private readonly IStreamAdapter _stream;
 
-      public MessageSerializer(IStreamAdapter streamAdapter, ISerializeAdapter serializeAdapter)
+      public BinaryMessageSerializer(IStreamAdapter streamAdapter, ISerializeAdapter serializeAdapter)
       {
          _stream = streamAdapter;
          _serializer = serializeAdapter;
@@ -19,15 +19,15 @@ namespace XF.Services
          _stream.Initialize();
       }
 
-      public string Serialize(object message)
+      public byte[] Serialize(object argument)
       {
-         _serializer.Serialize(_stream, message);
-         return _stream.Read();
+         _serializer.Serialize(_stream, argument);
+         return _stream.ReadBinary();
       }
 
-      public object Deserialize(string xmlDocument)
+      public object Deserialize(byte[] binaryArgument)
       {
-         _stream.Write(xmlDocument);
+         _stream.WriteBinary(binaryArgument);
          return _serializer.Deserialize(_stream);
       }
 
@@ -35,6 +35,5 @@ namespace XF.Services
       {
          if (_stream.IsOpen) _stream.Close();
       }
-
    }
 }
