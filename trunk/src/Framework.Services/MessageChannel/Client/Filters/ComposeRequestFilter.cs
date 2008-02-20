@@ -7,13 +7,6 @@ namespace XF.Services
    {
       private RequestState _requestState;
       private ResponseState _responseState;
-      private string _filterType;
-
-      public string FilterType
-      {
-         get { return _filterType; }
-         set { _filterType = value; }
-      }
 
       public RequestState RequestState
       {

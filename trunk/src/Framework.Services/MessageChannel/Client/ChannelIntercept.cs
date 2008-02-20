@@ -12,25 +12,32 @@ namespace XF.Services
       private string _serviceName;
       private string _methodName;
       private Type _serviceType;
-      private ITransport transport;
-      private IList<IChannelFilter> _filters;
+      private ITransport _transport;
+      private IList<IChannelFilter> _preFilters;
+      private IList<IChannelFilter> _postFilters;
 
       public ChannelIntercept(ITransport transport)
       {
-         this.transport = transport;
+         _transport = transport;
       }
 
-      public IList<IChannelFilter> FiltersList
+      public IList<IChannelFilter> PreFilters
       {
-         get { return _filters; }
-         set { _filters = value; }
+         get { return _preFilters; }
+         set { _preFilters = value; }
+      }
+
+      public IList<IChannelFilter> PostFilters
+      {
+         get { return _postFilters; }
+         set { _postFilters = value; }
       }
 
       public event EventHandler TransportFailed;
 
       public ITransport Transport
       {
-         get { return transport; }
+         get { return _transport; }
       }
 
       public string ServiceName
@@ -62,7 +69,7 @@ namespace XF.Services
 
          try
          {
-            responseState.Content = transport.SendChannelRequest(requestState.Content);
+            responseState.Content = _transport.SendChannelRequest(requestState.Content);
          }
          catch (Exception e)
          {
@@ -74,27 +81,21 @@ namespace XF.Services
 
       private void ProcessPreFilters(RequestState requestState, ResponseState responseState)
       {
-         foreach (IChannelFilter filter in _filters)
+         foreach (IChannelFilter filter in _preFilters)
          {
-            if (filter.FilterType == "pre")
-            {
-               filter.RequestState = requestState;
-               filter.ResponseState = responseState;
-               filter.Process();
-            }
+            filter.RequestState = requestState;
+            filter.ResponseState = responseState;
+            filter.Process();
          }
       }
 
       private void ProcessPostFilters(RequestState requestState, ResponseState responseState)
       {
-         foreach (IChannelFilter filter in _filters)
+         foreach (IChannelFilter filter in _postFilters)
          {
-            if (filter.FilterType == "post")
-            {
-               filter.RequestState = requestState;
-               filter.ResponseState = responseState;
-               filter.Process();
-            }
+            filter.RequestState = requestState;
+            filter.ResponseState = responseState;
+            filter.Process();
          }
       }
 

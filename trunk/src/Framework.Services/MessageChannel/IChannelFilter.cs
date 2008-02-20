@@ -7,7 +7,6 @@ namespace XF.Services
    {
       RequestState RequestState { get; set; }
       ResponseState ResponseState { get; set; }
-      string FilterType { get; set; } 
       void Process();
    }
 }
