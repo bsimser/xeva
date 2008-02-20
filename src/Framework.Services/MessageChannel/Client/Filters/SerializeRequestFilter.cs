@@ -1,12 +1,9 @@
-using System.Diagnostics;
-
 namespace XF.Services
 {
-   public class DeserializeResponseFilter : IChannelFilter
+   public class SerializeRequestFilter : IChannelFilter
    {
       private RequestState _requestState;
       private ResponseState _responseState;
-      private string _filterType;
 
       public RequestState RequestState
       {
@@ -20,19 +17,12 @@ namespace XF.Services
          set { _responseState = value; }
       }
 
-      public string FilterType
-      {
-         get { return _filterType; }
-         set { _filterType = value; }
-      }
-
       public void Process()
       {
          using (IBinaryMessageSerializer serializer = MessageSerializerFactory.CreateBinarySerializer(typeof(RequestMessage)))
          {
-            _responseState.Message = (ResponseMessage)serializer.Deserialize(_responseState.Content);
+            _requestState.Content = serializer.Serialize(_requestState.Message);
          }
       }
-
    }
 }

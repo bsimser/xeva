@@ -1,12 +1,16 @@
-using System.Diagnostics;
-
 namespace XF.Services
 {
-   public class DefaultErrorFilter : IChannelFilter
+   public class InsertCredentialsFilter : IChannelFilter
    {
+      private ICredentialsProvider _credentialsProvider;
       private RequestState _requestState;
       private ResponseState _responseState;
-      private string _filterType;
+
+      public ICredentialsProvider CredentialsProvider
+      {
+         get { return _credentialsProvider; }
+         set { _credentialsProvider = value; }
+      }
 
       public RequestState RequestState
       {
@@ -20,16 +24,9 @@ namespace XF.Services
          set { _responseState = value; }
       }
 
-      public string FilterType
-      {
-         get { return _filterType; }
-         set { _filterType = value; }
-      }
-
       public void Process()
       {
-         if(_responseState.Message.ExceptionMessage != null)
-            Debug.WriteLine(_responseState.Message.ExceptionMessage.ExceptionMessages[0]);
+         _requestState.Message.SessionKey = _credentialsProvider.SessionTicket;
       }
    }
 }
