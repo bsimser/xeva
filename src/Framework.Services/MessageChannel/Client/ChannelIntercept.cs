@@ -10,7 +10,6 @@ namespace XF.Services
    public class ChannelIntercept : IChannelIntercept
    {
       private string _serviceName;
-      private string _methodName;
       private Type _serviceType;
       private ITransport _transport;
       private IList<IChannelFilter> _preFilters;
@@ -52,49 +51,43 @@ namespace XF.Services
          set { _serviceType = value; }
       }
 
-      public string MethodName
-      {
-         get { return _methodName; }
-         set { _methodName = value; }
-      }
-
       public void Intercept(IInvocation invocation)
       {
-         RequestState requestState = new RequestState();
-         ResponseState responseState = new ResponseState();
+         ChannelRequest channelRequest = new ChannelRequest();
+         ChannelResponse channelResponse = new ChannelResponse();
 
-         requestState.Invocation = invocation;
-         requestState.ServiceName = ServiceName;
-         ProcessPreFilters(requestState, responseState);
+         channelRequest.Invocation = invocation;
+         channelRequest.ServiceName = ServiceName;
+         ProcessPreFilters(channelRequest, channelResponse);
 
          try
          {
-            responseState.Content = _transport.SendChannelRequest(requestState.Content);
+            channelResponse.Content = _transport.SendChannelRequest(channelRequest.Content);
          }
-         catch (Exception e)
+         catch (Exception)
          {
             RaiseTransportFailure();
          }
 
-         ProcessPostFilters(requestState, responseState);
+         ProcessPostFilters(channelRequest, channelResponse);
       }
 
-      private void ProcessPreFilters(RequestState requestState, ResponseState responseState)
+      private void ProcessPreFilters(ChannelRequest channelRequest, ChannelResponse channelResponse)
       {
          foreach (IChannelFilter filter in _preFilters)
          {
-            filter.RequestState = requestState;
-            filter.ResponseState = responseState;
+            filter.ChannelRequest = channelRequest;
+            filter.ChannelResponse = channelResponse;
             filter.Process();
          }
       }
 
-      private void ProcessPostFilters(RequestState requestState, ResponseState responseState)
+      private void ProcessPostFilters(ChannelRequest channelRequest, ChannelResponse channelResponse)
       {
          foreach (IChannelFilter filter in _postFilters)
          {
-            filter.RequestState = requestState;
-            filter.ResponseState = responseState;
+            filter.ChannelRequest = channelRequest;
+            filter.ChannelResponse = channelResponse;
             filter.Process();
          }
       }

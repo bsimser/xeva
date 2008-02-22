@@ -5,8 +5,8 @@ namespace XF.Services
 {
    public interface IChannelFilter
    {
-      RequestState RequestState { get; set; }
-      ResponseState ResponseState { get; set; }
+      ChannelRequest ChannelRequest { get; set; }
+      ChannelResponse ChannelResponse { get; set; }
       void Process();
    }
 }

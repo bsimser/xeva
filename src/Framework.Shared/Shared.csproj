@@ -52,6 +52,8 @@
   <ItemGroup>
     <Compile Include="Globals.cs" />
     <Compile Include="IoC.cs" />
+    <Compile Include="MessageChannel\ISessionTicket.cs" />
+    <Compile Include="MessageChannel\IUserAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\NotEmptyAttribute.cs" />
     <Compile Include="Validation\IValidationAware.cs" />

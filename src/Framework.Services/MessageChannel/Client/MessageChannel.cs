@@ -1,6 +1,4 @@
 using System;
-using Castle.Core;
-using Castle.Core.Interceptor;
 
 namespace XF.Services
 {
@@ -21,7 +19,9 @@ namespace XF.Services
 
       public object GetChannelInterface()
       {
-         return ProxyGeneratorFactory.Instance().CreateInterfaceProxyWithoutTarget(_channelIntercept.ServiceType, _channelIntercept);
+         return
+            ProxyGeneratorFactory.Instance().CreateInterfaceProxyWithoutTarget(_channelIntercept.ServiceType,
+                                                                               _channelIntercept);
       }
 
       public virtual void InitializeChannel(string serviceName, Type serviceType)
@@ -34,7 +34,7 @@ namespace XF.Services
 
       private void OnTransportFailure(object sender, EventArgs e)
       {
-         
+         throw new Exception("Unhandled Transport Exception");
       }
    }
 }

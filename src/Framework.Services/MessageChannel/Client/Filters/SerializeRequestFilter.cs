@@ -2,26 +2,26 @@ namespace XF.Services
 {
    public class SerializeRequestFilter : IChannelFilter
    {
-      private RequestState _requestState;
-      private ResponseState _responseState;
+      private ChannelRequest channelRequest;
+      private ChannelResponse channelResponse;
 
-      public RequestState RequestState
+      public ChannelRequest ChannelRequest
       {
-         get { return _requestState; }
-         set { _requestState = value; }
+         get { return channelRequest; }
+         set { channelRequest = value; }
       }
 
-      public ResponseState ResponseState
+      public ChannelResponse ChannelResponse
       {
-         get { return _responseState; }
-         set { _responseState = value; }
+         get { return channelResponse; }
+         set { channelResponse = value; }
       }
 
       public void Process()
       {
          using (IBinaryMessageSerializer serializer = MessageSerializerFactory.CreateBinarySerializer(typeof(RequestMessage)))
          {
-            _requestState.Content = serializer.Serialize(_requestState.Message);
+            channelRequest.Content = serializer.Serialize(channelRequest.Message);
          }
       }
    }

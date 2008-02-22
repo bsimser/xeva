@@ -1,28 +1,35 @@
+using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace XF.Services
 {
    public class DefaultErrorFilter : IChannelFilter
    {
-      private RequestState _requestState;
-      private ResponseState _responseState;
+      private ChannelRequest channelRequest;
+      private ChannelResponse channelResponse;
 
-      public RequestState RequestState
+      public ChannelRequest ChannelRequest
       {
-         get { return _requestState; }
-         set { _requestState = value; }
+         get { return channelRequest; }
+         set { channelRequest = value; }
       }
 
-      public ResponseState ResponseState
+      public ChannelResponse ChannelResponse
       {
-         get { return _responseState; }
-         set { _responseState = value; }
+         get { return channelResponse; }
+         set { channelResponse = value; }
       }
 
       public void Process()
       {
-         if(_responseState.Message.ExceptionMessage != null)
-            Debug.WriteLine(_responseState.Message.ExceptionMessage.ExceptionMessages[0]);
+         if(channelResponse.Message.ExceptionMessage != null)
+         {
+            StringBuilder errortext = new StringBuilder("Error on: " + channelResponse.Message.ExceptionMessage.ServiceKey);
+            errortext.AppendLine("Exception: " + channelResponse.Message.ExceptionMessage.ExceptionType);
+            errortext.AppendLine("Exception Message: " + channelResponse.Message.ExceptionMessage.ExceptionMessages[0]);
+            throw new Exception(errortext.ToString());
+         }
       }
    }
 }
