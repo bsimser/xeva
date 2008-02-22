@@ -6,7 +6,8 @@ namespace XF.Services
    [Serializable]
    public class RequestMessage
    {
-      public Guid SessionKey;
+      public bool IsAuthenticating;
+      public Guid SessionTicket;
       public string ServiceKey;
       public string MethodKey;
       public MessageArgument[] MessageArgs;

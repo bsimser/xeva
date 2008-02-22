@@ -5,30 +5,30 @@ namespace XF.Services
 {
    public class ComposeRequestFilter : IChannelFilter
    {
-      private RequestState _requestState;
-      private ResponseState _responseState;
+      private ChannelRequest channelRequest;
+      private ChannelResponse channelResponse;
 
-      public RequestState RequestState
+      public ChannelRequest ChannelRequest
       {
-         get { return _requestState; }
-         set { _requestState = value; }
+         get { return channelRequest; }
+         set { channelRequest = value; }
       }
 
-      public ResponseState ResponseState
+      public ChannelResponse ChannelResponse
       {
-         get { return _responseState; }
-         set { _responseState = value; }
+         get { return channelResponse; }
+         set { channelResponse = value; }
       }
 
       public void Process()
       {
-         IInvocation invocation = _requestState.Invocation;
+         IInvocation invocation = channelRequest.Invocation;
          object[] arguments = invocation.Arguments;
 
-         _requestState.Message.ServiceKey = _requestState.ServiceName;
-         _requestState.Message.MethodKey = invocation.Method.Name;
+         channelRequest.Message.ServiceKey = channelRequest.ServiceName;
+         channelRequest.Message.MethodKey = invocation.Method.Name;
 
-         _requestState.Message.MessageArgs = new MessageArgument[arguments.Length];
+         channelRequest.Message.MessageArgs = new MessageArgument[arguments.Length];
 
          for (int idx = 0; idx < arguments.Length; idx++)
          {
@@ -37,7 +37,7 @@ namespace XF.Services
             MessageArgument arg = new MessageArgument();
             arg.ArgumentType = argumentType.AssemblyQualifiedName;
             arg.Argument = arguments[idx];
-            _requestState.Message.MessageArgs[idx] = arg;
+            channelRequest.Message.MessageArgs[idx] = arg;
          }
       }
 

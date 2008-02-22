@@ -9,6 +9,5 @@ namespace XF.Services
       ITransport Transport { get; }
       string ServiceName { get; set; }
       Type ServiceType { get; set; }
-      string MethodName { get; set; }
    }
 }

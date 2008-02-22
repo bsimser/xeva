@@ -7,5 +7,6 @@ namespace XF.Services
    {
       public object ResponseObject;
       public ExceptionMessage ExceptionMessage;
+      public Guid SessionTicket;
    }
 }

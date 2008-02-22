@@ -2,7 +2,7 @@ using Castle.Core.Interceptor;
 
 namespace XF.Services
 {
-   public class ResponseState
+   public class ChannelResponse
    {
       private ResponseMessage _message = new ResponseMessage();
       private byte[] _content;
