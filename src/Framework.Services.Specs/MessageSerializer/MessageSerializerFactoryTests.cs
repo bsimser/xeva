@@ -15,9 +15,15 @@ namespace XF.Services
       }
 
       [Test]
-      public void Should_return_a_new_IMessageSerialzer()
+      public void Should_return_a_new_XMLMessageSerialzer()
       {
          IXMLMessageSerializer result = MessageSerializerFactory.CreateXMLSerializer(typeof(string));
+      }
+
+      [Test]
+      public void Should_return_a_new_BinaryMessageSerialzer()
+      {
+         IBinaryMessageSerializer result = MessageSerializerFactory.CreateBinarySerializer(typeof(string));
       }
    }
 }

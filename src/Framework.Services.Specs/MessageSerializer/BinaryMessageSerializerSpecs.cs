@@ -6,7 +6,7 @@ using Rhino.Mocks;
 namespace XF.Services
 {
    [TestFixture]
-   public class MessageSerializerTests
+   public class Specs_for_BinaryMessageSerializerSpecs
    {
       private MockRepository _mocks;
       private IStreamAdapter _streamAdapter;
@@ -24,7 +24,7 @@ namespace XF.Services
       [Test]
       public void A_new_MessageSerializer_can_be_initialize_with_an_IStreamAdapter_and_an_ISerializeAdapter()
       {
-         using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
+         using (IBinaryMessageSerializer theUnit = new BinaryMessageSerializer(_streamAdapter, _serializeAdapter))
          {
          }
       }
@@ -42,14 +42,14 @@ namespace XF.Services
 
          using (_mocks.Playback())
          {
-            using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
+            using (IBinaryMessageSerializer theUnit = new BinaryMessageSerializer(_streamAdapter, _serializeAdapter))
             {
             }
          }
       }
 
       [Test]
-      public void Should_serialize_an_object_to_xml_then_return_the_document_as_a_string()
+      public void Should_serialize_an_object_to_byte_array_then_return_the_document_as_a_string()
       {
          using (_mocks.Record())
          {
@@ -58,12 +58,12 @@ namespace XF.Services
                .Return(new MemoryStream());
             SetupResult
                .For(_streamAdapter.ReadString())
-               .Return("xmlText");
+               .Return("BinaryText");
          }
 
          using (_mocks.Playback())
          {
-            using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
+            using (IBinaryMessageSerializer theUnit = new BinaryMessageSerializer(_streamAdapter, _serializeAdapter))
             {
                theUnit.Serialize(Guid.NewGuid());
             }
@@ -71,11 +71,11 @@ namespace XF.Services
       }
 
       [Test]
-      public void Should_deserialize_an_xml_document_and_return_the_rehydrated_object()
+      public void Should_deserialize_an_binary_document_and_return_the_rehydrated_object()
       {
          using (_mocks.Record())
          {
-            _streamAdapter.WriteString("xmlDocument");
+            _streamAdapter.WriteBinary(new byte[0]);
             SetupResult
                .For(_serializeAdapter.Deserialize(_streamAdapter))
                .Return(Guid.NewGuid());
@@ -83,9 +83,9 @@ namespace XF.Services
 
          using (_mocks.Playback())
          {
-            using (IXMLMessageSerializer theUnit = new XMLMessageSerializer(_streamAdapter, _serializeAdapter))
+            using (IBinaryMessageSerializer theUnit = new BinaryMessageSerializer(_streamAdapter, _serializeAdapter))
             {
-               theUnit.Deserialize("xmlDocument");
+               theUnit.Deserialize(new byte[0]);
             }
          }
       }

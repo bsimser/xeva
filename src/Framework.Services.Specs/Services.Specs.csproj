@@ -59,11 +59,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MessageChannelSpecs\FakeProxy.cs" />
-    <Compile Include="MessageChannelSpecs\MessageChanneSpecs.cs" />
+    <Compile Include="MessageChannelSpecs\MessageChannelSpecs.cs" />
+    <Compile Include="MessageSerializer\BinaryMessageSerializerSpecs.cs" />
+    <Compile Include="MessageSerializer\BinarySerializeAdapterSpecs.cs" />
     <Compile Include="MessageSerializer\FakeObject.cs" />
     <Compile Include="MessageSerializer\MessageSerializerFactoryTests.cs" />
-    <Compile Include="MessageSerializer\MessageSerializerTests.cs" />
-    <Compile Include="MessageSerializer\SerializeAdapterTests.cs" />
+    <Compile Include="MessageSerializer\XMLMessageSerializerSpecs.cs" />
+    <Compile Include="MessageSerializer\XMLSerializeAdapterSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

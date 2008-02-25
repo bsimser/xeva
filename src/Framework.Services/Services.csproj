@@ -52,6 +52,7 @@
     <Compile Include="CredentialsProvider.cs" />
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Interfaces\ICredentialsProvider.cs" />
+    <Compile Include="Interfaces\IProxyGeneratorFactory.cs" />
     <Compile Include="Interfaces\ISessionService.cs" />
     <Compile Include="MessageChannel\Client\ChannelIntercept.cs" />
     <Compile Include="MessageChannel\Client\Filters\ResponseCredentialsFilter.cs" />
