@@ -1,17 +1,21 @@
+using System;
+using Castle.Core.Interceptor;
 using Castle.DynamicProxy;
 
 namespace XF.Services
 {
-   public static class ProxyGeneratorFactory
+   public class ProxyGeneratorFactory : IProxyGeneratorFactory
    {
-      private static ProxyGenerator _instance;
+      private ProxyGenerator _proxyGenerator;
 
-      public static ProxyGenerator Instance()
+      public ProxyGeneratorFactory()
       {
-         if (_instance == null)
-            _instance = new ProxyGenerator();
+         _proxyGenerator = new ProxyGenerator();
+      }
 
-         return _instance;
+      public object CreateInterfaceProxyWithoutTarget(Type serviceType, IInterceptor interceptor)
+      {
+         return _proxyGenerator.CreateInterfaceProxyWithoutTarget(serviceType, interceptor);
       }
    }
 }

@@ -32,8 +32,6 @@ namespace XF.Services
          set { _postFilters = value; }
       }
 
-      public event EventHandler TransportFailed;
-
       public ITransport Transport
       {
          get { return _transport; }
@@ -66,7 +64,7 @@ namespace XF.Services
          }
          catch (Exception)
          {
-            RaiseTransportFailure();
+            throw new Exception("Transport Failed");
          }
 
          ProcessPostFilters(channelRequest, channelResponse);
@@ -90,12 +88,6 @@ namespace XF.Services
             filter.ChannelResponse = channelResponse;
             filter.Process();
          }
-      }
-
-      private void RaiseTransportFailure()
-      {
-         if (TransportFailed != null)
-            TransportFailed(this, new EventArgs());
       }
 
    }
