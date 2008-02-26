@@ -32,11 +32,6 @@ namespace XF.Services
          set { _postFilters = value; }
       }
 
-      public ITransport Transport
-      {
-         get { return _transport; }
-      }
-
       public string ServiceName
       {
          get { return _serviceName; }
@@ -64,7 +59,7 @@ namespace XF.Services
          }
          catch (Exception)
          {
-            throw new Exception("Transport Failed");
+            throw new TransportFailureException();
          }
 
          ProcessPostFilters(channelRequest, channelResponse);

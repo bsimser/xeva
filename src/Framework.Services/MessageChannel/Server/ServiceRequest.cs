@@ -4,7 +4,7 @@ namespace XF.Services
 {
    public class ServiceRequest
    {
-      private RequestMessage _message = new RequestMessage();
+      private RequestMessage _message;
       private byte[] _content;
       private object _service;
       private bool _sessionValid;

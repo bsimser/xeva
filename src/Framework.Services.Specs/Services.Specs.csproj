@@ -58,8 +58,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageChannelSpecs\Client\ChannelInterceptSpecs.cs" />
+    <Compile Include="MessageChannelSpecs\Client\ClientPreFilterSpecs.cs" />
+    <Compile Include="MessageChannelSpecs\Client\ClientPostFilterSpecs.cs" />
+    <Compile Include="MessageChannelSpecs\FakeTransport.cs" />
     <Compile Include="MessageChannelSpecs\FakeProxy.cs" />
-    <Compile Include="MessageChannelSpecs\MessageChannelSpecs.cs" />
+    <Compile Include="MessageChannelSpecs\Client\MessageChannelSpecs.cs" />
+    <Compile Include="MessageChannelSpecs\Client\TransportSpecs.cs" />
+    <Compile Include="MessageChannelSpecs\Server\ServiceActivatorSpecs.cs" />
     <Compile Include="MessageSerializer\BinaryMessageSerializerSpecs.cs" />
     <Compile Include="MessageSerializer\BinarySerializeAdapterSpecs.cs" />
     <Compile Include="MessageSerializer\FakeObject.cs" />
@@ -72,6 +78,10 @@
     <ProjectReference Include="..\Framework.Services\Services.csproj">
       <Project>{568B6293-E3CC-4E1F-AECC-D8996821BE02}</Project>
       <Name>Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Shared\Shared.csproj">
+      <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>
+      <Name>Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\Framework.Specs\Specs.csproj">
       <Project>{46EC28CD-E062-482D-A33B-288F59C0B6A9}</Project>

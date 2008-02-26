@@ -6,13 +6,11 @@ namespace XF.Services
    {
       private TTransport _transport;
 
-      public Transport()
-      {
-         _transport = Activator.CreateInstance<TTransport>();
-      }
-
       public virtual byte[] SendChannelRequest(byte[] requestMessage)
       {
+         if (_transport == null)
+            _transport = IoC.Resolve<TTransport>();
+
          object[] requestPrams = new object[1] { requestMessage };
          return (byte[])_transport.GetType().GetMethod("SendChannelRequest").Invoke(_transport, requestPrams);
       }

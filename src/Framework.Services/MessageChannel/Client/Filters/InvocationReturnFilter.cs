@@ -4,37 +4,25 @@ namespace XF.Services
 {
    public class InvocationReturnFilter : IChannelFilter
    {
-      private ChannelRequest channelRequest;
-      private ChannelResponse channelResponse;
+      private ChannelRequest _channelRequest;
+      private ChannelResponse _channelResponse;
 
       public ChannelRequest ChannelRequest
       {
-         get { return channelRequest; }
-         set { channelRequest = value; }
+         get { return _channelRequest; }
+         set { _channelRequest = value; }
       }
 
       public ChannelResponse ChannelResponse
       {
-         get { return channelResponse; }
-         set { channelResponse = value; }
+         get { return _channelResponse; }
+         set { _channelResponse = value; }
       }
 
       public void Process()
       {
-         IInvocation invocation = channelRequest.Invocation;
-         ExceptionMessage exceptionMessage = channelResponse.Message.ExceptionMessage;
-
-         if(exceptionMessage != null)
-         {
-            if (exceptionMessage.ErrorLevel == "Warning" &&
-                channelResponse.Message.ResponseObject != null)
-               invocation.ReturnValue = channelResponse.Message.ResponseObject;
-         }
-         else
-         {
-            if (channelResponse.Message.ResponseObject != null)
-            invocation.ReturnValue = channelResponse.Message.ResponseObject;
-         }
+         if (_channelResponse.Message.ResponseObject != null)
+            _channelRequest.Invocation.ReturnValue = _channelResponse.Message.ResponseObject;
       }
 
    }

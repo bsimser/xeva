@@ -8,9 +8,9 @@ namespace XF.Services
    {
       private ProxyGenerator _proxyGenerator;
 
-      public ProxyGeneratorFactory()
+      public ProxyGeneratorFactory(ProxyGenerator proxyGenerator)
       {
-         _proxyGenerator = new ProxyGenerator();
+         _proxyGenerator = proxyGenerator;
       }
 
       public object CreateInterfaceProxyWithoutTarget(Type serviceType, IInterceptor interceptor)
