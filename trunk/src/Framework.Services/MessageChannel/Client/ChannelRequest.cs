@@ -5,7 +5,7 @@ namespace XF.Services
    public class ChannelRequest
    {
       private string _serviceName;
-      private RequestMessage _message = new RequestMessage();
+      private RequestMessage _message;
       private IInvocation _invocation;
       private byte[] _content;
 

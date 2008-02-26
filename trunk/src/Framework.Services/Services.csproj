@@ -56,6 +56,7 @@
     <Compile Include="Interfaces\ISessionService.cs" />
     <Compile Include="MessageChannel\Client\ChannelIntercept.cs" />
     <Compile Include="MessageChannel\Client\Filters\ResponseCredentialsFilter.cs" />
+    <Compile Include="MessageChannel\Exceptions\TransportFailureException.cs" />
     <Compile Include="MessageChannel\Exceptions\InvalidSessionException.cs" />
     <Compile Include="MessageChannel\Exceptions\PostFilterProcessingException.cs" />
     <Compile Include="MessageChannel\Exceptions\PreFilterProcessingException.cs" />

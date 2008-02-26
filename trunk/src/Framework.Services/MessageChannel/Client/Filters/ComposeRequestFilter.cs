@@ -5,30 +5,32 @@ namespace XF.Services
 {
    public class ComposeRequestFilter : IChannelFilter
    {
-      private ChannelRequest channelRequest;
-      private ChannelResponse channelResponse;
+      private ChannelRequest _channelRequest;
+      private ChannelResponse _channelResponse;
 
       public ChannelRequest ChannelRequest
       {
-         get { return channelRequest; }
-         set { channelRequest = value; }
+         get { return _channelRequest; }
+         set { _channelRequest = value; }
       }
 
       public ChannelResponse ChannelResponse
       {
-         get { return channelResponse; }
-         set { channelResponse = value; }
+         get { return _channelResponse; }
+         set { _channelResponse = value; }
       }
 
       public void Process()
       {
-         IInvocation invocation = channelRequest.Invocation;
+         RequestMessage request = new RequestMessage();
+
+         IInvocation invocation = _channelRequest.Invocation;
          object[] arguments = invocation.Arguments;
 
-         channelRequest.Message.ServiceKey = channelRequest.ServiceName;
-         channelRequest.Message.MethodKey = invocation.Method.Name;
+         request.ServiceKey = _channelRequest.ServiceName;
+         request.MethodKey = invocation.Method.Name;
 
-         channelRequest.Message.MessageArgs = new MessageArgument[arguments.Length];
+         request.MessageArgs = new MessageArgument[arguments.Length];
 
          for (int idx = 0; idx < arguments.Length; idx++)
          {
@@ -37,8 +39,10 @@ namespace XF.Services
             MessageArgument arg = new MessageArgument();
             arg.ArgumentType = argumentType.AssemblyQualifiedName;
             arg.Argument = arguments[idx];
-            channelRequest.Message.MessageArgs[idx] = arg;
+            request.MessageArgs[idx] = arg;
          }
+
+         _channelRequest.Message = request;
       }
 
    }
