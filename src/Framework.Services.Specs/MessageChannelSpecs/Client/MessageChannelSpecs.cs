@@ -51,7 +51,7 @@ namespace Specs_for_MessageChannel
          using (Record)
          {
             Expect
-               .Call(_proxyFactory.CreateInterfaceProxyWithoutTarget(null, null))
+               .Call(_proxyFactory.GenerateProxy(null, null))
                .Return(new object())
                .IgnoreArguments();
          }

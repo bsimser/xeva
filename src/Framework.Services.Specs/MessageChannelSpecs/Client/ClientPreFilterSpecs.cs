@@ -7,7 +7,7 @@ using Rhino.Mocks;
 using XF.Services;
 using XF.Specs;
 
-namespace Spec_for_Client_PreFilters
+namespace Specs_for_Client_PreFilters
 {
    [TestFixture]
    public class When_processing_the_compose_request_filter : Spec
@@ -184,7 +184,7 @@ namespace Spec_for_Client_PreFilters
             _theUnit.ChannelRequest = ObjectMother.GetChannelRequest(_invocation);
             _theUnit.Process();
 
-            Assert.That(_theUnit.ChannelRequest.Content, Is.TypeOf(typeof(byte[])));
+            Assert.That(_theUnit.ChannelRequest.Content, Is.Not.Null);
          }
       }
    }

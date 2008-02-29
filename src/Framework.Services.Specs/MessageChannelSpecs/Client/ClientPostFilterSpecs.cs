@@ -7,7 +7,7 @@ using Rhino.Mocks;
 using XF.Services;
 using XF.Specs;
 
-namespace Spec_for_Client_PostFilters
+namespace Specs_for_Client_PostFilters
 {
    [TestFixture]
    public class When_processing_the_deserialize_response_filter : Spec
@@ -24,7 +24,7 @@ namespace Spec_for_Client_PostFilters
       }
 
       [Test]
-      public void Set_the_service_name_on_the_request_message()
+      public void Build_the_response_message_from_the_channel_response()
       {
          using (Record)
          {
@@ -35,7 +35,7 @@ namespace Spec_for_Client_PostFilters
             _theUnit.ChannelResponse = ObjectMother.GetChannelResponse();
             _theUnit.Process();
 
-            Assert.That(_theUnit.ChannelResponse.Message, Is.TypeOf(typeof (ResponseMessage)));
+            Assert.That(_theUnit.ChannelResponse.Message, Is.Not.Null);
          }
       }
    }
