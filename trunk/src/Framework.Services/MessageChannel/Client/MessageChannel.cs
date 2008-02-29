@@ -20,7 +20,7 @@ namespace XF.Services
 
       public object GetChannelInterface()
       {
-         return _proxyFactory.CreateInterfaceProxyWithoutTarget(_channelIntercept.ServiceType, _channelIntercept);
+         return _proxyFactory.GenerateProxy(_channelIntercept.ServiceType, _channelIntercept);
       }
 
       public virtual void InitializeChannel(string serviceName, Type serviceType)

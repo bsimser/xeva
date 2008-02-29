@@ -26,7 +26,6 @@ namespace XF.Services
       public byte[] Content
       {
          get { return _content; }
-         set { _content = value; }
       }
 
       public object Service

@@ -10,7 +10,6 @@ namespace XF.Services
 
       public ISessionService SessionService
       {
-         get { return _sessionService; }
          set { _sessionService = value; }
       }
 

@@ -5,6 +5,6 @@ namespace XF.Services
 {
    public interface IProxyGeneratorFactory
    {
-      object CreateInterfaceProxyWithoutTarget(Type serviceType, IInterceptor interceptor);
+      object GenerateProxy(Type serviceType, IInterceptor interceptor);
    }
 }

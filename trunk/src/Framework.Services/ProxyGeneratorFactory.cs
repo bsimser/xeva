@@ -13,7 +13,7 @@ namespace XF.Services
          _proxyGenerator = proxyGenerator;
       }
 
-      public object CreateInterfaceProxyWithoutTarget(Type serviceType, IInterceptor interceptor)
+      public object GenerateProxy(Type serviceType, IInterceptor interceptor)
       {
          return _proxyGenerator.CreateInterfaceProxyWithoutTarget(serviceType, interceptor);
       }
