@@ -26,9 +26,7 @@ namespace XF.Validation
          Regex emailRegex = new Regex(patternStrict);
 
          if (!emailRegex.IsMatch(stringValue))
-         {
             AddMessage(validationResult, ERROR_MESSAGE);
-         }
       }
    }
 }
