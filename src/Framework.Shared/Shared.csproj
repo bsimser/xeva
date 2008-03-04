@@ -55,6 +55,8 @@
     <Compile Include="MessageChannel\ISessionTicket.cs" />
     <Compile Include="MessageChannel\IUserAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\NotNegativeAttribute.cs" />
+    <Compile Include="Validation\NumericAttribute.cs" />
     <Compile Include="Validation\NotEmptyAttribute.cs" />
     <Compile Include="Validation\IValidationAware.cs" />
     <Compile Include="Validation\EmailFormatAttribute.cs" />

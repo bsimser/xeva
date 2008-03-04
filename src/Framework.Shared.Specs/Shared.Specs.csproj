@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="IoCSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\NumericAttributeSpecs.cs" />
+    <Compile Include="Validation\NotNegativeAttributeSpecs.cs" />
     <Compile Include="Validation\NotEmptyAttributeSpecs.cs" />
     <Compile Include="Validation\EmailFormatAttributeSpecs.cs" />
     <Compile Include="Validation\MinimumLengthAttributeSpecs.cs" />
