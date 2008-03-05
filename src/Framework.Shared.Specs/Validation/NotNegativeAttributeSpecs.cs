@@ -22,7 +22,7 @@ namespace Specs_for_NotNegativeAttribute
          example.String = "-1";
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -34,7 +34,7 @@ namespace Specs_for_NotNegativeAttribute
          example.String = "1";
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }

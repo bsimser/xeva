@@ -9,6 +9,9 @@ namespace XF.Validation
       {
          if (rawValue == null) return;
 
+         if (rawValue.GetType() == typeof(string))
+            if (string.IsNullOrEmpty(rawValue.ToString())) return;
+
          decimal result;
          if (!decimal.TryParse(rawValue.ToString(), out result)) return;
 

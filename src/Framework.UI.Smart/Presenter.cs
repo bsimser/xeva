@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using XF.UI.Smart;
+using XF.Validation;
 
 namespace XF.UI.Smart
 {
@@ -147,9 +148,14 @@ namespace XF.UI.Smart
 
       public bool Validate(object target)
       {
+         return Validate(new object[1] { target });
+      }
+
+      public bool Validate(object[] targets)
+      {
          InitializeValidator(new PresenterValidator());
 
-         return _presenterValidator.Validate(target, _controls);
+         return _presenterValidator.Validate(targets, _controls);
       }
    }
 }

@@ -23,7 +23,7 @@ namespace Specs_for_MatchPatternAttribute
          _sample.StringProperty = "~test";
 
          IList<ValidatonError> messages =
-            _validator.Validate(_sample, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { _sample }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -34,7 +34,7 @@ namespace Specs_for_MatchPatternAttribute
          _sample.StringProperty = "test123";
 
          IList<ValidatonError> messages =
-            _validator.Validate(_sample, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { _sample }, new Dictionary<string, IValidationAware>()).Errors;
       }
    }
 

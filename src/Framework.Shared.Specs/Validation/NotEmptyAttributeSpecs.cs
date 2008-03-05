@@ -24,7 +24,7 @@ namespace Specs_for_NotEmptyAttribute
          example.Guid = Guid.Empty;
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -36,7 +36,7 @@ namespace Specs_for_NotEmptyAttribute
          example.Guid = Guid.NewGuid();
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }
@@ -62,7 +62,7 @@ namespace Specs_for_NotEmptyAttribute
          example.List = list;
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -78,7 +78,7 @@ namespace Specs_for_NotEmptyAttribute
          example.List = list;
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }
@@ -102,7 +102,7 @@ namespace Specs_for_NotEmptyAttribute
          example.String = string.Empty;
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -115,7 +115,7 @@ namespace Specs_for_NotEmptyAttribute
          example.String = null;
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(1, messages.Count);
       }
@@ -128,7 +128,7 @@ namespace Specs_for_NotEmptyAttribute
          example.String = "something";
 
          IList<ValidatonError> messages =
-            _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors;
+            _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors;
 
          Assert.AreEqual(0, messages.Count);
       }

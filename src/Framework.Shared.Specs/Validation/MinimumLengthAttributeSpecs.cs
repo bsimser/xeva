@@ -9,10 +9,10 @@ namespace Specs_for_MinimumLengthAttribute
    public class When_validating : Spec
    {
       private readonly Validator _validator = new Validator();
-      
+
       protected override void Before_each_spec()
       {
-         
+
       }
 
       [Test]
@@ -20,7 +20,7 @@ namespace Specs_for_MinimumLengthAttribute
       {
          MinimumLengthExample example = new MinimumLengthExample();
          example.SomeString = "1234567";
-         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors.Count);
+         Assert.AreEqual(0, _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors.Count);
       }
 
       [Test]
@@ -28,15 +28,15 @@ namespace Specs_for_MinimumLengthAttribute
       {
          MinimumLengthExample example = new MinimumLengthExample();
          example.SomeString = "123456";
-         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors.Count);
+         Assert.AreEqual(0, _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors.Count);
       }
 
       [Test]
       public void Should_fail_if_the_property_value_length_is_less_than_the_amount_specified()
       {
          MinimumLengthExample example = new MinimumLengthExample();
-         example.SomeString = "12345"; 
-         Assert.AreEqual(1, _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors.Count);
+         example.SomeString = "12345";
+         Assert.AreEqual(1, _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors.Count);
       }
 
       [Test]
@@ -44,7 +44,7 @@ namespace Specs_for_MinimumLengthAttribute
       {
          MinimumLengthExampleNonString example = new MinimumLengthExampleNonString();
          example.SomeInt = 57042;
-         Assert.AreEqual(0, _validator.Validate(example, new Dictionary<string, IValidationAware>()).Errors.Count);
+         Assert.AreEqual(0, _validator.Validate(new object[1] { example }, new Dictionary<string, IValidationAware>()).Errors.Count);
       }
    }
 

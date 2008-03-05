@@ -14,7 +14,7 @@ namespace Specs_for_Validator
       {
          Validator validator = new Validator();
          ExampleClassWithValidatedProperties sample1 = new ExampleClassWithValidatedProperties();
-         ValidationResult validationResult = validator.Validate(sample1, new Dictionary<string, IValidationAware>());
+         ValidationResult validationResult = validator.Validate(new object[1] { sample1 }, new Dictionary<string, IValidationAware>());
          Assert.IsFalse(validationResult.IsValid);
          Assert.AreEqual(1, validationResult.Errors.Count);
       }
@@ -37,7 +37,7 @@ namespace Specs_for_Validator
 
          using (Playback)
          {
-            validator.Validate(sample1, validationObjects);
+            validator.Validate(new object[1] { sample1 }, validationObjects);
          }
       }
    }
@@ -63,7 +63,7 @@ namespace Specs_for_Validator
 
          using (Playback)
          {
-            validator.Validate(sample1, validationObjects);
+            validator.Validate(new object[1] { sample1 }, validationObjects);
          }
       }
    }
