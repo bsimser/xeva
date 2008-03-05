@@ -4,6 +4,6 @@ namespace XF.Validation
 {
    public interface IValidator
    {
-      ValidationResult Validate(object target, Dictionary<string, IValidationAware> validationObjects);
+      ValidationResult Validate(object[] targets, Dictionary<string, IValidationAware> validationObjects);
    }
 }

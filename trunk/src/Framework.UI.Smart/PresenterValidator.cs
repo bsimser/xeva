@@ -5,7 +5,7 @@ namespace XF.UI.Smart
 {
    public class PresenterValidator : IPresenterValidator
    {
-      public virtual bool Validate(object target, Dictionary<string, IControl> controls)
+      public virtual bool Validate(object[] targets, Dictionary<string, IControl> controls)
       {
          Dictionary<string, IValidationAware> validationObjects = new Dictionary<string, IValidationAware>();
 
@@ -14,7 +14,7 @@ namespace XF.UI.Smart
             validationObjects.Add(control.Key, control.Value);
          }
 
-         return new Validator().Validate(target, validationObjects).IsValid;
+         return new Validator().Validate(targets, validationObjects).IsValid;
       }
    }
 }

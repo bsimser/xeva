@@ -11,19 +11,22 @@ namespace XF.Validation
 
       public Validator() {}
 
-      public ValidationResult Validate(object target, Dictionary<string, IValidationAware> validationObjects)
+      public ValidationResult Validate(object[] targets, Dictionary<string, IValidationAware> validationObjects)
       {
-         Type targetType = target.GetType();
-         IList<ValidationAttribute> validations = ScanTypeForValidationAttributes(targetType);
-
          ValidationResult result = new ValidationResult();
 
-         foreach (ValidationAttribute attribute in validations)
-            attribute.Validate(target, result);
-
-         if (target is ISelfValidator)
+         foreach (object target in targets)
          {
-            ((ISelfValidator)target).Validate(result);
+            Type targetType = target.GetType();
+            IList<ValidationAttribute> validations = ScanTypeForValidationAttributes(targetType);
+
+            foreach (ValidationAttribute attribute in validations)
+               attribute.Validate(target, result);
+
+            if (target is ISelfValidator)
+            {
+               ((ISelfValidator)target).Validate(result);
+            }
          }
 
          DisplayErrorNotifications(result, validationObjects);
