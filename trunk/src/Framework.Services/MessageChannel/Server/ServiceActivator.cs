@@ -37,9 +37,9 @@ namespace XF.Services
                filter.Process();
             }
          }
-         catch (Exception)
+         catch (Exception ex)
          {
-            _serviceResponse.ServiceException = new PreFilterProcessingException();
+            _serviceResponse.ServiceException = new PreFilterProcessingException(ex);
          }
       }
 
@@ -78,9 +78,9 @@ namespace XF.Services
                filter.Process();
             }
          }
-         catch (Exception)
+         catch (Exception ex)
          {
-            _serviceResponse.ServiceException = new PostFilterProcessingException();
+            _serviceResponse.ServiceException = new PostFilterProcessingException(ex);
          }
       }
    }
