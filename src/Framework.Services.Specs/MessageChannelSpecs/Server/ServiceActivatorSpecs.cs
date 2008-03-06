@@ -60,7 +60,7 @@ namespace Specs_for_ServiceActivator
          using (Record)
          {
             _filter.Process();
-            LastCall.Throw(new PreFilterProcessingException());
+            LastCall.Throw(new PreFilterProcessingException(new Exception("stub")));
          }
 
          using (Playback)
@@ -177,7 +177,7 @@ namespace Specs_for_ServiceActivator
          using (Record)
          {
             _filter.Process();
-            LastCall.Throw(new PreFilterProcessingException());
+            LastCall.Throw(new PreFilterProcessingException(new Exception("stub")));
          }
 
          using (Playback)

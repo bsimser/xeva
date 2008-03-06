@@ -23,11 +23,14 @@ namespace XF.Services
 
       public void Process()
       {
-         if(_channelResponse.Message.ExceptionMessage != null)
+         if (_channelResponse.Message.ExceptionMessage != null)
          {
             StringBuilder errortext = new StringBuilder("Error on: " + _channelResponse.Message.ExceptionMessage.ServiceKey);
             errortext.AppendLine("Exception: " + _channelResponse.Message.ExceptionMessage.ExceptionType);
-            errortext.AppendLine("Exception Message: " + _channelResponse.Message.ExceptionMessage.ExceptionMessages[0]);
+            foreach (string exceptionMessage in _channelResponse.Message.ExceptionMessage.ExceptionMessages)
+            {
+               errortext.AppendLine("Exception Message: " + exceptionMessage);
+            }
             throw new Exception(errortext.ToString());
          }
       }

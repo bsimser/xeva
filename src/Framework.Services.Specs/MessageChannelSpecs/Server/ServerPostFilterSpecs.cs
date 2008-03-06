@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -79,7 +80,7 @@ namespace Specs_for_ServerPostFilters
       {
          ServiceResponse result = new ServiceResponse();
          result.Message = new ResponseMessage();
-         result.ServiceException = new PostFilterProcessingException();
+         result.ServiceException = new PostFilterProcessingException(new Exception("stub"));
 
          return result;
       }

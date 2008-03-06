@@ -26,12 +26,19 @@ namespace XF.Services
             if(_serviceRequest.UserAccount != null)
                username = _serviceRequest.UserAccount.Username;
 
+            object[] args;
+            if (_serviceRequest.ServiceMethodArgs == null)
+               args = new object[1] { "none" };
+            else
+               args = _serviceRequest.ServiceMethodArgs;
+
             ExceptionShield exceptionShield = new ExceptionShield(request.ServiceKey, request.MethodKey, 
-                                                                  _serviceRequest.ServiceMethodArgs, 
+                                                                  args, 
                                                                   _serviceResponse.ServiceException, 
                                                                   username);
             exceptionShield.Log();
-            _serviceResponse.Message.ExceptionMessage = ExceptionShield.ExceptionMessage;            
+            _serviceResponse.Message.ExceptionMessage = ExceptionShield.ExceptionMessage;
+            _serviceResponse.Message.ResponseObject = "Error Message";
          }
       }
    }

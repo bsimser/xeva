@@ -86,8 +86,13 @@ namespace XF.Services
          List<string> result = new List<string>();
 
          result.Add(exception.Message);
-
-         Exception innerException = exception.InnerException;
+         Exception innerException = null;
+         if (exception is PreFilterProcessingException)
+            innerException = ((PreFilterProcessingException)exception).FilterException;
+         else if (exception is PostFilterProcessingException)
+            innerException = ((PostFilterProcessingException)exception).FilterException;
+         else innerException = exception.InnerException;
+          
          while (innerException != null)
          {
             result.Add(innerException.Message);
