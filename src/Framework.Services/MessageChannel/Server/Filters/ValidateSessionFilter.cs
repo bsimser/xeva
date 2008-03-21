@@ -29,15 +29,15 @@ namespace XF.Services
       {
          RequestMessage message = _serviceRequest.Message;
 
-         if(message.IsAuthenticating)
+         if (message.IsAuthenticating)
          {
             object[] args = (object[])_serviceRequest.ServiceMethodArgs[0];
             Guid userID = _sessionService.Authenticate(args);
             if (userID != Guid.Empty)
             {
                message.SessionTicket = _sessionService.GenerateSessionTicket(userID);
-               _serviceRequest.ValidSession = true;
             }
+            _serviceRequest.ValidSession = true;
          }
          else
          {
@@ -55,7 +55,7 @@ namespace XF.Services
 
       private void LoadUserCredentials()
       {
-         if(!_serviceRequest.Message.IsAuthenticating)
+         if (!_serviceRequest.Message.IsAuthenticating)
          {
             _serviceRequest.UserAccount = _sessionService.GetUserAccount(_serviceRequest.Message.SessionTicket);
          }
