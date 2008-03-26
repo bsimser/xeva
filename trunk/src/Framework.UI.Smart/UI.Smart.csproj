@@ -81,8 +81,10 @@
     <Compile Include="Request.cs" />
     <Compile Include="PresenterValidator.cs" />
     <Compile Include="Windows\IWindowOptions.cs" />
+    <Compile Include="Windows\IWindowRegistry.cs" />
     <Compile Include="Windows\WindowManager.cs" />
     <Compile Include="Windows\WindowOptions.cs" />
+    <Compile Include="Windows\WindowRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
