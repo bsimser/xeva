@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using XF.UI.Smart;
-using XF.Validation;
 
 namespace XF.UI.Smart
 {
@@ -16,7 +15,9 @@ namespace XF.UI.Smart
       private string _key;
       private string _label;
       private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
+      private IRequest _request;
       private IWindowAdapter _windowAdapter;
+      private IWindowRegistry _windowRegistry;
 
       public string Key
       {
@@ -47,6 +48,8 @@ namespace XF.UI.Smart
 
       public void Start(IRequest request)
       {
+         _request = request;
+
          if (HasStarted) return;
          if (View == null) throw new ViewNotAvailableException();
          
@@ -106,6 +109,8 @@ namespace XF.UI.Smart
 
       protected virtual void CustomFinish()
       {
+         Guid entityID = _request.GetOptionalItem<Guid>("entity-id", Guid.Empty);
+         _windowRegistry.RemoveWindow(entityID);
       }
 
       public void DisplayIn(IWindowAdapter windowAdapter)
@@ -123,6 +128,11 @@ namespace XF.UI.Smart
          {
             return (IWindowController)_windowAdapter ?? new NoWindowControls();
          }
+      }
+
+      public IWindowRegistry WindowRegistry
+      {
+         set { _windowRegistry = value; }
       }
 
       private void OnWindowClosed(object sender, EventArgs e)
