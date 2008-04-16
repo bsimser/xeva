@@ -23,6 +23,7 @@
   <target name="build">
     <call target="clean" />
     <call target="compile" />
+    <call target="specs" />
     <call target="package" />
   </target>
   
@@ -117,6 +118,17 @@
     <copy file="${build-source-dir}\Framework.UI.Smart.Specs\bin\${project-config}\XF.UI.Smart.Specs.dll" todir="${build-package-dir}"/>
     <copy file="${build-source-dir}\Framework.UI.Smart.Specs\bin\${project-config}\XF.UI.Smart.Specs.pdb" todir="${build-package-dir}"/>
   
+  </target>
+
+  <target name="specs">
+    <nunit2 verbose="true" haltonfailure="false" failonerror="true" failonfailureatend="true">
+      <formatter type="Plain" />
+      <test haltonfailure="false">
+        <assemblies>
+          <include name="${build-package-dir}/**.Specs.dll" />
+        </assemblies>
+      </test>
+    </nunit2>
   </target>
 
 </project>
