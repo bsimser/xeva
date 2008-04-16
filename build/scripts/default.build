@@ -23,8 +23,8 @@
   <target name="build">
     <call target="clean" />
     <call target="compile" />
-    <call target="specs" />
     <call target="package" />
+    <call target="specs" />
   </target>
   
   <target name="clean">
@@ -121,7 +121,7 @@
   </target>
 
   <target name="specs">
-    <nunit2 verbose="true" haltonfailure="false" failonerror="true" failonfailureatend="true">
+    <nunit2 verbose="true" haltonfailure="false" failonerror="true">
       <formatter type="Plain" />
       <test haltonfailure="false">
         <assemblies>
