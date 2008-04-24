@@ -1,0 +1,129 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{568B6293-E3CC-4E1F-AECC-D8996821BE02}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XF.Services</RootNamespace>
+    <AssemblyName>XF.Services</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CredentialsProvider.cs" />
+    <Compile Include="Interfaces\IAuthenticationService.cs" />
+    <Compile Include="Interfaces\ICredentialsProvider.cs" />
+    <Compile Include="Interfaces\IProxyGeneratorFactory.cs" />
+    <Compile Include="Interfaces\ISessionService.cs" />
+    <Compile Include="MessageChannel\Client\ChannelIntercept.cs" />
+    <Compile Include="MessageChannel\Client\Filters\ResponseCredentialsFilter.cs" />
+    <Compile Include="MessageChannel\Exceptions\TransportFailureException.cs" />
+    <Compile Include="MessageChannel\Exceptions\InvalidSessionException.cs" />
+    <Compile Include="MessageChannel\Exceptions\PostFilterProcessingException.cs" />
+    <Compile Include="MessageChannel\Exceptions\PreFilterProcessingException.cs" />
+    <Compile Include="MessageChannel\Server\ExceptionShield.cs" />
+    <Compile Include="MessageChannel\Server\Filters\BuildServiceFilter.cs" />
+    <Compile Include="MessageChannel\Server\Filters\BuildServiceMethodFilter.cs" />
+    <Compile Include="MessageChannel\Server\Filters\DeserializeRequestFilter.cs" />
+    <Compile Include="MessageChannel\Server\Filters\ExceptionShieldFilter.cs" />
+    <Compile Include="MessageChannel\Server\Filters\InjectCredentialsFilter.cs" />
+    <Compile Include="MessageChannel\Server\Filters\SerializeResponseFilter.cs" />
+    <Compile Include="MessageChannel\Server\Filters\ValidateSessionFilter.cs" />
+    <Compile Include="MessageChannel\Server\IServiceActivator.cs" />
+    <Compile Include="MessageChannel\Server\IServiceFilter.cs" />
+    <Compile Include="MessageChannel\Client\ChannelResponse.cs" />
+    <Compile Include="MessageChannel\Server\ExceptionMessage.cs" />
+    <Compile Include="MessageChannel\Client\Filters\ComposeRequestFilter.cs" />
+    <Compile Include="MessageChannel\Client\Filters\DefaultErrorFilter.cs" />
+    <Compile Include="MessageChannel\Client\Filters\DeserializeResponseFilter.cs" />
+    <Compile Include="MessageChannel\Client\Filters\RequestCredentialsFilter.cs" />
+    <Compile Include="MessageChannel\Client\Filters\InvocationReturnFilter.cs" />
+    <Compile Include="MessageChannel\Client\IChannelFilter.cs" />
+    <Compile Include="MessageChannel\Client\IChannelIntercept.cs" />
+    <Compile Include="MessageChannel\Client\ITransport.cs" />
+    <Compile Include="MessageChannel\Client\IMessageChannel.cs" />
+    <Compile Include="MessageChannel\Client\MessageArgument.cs" />
+    <Compile Include="MessageChannel\Client\RequestMessage.cs" />
+    <Compile Include="MessageChannel\Server\ResponseMessage.cs" />
+    <Compile Include="MessageChannel\Client\MessageChannel.cs" />
+    <Compile Include="MessageChannel\Client\Filters\SerializeRequestFilter.cs" />
+    <Compile Include="MessageChannel\Client\ChannelRequest.cs" />
+    <Compile Include="MessageChannel\Client\Transport.cs" />
+    <Compile Include="MessageChannel\Server\ServiceActivator.cs" />
+    <Compile Include="MessageChannel\Server\ServiceRequest.cs" />
+    <Compile Include="MessageChannel\Server\ServiceResponse.cs" />
+    <Compile Include="MessageSerializer\BinaryMessageSerializer.cs" />
+    <Compile Include="MessageSerializer\BinarySerializeAdapter.cs" />
+    <Compile Include="MessageSerializer\IBinaryMessageSerializer.cs" />
+    <Compile Include="MessageSerializer\IXMLMessageSerializer.cs" />
+    <Compile Include="MessageSerializer\ISerializeAdapter.cs" />
+    <Compile Include="MessageSerializer\IStreamAdapter.cs" />
+    <Compile Include="MessageSerializer\XMLMessageSerializer.cs" />
+    <Compile Include="MessageSerializer\MessageSerializerFactory.cs" />
+    <Compile Include="MessageSerializer\XMLSerializeAdapter.cs" />
+    <Compile Include="MessageSerializer\StreamAdapter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyGeneratorFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Shared\Shared.csproj">
+      <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,108 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1FB3293D-07F4-46FE-B86D-5897879CCB9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XF.UI.Smart</RootNamespace>
+    <AssemblyName>XF.UI.Smart</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.MicroKernel, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.MicroKernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\castle-1.0.rc3\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="DynamicSorting, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\dynamiccomparer\DynamicSorting.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Binding\BindingAdapter.cs" />
+    <Compile Include="Binding\BindingFilter.cs" />
+    <Compile Include="Binding\BindingFilterExpression.cs" />
+    <Compile Include="Binding\IBindingFilter.cs" />
+    <Compile Include="Exceptions\RequestItemAlreadySetException.cs" />
+    <Compile Include="Exceptions\RequestItemRequiredException.cs" />
+    <Compile Include="Exceptions\NoUserInterfaceObjectException.cs" />
+    <Compile Include="Exceptions\RequestItemTypeMismatchException.cs" />
+    <Compile Include="Exceptions\ViewNotAvailableException.cs" />
+    <Compile Include="Windows\IControl.cs" />
+    <Compile Include="IRequest.cs" />
+    <Compile Include="IPresenterValidator.cs" />
+    <Compile Include="Windows\IWindowFactory.cs" />
+    <Compile Include="Windows\IWindowAdapter.cs" />
+    <Compile Include="Windows\IWindowController.cs" />
+    <Compile Include="Windows\IWindowManager.cs" />
+    <Compile Include="Link.cs" />
+    <Compile Include="IViewCallbacks.cs" />
+    <Compile Include="Exceptions\NoCallbacksImplementationException.cs" />
+    <Compile Include="NoWindowControls.cs" />
+    <Compile Include="NullRequest.cs" />
+    <Compile Include="Presenter.cs" />
+    <Compile Include="IPresenter.cs" />
+    <Compile Include="IView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="PresenterValidator.cs" />
+    <Compile Include="Windows\IWindowOptions.cs" />
+    <Compile Include="Windows\IWindowRegistry.cs" />
+    <Compile Include="Windows\WindowManager.cs" />
+    <Compile Include="Windows\WindowOptions.cs" />
+    <Compile Include="Windows\WindowRegistry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Shared\Shared.csproj">
+      <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
