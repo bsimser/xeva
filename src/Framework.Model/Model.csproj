@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A4046AC3-E67C-47B0-883E-7B07484E6A03}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -45,7 +45,9 @@
     <Compile Include="Entity.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Exceptions\StoreClosedException.cs" />
+    <Compile Include="IBuilder.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="IFactory.cs" />
     <Compile Include="INamedQuery.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IStore.cs" />
