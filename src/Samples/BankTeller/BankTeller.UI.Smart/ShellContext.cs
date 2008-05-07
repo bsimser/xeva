@@ -9,21 +9,43 @@ namespace BankTeller.UI.Smart
 {
    public class ShellContext : ApplicationContext
    {
-      private readonly ILoginPresenter _loginPresenter;
-      private IWindowManager _windowManager;
+      private readonly IWindowManager _windowManager;
+      private ILoginPresenter _loginPresenter;
+      private IWindowAdapter _loginWindow;
+      private IShellPresenter _shellPresenter;
+      private IWindowAdapter _shellWindow;
 
       public ShellContext()
       {
          InitializeContainer();
 
-         _loginPresenter = IoC.Resolve<ILoginPresenter>();
          _windowManager = IoC.Resolve<IWindowManager>();
 
-         IWindowAdapter windowAdapter = _windowManager.Create(new WindowOptions(true, 400, 300));
-         windowAdapter.Closed += OnWindowAdapterClosed;
+         ShowLogin();
+      }
 
-         _loginPresenter.DisplayIn(windowAdapter);
+      private void ShowLogin()
+      {
+         _loginWindow = _windowManager.Create(new WindowOptions(true, 400, 300));
+         _loginWindow.Closed += OnWindowAdapterClosed;
+
+         _loginPresenter = IoC.Resolve<ILoginPresenter>();
+         _loginPresenter.LoginSuccess += (o, e) => ShowShell();
+         _loginPresenter.DisplayIn(_loginWindow);
          _loginPresenter.Start();
+      }
+
+      private void ShowShell()
+      {
+         _loginWindow.Closed -= OnWindowAdapterClosed;
+         _loginWindow.Close();
+
+         _shellWindow = _windowManager.Create(new WindowOptions {Height = 500, Width = 700, Modal = false});
+         _shellWindow.Closed += OnWindowAdapterClosed;
+
+         _shellPresenter = IoC.Resolve<IShellPresenter>();
+         _shellPresenter.DisplayIn(_shellWindow);
+         _shellPresenter.Start();
       }
 
       private void OnWindowAdapterClosed(object sender, EventArgs e)
@@ -33,8 +55,8 @@ namespace BankTeller.UI.Smart
 
       private void InitializeContainer()
       {
-         string windsorConfig = @".\_config\windsor.xml";
-         WindsorContainer windsorContainer = new WindsorContainer(windsorConfig);
+         var windsorConfig = @".\_config\windsor.xml";
+         var windsorContainer = new WindsorContainer(windsorConfig);
          IoC.Initialize(windsorContainer);
       }
    }

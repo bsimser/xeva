@@ -21,6 +21,24 @@
     </component>
 
     <component
+      id="Presenters.Shell"
+      lifestyle="transient"
+      service="BankTeller.UI.Smart.Presenters.IShellPresenter, BankTeller.UI.Smart"
+      type="BankTeller.UI.Smart.Presenters.ShellPresenter, BankTeller.UI.Smart">
+      <parameters>
+        <Key>Presenter.Shell</Key>
+        <Label>Shell</Label>
+      </parameters>
+    </component>
+
+    <component
+      id="Views.Shell"
+      lifestyle="transient"
+      service="BankTeller.UI.Smart.Presenters.IShellView, BankTeller.UI.Smart"
+      type="BankTeller.UI.Smart.Views.ShellView, BankTeller.UI.Smart">
+    </component>
+
+    <component
       id="Services.LabelLookup"
       lifestyle="singleton"
       service="BankTeller.UI.Smart.Services.ILabelLookup, BankTeller.UI.Smart"
@@ -32,6 +50,13 @@
       lifestyle="singleton"
       service="BankTeller.UI.Smart.Services.IAuthenticationService, BankTeller.UI.Smart"
       type="BankTeller.UI.Smart.Services.AuthenticationService, BankTeller.UI.Smart">
+    </component>
+
+    <component
+      id="Services.Profile"
+      lifestyle="singleton"
+      service="BankTeller.UI.Smart.Services.IProfileService, BankTeller.UI.Smart"
+      type="BankTeller.UI.Smart.Services.ProfileService, BankTeller.UI.Smart">
     </component>
 
     <component
@@ -47,6 +72,6 @@
       service="XF.UI.Smart.IWindowFactory, XF.UI.Smart"
       type="BankTeller.UI.Smart.WindowFactory, BankTeller.UI.Smart">
     </component>
-    
+
   </components>
 </castle>

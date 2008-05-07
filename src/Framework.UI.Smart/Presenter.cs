@@ -109,6 +109,7 @@ namespace XF.UI.Smart
 
       protected virtual void CustomFinish()
       {
+         if (_windowRegistry == null) return;
          Guid entityID = _request.GetOptionalItem<Guid>("entity-id", Guid.Empty);
          _windowRegistry.RemoveWindow(entityID);
       }
