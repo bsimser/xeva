@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{82487701-27A8-41B4-A546-E0FF2FF84EE8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -61,6 +61,10 @@
     <Compile Include="Presenters\Login\ILoginPresenter.cs" />
     <Compile Include="Presenters\Login\ILoginView.cs" />
     <Compile Include="Presenters\Login\LoginPresenter.cs" />
+    <Compile Include="Presenters\Shell\IShellCallbacks.cs" />
+    <Compile Include="Presenters\Shell\IShellPresenter.cs" />
+    <Compile Include="Presenters\Shell\IShellView.cs" />
+    <Compile Include="Presenters\Shell\ShellPresenter.cs" />
     <Compile Include="Program.cs">
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +76,10 @@
     <EmbeddedResource Include="Views\Login\LoginView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LoginView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Shell\ShellView.resx">
+      <DependentUpon>ShellView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Window.resx">
       <SubType>Designer</SubType>
@@ -94,13 +102,21 @@
     <Compile Include="Services\AuthenticationService.cs" />
     <Compile Include="Services\IAuthenticationService.cs" />
     <Compile Include="Services\ILabelLookup.cs" />
+    <Compile Include="Services\IProfileService.cs" />
     <Compile Include="Services\LabelLookup.cs" />
+    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="ShellContext.cs" />
     <Compile Include="Views\Login\LoginView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\Login\LoginView.Designer.cs">
       <DependentUpon>LoginView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shell\ShellView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Shell\ShellView.Designer.cs">
+      <DependentUpon>ShellView.cs</DependentUpon>
     </Compile>
     <Compile Include="Window.cs">
       <SubType>Form</SubType>

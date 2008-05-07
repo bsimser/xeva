@@ -9,7 +9,7 @@ namespace BankTeller.UI.Smart.Services
       
       public bool Authenticate(string username, string password)
       {
-         return false;
+         return true;
       }
 
    }
