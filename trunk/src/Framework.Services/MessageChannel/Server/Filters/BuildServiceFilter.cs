@@ -19,7 +19,7 @@ namespace XF.Services
 
       public void Process()
       {
-         _serviceRequest.Service = IoC.Resolve(_serviceRequest.Message.ServiceKey);
+         _serviceRequest.Service = Locator.Resolve(_serviceRequest.Message.ServiceKey);
       }
    }
 }

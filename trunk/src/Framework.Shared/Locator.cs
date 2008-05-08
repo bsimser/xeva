@@ -5,10 +5,8 @@ using Castle.Windsor;
 
 namespace XF
 {
-   public static class IoC
+   public static class Locator
    {
-      private static IWindsorContainer container;
-      private static object LocalContainerKey = new object();
 
       public static void Initialize(IWindsorContainer windsorContainer)
       {
@@ -36,7 +34,7 @@ namespace XF
       {
          get
          {
-            IWindsorContainer result = GlobalContainer;
+            var result = GlobalContainer;
             if (result == null)
                throw new InvalidOperationException("The container has not been initialized!");
             return result;
@@ -50,11 +48,9 @@ namespace XF
 
       public static void Reset()
       {
-         if (GlobalContainer != null)
-         {
-            GlobalContainer.Dispose();
-            GlobalContainer = null;
-         }
+         if (GlobalContainer == null) return;
+         GlobalContainer.Dispose();
+         GlobalContainer = null;
       }
 
       public static void AddComponent(string componentKey, Type componentType)
@@ -69,16 +65,6 @@ namespace XF
 
       }
 
-      internal static IWindsorContainer GlobalContainer
-      {
-         get
-         {
-            return container;
-         }
-         set
-         {
-            container = value;
-         }
-      }
+      internal static IWindsorContainer GlobalContainer { get; set; }
    }
 }

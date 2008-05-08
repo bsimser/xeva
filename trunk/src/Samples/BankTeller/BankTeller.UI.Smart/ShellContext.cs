@@ -19,7 +19,7 @@ namespace BankTeller.UI.Smart
       {
          InitializeContainer();
 
-         _windowManager = IoC.Resolve<IWindowManager>();
+         _windowManager = Locator.Resolve<IWindowManager>();
 
          ShowLogin();
       }
@@ -29,7 +29,7 @@ namespace BankTeller.UI.Smart
          _loginWindow = _windowManager.Create(new WindowOptions(true, 400, 300));
          _loginWindow.Closed += OnWindowAdapterClosed;
 
-         _loginPresenter = IoC.Resolve<ILoginPresenter>();
+         _loginPresenter = Locator.Resolve<ILoginPresenter>();
          _loginPresenter.LoginSuccess += (o, e) => ShowShell();
          _loginPresenter.DisplayIn(_loginWindow);
          _loginPresenter.Start();
@@ -43,7 +43,7 @@ namespace BankTeller.UI.Smart
          _shellWindow = _windowManager.Create(new WindowOptions {Height = 500, Width = 700, Modal = false});
          _shellWindow.Closed += OnWindowAdapterClosed;
 
-         _shellPresenter = IoC.Resolve<IShellPresenter>();
+         _shellPresenter = Locator.Resolve<IShellPresenter>();
          _shellPresenter.DisplayIn(_shellWindow);
          _shellPresenter.Start();
       }
@@ -57,7 +57,7 @@ namespace BankTeller.UI.Smart
       {
          var windsorConfig = @".\_config\windsor.xml";
          var windsorContainer = new WindsorContainer(windsorConfig);
-         IoC.Initialize(windsorContainer);
+         Locator.Initialize(windsorContainer);
       }
    }
 }

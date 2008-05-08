@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1FB3293D-07F4-46FE-B86D-5897879CCB9C}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -89,7 +89,6 @@
     <Compile Include="Windows\IWindowRegistry.cs" />
     <Compile Include="Windows\WindowManager.cs" />
     <Compile Include="Windows\WindowOptions.cs" />
-    <Compile Include="Windows\WindowRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
