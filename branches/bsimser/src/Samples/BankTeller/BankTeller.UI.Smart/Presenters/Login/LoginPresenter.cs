@@ -1,10 +1,11 @@
+using System;
 using BankTeller.UI.Smart.Services;
 using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart.Presenters
 {
-   public class LoginPresenter : 
-      Presenter<ILoginView, ILoginCallbacks>, ILoginPresenter, 
+   public class LoginPresenter :
+      Presenter<ILoginView, ILoginCallbacks>, ILoginPresenter,
       ILoginCallbacks
    {
       private readonly IAuthenticationService _authenticationService;
@@ -18,13 +19,25 @@ namespace BankTeller.UI.Smart.Presenters
 
       public void Login()
       {
-         
          if (!_authenticationService.Authenticate(View.Username, View.Password))
          {
             string errorMessage = _labelLookup.Find("INVALID_LOGIN");
             View.ShowError(errorMessage);
          }
+         else
+         {
+            OnLoginSuccess();
+         }
+      }
 
+      public event EventHandler LoginSuccess;
+
+      protected void OnLoginSuccess()
+      {
+         if (LoginSuccess != null)
+         {
+            LoginSuccess(this, EventArgs.Empty);
+         }
       }
    }
 }
