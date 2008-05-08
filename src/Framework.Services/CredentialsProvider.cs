@@ -24,7 +24,7 @@ namespace XF.Services
       public Guid Authenticate(object[] args)
       {
          _isAuthenticating = true;
-         TAuthenticationService authenticationService = IoC.Resolve<TAuthenticationService>();
+         TAuthenticationService authenticationService = Locator.Resolve<TAuthenticationService>();
 
          return authenticationService.Authenticate(args);
       }

@@ -19,7 +19,7 @@ namespace Specs_for_CredentialsProvider
       {
          _theUnit = new CredentialsProvider<FakeAuthentication>();
          _mockContainer = Mock<IWindsorContainer>();
-         IoC.Initialize(_mockContainer);
+         Locator.Initialize(_mockContainer);
 
          _theUnit.IsAuthenticating = true;
          _theUnit.SessionTicket = Guid.NewGuid();

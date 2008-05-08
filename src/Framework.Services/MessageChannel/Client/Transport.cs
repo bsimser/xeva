@@ -9,7 +9,7 @@ namespace XF.Services
       public virtual byte[] SendChannelRequest(byte[] requestMessage)
       {
          if (_transport == null)
-            _transport = IoC.Resolve<TTransport>();
+            _transport = Locator.Resolve<TTransport>();
 
          object[] requestPrams = new object[1] { requestMessage };
          return (byte[])_transport.GetType().GetMethod("SendChannelRequest").Invoke(_transport, requestPrams);

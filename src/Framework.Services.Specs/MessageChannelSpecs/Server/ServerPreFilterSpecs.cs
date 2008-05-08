@@ -51,7 +51,7 @@ namespace Specs_for_ServerPreFilters
       {
          _theUnit = new BuildServiceFilter();
          _mockContainer = Mock<IWindsorContainer>();
-         IoC.Initialize(_mockContainer);
+         Locator.Initialize(_mockContainer);
 
          //For coverage only
          _theUnit.ServiceResponse = new ServiceResponse();

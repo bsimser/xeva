@@ -8,7 +8,7 @@ using XF.Specs;
 namespace Specs_for_Transport
 {
    [TestFixture]
-   public class When_sending_a_channle_message : Spec
+   public class When_sending_a_message : Spec
    {
       private IWindsorContainer _mockContainer;
       private FakeTransport _physicalChannel;
@@ -18,13 +18,13 @@ namespace Specs_for_Transport
       {
          _physicalChannel = Mock<FakeTransport>();
          _mockContainer = Mock<IWindsorContainer>();
-         IoC.Initialize(_mockContainer);
+         Locator.Initialize(_mockContainer);
 
          _theUnit = new Transport<FakeTransport>();
       }
 
       [Test]
-      public void Instantiate_the_underlying_physical_channel()
+      public void Instantiate_the_underlying_physical_transport()
       {
          using (Record)
          {
@@ -40,7 +40,7 @@ namespace Specs_for_Transport
       }
 
       [Test] 
-      public void Send_the_message_to_the_underlying_physical_channel()
+      public void Send_the_message_to_the_underlying_physical_transport()
       {
          SetupResult
             .For(_mockContainer.Resolve<FakeTransport>())
