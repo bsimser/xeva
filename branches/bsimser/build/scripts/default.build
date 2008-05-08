@@ -23,12 +23,25 @@
   <target name="build">
     <call target="clean" />
     <call target="compile" />
+    <call target="compile.samples" />
     <call target="package" />
     <call target="specs" />
   </target>
   
   <target name="clean">
     <delete dir="${build-package-dir}" failonerror="false" />
+  </target>
+
+  <target name="compile.samples">
+
+    <msbuild project="${build-source-dir}\Samples\BankTeller\BankTeller.UI.Smart\BankTeller.UI.Smart.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
+    <msbuild project="${build-source-dir}\Samples\BankTeller\BankTeller.UI.Smart.Specs\BankTeller.UI.Smart.Specs.csproj" verbosity="${build-verbosity}">
+      <property name="Configuration" value="${project-config}"/>
+    </msbuild>
+
   </target>
 
   <target name="compile">
@@ -117,7 +130,12 @@
     <copy file="${build-source-dir}\Framework.UI.Smart\bin\${project-config}\XF.UI.Smart.pdb" todir="${build-package-dir}"/>
     <copy file="${build-source-dir}\Framework.UI.Smart.Specs\bin\${project-config}\XF.UI.Smart.Specs.dll" todir="${build-package-dir}"/>
     <copy file="${build-source-dir}\Framework.UI.Smart.Specs\bin\${project-config}\XF.UI.Smart.Specs.pdb" todir="${build-package-dir}"/>
-  
+
+    <copy file="${build-source-dir}\Samples\BankTeller\BankTeller.UI.Smart\bin\${project-config}\BankTeller.UI.Smart.exe" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Samples\BankTeller\BankTeller.UI.Smart\bin\${project-config}\BankTeller.UI.Smart.pdb" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Samples\BankTeller\BankTeller.UI.Smart.Specs\bin\${project-config}\BankTeller.UI.Smart.Specs.dll" todir="${build-package-dir}"/>
+    <copy file="${build-source-dir}\Samples\BankTeller\BankTeller.UI.Smart.Specs\bin\${project-config}\BankTeller.UI.Smart.Specs.pdb" todir="${build-package-dir}"/>
+ 
   </target>
 
   <target name="specs">
