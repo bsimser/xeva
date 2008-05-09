@@ -8,9 +8,11 @@ namespace XF
    public static class Locator
    {
 
+      private const string CONTAINER_KEY = "XF.Shared:CONTAINER_KEY";
+
       public static void Initialize(IWindsorContainer windsorContainer)
       {
-         GlobalContainer = windsorContainer;
+         Container = windsorContainer;
       }
 
       public static T Resolve<T>()
@@ -30,27 +32,30 @@ namespace XF
          return Container.Resolve(component);
       }
 
-      public static IWindsorContainer Container
+      private static IWindsorContainer Container
       {
          get
          {
-            var result = GlobalContainer;
-            if (result == null)
-               throw new InvalidOperationException("The container has not been initialized!");
+            var result = Globals.Data[CONTAINER_KEY] as IWindsorContainer;
             return result;
+         }
+         set
+         {
+            Globals.Data[CONTAINER_KEY] = value;
          }
       }
 
       public static bool Initialized
       {
-         get { return GlobalContainer != null; }
+         get { return Container != null; }
       }
 
       public static void Reset()
       {
-         if (GlobalContainer == null) return;
-         GlobalContainer.Dispose();
-         GlobalContainer = null;
+         if (Container == null) return;
+         Container.Dispose();
+         Container = null;
+
       }
 
       public static void AddComponent(string componentKey, Type componentType)
@@ -62,9 +67,6 @@ namespace XF
          catch (ComponentRegistrationException)
          {
          }
-
       }
-
-      internal static IWindsorContainer GlobalContainer { get; set; }
    }
 }
