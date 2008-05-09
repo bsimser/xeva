@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
 using Rhino.Mocks;
+using XF.Model;
 using XF.Specs;
 
-namespace XF.Model
+namespace Specs_for_Entity
 {
 
    [TestFixture]

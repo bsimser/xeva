@@ -5,7 +5,7 @@ using Rhino.Mocks;
 using XF.Model;
 using XF.Specs;
 
-namespace XF.Model
+namespace Specs_for_Repository
 {
    [TestFixture]
    public class When_finding_an_individual_entity_by_ID : Spec

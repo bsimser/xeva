@@ -64,9 +64,7 @@ namespace XF.Model
       public static ITransaction Transact()
       {
          Initialize();
-
          ActiveElection.CreateVote();
-
          return ActiveElection;
       }
 
