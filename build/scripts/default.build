@@ -33,49 +33,15 @@
 
   <target name="compile">
 
-    <msbuild project="${build-source-dir}\Framework.Specs\Specs.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
+    <property name="msbuild" value="C:/WINDOWS/Microsoft.NET/Framework/v3.5/MSBuild.exe" />
 
-    <msbuild project="${build-source-dir}\Framework.Shared\Shared.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.Shared.Specs\Shared.Specs.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.Model\Model.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.Model.Specs\Model.Specs.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.Store\Store.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.Store.Specs\Store.Specs.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.Services\Services.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.Services.Specs\Services.Specs.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.UI.Smart\UI.Smart.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
-
-    <msbuild project="${build-source-dir}\Framework.UI.Smart.Specs\UI.Smart.Specs.csproj" verbosity="${build-verbosity}">
-      <property name="Configuration" value="${project-config}"/>
-    </msbuild>
+    <exec program="${msbuild}">
+      <arg value="${build-source-dir}/XF.sln" />
+      <arg value="/v:n" />
+      <arg value="/p:Configuration=${project-config}" />
+      <arg value="/p:WarningLevel=0" />
+      <arg value="/p:SolutionDir=${build-source-dir}" />
+    </exec>
 
   </target>
 
