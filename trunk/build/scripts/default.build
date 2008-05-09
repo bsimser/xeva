@@ -12,6 +12,7 @@
   <property name="build-package-dir" value="..\out\package" overwrite="false" />
   <property name="tools-dir" value="..\..\tools" />
   <property name="build-verbosity" value="Minimal" />
+  <property name="msbuild" value="C:/WINDOWS/Microsoft.NET/Framework/v3.5/MSBuild.exe" />
 
   <loadtasks>
     <fileset>
@@ -32,8 +33,6 @@
   </target>
 
   <target name="compile">
-
-    <property name="msbuild" value="C:/WINDOWS/Microsoft.NET/Framework/v3.5/MSBuild.exe" />
 
     <exec program="${msbuild}">
       <arg value="${build-source-dir}/XF.sln" />
