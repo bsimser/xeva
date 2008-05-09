@@ -1,11 +1,12 @@
 using System;
 using NUnit.Framework;
 using Rhino.Mocks;
+using XF;
+using XF.Model;
 using XF.Specs;
 
-namespace XF.Model
+namespace Specs_for_UnitOfWork
 {
-
    [TestFixture]
    public class When_initializing : Spec
    {
@@ -36,7 +37,7 @@ namespace XF.Model
          UnitOfWork.InitializeWithStore(_mockStore);
 
          Assert.IsNotNull(Globals.Data[ModelConstants.STORE_KEY]);
-         Assert.IsInstanceOfType(typeof(IStore),
+         Assert.IsInstanceOfType(typeof (IStore),
                                  Globals.Data[ModelConstants.STORE_KEY]);
       }
    }
@@ -67,7 +68,7 @@ namespace XF.Model
          }
       }
 
-      [Test, ExpectedException(typeof(Exception))]
+      [Test, ExpectedException(typeof (Exception))]
       public void Fail_if_there_is_no_underlying_store()
       {
          Globals.Data.Clear();
@@ -115,7 +116,7 @@ namespace XF.Model
          _mockStore = Mock<IStore>();
       }
 
-      [Test, ExpectedException(typeof(UnitOfWorkTestException))]
+      [Test, ExpectedException(typeof (UnitOfWorkTestException))]
       public void Rollback_when_an_exception_occurs()
       {
          ITransaction mockRootTransaction = Mock<ITransaction>();
