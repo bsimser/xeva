@@ -52,12 +52,12 @@ namespace XF.UI.Smart
 
          if (HasStarted) return;
          if (View == null) throw new ViewNotAvailableException();
-         
+
          InitializeRequest(request);
 
          TCallbacks callbacks = this as TCallbacks;
          if (callbacks == null) throw new NoCallbacksImplementationException();
-         
+
          View.Attach(callbacks);
          CustomStart();
 
@@ -66,7 +66,9 @@ namespace XF.UI.Smart
          _isStarted = true;
       }
 
-      protected virtual void InitializeRequest(IRequest request) { }
+      protected virtual void InitializeRequest(IRequest request)
+      {
+      }
 
       public virtual void InitializeValidator(IPresenterValidator presenterValidator)
       {
@@ -93,7 +95,6 @@ namespace XF.UI.Smart
          _isFinished = true;
       }
 
-
       public virtual object UI
       {
          get
@@ -109,9 +110,6 @@ namespace XF.UI.Smart
 
       protected virtual void CustomFinish()
       {
-         if (_windowRegistry == null) return;
-         Guid entityID = _request.GetOptionalItem<Guid>("entity-id", Guid.Empty);
-         _windowRegistry.RemoveWindow(entityID);
       }
 
       public void DisplayIn(IWindowAdapter windowAdapter)
@@ -125,15 +123,7 @@ namespace XF.UI.Smart
 
       public IWindowController Window
       {
-         get
-         {
-            return (IWindowController)_windowAdapter ?? new NoWindowControls();
-         }
-      }
-
-      public IWindowRegistry WindowRegistry
-      {
-         set { _windowRegistry = value; }
+         get { return (IWindowController) _windowAdapter ?? new NoWindowControls(); }
       }
 
       private void OnWindowClosed(object sender, EventArgs e)
@@ -159,7 +149,7 @@ namespace XF.UI.Smart
 
       public bool Validate(object target)
       {
-         return Validate(new object[1] { target });
+         return Validate(new object[1] {target});
       }
 
       public bool Validate(object[] targets)
