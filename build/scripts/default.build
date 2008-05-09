@@ -12,7 +12,23 @@
   <property name="build-package-dir" value="..\out\package" overwrite="false" />
   <property name="tools-dir" value="..\..\tools" />
   <property name="build-verbosity" value="Minimal" />
+  
   <property name="msbuild" value="C:/WINDOWS/Microsoft.NET/Framework/v3.5/MSBuild.exe" />
+
+  <property name="tools-dir"
+       value="..\..\tools" />
+
+  <property name="tools-nunit"
+       value="${tools-dir}\nunit-2.4.6\nunit-console.exe"
+       overwrite="false" />
+
+  <property name="tools-ncover"
+				 value="${tools-dir}\ncover-1.5.8\NCover.Console.exe"
+				 overwrite="false" />
+
+  <property name="tools-ncoverexplorer"
+				 value="${tools-dir}\ncoverexplorer-1.4.0.1\NCoverExplorer.Console.exe"
+				 overwrite="false" />
 
   <loadtasks>
     <fileset>
@@ -25,7 +41,7 @@
     <call target="clean" />
     <call target="compile" />
     <call target="package" />
-    <call target="specs" />
+    <call target="specify" />
   </target>
   
   <target name="clean">
@@ -85,7 +101,7 @@
   
   </target>
 
-  <target name="specs">
+  <target name="specify">
     <nunit2 verbose="true" haltonfailure="false" failonerror="true">
       <formatter type="Plain" />
       <test haltonfailure="false">
@@ -94,6 +110,53 @@
         </assemblies>
       </test>
     </nunit2>
+  </target>
+
+  <target name="coverage">
+
+    <mkdir dir="${build-package-dir}/reports"
+				 failonerror="false" />
+
+    <!--<copy file="nunit-project.config"
+				tofile="${build-package-dir}\nunit-project.config"/>-->
+    
+    <nunitproject project="${build-package-dir}\nunit-project.nunit">
+      <fileset>
+        <include name="${build-package-dir}/XF.*.Specs.dll" />
+      </fileset>
+    </nunitproject>
+    
+    <ncover program="${tools-ncover}"
+				  commandLineExe="${tools-nunit}"
+				  commandLineArgs="${build-package-dir}\nunit-project.nunit /xml=&quot;${build-package-dir}\reports\nunit.xml&quot; /nologo /nodots"
+				  coverageFile="${build-package-dir}\reports\ncover.xml"
+				  failonerror="false"
+				  verbose="true">
+      <assemblies basedir="${build-package-dir}">
+        <include name="XF*.dll" />
+        <exclude name="X*.Tests.dll" />
+        <exclude name="X*.Specs.dll" />
+      </assemblies>
+    </ncover>
+
+    <!--
+    <ncoverexplorer program="${tools-ncoverexplorer}"
+              projectName="${project-name}"
+              outputDir="${build-package-dir}\reports"
+              reportType="5"
+              xmlReportName="ncoverexplorer.xml"
+              satisfactoryCoverage="20"
+              failMinimum="true"
+              verbose="false">
+      <moduleThresholds>
+        <moduleThreshold moduleName="XF.Shared.dll"
+									  satisfactoryCoverage="20" />
+      </moduleThresholds>
+      <fileset>
+        <include name="${build-package-dir}\reports\ncover.xml" />
+      </fileset>
+    </ncoverexplorer>-->
+  
   </target>
 
 </project>
