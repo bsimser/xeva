@@ -1,4 +1,3 @@
-using System;
 
 namespace XF.UI.Smart
 {
@@ -7,6 +6,8 @@ namespace XF.UI.Smart
       void Start();
 
       void Start(IRequest request);
+
+      void ReInitialize(IRequest request);
 
       void Finish();
 
