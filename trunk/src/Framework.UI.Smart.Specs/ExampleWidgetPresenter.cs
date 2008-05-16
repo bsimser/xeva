@@ -20,6 +20,12 @@ namespace XF.UI.Smart
          _initializeCount += 1;
       }
 
+      public override void ReInitialize(IRequest request)
+      {
+         _requestData = request.GetRequiredItem<string>("data", string.Empty);
+         _initializeCount += 1;
+      }
+
       protected override void CustomStart()
       {
          _startCount += 1;

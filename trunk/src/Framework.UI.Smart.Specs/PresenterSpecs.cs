@@ -72,6 +72,28 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
+   public class When_reinitializing_a_presenter : Spec
+   {
+      private ExampleWidgetPresenter _presenter;
+      private IRequest _request;
+
+      protected override void Before_each_spec()
+      {
+         _presenter = Create<ExampleWidgetPresenter>();
+         _request = new Request();
+         _request.SetItem("data", "test");
+      }
+
+      [Test]
+      public void Initialize_request_data()
+      {
+         Assert.AreEqual(0, _presenter.InitializeCount);
+         _presenter.ReInitialize(_request);
+         Assert.AreEqual(1, _presenter.InitializeCount);
+      }
+   }
+
+   [TestFixture]
    public class When_finishing_a_presenter : Spec
    {
       private ExampleWidgetPresenter _presenter;
