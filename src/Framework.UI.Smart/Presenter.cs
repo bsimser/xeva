@@ -70,6 +70,10 @@ namespace XF.UI.Smart
       {
       }
 
+      public virtual void ReInitialize(IRequest request)
+      {
+      }
+
       public virtual void InitializeValidator(IPresenterValidator presenterValidator)
       {
          if (_presenterValidator == null)
