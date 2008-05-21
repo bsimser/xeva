@@ -4,7 +4,7 @@ using XF.Model;
 
 namespace XF.Model
 {
-   public interface IRepository<TEntity> where TEntity : Entity, new()
+   public interface IRepository<TEntity> where TEntity : IEntity
    {
       TEntity FindByID(Guid id);
 

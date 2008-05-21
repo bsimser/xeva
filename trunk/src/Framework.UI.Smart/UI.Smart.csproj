@@ -66,11 +66,13 @@
     <Compile Include="Binding\BindingFilter.cs" />
     <Compile Include="Binding\BindingFilterExpression.cs" />
     <Compile Include="Binding\IBindingFilter.cs" />
+    <Compile Include="Builder\PresenterBuilder.cs" />
     <Compile Include="Exceptions\RequestItemAlreadySetException.cs" />
     <Compile Include="Exceptions\RequestItemRequiredException.cs" />
     <Compile Include="Exceptions\NoUserInterfaceObjectException.cs" />
     <Compile Include="Exceptions\RequestItemTypeMismatchException.cs" />
     <Compile Include="Exceptions\ViewNotAvailableException.cs" />
+    <Compile Include="PresenterFinishedEventArgs.cs" />
     <Compile Include="Windows\IControl.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="IPresenterValidator.cs" />

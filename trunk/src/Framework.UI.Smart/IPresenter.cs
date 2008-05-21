@@ -1,4 +1,6 @@
 
+using System;
+
 namespace XF.UI.Smart
 {
    public interface IPresenter : IViewCallbacks
@@ -10,6 +12,8 @@ namespace XF.UI.Smart
       void ReInitialize(IRequest request);
 
       void Finish();
+
+      event EventHandler<PresenterFinishedEventArgs> Finished;
 
       object UI { get; }
 
