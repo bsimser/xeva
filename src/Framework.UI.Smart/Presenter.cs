@@ -85,6 +85,14 @@ namespace XF.UI.Smart
          Finish(false);
       }
 
+      public event EventHandler<PresenterFinishedEventArgs> Finished;
+
+      protected virtual void OnFinished(PresenterFinishedEventArgs args)
+      {
+         if (Finished != null)
+            Finished(this, args);
+      }
+
       private void Finish(bool windowInitiated)
       {
          if (!HasStarted) return;
@@ -97,6 +105,7 @@ namespace XF.UI.Smart
          _windowAdapter = null;
          CustomFinish();
          _isFinished = true;
+         OnFinished(new PresenterFinishedEventArgs(Key));
       }
 
       public virtual object UI

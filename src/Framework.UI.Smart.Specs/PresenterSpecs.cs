@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -136,6 +137,33 @@ namespace Specs_for_Presenter
          _presenter.Finish();         
          Assert.AreEqual(1, _presenter.FinishCount);
       }
+
+      [Test]
+      public void Fire_an_event_when_finished()
+      {
+         var finishedFired = 0;
+
+         _presenter.Start();
+         _presenter.Finished += (s, e) => { finishedFired += 1; };
+         _presenter.Finish();
+
+         Assert.That(finishedFired, Is.EqualTo(1));
+      }
+
+      [Test]
+      public void Return_the_key_of_the_presenter_in_the_finished_event()
+      {
+         var knownKey = Guid.NewGuid().ToString();
+         var eventKey = string.Empty;
+
+         _presenter.Start();
+         _presenter.Key = knownKey;
+         _presenter.Finished += (s, e) => { eventKey = e.Key; };
+         _presenter.Finish();
+
+         Assert.That(eventKey, Is.EqualTo(knownKey));
+      }
+
    }
 
    [TestFixture]

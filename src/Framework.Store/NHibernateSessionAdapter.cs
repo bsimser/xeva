@@ -51,7 +51,7 @@ namespace XF.Store
          _session.Clear();
       }
 
-      public TEntity Load<TEntity>(Guid id) where TEntity : Entity, new()
+      public TEntity Load<TEntity>(Guid id) where TEntity : Entity
       {
          Open();
 
@@ -96,7 +96,7 @@ namespace XF.Store
          return;
       }
 
-      public IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : Entity, new()
+      public IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : Entity
       {
          Open();
 

@@ -5,7 +5,7 @@ using XF.Model;
 namespace XF.Model
 {
    public abstract class Repository<TEntity> : IRepository<TEntity>
-      where TEntity : Entity, new()
+      where TEntity : Entity
    {
 
       public virtual TEntity FindByID(Guid id)

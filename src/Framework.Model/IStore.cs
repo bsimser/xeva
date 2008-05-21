@@ -18,7 +18,7 @@ namespace XF.Model
 
       void Clear();
 
-      TEntity Load<TEntity>(Guid id) where TEntity : Entity, new();
+      TEntity Load<TEntity>(Guid id) where TEntity : Entity;
 
       void Delete(object entity);
 
@@ -26,7 +26,7 @@ namespace XF.Model
 
       void Refresh(object entity);
 
-      IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : Entity, new();
+      IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : Entity;
 
       ITransaction CreateTransaction();
    }
