@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using XF.UI.Smart;
 
 namespace XF.UI.Smart
@@ -18,6 +19,7 @@ namespace XF.UI.Smart
       private IRequest _request;
       private IWindowAdapter _windowAdapter;
       private IWindowRegistry _windowRegistry;
+      private IAsyncWorker _asyncWorker;
 
       public string Key
       {
@@ -59,11 +61,42 @@ namespace XF.UI.Smart
          if (callbacks == null) throw new NoCallbacksImplementationException();
 
          View.Attach(callbacks);
-         CustomStart();
-
-         Window.Show();
+         
+         if(View is IAsyncView<TCallbacks>)
+         {
+            InitializeAsyncWorker();
+            ((IAsyncView<TCallbacks>)View).ShowWaiting();
+            Window.Show();
+            _asyncWorker.RunWorkerAsync();
+         }
+         else
+         {
+            CustomStart();
+            Window.Show();
+         }
 
          _isStarted = true;
+      }
+
+      private void InitializeAsyncWorker()
+      {
+         if(_asyncWorker == null)
+         {
+            _asyncWorker = Locator.Resolve<IAsyncWorker>();
+            _asyncWorker.DoWork += AsyncCustomStart;
+            _asyncWorker.RunWorkerCompleted += OnAsyncWorkerComplete;
+         }
+      }
+
+      private void AsyncCustomStart(object sender, DoWorkEventArgs e)
+      {
+         CustomStart();
+      }
+
+      private void OnAsyncWorkerComplete(object sender, RunWorkerCompletedEventArgs e)
+      {
+         ((IAsyncView<TCallbacks>)View).HideWaiting();
+         ResumeCustomStart();
       }
 
       protected virtual void InitializeRequest(IRequest request)
@@ -71,6 +104,10 @@ namespace XF.UI.Smart
       }
 
       public virtual void ReInitialize(IRequest request)
+      {
+      }
+
+      public virtual void ResumeCustomStart()
       {
       }
 
