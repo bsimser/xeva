@@ -71,6 +71,7 @@
     <Compile Include="Binding\BindingAdapterTests.cs" />
     <Compile Include="Binding\BindingFilterTests.cs" />
     <Compile Include="Binding\FakeObject.cs" />
+    <Compile Include="ExampleAsyncPresenter.cs" />
     <Compile Include="IExampleWidgetPresenter.cs" />
     <Compile Include="RequestSpecs.cs" />
     <Compile Include="ExampleInvalidPresenter.cs" />

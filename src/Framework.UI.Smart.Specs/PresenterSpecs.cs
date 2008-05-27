@@ -1,8 +1,10 @@
 using System;
+using Castle.Windsor;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
 using Rhino.Mocks.Interfaces;
+using XF;
 using XF.Specs;
 using XF.UI.Smart;
 
@@ -70,6 +72,90 @@ namespace Specs_for_Presenter
          Request invalidRequest = new Request();
          _presenter.Start(invalidRequest);
       }
+   }
+
+   [TestFixture]
+   public class When_starting_an_asynchronous_presenter : Spec
+   {
+      private ExampleAsyncPresenter _presenter;
+      private IRequest _request;
+      private IWindsorContainer _container;
+      private IAsyncWorker _worker;
+
+      protected override void Before_each_spec()
+      {
+         _worker = Mock<IAsyncWorker>();
+         _container = Mock<IWindsorContainer>();
+         Locator.Initialize(_container);
+
+         _presenter = Create<ExampleAsyncPresenter>();
+         _request = new Request();
+         _request.SetItem("data", "test");
+      }
+
+      [Test]
+      public void Attach_callbacks_to_the_view()
+      {
+         SetupResult
+            .For(_container.Resolve<IAsyncWorker>())
+            .Return(_worker);
+
+         using (Record)
+         {
+            Get<IExampleAsyncView>().Attach(_presenter);
+         }
+         using (Playback)
+         {
+            _presenter.Start(_request);
+         }
+      }
+
+      [Test]
+      public void Get_an_async_work_and_initialize()
+      {
+
+         using (Record)
+         {
+            Expect
+               .Call(_container.Resolve<IAsyncWorker>())
+               .Return(_worker);
+         }
+
+         using (Playback)
+         {
+            _presenter.Start(_request);
+         }
+      }
+
+      [Test]
+      public void Run_the_async_worker_and_resume()
+      {
+
+         SetupResult
+           .For(_container.Resolve<IAsyncWorker>())
+           .Return(_worker);
+
+         _worker.DoWork += null;
+         IEventRaiser doWork = LastCall.IgnoreArguments().GetEventRaiser();
+
+         _worker.RunWorkerCompleted += null;
+         IEventRaiser workerDone = LastCall.IgnoreArguments().GetEventRaiser();
+
+         using (Record)
+         {
+            Get<IExampleAsyncView>().ShowWaiting();
+            _worker.RunWorkerAsync();
+            Get<IExampleAsyncView>().HideWaiting();
+         }
+
+         using (Playback)
+         {
+            _presenter.Start(_request);
+            doWork.Raise(null, null);
+            workerDone.Raise(null,null);
+         }
+      }
+
    }
 
    [TestFixture]

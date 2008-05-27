@@ -72,6 +72,9 @@
     <Compile Include="Exceptions\NoUserInterfaceObjectException.cs" />
     <Compile Include="Exceptions\RequestItemTypeMismatchException.cs" />
     <Compile Include="Exceptions\ViewNotAvailableException.cs" />
+    <Compile Include="IAsyncView.cs" />
+    <Compile Include="IAsyncWorker.cs" />
+    <Compile Include="IWaitingControl.cs" />
     <Compile Include="PresenterFinishedEventArgs.cs" />
     <Compile Include="Windows\IControl.cs" />
     <Compile Include="IRequest.cs" />
