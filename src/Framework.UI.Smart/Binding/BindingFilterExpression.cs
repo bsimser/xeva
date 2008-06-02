@@ -45,10 +45,13 @@ namespace XF.UI.Smart
          switch (Operator.ToUpper())
          {
             case "EQUAL":
-               IsMatch = _expressionValues[0] == compareValue.Replace("\n", "").Replace("\r", "");
+               IsMatch = _expressionValues[0] == (compareValue != null ? compareValue.Replace("\n", "").Replace("\r", "") : "null");
                break;
             case "=":
-               IsMatch = _expressionValues[0] == compareValue.Replace("\n", "").Replace("\r", "");
+               IsMatch = _expressionValues[0] == (compareValue != null ? compareValue.Replace("\n", "").Replace("\r", "") : "null");
+               break;
+            case "!=":
+               IsMatch = _expressionValues[0] != (compareValue != null ? compareValue.Replace("\n", "").Replace("\r", "") : "null");
                break;
             case "NOT IN":
                IsMatch = !_expressionValues.Contains(compareValue);

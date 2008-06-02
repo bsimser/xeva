@@ -25,7 +25,7 @@ namespace XF.Services
          _exceptionMessage.UserFullName = userFullName;
          _exceptionMessage.ExceptionsTime = DateTime.Now.ToString();
          _exceptionMessage.ExceptionMessages = GetExceptionMessages(exception);
-         _exceptionMessage.StackTrace = exception.StackTrace;
+         _exceptionMessage.StackTrace = GetExceptionStackTrace(exception);
          _exceptionMessage.ExceptionType = exception.GetType().Name;
       }
 
@@ -100,5 +100,28 @@ namespace XF.Services
          }
          return result;
       }
+
+      private string GetExceptionStackTrace(Exception exception)
+      {
+         StringBuilder trace = new StringBuilder();
+         if (!String.IsNullOrEmpty(exception.StackTrace))
+            trace.AppendFormat("Stack Trace Top: {0}", exception.StackTrace);
+
+         Exception innerException = null;
+         if (exception is PreFilterProcessingException)
+            innerException = ((PreFilterProcessingException)exception).FilterException;
+         else if (exception is PostFilterProcessingException)
+            innerException = ((PostFilterProcessingException)exception).FilterException;
+         else innerException = exception.InnerException;
+
+         while (innerException != null)
+         {
+            trace.AppendLine("Stack Trace Inner: " + innerException.StackTrace);
+            innerException = innerException.InnerException;
+         }
+
+         return trace.ToString();
+      }
+
    }
 }
