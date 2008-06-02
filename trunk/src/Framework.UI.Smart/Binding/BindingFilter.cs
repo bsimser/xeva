@@ -44,7 +44,7 @@ namespace XF.UI.Smart
                                                                       });
             if (expression != null)
             {
-               string itemValue = descriptor.GetValue(item).ToString();
+               string itemValue = descriptor.GetValue(item) != null ? descriptor.GetValue(item).ToString() : null;
                expression.EvaluateExpression(itemValue);
             }
          }
@@ -98,7 +98,7 @@ namespace XF.UI.Smart
          return results;
       }
 
-      private string[] _operators = new string[] {" EQUAL ", " = ", " IN ", " NOT IN ", " LIKE "};
+      private string[] _operators = new string[] { " EQUAL ", " = ", " != ", " IN ", " NOT IN ", " LIKE " };
       private string[] ExtractFilterProperty(string entry)
       {
          string[] result = new string[3];
