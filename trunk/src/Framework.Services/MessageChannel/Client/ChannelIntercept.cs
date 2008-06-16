@@ -59,7 +59,7 @@ namespace XF.Services
          }
          catch (Exception)
          {
-            throw new TransportFailureException();
+            throw;
          }
 
          ProcessPostFilters(channelRequest, channelResponse);
