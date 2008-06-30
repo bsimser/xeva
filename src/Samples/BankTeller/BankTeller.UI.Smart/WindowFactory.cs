@@ -7,7 +7,7 @@ namespace BankTeller.UI.Smart
 {
    public class WindowFactory 
    {
-      public IWindowAdapter Create()
+      public virtual IWindowAdapter Create()
       {
          return new WindowAdapter();
       }

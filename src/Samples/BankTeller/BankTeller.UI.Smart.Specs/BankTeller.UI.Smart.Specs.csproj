@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowManagerSpecs.cs" />
     <Compile Include="Presenters\Login\LoginPresenterSpecs.cs" />
     <Compile Include="Presenters\Shell\ShellPresenterSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

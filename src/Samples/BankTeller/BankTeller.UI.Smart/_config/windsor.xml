@@ -63,13 +63,12 @@
       id="Framework.WindowManager"
       lifestyle="singleton"
       service="XF.UI.Smart.IWindowManager, XF.UI.Smart"
-      type="XF.UI.Smart.WindowManager, XF.UI.Smart">
+      type="BankTeller.UI.Smart.MainWindowManager, BankTeller.UI.Smart">
     </component>
 
     <component
-      id="Framework.WindowAdapter"
+      id="Framework.WindowFactory"
       lifestyle="singleton"
-      service="XF.UI.Smart.IWindowFactory, XF.UI.Smart"
       type="BankTeller.UI.Smart.WindowFactory, BankTeller.UI.Smart">
     </component>
 
