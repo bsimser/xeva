@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Forms;
 using BankTeller.UI.Smart.Presenters;
 using Castle.Windsor;
@@ -11,6 +10,7 @@ namespace BankTeller.UI.Smart
    {
       private readonly IWindowManager _windowManager;
       private ILoginPresenter _loginPresenter;
+      private bool _loginSuccess;
       private IWindowAdapter _loginWindow;
       private IShellPresenter _shellPresenter;
       private IWindowAdapter _shellWindow;
@@ -18,37 +18,42 @@ namespace BankTeller.UI.Smart
       public ShellContext()
       {
          InitializeContainer();
-
          _windowManager = Locator.Resolve<IWindowManager>();
-
          ShowLogin();
       }
 
       private void ShowLogin()
       {
-         _loginWindow = _windowManager.Create(new WindowOptions(true, 400, 300));
-         _loginWindow.Closed += OnWindowAdapterClosed;
+         _loginPresenter =
+            New
+               .Presenter<ILoginPresenter>()
+               .ManagedBy(_windowManager)
+               .Window.ClosedCallback(OnLoginWindowClosed).Modal.Size(400, 300)
+               .Display();
 
-         _loginPresenter = Locator.Resolve<ILoginPresenter>();
-         _loginPresenter.LoginSuccess += (o, e) => ShowShell();
-         _loginPresenter.DisplayIn(_loginWindow);
+         _loginPresenter.LoginSuccess += ()=> _loginSuccess = true; 
          _loginPresenter.Start();
       }
 
       private void ShowShell()
       {
-         _loginWindow.Closed -= OnWindowAdapterClosed;
-         _loginWindow.Close();
-
-         _shellWindow = _windowManager.Create(new WindowOptions {Height = 500, Width = 700, Modal = false});
-         _shellWindow.Closed += OnWindowAdapterClosed;
-
-         _shellPresenter = Locator.Resolve<IShellPresenter>();
-         _shellPresenter.DisplayIn(_shellWindow);
-         _shellPresenter.Start();
+         New.Presenter<IShellPresenter>()
+            .ManagedBy(_windowManager)
+            .Window.Size(800, 600).NotModal.ClosedCallback(OnLoginWindowClosed)
+            .Display();
       }
 
-      private void OnWindowAdapterClosed(object sender, EventArgs e)
+      private void OnLoginWindowClosed()
+      {
+         if (_loginSuccess)
+         {
+            ShowShell();
+            return;
+         }
+         Application.Exit();
+      }
+
+      private void OnShellWindowClosed()
       {
          Application.Exit();
       }

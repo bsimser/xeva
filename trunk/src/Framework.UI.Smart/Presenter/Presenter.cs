@@ -162,6 +162,19 @@ namespace XF.UI.Smart
       {
       }
 
+      public void DisplayIn(IWindowManager manager, IWindowOptions options)
+      {
+         if (this.UI == null) throw new NoUserInterfaceObjectException();
+         
+         _windowAdapter = manager.CreateWindowFor(this);
+         
+         if (options != null) _windowAdapter.ApplyOptions(options);
+         _windowAdapter.InitializeUI(this.UI);
+         _windowAdapter.Closed += OnWindowClosed;
+         
+         if (HasStarted) _windowAdapter.Show();
+      }
+
       public void DisplayIn(IWindowAdapter windowAdapter)
       {
          if (this.UI == null) throw new NoUserInterfaceObjectException();

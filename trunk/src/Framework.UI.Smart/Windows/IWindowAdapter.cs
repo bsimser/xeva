@@ -3,12 +3,10 @@ using System.ComponentModel;
 
 namespace XF.UI.Smart
 {
-   public interface IWindowAdapter : IWindowController, IWindowOptions
+   public interface IWindowAdapter : IWindowController 
    {
-      void Close();
-
-      event EventHandler Closed;
-
       void InitializeUI(object ui);
+
+      void ApplyOptions(IWindowOptions options);
    }
 }

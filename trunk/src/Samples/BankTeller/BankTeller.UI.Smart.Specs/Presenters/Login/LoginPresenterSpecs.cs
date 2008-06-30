@@ -119,7 +119,7 @@ namespace Specs_for_LoginPresenter
          }
 
          var eventCalls = 0;
-         _presenter.LoginSuccess += (o, e) => { eventCalls += 1; };
+         _presenter.LoginSuccess += () => { eventCalls += 1; };
 
          using (Playback)
          {

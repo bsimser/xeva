@@ -9,8 +9,6 @@ namespace BankTeller.UI.Smart
    public class WindowAdapter : IWindowAdapter
    {
       private bool _modal;
-      private int _width;
-      private int _height;
       private readonly Window _window;
 
       public WindowAdapter()
@@ -25,8 +23,6 @@ namespace BankTeller.UI.Smart
             this.Closed(this, EventArgs.Empty);
       }
 
-      #region IWindowAdapter Members
-
       public void Close()
       {
          _window.Close();
@@ -39,9 +35,14 @@ namespace BankTeller.UI.Smart
          _window.InitializeUI(ui);
       }
 
-      #endregion  
-
-      #region IWindowController Members
+      public void ApplyOptions(IWindowOptions options)
+      {
+         _modal = options.Modal;
+         _window.Width = options.Width;
+         _window.Height = options.Height;
+         _window.Left = options.Left;
+         _window.Top = options.Top;
+      }
 
       public void Show()
       {
@@ -58,29 +59,5 @@ namespace BankTeller.UI.Smart
       {
          _window.Text = caption;
       }
-
-      #endregion
-
-      #region IWindowOptions Members
-
-      public bool Modal
-      {
-         get { return _modal; }
-         set { _modal = value; }
-      }
-
-      public int Width
-      {
-         get { return _window.Width; }
-         set { _window.Width = value; }
-      }
-
-      public int Height
-      {
-         get { return _window.Height; }
-         set { _window.Height = value; }
-      }
-
-      #endregion
    }
 }

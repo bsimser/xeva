@@ -59,6 +59,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +67,7 @@
     <Compile Include="Binding\BindingFilter.cs" />
     <Compile Include="Binding\BindingFilterExpression.cs" />
     <Compile Include="Binding\IBindingFilter.cs" />
-    <Compile Include="Builder\PresenterBuilder.cs" />
+    <Compile Include="Presenter\PresenterBuilder.cs" />
     <Compile Include="Exceptions\RequestItemAlreadySetException.cs" />
     <Compile Include="Exceptions\RequestItemRequiredException.cs" />
     <Compile Include="Exceptions\NoUserInterfaceObjectException.cs" />
@@ -74,29 +75,27 @@
     <Compile Include="Exceptions\ViewNotAvailableException.cs" />
     <Compile Include="IAsyncView.cs" />
     <Compile Include="IAsyncWorker.cs" />
-    <Compile Include="IWaitingControl.cs" />
-    <Compile Include="PresenterFinishedEventArgs.cs" />
+    <Compile Include="Windows\IWaitingControl.cs" />
+    <Compile Include="Presenter\PresenterFinishedEventArgs.cs" />
     <Compile Include="Windows\IControl.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="IPresenterValidator.cs" />
-    <Compile Include="Windows\IWindowFactory.cs" />
     <Compile Include="Windows\IWindowAdapter.cs" />
     <Compile Include="Windows\IWindowController.cs" />
     <Compile Include="Windows\IWindowManager.cs" />
     <Compile Include="Link.cs" />
-    <Compile Include="IViewCallbacks.cs" />
+    <Compile Include="Presenter\IViewCallbacks.cs" />
     <Compile Include="Exceptions\NoCallbacksImplementationException.cs" />
-    <Compile Include="NoWindowControls.cs" />
+    <Compile Include="Windows\NoWindowControls.cs" />
     <Compile Include="NullRequest.cs" />
-    <Compile Include="Presenter.cs" />
+    <Compile Include="Presenter\Presenter.cs" />
     <Compile Include="IPresenter.cs" />
-    <Compile Include="IView.cs" />
+    <Compile Include="Presenter\IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
-    <Compile Include="PresenterValidator.cs" />
+    <Compile Include="Presenter\PresenterValidator.cs" />
     <Compile Include="Windows\IWindowOptions.cs" />
     <Compile Include="Windows\IWindowRegistry.cs" />
-    <Compile Include="Windows\WindowManager.cs" />
     <Compile Include="Windows\WindowOptions.cs" />
   </ItemGroup>
   <ItemGroup>

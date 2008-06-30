@@ -57,9 +57,19 @@ namespace XF.Specs
          return _mocks.DynamicMock<TType>();
       }
 
-      protected TType Mock<TType>(object[] prams)
+      protected TType Mock<TType>(object[] args)
       {
-         return _mocks.DynamicMock<TType>(prams);
+         return _mocks.DynamicMock<TType>(args);
+      }
+
+      protected TType Stub<TType>()
+      {
+         return _mocks.Stub<TType>();
+      }
+
+      protected TType Stub<TType>(object[] args)
+      {
+         return _mocks.Stub<TType>(args);
       }
 
       protected TType Partial<TType>() 
@@ -78,11 +88,6 @@ namespace XF.Specs
          where TType : class
       {
          return _autoMockingContainer.Create<TType>();
-      }
-
-      protected TType Stub<TType>()
-      {
-         return _mocks.Stub<TType>();
       }
 
       protected void Verify(object mock)

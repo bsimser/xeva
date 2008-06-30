@@ -5,7 +5,7 @@ using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart
 {
-   public class WindowFactory : IWindowFactory
+   public class WindowFactory 
    {
       public IWindowAdapter Create()
       {
