@@ -1,23 +1,53 @@
-using System.Runtime.Serialization;
+using System.Drawing;
 
 namespace XF.UI.Smart
 {
    public class WindowOptions : IWindowOptions
    {
+      private int _height;
       private bool _modal;
       private int _width;
-      private int _height;
+      private int _top;
+      private int _left;
 
-      public WindowOptions()
-      {
-            
-      }
-
-      public WindowOptions(bool modal, int width, int height)
+      public WindowOptions(bool modal, int width, int height, int left, int top)
       {
          _modal = modal;
          _width = width;
          _height = height;
+         _top = top;
+         _left = left;
+      }
+
+      public WindowOptions() : this (false, 300, 300, 0, 0)
+      {
+      }
+
+      public WindowOptions(bool modal, int width, int height): this (modal, width, height, 0, 0)
+      {
+      }
+
+      public Point Location
+      {
+         get
+         {
+            return new Point(_top, _left);
+         }
+         set
+         {
+            _left = value.X;
+            _top = value.Y;
+         }
+      }
+
+      public Size Size
+      {
+         get { return new Size(_width, _height); }
+         set
+         {
+            _width = value.Width;
+            _height = value.Height;
+         }
       }
 
       public bool Modal
@@ -38,11 +68,16 @@ namespace XF.UI.Smart
          set { _height = value; }
       }
 
-      public virtual void ApplyOptionsTo(IWindowAdapter windowAdapter)
+      public int Left
       {
-         windowAdapter.Width = _width;
-         windowAdapter.Height = _height;
-         windowAdapter.Modal = _modal;
+         get { return _left; }
+         set { _left = value; }
+      }
+
+      public int Top
+      {
+         get { return _top; }
+         set { _top = value; }
       }
    }
 }

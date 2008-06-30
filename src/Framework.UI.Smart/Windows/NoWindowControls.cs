@@ -1,3 +1,5 @@
+using System;
+
 namespace XF.UI.Smart
 {
    public class NoWindowControls : IWindowController
@@ -19,6 +21,13 @@ namespace XF.UI.Smart
       public void Hide()
       {
       }
+
+      public void Close()
+      {
+         
+      }
+
+      public event EventHandler Closed;
 
       public void ChangeCaption(string caption)
       {

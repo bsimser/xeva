@@ -36,5 +36,6 @@ namespace XF.UI.Smart
          get;
       }
 
+      void DisplayIn(IWindowManager manager, IWindowOptions options);
    }
 }

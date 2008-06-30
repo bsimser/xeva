@@ -30,13 +30,13 @@ namespace BankTeller.UI.Smart.Presenters
          }
       }
 
-      public event EventHandler LoginSuccess;
+      public event LoginSuccessDelegate LoginSuccess;
 
       protected void OnLoginSuccess()
       {
          if (LoginSuccess != null)
          {
-            LoginSuccess(this, EventArgs.Empty);
+            LoginSuccess();
          }
       }
    }

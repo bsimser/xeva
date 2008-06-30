@@ -72,14 +72,14 @@
     <Compile Include="Binding\BindingFilterTests.cs" />
     <Compile Include="Binding\FakeObject.cs" />
     <Compile Include="ExampleAsyncPresenter.cs" />
+    <Compile Include="ExampleWindowManager.cs" />
     <Compile Include="IExampleWidgetPresenter.cs" />
+    <Compile Include="PresenterBuilderSpecs.cs" />
     <Compile Include="RequestSpecs.cs" />
     <Compile Include="ExampleInvalidPresenter.cs" />
     <Compile Include="ExampleWidgetPresenter.cs" />
     <Compile Include="PresenterSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowManagerSpecs.cs" />
-    <Compile Include="WindowOptionsSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
