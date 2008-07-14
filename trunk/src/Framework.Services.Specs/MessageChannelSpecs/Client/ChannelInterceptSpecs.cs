@@ -1,5 +1,7 @@
+extern alias CastleCore;
+
 using System.Collections.Generic;
-using Castle.Core.Interceptor;
+using CastleInterception = CastleCore::Castle.Core.Interceptor;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -12,7 +14,7 @@ namespace Specs_for_ChannelIntercept
    public class When_sarting : Spec
    {
       private IChannelFilter _filter;
-      private IInvocation _invocation;
+      private CastleInterception.IInvocation _invocation;
       private ITransport _transPort;
       private ChannelIntercept _theUnit;
 
@@ -35,14 +37,14 @@ namespace Specs_for_ChannelIntercept
    public class When_sending_a_message : Spec
    {
       private IChannelFilter _filter;
-      private IInvocation _invocation;
+      private CastleInterception.IInvocation _invocation;
       private ITransport _transPort;
       private ChannelIntercept _theUnit;
 
       protected override void Before_each_spec()
       {
          _filter = Mock<IChannelFilter>();
-         _invocation = Mock<IInvocation>();
+         _invocation = Mock<CastleInterception.IInvocation>();
          _transPort = Mock<ITransport>();
          _theUnit = new ChannelIntercept(_transPort);
          _theUnit.PreFilters = new List<IChannelFilter>();

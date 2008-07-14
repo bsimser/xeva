@@ -1,6 +1,8 @@
+extern alias CastleCore;
+
 using System;
 using System.Reflection;
-using Castle.Core.Interceptor;
+using CastleInterception = CastleCore::Castle.Core.Interceptor;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -14,11 +16,11 @@ namespace Specs_for_Client_PreFilters
    {
       private ComposeRequestFilter _theUnit;
       private MethodInfo _proxyMethod;
-      private IInvocation _invocation;
+      private CastleInterception.IInvocation _invocation;
 
       protected override void Before_each_spec()
       {
-         _invocation = Mock<IInvocation>();
+         _invocation = Mock<CastleInterception.IInvocation>();
          _proxyMethod = ObjectMother.GetMethodInfo();
 
          _theUnit = new ComposeRequestFilter();
@@ -102,11 +104,11 @@ namespace Specs_for_Client_PreFilters
    {
       private RequestCredentialsFilter _theUnit;
       private ICredentialsProvider _credentialsProvider;
-      private IInvocation _invocation;
+      private CastleInterception.IInvocation _invocation;
 
       protected override void Before_each_spec()
       {
-         _invocation = Mock<IInvocation>();
+         _invocation = Mock<CastleInterception.IInvocation>();
          _credentialsProvider = Mock<ICredentialsProvider>();
 
          _theUnit = new RequestCredentialsFilter();
@@ -161,11 +163,11 @@ namespace Specs_for_Client_PreFilters
    public class When_processing_the_serialize_request_filter : Spec
    {
       private SerializeRequestFilter _theUnit;
-      private IInvocation _invocation;
+      private CastleInterception.IInvocation _invocation;
 
       protected override void Before_each_spec()
       {
-         _invocation = Mock<IInvocation>();
+         _invocation = Mock<CastleInterception.IInvocation>();
 
          _theUnit = new SerializeRequestFilter();
 
@@ -191,7 +193,7 @@ namespace Specs_for_Client_PreFilters
 
    internal static class ObjectMother
    {
-      public static ChannelRequest GetChannelRequest(IInvocation invocation)
+      public static ChannelRequest GetChannelRequest(CastleInterception.IInvocation invocation)
       {
          ChannelRequest result = new ChannelRequest();
          result.Message = new RequestMessage();

@@ -1,6 +1,8 @@
+extern alias CastleCore;
+
 using System;
 using System.Collections.Generic;
-using Castle.Core.Interceptor;
+using CastleInterception = CastleCore::Castle.Core.Interceptor;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
@@ -154,11 +156,11 @@ namespace Specs_for_Client_PostFilters
    public class When_processing_the_invocation_return_filter : Spec
    {
       private InvocationReturnFilter _theUnit;
-      private IInvocation _invocation;
+      private CastleInterception.IInvocation _invocation;
 
       protected override void Before_each_spec()
       {
-         _invocation = Mock<IInvocation>();
+         _invocation = Mock<CastleInterception.IInvocation>();
 
          _theUnit = new InvocationReturnFilter();
 
@@ -219,7 +221,7 @@ namespace Specs_for_Client_PostFilters
          return result;
       }
 
-      public static ChannelRequest GetChannelRequest(IInvocation invocation)
+      public static ChannelRequest GetChannelRequest(CastleInterception.IInvocation invocation)
       {
          ChannelRequest result = new ChannelRequest();
          result.Message = new RequestMessage();
