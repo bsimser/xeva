@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using XF.UI.Smart;
 
 namespace XF.UI.Smart
 {
@@ -9,17 +8,38 @@ namespace XF.UI.Smart
       where TCallbacks : class, IViewCallbacks
       where TView : class, IView<TCallbacks>
    {
-      private TView _view;
-      private IPresenterValidator _presenterValidator;
-      private bool _isStarted = false;
-      private bool _isFinished = false;
+      private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
+      private IAsyncWorker _asyncWorker;
+      private bool _isFinished;
+      private bool _isStarted;
       private string _key;
       private string _label;
-      private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
+      private IPresenterValidator _presenterValidator;
       private IRequest _request;
+      private TView _view;
       private IWindowAdapter _windowAdapter;
       private IWindowRegistry _windowRegistry;
-      private IAsyncWorker _asyncWorker;
+
+      protected bool HasStarted
+      {
+         get { return _isStarted; }
+      }
+
+      protected bool HasFinished
+      {
+         get { return _isFinished; }
+      }
+
+      public TView View
+      {
+         get { return _view; }
+         set { _view = value; }
+      }
+
+      public Dictionary<string, IControl> Controls
+      {
+         get { return _controls; }
+      }
 
       public string Key
       {
@@ -33,14 +53,8 @@ namespace XF.UI.Smart
          set { _label = value; }
       }
 
-      protected bool HasStarted
+      protected virtual void InitializeRequest(IRequest request)
       {
-         get { return _isStarted; }
-      }
-
-      protected bool HasFinished
-      {
-         get { return _isFinished; }
       }
 
       public void Start()
@@ -57,15 +71,15 @@ namespace XF.UI.Smart
 
          InitializeRequest(request);
 
-         TCallbacks callbacks = this as TCallbacks;
+         var callbacks = this as TCallbacks;
          if (callbacks == null) throw new NoCallbacksImplementationException();
 
          View.Attach(callbacks);
-         
-         if(View is IAsyncView<TCallbacks>)
+
+         if (View is IAsyncView<TCallbacks>)
          {
             InitializeAsyncWorker();
-            ((IAsyncView<TCallbacks>)View).ShowWaiting();
+            ((IAsyncView<TCallbacks>) View).ShowWaiting();
             Window.Show();
             _asyncWorker.RunWorkerAsync();
          }
@@ -78,32 +92,7 @@ namespace XF.UI.Smart
          _isStarted = true;
       }
 
-      private void InitializeAsyncWorker()
-      {
-         if(_asyncWorker == null)
-         {
-            _asyncWorker = Locator.Resolve<IAsyncWorker>();
-            _asyncWorker.DoWork += AsyncCustomStart;
-            _asyncWorker.RunWorkerCompleted += OnAsyncWorkerComplete;
-         }
-      }
-
-      private void AsyncCustomStart(object sender, DoWorkEventArgs e)
-      {
-         CustomStart();
-      }
-
-      private void OnAsyncWorkerComplete(object sender, RunWorkerCompletedEventArgs e)
-      {
-         ((IAsyncView<TCallbacks>)View).HideWaiting();
-         ResumeCustomStart();
-      }
-
-      protected virtual void InitializeRequest(IRequest request)
-      {
-      }
-
-      public virtual void ReInitialize(IRequest request)
+      protected virtual void CustomStart()
       {
       }
 
@@ -111,23 +100,13 @@ namespace XF.UI.Smart
       {
       }
 
-      public virtual void InitializeValidator(IPresenterValidator presenterValidator)
+      public virtual void ReInitialize(IRequest request)
       {
-         if (_presenterValidator == null)
-            _presenterValidator = presenterValidator;
       }
 
       public void Finish()
       {
          Finish(false);
-      }
-
-      public event EventHandler<PresenterFinishedEventArgs> Finished;
-
-      protected virtual void OnFinished(PresenterFinishedEventArgs args)
-      {
-         if (Finished != null)
-            Finished(this, args);
       }
 
       private void Finish(bool windowInitiated)
@@ -145,69 +124,47 @@ namespace XF.UI.Smart
          OnFinished(new PresenterFinishedEventArgs(Key));
       }
 
-      public virtual object UI
-      {
-         get
-         {
-            object result = (_view == null) ? null : _view.UI;
-            return result;
-         }
-      }
-
-      protected virtual void CustomStart()
-      {
-      }
-
       protected virtual void CustomFinish()
       {
       }
 
+      public event EventHandler<PresenterFinishedEventArgs> Finished;
+
+      protected virtual void OnFinished(PresenterFinishedEventArgs args)
+      {
+         if (Finished != null)
+            Finished(this, args);
+      }
+
+      public virtual object UI
+      {
+         get
+         {
+            var result = (_view == null) ? null : _view.UI;
+            return result;
+         }
+      }
+
       public void DisplayIn(IWindowManager manager, IWindowOptions options)
       {
-         if (this.UI == null) throw new NoUserInterfaceObjectException();
-         
+         if (UI == null) throw new NoUserInterfaceObjectException();
+
          _windowAdapter = manager.CreateWindowFor(this);
-         
+
          if (options != null) _windowAdapter.ApplyOptions(options);
-         _windowAdapter.InitializeUI(this.UI);
+         _windowAdapter.InitializeUI(UI);
          _windowAdapter.Closed += OnWindowClosed;
-         
+
          if (HasStarted) _windowAdapter.Show();
       }
 
       public void DisplayIn(IWindowAdapter windowAdapter)
       {
-         if (this.UI == null) throw new NoUserInterfaceObjectException();
+         if (UI == null) throw new NoUserInterfaceObjectException();
          _windowAdapter = windowAdapter;
-         _windowAdapter.InitializeUI(this.UI);
+         _windowAdapter.InitializeUI(UI);
          _windowAdapter.Closed += OnWindowClosed;
          if (HasStarted) _windowAdapter.Show();
-      }
-
-      public IWindowController Window
-      {
-         get { return (IWindowController) _windowAdapter ?? new NoWindowControls(); }
-      }
-
-      private void OnWindowClosed(object sender, EventArgs e)
-      {
-         Finish(true);
-      }
-
-      public TView View
-      {
-         get { return _view; }
-         set { _view = value; }
-      }
-
-      public Dictionary<string, IControl> Controls
-      {
-         get { return _controls; }
-      }
-
-      public void RegisterControl(string property, IControl control)
-      {
-         _controls.Add(property, control);
       }
 
       public bool Validate(object target)
@@ -220,6 +177,48 @@ namespace XF.UI.Smart
          InitializeValidator(new PresenterValidator());
 
          return _presenterValidator.Validate(targets, _controls);
+      }
+
+      public virtual void InitializeValidator(IPresenterValidator presenterValidator)
+      {
+         if (_presenterValidator == null)
+            _presenterValidator = presenterValidator;
+      }
+
+      public IWindowController Window
+      {
+         get { return (IWindowController) _windowAdapter ?? new NoWindowControls(); }
+      }
+
+      public void RegisterControl(string property, IControl control)
+      {
+         _controls.Add(property, control);
+      }
+
+      private void InitializeAsyncWorker()
+      {
+         if (_asyncWorker == null)
+         {
+            _asyncWorker = Locator.Resolve<IAsyncWorker>();
+            _asyncWorker.DoWork += AsyncCustomStart;
+            _asyncWorker.RunWorkerCompleted += OnAsyncWorkerComplete;
+         }
+      }
+
+      private void AsyncCustomStart(object sender, DoWorkEventArgs e)
+      {
+         CustomStart();
+      }
+
+      private void OnAsyncWorkerComplete(object sender, RunWorkerCompletedEventArgs e)
+      {
+         ((IAsyncView<TCallbacks>) View).HideWaiting();
+         ResumeCustomStart();
+      }
+
+      private void OnWindowClosed(object sender, EventArgs e)
+      {
+         Finish(true);
       }
    }
 }

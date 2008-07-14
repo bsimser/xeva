@@ -26,7 +26,7 @@ namespace Specs_for_PresenterBuilder
       }
 
       [Test]
-      public void Accept_a_provided_window_manager_instance()
+      public void Accept_a_provided_window_manager()
       {
          using (Record)
          {
