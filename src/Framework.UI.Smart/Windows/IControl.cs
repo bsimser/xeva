@@ -9,5 +9,9 @@ namespace XF.UI.Smart
       object Value { get; set; }
 
       bool ReadOnly { get; set; }
+
+      int Width { get; set; }
+
+      int Height { get; set; }
    }
 }
