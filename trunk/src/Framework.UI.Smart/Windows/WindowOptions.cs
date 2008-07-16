@@ -19,7 +19,7 @@ namespace XF.UI.Smart
          _left = left;
       }
 
-      public WindowOptions() : this (false, 300, 300, 0, 0)
+      public WindowOptions() : this (false, 800, 600, 0, 0)
       {
       }
 
