@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NHibernate;
-using NHibernate.Expression;
+using System.Linq;
+using NHibernate.Linq;
 using XF.Model;
 using ITransaction=XF.Model.ITransaction;
 using NHQuery = NHibernate.IQuery;
@@ -114,6 +114,11 @@ namespace XF.Store
          IList<TEntity> result = new List<TEntity>(iQuery.List<TEntity>());
 
          return result;
+      }
+
+      public IOrderedQueryable Query<TEntity>()
+      {
+         return _session.Linq<TEntity>();
       }
 
       public ITransaction CreateTransaction()

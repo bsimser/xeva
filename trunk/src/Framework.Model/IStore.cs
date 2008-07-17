@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using XF.Model;
 
 namespace XF.Model
@@ -27,6 +28,8 @@ namespace XF.Model
       void Refresh(object entity);
 
       IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : Entity;
+      
+      IOrderedQueryable Query<TEntity>();
 
       ITransaction CreateTransaction();
    }
