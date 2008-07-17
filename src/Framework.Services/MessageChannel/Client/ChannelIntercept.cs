@@ -52,7 +52,7 @@ namespace XF.Services
          channelRequest.Invocation = invocation;
          channelRequest.ServiceName = ServiceName;
          ProcessPreFilters(channelRequest, channelResponse);
-
+               
          try
          {
             channelResponse.Content = _transport.SendChannelRequest(channelRequest.Content);
