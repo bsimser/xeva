@@ -27,9 +27,9 @@ namespace XF.Model
 
       void Refresh(object entity);
 
-      IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : Entity;
+      IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : IEntity;
       
-      IOrderedQueryable Query<TEntity>();
+      IOrderedQueryable<TEntity> Query<TEntity>() where TEntity : IEntity;
 
       ITransaction CreateTransaction();
    }

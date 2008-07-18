@@ -96,7 +96,7 @@ namespace XF.Store
          return;
       }
 
-      public IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : Entity
+      public IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : IEntity
       {
          Open();
 
@@ -116,7 +116,7 @@ namespace XF.Store
          return result;
       }
 
-      public IOrderedQueryable Query<TEntity>()
+      public IOrderedQueryable<TEntity> Query<TEntity>() where TEntity : IEntity
       {
          return _session.Linq<TEntity>();
       }
