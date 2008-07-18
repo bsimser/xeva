@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using XF.Model;
 
 namespace XF.Model
@@ -7,8 +8,16 @@ namespace XF.Model
    public abstract class Repository<TEntity> : IRepository<TEntity>
       where TEntity : Entity
    {
+      public IQueryable<TEntity> All
+      {
+         get
+         {
+            GuardStoreNotNull();
+            return Store.Query<TEntity>();
+         }
+      }
 
-      public virtual TEntity FindByID(Guid id)
+      public virtual TEntity FindBy(Guid id)
       {
          GuardStoreNotNull();
          TEntity result = Store.Load<TEntity>(id);

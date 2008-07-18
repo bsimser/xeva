@@ -30,7 +30,7 @@ namespace Specs_for_Repository
          using (Playback)
          {
             FakeRepository repository = new FakeRepository();
-            repository.FindByID(Guid.Empty);
+            repository.FindBy(Guid.Empty);
          }
       }
 
@@ -93,7 +93,7 @@ namespace Specs_for_Repository
       [ExpectedException(typeof(InvalidOperationException))]
       public void Throw_an_exception_when_finding_an_entity_by_id()
       {
-         _repository.FindByID(Guid.Empty);
+         _repository.FindBy(Guid.Empty);
       }
 
       [Test]
