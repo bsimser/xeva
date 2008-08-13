@@ -29,7 +29,7 @@ namespace BankTeller.UI.Smart
                .Presenter<ILoginPresenter>()
                .ManagedBy(_windowManager)
                .Window.ClosedCallback(OnLoginWindowClosed).Modal.Size(400, 300)
-               .Display();
+               .Return; 
 
          _loginPresenter.LoginSuccess += ()=> _loginSuccess = true; 
          _loginPresenter.Start();
@@ -39,8 +39,8 @@ namespace BankTeller.UI.Smart
       {
          New.Presenter<IShellPresenter>()
             .ManagedBy(_windowManager)
-            .Window.Size(800, 600).NotModal.ClosedCallback(OnLoginWindowClosed)
-            .Display();
+            .Window.Size(800, 600).NotModal.ClosedCallback(OnShellWindowClosed)
+            .Return.Start();
       }
 
       private void OnLoginWindowClosed()

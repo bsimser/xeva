@@ -53,8 +53,18 @@ namespace XF.UI.Smart
          set { _label = value; }
       }
 
-      protected virtual void InitializeRequest(IRequest request)
+      public virtual object UI
       {
+         get
+         {
+            var result = (_view == null) ? null : _view.UI;
+            return result;
+         }
+      }
+
+      public IWindowController Window
+      {
+         get { return (IWindowController) _windowAdapter ?? new NoWindowControls(); }
       }
 
       public void Start()
@@ -76,38 +86,57 @@ namespace XF.UI.Smart
 
          View.Attach(callbacks);
 
-         if (View is IAsyncView<TCallbacks>)
-         {
-            InitializeAsyncWorker();
-            ((IAsyncView<TCallbacks>) View).ShowWaiting();
-            Window.Show();
-            _asyncWorker.RunWorkerAsync();
-         }
-         else
-         {
-            CustomStart();
-            Window.Show();
-         }
-
+         CustomStart();
          _isStarted = true;
+ 
+         Window.Show();
       }
 
-      protected virtual void CustomStart()
-      {
-      }
-
-      public virtual void ResumeCustomStart()
-      {
-      }
-
-      public virtual void ReInitialize(IRequest request)
-      {
-      }
+      public virtual void ReInitialize(IRequest request) {}
 
       public void Finish()
       {
          Finish(false);
       }
+
+      public WorkItemBuilder Queue
+      {
+         get
+         {
+            return new WorkItemBuilder(Locator.Resolve<IWorkItemDispatcher>());
+         }
+      }
+
+      public event EventHandler<PresenterFinishedEventArgs> Finished;
+
+      public void DisplayIn(IWindowManager manager, IWindowOptions options)
+      {
+         if (UI == null) throw new NoUserInterfaceObjectException();
+
+         _windowAdapter = manager.CreateWindowFor(this);
+
+         if (options != null) _windowAdapter.ApplyOptions(options);
+         _windowAdapter.InitializeUI(UI);
+         _windowAdapter.Closed += OnWindowClosed;
+
+         if (HasStarted) _windowAdapter.Show();
+      }
+
+      public void DisplayIn(IWindowManager manager)
+      {
+         this.DisplayIn(manager, manager.CreateDefaultWindowOptionsFor(this));
+      }
+
+      public void RegisterControl(string property, IControl control)
+      {
+         _controls.Add(property, control);
+      }
+
+      protected virtual void InitializeRequest(IRequest request) {}
+
+      protected virtual void CustomStart() {}
+
+      public virtual void ResumeCustomStart() {}
 
       private void Finish(bool windowInitiated)
       {
@@ -124,47 +153,12 @@ namespace XF.UI.Smart
          OnFinished(new PresenterFinishedEventArgs(Key));
       }
 
-      protected virtual void CustomFinish()
-      {
-      }
-
-      public event EventHandler<PresenterFinishedEventArgs> Finished;
+      protected virtual void CustomFinish() {}
 
       protected virtual void OnFinished(PresenterFinishedEventArgs args)
       {
          if (Finished != null)
             Finished(this, args);
-      }
-
-      public virtual object UI
-      {
-         get
-         {
-            var result = (_view == null) ? null : _view.UI;
-            return result;
-         }
-      }
-
-      public void DisplayIn(IWindowManager manager, IWindowOptions options)
-      {
-         if (UI == null) throw new NoUserInterfaceObjectException();
-
-         _windowAdapter = manager.CreateWindowFor(this);
-
-         if (options != null) _windowAdapter.ApplyOptions(options);
-         _windowAdapter.InitializeUI(UI);
-         _windowAdapter.Closed += OnWindowClosed;
-
-         if (HasStarted) _windowAdapter.Show();
-      }
-
-      public void DisplayIn(IWindowAdapter windowAdapter)
-      {
-         if (UI == null) throw new NoUserInterfaceObjectException();
-         _windowAdapter = windowAdapter;
-         _windowAdapter.InitializeUI(UI);
-         _windowAdapter.Closed += OnWindowClosed;
-         if (HasStarted) _windowAdapter.Show();
       }
 
       public bool Validate(object target)
@@ -183,16 +177,6 @@ namespace XF.UI.Smart
       {
          if (_presenterValidator == null)
             _presenterValidator = presenterValidator;
-      }
-
-      public IWindowController Window
-      {
-         get { return (IWindowController) _windowAdapter ?? new NoWindowControls(); }
-      }
-
-      public void RegisterControl(string property, IControl control)
-      {
-         _controls.Add(property, control);
       }
 
       private void InitializeAsyncWorker()

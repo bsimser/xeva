@@ -1,8 +1,10 @@
 using BankTeller.UI.Smart.Presenters;
 using BankTeller.UI.Smart.Services;
+using Castle.Windsor;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
+using XF;
 using XF.Specs;
 using XF.UI.Smart;
 
@@ -19,6 +21,9 @@ namespace Specs_for_LoginPresenter
          _presenter = Create<LoginPresenter>();
          _view = Mock<ILoginView>();
          _presenter.View = _view;
+         var mockContainer = Mock<IWindsorContainer>();
+         Locator.Initialize(mockContainer);
+         SetupResult.For(mockContainer.Resolve<IWorkItemDispatcher>()).Return(new SynchronousDispatcher());
       }
 
       [Test]
@@ -57,6 +62,10 @@ namespace Specs_for_LoginPresenter
          SetupResult
             .For(Get<IAuthenticationService>().Authenticate("dave", "test123"))
             .Return(false);
+
+         var mockContainer = Mock<IWindsorContainer>();
+         Locator.Initialize(mockContainer);
+         SetupResult.For(mockContainer.Resolve<IWorkItemDispatcher>()).Return(new SynchronousDispatcher());
       }
 
       [Test]
@@ -104,6 +113,10 @@ namespace Specs_for_LoginPresenter
 
          _view = Mock<ILoginView>();
          _presenter.View = _view;
+
+         var mockContainer = Mock<IWindsorContainer>();
+         Locator.Initialize(mockContainer);
+         SetupResult.For(mockContainer.Resolve<IWorkItemDispatcher>()).Return(new SynchronousDispatcher());
       }
 
       [Test]

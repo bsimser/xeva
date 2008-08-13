@@ -61,5 +61,14 @@ namespace BankTeller.UI.Smart.Views
          _callbacks = callback;
       }
 
+      public void ShowWaiting()
+      {
+         this.BackColor = Color.Turquoise;
+      }
+
+      public void HideWaiting()
+      {
+         this.BackColor = Color.White;
+      }
    }
 }

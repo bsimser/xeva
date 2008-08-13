@@ -75,6 +75,11 @@
     <Compile Include="Exceptions\ViewNotAvailableException.cs" />
     <Compile Include="IAsyncView.cs" />
     <Compile Include="IAsyncWorker.cs" />
+    <Compile Include="Queue\BackgroundWorkerDispatcher.cs" />
+    <Compile Include="Queue\IWorkItemDispatcher.cs" />
+    <Compile Include="Queue\SynchronousDispatcher.cs" />
+    <Compile Include="Queue\WorkItem.cs" />
+    <Compile Include="Queue\WorkItemBuilder.cs" />
     <Compile Include="Windows\IWaitingControl.cs" />
     <Compile Include="Presenter\PresenterFinishedEventArgs.cs" />
     <Compile Include="Windows\IControl.cs" />

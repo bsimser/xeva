@@ -1,10 +1,8 @@
 using System;
-using Castle.Windsor;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
 using Rhino.Mocks.Interfaces;
-using XF;
 using XF.Specs;
 using XF.UI.Smart;
 
@@ -36,7 +34,15 @@ namespace Specs_for_Presenter
          }
       }
 
-      [Test, ExpectedException(typeof(ViewNotAvailableException))]
+      [Test]
+      public void Call_custom_startup_code()
+      {
+         Assert.AreEqual(0, _presenter.StartCount);
+         _presenter.Start(_request);
+         Assert.AreEqual(1, _presenter.StartCount);
+      }
+
+      [Test, ExpectedException(typeof (ViewNotAvailableException))]
       public void Fail_if_the_view_is_not_available()
       {
          _presenter.View = null;
@@ -44,11 +50,11 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Call_custom_startup_code()
+      public void Initialize_request_data()
       {
-         Assert.AreEqual(0, _presenter.StartCount);
+         Assert.AreEqual(0, _presenter.InitializeCount);
          _presenter.Start(_request);
-         Assert.AreEqual(1, _presenter.StartCount);
+         Assert.AreEqual(1, _presenter.InitializeCount);
       }
 
       [Test]
@@ -58,125 +64,11 @@ namespace Specs_for_Presenter
          Assert.AreEqual(1, _presenter.StartCount);
       }
 
-      [Test]
-      public void Initialize_request_data()
-      {
-         Assert.AreEqual(0, _presenter.InitializeCount);
-         _presenter.Start(_request);
-         Assert.AreEqual(1, _presenter.InitializeCount);
-      }
-
-      [Test, ExpectedException(typeof(RequestItemRequiredException))]
+      [Test, ExpectedException(typeof (RequestItemRequiredException))]
       public void Throw_an_exception_if_data_is_missing_from_the_request()
       {
          var invalidRequest = new Request();
          _presenter.Start(invalidRequest);
-      }
-   }
-
-   [TestFixture]
-   public class When_starting_an_asynchronous_presenter : Spec
-   {
-      private ExampleAsyncPresenter _presenter;
-      private IRequest _request;
-      private IWindsorContainer _container;
-      private IAsyncWorker _worker;
-
-      protected override void Before_each_spec()
-      {
-         _worker = Mock<IAsyncWorker>();
-         _container = Mock<IWindsorContainer>();
-         Locator.Initialize(_container);
-
-         _presenter = Create<ExampleAsyncPresenter>();
-         _request = new Request();
-         _request.SetItem("data", "test");
-      }
-
-      [Test]
-      public void Attach_callbacks_to_the_view()
-      {
-         SetupResult
-            .For(_container.Resolve<IAsyncWorker>())
-            .Return(_worker);
-
-         using (Record)
-         {
-            Get<IExampleAsyncView>().Attach(_presenter);
-         }
-         using (Playback)
-         {
-            _presenter.Start(_request);
-         }
-      }
-
-      [Test]
-      public void Get_an_async_work_and_initialize()
-      {
-
-         using (Record)
-         {
-            Expect
-               .Call(_container.Resolve<IAsyncWorker>())
-               .Return(_worker);
-         }
-
-         using (Playback)
-         {
-            _presenter.Start(_request);
-         }
-      }
-
-      [Test]
-      public void Run_the_async_worker_and_resume()
-      {
-
-         SetupResult
-           .For(_container.Resolve<IAsyncWorker>())
-           .Return(_worker);
-
-         _worker.DoWork += null;
-         IEventRaiser doWork = LastCall.IgnoreArguments().GetEventRaiser();
-
-         _worker.RunWorkerCompleted += null;
-         IEventRaiser workerDone = LastCall.IgnoreArguments().GetEventRaiser();
-
-         using (Record)
-         {
-            Get<IExampleAsyncView>().ShowWaiting();
-            _worker.RunWorkerAsync();
-            Get<IExampleAsyncView>().HideWaiting();
-         }
-
-         using (Playback)
-         {
-            _presenter.Start(_request);
-            doWork.Raise(null, null);
-            workerDone.Raise(null,null);
-         }
-      }
-
-   }
-
-   [TestFixture]
-   public class When_reinitializing_a_presenter : Spec
-   {
-      private ExampleWidgetPresenter _presenter;
-      private IRequest _request;
-
-      protected override void Before_each_spec()
-      {
-         _presenter = Create<ExampleWidgetPresenter>();
-         _request = new Request();
-         _request.SetItem("data", "test");
-      }
-
-      [Test]
-      public void Initialize_request_data()
-      {
-         Assert.AreEqual(0, _presenter.InitializeCount);
-         _presenter.ReInitialize(_request);
-         Assert.AreEqual(1, _presenter.InitializeCount);
       }
    }
 
@@ -212,19 +104,6 @@ namespace Specs_for_Presenter
       }
 
       [Test]
-      public void Only_finish_once()
-      {
-         _presenter.Start(_request);
-         Assert.AreEqual(0, _presenter.FinishCount);
-         
-         _presenter.Finish();
-         Assert.AreEqual(1, _presenter.FinishCount);
-
-         _presenter.Finish();         
-         Assert.AreEqual(1, _presenter.FinishCount);
-      }
-
-      [Test]
       public void Fire_an_event_when_finished()
       {
          var finishedFired = 0;
@@ -234,6 +113,19 @@ namespace Specs_for_Presenter
          _presenter.Finish();
 
          Assert.That(finishedFired, Is.EqualTo(1));
+      }
+
+      [Test]
+      public void Only_finish_once()
+      {
+         _presenter.Start(_request);
+         Assert.AreEqual(0, _presenter.FinishCount);
+
+         _presenter.Finish();
+         Assert.AreEqual(1, _presenter.FinishCount);
+
+         _presenter.Finish();
+         Assert.AreEqual(1, _presenter.FinishCount);
       }
 
       [Test]
@@ -249,7 +141,6 @@ namespace Specs_for_Presenter
 
          Assert.That(eventKey, Is.EqualTo(knownKey));
       }
-
    }
 
    [TestFixture]
@@ -257,28 +148,12 @@ namespace Specs_for_Presenter
    {
       private ExampleWidgetPresenter _presenter;
       private IPresenterValidator _presenterValidator;
- 
+
       protected override void Before_each_spec()
       {
          _presenter = Create<ExampleWidgetPresenter>();
          _presenterValidator = Mock<IPresenterValidator>();
          _presenter.InitializeValidator(_presenterValidator);
-      }
-
-      [Test]
-      public void Return_true_if_the_data_is_valid()
-      {
-         using (Record)
-         {
-            Expect.Call(_presenterValidator.Validate(null, null))
-               .IgnoreArguments()
-               .Return(true);
-         }
-
-         using (Playback)
-         {
-            Assert.IsTrue(_presenter.Validate(null));
-         }
       }
 
       [Test]
@@ -294,6 +169,22 @@ namespace Specs_for_Presenter
          using (Playback)
          {
             Assert.IsFalse(_presenter.Validate(null));
+         }
+      }
+
+      [Test]
+      public void Return_true_if_the_data_is_valid()
+      {
+         using (Record)
+         {
+            Expect.Call(_presenterValidator.Validate(null, null))
+               .IgnoreArguments()
+               .Return(true);
+         }
+
+         using (Playback)
+         {
+            Assert.IsTrue(_presenter.Validate(null));
          }
       }
    }
@@ -318,56 +209,21 @@ namespace Specs_for_Presenter
    [TestFixture]
    public class When_a_presenter_is_displayed_in_a_window : Spec
    {
-      /* TODO: Rework 
       private ExampleWidgetPresenter _presenter;
-      private ExampleWindowManager _windowManager;
+      private IWindowManager _windowManager;
       private IRequest _request;
+      private IWindowAdapter _windowAdapter;
+      private IWindowOptions _windowOptions;
 
       protected override void Before_each_spec()
       {
          _presenter = Create<ExampleWidgetPresenter>();
+         _windowManager = Mock<IWindowManager>();
          _windowAdapter = Mock<IWindowAdapter>();
+         _windowOptions = Mock<IWindowOptions>();
          _request = new Request();
          _request.SetItem("data", "test");
-      }
-
-      [Test, ExpectedException(typeof(NoUserInterfaceObjectException))]
-      public void Throw_an_exception_if_the_window_ui_is_null()
-      {
-         using (Record)
-         {
-            _windowAdapter.InitializeUI(_presenter.UI);
-         }
-         using (Playback)
-         {
-            _presenter.SetNullWindowUI();
-            _presenter.DisplayIn(_windowAdapter);
-         }
-      }
-
-      [Test]
-      public void Provide_a_means_of_controlling_the_window_from_the_presenter()
-      {
-         Assert.That(_presenter.Window, Is.TypeOf(typeof(NoWindowControls)));
-         _presenter.DisplayIn(_windowAdapter);
-         Assert.That(_presenter.Window, Is.Not.TypeOf(typeof(NoWindowControls)));
-      }
-
-      [Test]
-      public void Stop_tracking_window_closure_when_the_presenter_is_closed()
-      {
-         using (Record)
-         {
-            _windowAdapter.Closed -= null;
-            LastCall.IgnoreArguments();
-         }
-         using (Playback)
-         {
-            Assert.AreEqual(0, _presenter.FinishCount);
-            _presenter.DisplayIn(_windowAdapter);
-            _presenter.Start(_request);
-            _presenter.Finish();
-         }
+         SetupResult.For(_windowManager.CreateWindowFor(_presenter)).Return(_windowAdapter);
       }
 
       [Test]
@@ -380,23 +236,23 @@ namespace Specs_for_Presenter
          using (Playback)
          {
             Assert.AreEqual(0, _presenter.FinishCount);
-            _presenter.DisplayIn(_windowAdapter);
+            _presenter.DisplayIn(_windowManager);
             _presenter.Start(_request);
             _presenter.Finish();
          }
       }
 
       [Test]
-      public void Track_when_the_window_is_closed()
+      public void Do_not_show_the_window_if_the_presenter_has_not_started()
       {
          using (Record)
          {
-            _windowAdapter.Closed += null;
-            LastCall.IgnoreArguments();
+            _windowAdapter.Show();
+            LastCall.Repeat.Never();
          }
          using (Playback)
          {
-           _presenter.DisplayIn(_windowAdapter);
+            _presenter.DisplayIn(_windowManager);
          }
       }
 
@@ -414,10 +270,39 @@ namespace Specs_for_Presenter
          using (Playback)
          {
             Assert.AreEqual(0, _presenter.FinishCount);
-            _presenter.DisplayIn(_windowAdapter);
+            _presenter.DisplayIn(_windowManager);
             _presenter.Start(_request);
             raiser.Raise(null, null);
             Assert.AreEqual(1, _presenter.FinishCount);
+         }
+      }
+
+      [Test]
+      public void Provide_a_means_of_controlling_the_window_from_the_presenter()
+      {
+         using (Record)
+         {
+         }
+         using (Playback)
+         {
+            Assert.That(_presenter.Window, Is.TypeOf(typeof (NoWindowControls)));
+            _presenter.DisplayIn(_windowManager, _windowOptions);
+            Assert.That(_presenter.Window, Is.Not.TypeOf(typeof (NoWindowControls)));
+         }
+      }
+
+      [Test]
+      public void Show_an_existing_window_after_the_presenter_has_started()
+      {
+
+         using (Record)
+         {
+            _windowAdapter.Show();
+         }
+         using (Playback)
+         {
+            _presenter.DisplayIn(_windowManager);
+            _presenter.Start();
          }
       }
 
@@ -431,37 +316,52 @@ namespace Specs_for_Presenter
          using (Playback)
          {
             _presenter.Start();
-            _presenter.DisplayIn(_windowAdapter);
+            _presenter.DisplayIn(_windowManager);
          }
       }
 
       [Test]
-      public void Do_not_show_the_window_if_the_presenter_has_not_started()
+      public void Stop_tracking_window_closure_when_the_presenter_is_closed()
       {
          using (Record)
          {
-            _windowAdapter.Show();
-            LastCall.Repeat.Never();
+            _windowAdapter.Closed -= null;
+            LastCall.IgnoreArguments();
          }
          using (Playback)
          {
-            _presenter.DisplayIn(_windowAdapter);
+            Assert.AreEqual(0, _presenter.FinishCount);
+            _presenter.DisplayIn(_windowManager);
+            _presenter.Start(_request);
+            _presenter.Finish();
+         }
+      }
+
+      [Test, ExpectedException(typeof (NoUserInterfaceObjectException))]
+      public void Throw_an_exception_if_the_window_ui_is_null()
+      {
+         using (Record)
+         {
+         }
+         using (Playback)
+         {
+            _presenter.SetNullWindowUI();
+            _presenter.DisplayIn(_windowManager, _windowOptions);
          }
       }
 
       [Test]
-      public void Show_an_existing_window_after_the_presenter_has_started()
+      public void Track_when_the_window_is_closed()
       {
          using (Record)
          {
-            _windowAdapter.Show();
+            _windowAdapter.Closed += null;
+            LastCall.IgnoreArguments();
          }
          using (Playback)
          {
-            _presenter.DisplayIn(_windowAdapter);
-            _presenter.Start();
+            _presenter.DisplayIn(_windowManager);
          }
-       }
-       */
+      }
    }
 }

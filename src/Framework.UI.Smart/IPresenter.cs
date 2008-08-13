@@ -1,10 +1,17 @@
-
 using System;
 
 namespace XF.UI.Smart
 {
    public interface IPresenter : IViewCallbacks
    {
+      object UI { get; }
+      
+      string Key { get; set; }
+
+      string Label { get; set; }
+
+      IWindowController Window { get; }
+      
       void Start();
 
       void Start(IRequest request);
@@ -13,29 +20,12 @@ namespace XF.UI.Smart
 
       void Finish();
 
+      WorkItemBuilder Queue { get; }
+
       event EventHandler<PresenterFinishedEventArgs> Finished;
 
-      object UI { get; }
-
-      void DisplayIn(IWindowAdapter windowAdapter);
-
-      string Key
-      {
-         get;
-         set;
-      }
-
-      string Label
-      {
-         get;
-         set;
-      }
-
-      IWindowController Window
-      {
-         get;
-      }
-
       void DisplayIn(IWindowManager manager, IWindowOptions options);
+
+      void DisplayIn(IWindowManager manager);
    }
 }

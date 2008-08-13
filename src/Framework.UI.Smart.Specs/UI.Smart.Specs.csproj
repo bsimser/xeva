@@ -72,6 +72,7 @@
     <Compile Include="Binding\BindingFilterTests.cs" />
     <Compile Include="Binding\FakeObject.cs" />
     <Compile Include="ExampleAsyncPresenter.cs" />
+    <Compile Include="ExampleWindowAdapter.cs" />
     <Compile Include="ExampleWindowManager.cs" />
     <Compile Include="IExampleWidgetPresenter.cs" />
     <Compile Include="PresenterBuilderSpecs.cs" />
@@ -80,6 +81,9 @@
     <Compile Include="ExampleWidgetPresenter.cs" />
     <Compile Include="PresenterSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SynchronousDispatcherSpecs.cs" />
+    <Compile Include="WorkItemBuilderSpecs.cs" />
+    <Compile Include="WorkItemSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
