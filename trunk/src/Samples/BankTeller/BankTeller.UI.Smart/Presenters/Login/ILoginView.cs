@@ -2,7 +2,7 @@ using XF.UI.Smart;
 
 namespace BankTeller.UI.Smart.Presenters
 {
-   public interface ILoginView : IView<ILoginCallbacks>
+   public interface ILoginView : IAsyncView<ILoginCallbacks>
    {
       string Username { get; }
       string Password { get; }

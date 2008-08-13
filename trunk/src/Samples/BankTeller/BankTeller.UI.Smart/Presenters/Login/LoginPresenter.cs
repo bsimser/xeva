@@ -1,4 +1,4 @@
-using System;
+using System.Threading;
 using BankTeller.UI.Smart.Services;
 using XF.UI.Smart;
 
@@ -10,6 +10,8 @@ namespace BankTeller.UI.Smart.Presenters
    {
       private readonly IAuthenticationService _authenticationService;
       private readonly ILabelLookup _labelLookup;
+      private bool _success;
+      private int count = 0;
 
       public LoginPresenter(IAuthenticationService authenticationService, ILabelLookup labelLookup)
       {
@@ -17,27 +19,42 @@ namespace BankTeller.UI.Smart.Presenters
          _labelLookup = labelLookup;
       }
 
-      public void Login()
+      public virtual void Login()
       {
-         if (!_authenticationService.Authenticate(View.Username, View.Password))
+         View.ShowWaiting();
+
+         Queue
+            .Add(AttemptLogin)
+            .Add(() => Thread.Sleep(1000)) // an illustration of the async stuff
+            .Send(EvaluateSuccess);
+      }
+
+      private void AttemptLogin()
+      {
+         _success = _authenticationService.Authenticate(View.Username, View.Password);
+      }
+
+      private void EvaluateSuccess()
+      {
+         View.HideWaiting();
+
+         if (_success)
          {
-            string errorMessage = _labelLookup.Find("INVALID_LOGIN");
-            View.ShowError(errorMessage);
+            OnLoginSuccess();
+            Window.Close();
          }
          else
          {
-            OnLoginSuccess();
+            var errorMessage = _labelLookup.Find("INVALID_LOGIN");
+            View.ShowError(errorMessage);
          }
       }
 
       public event LoginSuccessDelegate LoginSuccess;
 
-      protected void OnLoginSuccess()
+      protected virtual void OnLoginSuccess()
       {
-         if (LoginSuccess != null)
-         {
-            LoginSuccess();
-         }
+         if (LoginSuccess != null) LoginSuccess();
       }
    }
 }

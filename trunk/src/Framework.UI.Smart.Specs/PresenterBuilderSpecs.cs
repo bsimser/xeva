@@ -35,9 +35,7 @@ namespace Specs_for_PresenterBuilder
          }
          using (Playback)
          {
-            New.Presenter<ExampleWidgetPresenter>()
-               .ManagedBy(_mockWindowManager)
-               .Window.Size(300, 400).Modal.Location(0, 0).Display();
+            New.Presenter<ExampleWidgetPresenter>();
          }
       }
 

@@ -72,5 +72,12 @@
       type="BankTeller.UI.Smart.WindowFactory, BankTeller.UI.Smart">
     </component>
 
+    <component
+      id="Framework.GlobalQueue"
+      lifestyle="singleton"
+      service="XF.UI.Smart.IWorkItemDispatcher, XF.UI.Smart"
+      type="XF.UI.Smart.BackgroundWorkerDispatcher, XF.UI.Smart">
+    </component>
+  
   </components>
 </castle>

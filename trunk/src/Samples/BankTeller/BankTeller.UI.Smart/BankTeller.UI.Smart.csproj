@@ -78,11 +78,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Login\LoginView.resx">
+    <EmbeddedResource Include="Views\LoginView.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Shell\ShellView.resx">
+    <EmbeddedResource Include="Views\ShellView.resx">
       <DependentUpon>ShellView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -111,16 +111,16 @@
     <Compile Include="Services\LabelLookup.cs" />
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="ShellContext.cs" />
-    <Compile Include="Views\Login\LoginView.cs">
+    <Compile Include="Views\LoginView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Login\LoginView.Designer.cs">
+    <Compile Include="Views\LoginView.Designer.cs">
       <DependentUpon>LoginView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shell\ShellView.cs">
+    <Compile Include="Views\ShellView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Shell\ShellView.Designer.cs">
+    <Compile Include="Views\ShellView.Designer.cs">
       <DependentUpon>ShellView.cs</DependentUpon>
     </Compile>
     <Compile Include="Window.cs">
@@ -150,6 +150,10 @@
     <Content Include="_config\windsor.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Shell\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

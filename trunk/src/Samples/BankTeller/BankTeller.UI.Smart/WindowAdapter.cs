@@ -25,7 +25,13 @@ namespace BankTeller.UI.Smart
 
       public void Close()
       {
-         _window.Close();
+//         if (_window.InvokeRequired)
+//         {
+//            Action a = _window.Close;
+//            _window.Invoke(a);
+//         }
+//         else
+            _window.Close();
       }
 
       public event EventHandler Closed;

@@ -35,6 +35,11 @@ namespace BankTeller.UI.Smart
          return adapter;
       }
 
+      public IWindowOptions CreateDefaultWindowOptionsFor(IPresenter presenter)
+      {
+         return new WindowOptions(false, 800, 600);
+      }
+
       private void SetExistingAdapter(IWindowAdapter existingAdapter)
       {
          _existingAdapter = existingAdapter;
