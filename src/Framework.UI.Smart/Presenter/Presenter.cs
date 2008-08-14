@@ -136,8 +136,6 @@ namespace XF.UI.Smart
 
       protected virtual void CustomStart() {}
 
-      public virtual void ResumeCustomStart() {}
-
       private void Finish(bool windowInitiated)
       {
          if (!HasStarted) return;
@@ -177,27 +175,6 @@ namespace XF.UI.Smart
       {
          if (_presenterValidator == null)
             _presenterValidator = presenterValidator;
-      }
-
-      private void InitializeAsyncWorker()
-      {
-         if (_asyncWorker == null)
-         {
-            _asyncWorker = Locator.Resolve<IAsyncWorker>();
-            _asyncWorker.DoWork += AsyncCustomStart;
-            _asyncWorker.RunWorkerCompleted += OnAsyncWorkerComplete;
-         }
-      }
-
-      private void AsyncCustomStart(object sender, DoWorkEventArgs e)
-      {
-         CustomStart();
-      }
-
-      private void OnAsyncWorkerComplete(object sender, RunWorkerCompletedEventArgs e)
-      {
-         ((IAsyncView<TCallbacks>) View).HideWaiting();
-         ResumeCustomStart();
       }
 
       private void OnWindowClosed(object sender, EventArgs e)
