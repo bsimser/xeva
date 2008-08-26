@@ -30,7 +30,7 @@ namespace Specs_for_ShellPresenter
          }
          using (Playback)
          {
-            _shellPresenter.Start();
+            _shellPresenter.Activate();
          }
       }
 
@@ -43,7 +43,7 @@ namespace Specs_for_ShellPresenter
          }
          using (Playback)
          {
-            _shellPresenter.Start();
+            _shellPresenter.Activate();
          }
       }
    }

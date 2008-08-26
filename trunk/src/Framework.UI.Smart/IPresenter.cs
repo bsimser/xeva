@@ -11,12 +11,10 @@ namespace XF.UI.Smart
       string Label { get; set; }
 
       IWindowController Window { get; }
-      
-      void Start();
 
-      void Start(IRequest request);
+      void Activate();
 
-      void ReInitialize(IRequest request);
+      void Activate(IRequest request);
 
       void Finish();
 

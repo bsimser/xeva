@@ -4,41 +4,25 @@ using System.ComponentModel;
 
 namespace XF.UI.Smart
 {
-   public abstract class Presenter<TView, TCallbacks> : IPresenter
+   public abstract class Presenter<TView, TCallbacks> : IRefreshes, IRefreshable
       where TCallbacks : class, IViewCallbacks
       where TView : class, IView<TCallbacks>
    {
-      private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
-      private IAsyncWorker _asyncWorker;
-      private bool _isFinished;
-      private bool _isStarted;
       private string _key;
       private string _label;
+      private bool _activated;
+      private bool _finished;
       private IPresenterValidator _presenterValidator;
       private IRequest _request;
       private TView _view;
       private IWindowAdapter _windowAdapter;
-      private IWindowRegistry _windowRegistry;
-
-      protected bool HasStarted
-      {
-         get { return _isStarted; }
-      }
-
-      protected bool HasFinished
-      {
-         get { return _isFinished; }
-      }
+      private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
+      private readonly List<IRefreshable> _refreshables = new List<IRefreshable>();
 
       public TView View
       {
          get { return _view; }
          set { _view = value; }
-      }
-
-      public Dictionary<string, IControl> Controls
-      {
-         get { return _controls; }
       }
 
       public string Key
@@ -53,52 +37,6 @@ namespace XF.UI.Smart
          set { _label = value; }
       }
 
-      public virtual object UI
-      {
-         get
-         {
-            var result = (_view == null) ? null : _view.UI;
-            return result;
-         }
-      }
-
-      public IWindowController Window
-      {
-         get { return (IWindowController) _windowAdapter ?? new NoWindowControls(); }
-      }
-
-      public void Start()
-      {
-         Start(new NullRequest());
-      }
-
-      public void Start(IRequest request)
-      {
-         _request = request;
-
-         if (HasStarted) return;
-         if (View == null) throw new ViewNotAvailableException();
-
-         InitializeRequest(request);
-
-         var callbacks = this as TCallbacks;
-         if (callbacks == null) throw new NoCallbacksImplementationException();
-
-         View.Attach(callbacks);
-
-         CustomStart();
-         _isStarted = true;
- 
-         Window.Show();
-      }
-
-      public virtual void ReInitialize(IRequest request) {}
-
-      public void Finish()
-      {
-         Finish(false);
-      }
-
       public WorkItemBuilder Queue
       {
          get
@@ -107,7 +45,85 @@ namespace XF.UI.Smart
          }
       }
 
+      #region Presenter Lifecycle
+
+      public void Activate()
+      {
+         Activate(new NullRequest());
+      }
+
+      public void Activate(IRequest request)
+      {
+         _request = request;
+
+         if (View == null) throw new ViewNotAvailableException();
+
+         var callbacks = this as TCallbacks;
+         if (callbacks == null) throw new NoCallbacksImplementationException();
+
+         View.Attach(callbacks);
+
+         HandleRequest(request);
+         if (!_activated) OnFirstActivation();         
+
+         _activated = true;
+ 
+         Window.Show();
+      }
+
+      public void Finish()
+      {
+         Finish(false);
+      }
+
+      private void Finish(bool windowInitiated)
+      {
+         if (!_activated) return;
+         if (_finished) return;
+         
+         if (!windowInitiated && (_windowAdapter != null))
+         {
+            _windowAdapter.Closed -= OnWindowClosed;
+            _windowAdapter.Close();
+         }
+         _windowAdapter = null;
+         _finished = true;
+         
+         OnFinish();
+
+         if (Finished != null)
+            Finished(this, new PresenterFinishedEventArgs(Key));
+      }
+
       public event EventHandler<PresenterFinishedEventArgs> Finished;
+
+      #endregion
+
+      #region Optional Lifecycle Hook Methods
+
+      protected virtual void HandleRequest(IRequest request) { }
+
+      protected virtual void OnFirstActivation() { }
+
+      protected virtual void OnEveryActivation() { }
+
+      protected virtual void OnFinish() { }
+
+      #endregion
+
+      public IWindowController Window
+      {
+         get { return (IWindowController) _windowAdapter ?? new NoWindowControls(); }
+      }
+
+      public virtual object UI
+      {
+         get
+         {
+            var result = (_view == null) ? null : _view.UI;
+            return result;
+         }
+      }
 
       public void DisplayIn(IWindowManager manager, IWindowOptions options)
       {
@@ -119,7 +135,7 @@ namespace XF.UI.Smart
          _windowAdapter.InitializeUI(UI);
          _windowAdapter.Closed += OnWindowClosed;
 
-         if (HasStarted) _windowAdapter.Show();
+         if (_activated) _windowAdapter.Show();
       }
 
       public void DisplayIn(IWindowManager manager)
@@ -127,36 +143,22 @@ namespace XF.UI.Smart
          this.DisplayIn(manager, manager.CreateDefaultWindowOptionsFor(this));
       }
 
+      private void OnWindowClosed(object sender, EventArgs e)
+      {
+         Finish(true);
+      }
+
+
+      #region Validation Helpers
+
+      public Dictionary<string, IControl> Controls
+      {
+         get { return _controls; }
+      }
+
       public void RegisterControl(string property, IControl control)
       {
          _controls.Add(property, control);
-      }
-
-      protected virtual void InitializeRequest(IRequest request) {}
-
-      protected virtual void CustomStart() {}
-
-      private void Finish(bool windowInitiated)
-      {
-         if (!HasStarted) return;
-         if (HasFinished) return;
-         if (!windowInitiated && (_windowAdapter != null))
-         {
-            _windowAdapter.Closed -= OnWindowClosed;
-            _windowAdapter.Close();
-         }
-         _windowAdapter = null;
-         CustomFinish();
-         _isFinished = true;
-         OnFinished(new PresenterFinishedEventArgs(Key));
-      }
-
-      protected virtual void CustomFinish() {}
-
-      protected virtual void OnFinished(PresenterFinishedEventArgs args)
-      {
-         if (Finished != null)
-            Finished(this, args);
       }
 
       public bool Validate(object target)
@@ -167,7 +169,6 @@ namespace XF.UI.Smart
       public bool Validate(object[] targets)
       {
          InitializeValidator(new PresenterValidator());
-
          return _presenterValidator.Validate(targets, _controls);
       }
 
@@ -177,9 +178,23 @@ namespace XF.UI.Smart
             _presenterValidator = presenterValidator;
       }
 
-      private void OnWindowClosed(object sender, EventArgs e)
+      #endregion
+
+      #region Refresh/Refreshable Support
+
+      public void Register(IRefreshable refreshable)
       {
-         Finish(true);
+         if (_refreshables.Contains(refreshable)) return;
+         _refreshables.Add(refreshable);
       }
+
+      public void RefreshAll()
+      {
+         _refreshables.ForEach(r => r.Refresh());
+      }
+
+      public virtual void Refresh() { }
+
+      #endregion
    }
 }

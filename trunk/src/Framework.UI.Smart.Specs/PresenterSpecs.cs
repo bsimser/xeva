@@ -9,7 +9,7 @@ using XF.UI.Smart;
 namespace Specs_for_Presenter
 {
    [TestFixture]
-   public class When_starting_a_presenter : Spec
+   public class When_activating_a_presenter_for_the_first_time : Spec
    {
       private ExampleWidgetPresenter _presenter;
       private IRequest _request;
@@ -30,45 +30,79 @@ namespace Specs_for_Presenter
          }
          using (Playback)
          {
-            _presenter.Start(_request);
+            _presenter.Activate(_request);
          }
       }
 
       [Test]
-      public void Call_custom_startup_code()
+      public void Call_the_first_activation_hook()
       {
-         Assert.AreEqual(0, _presenter.StartCount);
-         _presenter.Start(_request);
-         Assert.AreEqual(1, _presenter.StartCount);
+         Assert.AreEqual(0, _presenter.FirstActivationCallCount);
+         _presenter.Activate(_request);
+         Assert.AreEqual(1, _presenter.FirstActivationCallCount);
       }
 
       [Test, ExpectedException(typeof (ViewNotAvailableException))]
       public void Fail_if_the_view_is_not_available()
       {
          _presenter.View = null;
-         _presenter.Start(_request);
+         _presenter.Activate(_request);
       }
 
       [Test]
       public void Initialize_request_data()
       {
-         Assert.AreEqual(0, _presenter.InitializeCount);
-         _presenter.Start(_request);
-         Assert.AreEqual(1, _presenter.InitializeCount);
-      }
-
-      [Test]
-      public void Only_start_once()
-      {
-         _presenter.Start(new NullRequest());
-         Assert.AreEqual(1, _presenter.StartCount);
+         Assert.AreEqual(0, _presenter.HandleRequestCallCount);
+         _presenter.Activate(_request);
+         Assert.AreEqual(1, _presenter.HandleRequestCallCount);
       }
 
       [Test, ExpectedException(typeof (RequestItemRequiredException))]
       public void Throw_an_exception_if_data_is_missing_from_the_request()
       {
          var invalidRequest = new Request();
-         _presenter.Start(invalidRequest);
+         _presenter.Activate(invalidRequest);
+      }
+   }
+
+   [TestFixture]
+   public class When_activating_a_presenter_multiple_times : Spec
+   {
+      private ExampleWidgetPresenter _presenter;
+      private IRequest _request;
+
+      protected override void Before_each_spec()
+      {
+         _presenter = Create<ExampleWidgetPresenter>();
+         _request = new Request();
+         _request.SetItem("data", "test");
+      }
+
+      [Test]
+      public void Only_call_the_first_activation_hook_once()
+      {
+         Assert.AreEqual(0, _presenter.FirstActivationCallCount);
+         _presenter.Activate(_request);
+         _presenter.Activate(_request);
+         Assert.AreEqual(1, _presenter.FirstActivationCallCount);
+      }
+
+      [Test]
+      public void Handle_the_request_for_each_activation()
+      {
+         Assert.AreEqual(0, _presenter.HandleRequestCallCount);
+         _presenter.Activate(_request);
+         _presenter.Activate(_request);
+         Assert.AreEqual(2, _presenter.HandleRequestCallCount);
+      }
+
+      [Test]
+      public void Call_the_every_activation_hook_every_time()
+      {
+         Assert.AreEqual(0, _presenter.EveryActivationCallCount);
+         _presenter.Activate(_request);
+         _presenter.Activate(_request);
+         Assert.AreEqual(2, _presenter.HandleRequestCallCount);
       }
    }
 
@@ -89,14 +123,14 @@ namespace Specs_for_Presenter
       [Test]
       public void Call_custom_finishing_code()
       {
-         _presenter.Start(_request);
+         _presenter.Activate(_request);
          Assert.AreEqual(0, _presenter.FinishCount);
          _presenter.Finish();
          Assert.AreEqual(1, _presenter.FinishCount);
       }
 
       [Test]
-      public void Do_not_finish_if_never_started()
+      public void Do_not_finish_if_never_activated()
       {
          Assert.AreEqual(0, _presenter.FinishCount);
          _presenter.Finish();
@@ -108,7 +142,7 @@ namespace Specs_for_Presenter
       {
          var finishedFired = 0;
 
-         _presenter.Start();
+         _presenter.Activate();
          _presenter.Finished += (s, e) => { finishedFired += 1; };
          _presenter.Finish();
 
@@ -118,7 +152,7 @@ namespace Specs_for_Presenter
       [Test]
       public void Only_finish_once()
       {
-         _presenter.Start(_request);
+         _presenter.Activate(_request);
          Assert.AreEqual(0, _presenter.FinishCount);
 
          _presenter.Finish();
@@ -134,7 +168,7 @@ namespace Specs_for_Presenter
          var knownKey = Guid.NewGuid().ToString();
          var eventKey = string.Empty;
 
-         _presenter.Start();
+         _presenter.Activate();
          _presenter.Key = knownKey;
          _presenter.Finished += (s, e) => { eventKey = e.Key; };
          _presenter.Finish();
@@ -190,7 +224,7 @@ namespace Specs_for_Presenter
    }
 
    [TestFixture]
-   public class When_starting_a_presenter_that_does_not_implement_a_view_callback : Spec
+   public class When_activating_a_presenter_that_does_not_implement_a_view_callback : Spec
    {
       private ExampleInvalidPresenter _presenter;
 
@@ -202,7 +236,7 @@ namespace Specs_for_Presenter
       [Test, ExpectedException(typeof (NoCallbacksImplementationException))]
       public void Throw_an_exception()
       {
-         _presenter.Start(new NullRequest());
+         _presenter.Activate(new NullRequest());
       }
    }
 
@@ -237,13 +271,13 @@ namespace Specs_for_Presenter
          {
             Assert.AreEqual(0, _presenter.FinishCount);
             _presenter.DisplayIn(_windowManager);
-            _presenter.Start(_request);
+            _presenter.Activate(_request);
             _presenter.Finish();
          }
       }
 
       [Test]
-      public void Do_not_show_the_window_if_the_presenter_has_not_started()
+      public void Do_not_show_the_window_if_the_presenter_is_not_activated()
       {
          using (Record)
          {
@@ -271,7 +305,7 @@ namespace Specs_for_Presenter
          {
             Assert.AreEqual(0, _presenter.FinishCount);
             _presenter.DisplayIn(_windowManager);
-            _presenter.Start(_request);
+            _presenter.Activate(_request);
             raiser.Raise(null, null);
             Assert.AreEqual(1, _presenter.FinishCount);
          }
@@ -302,12 +336,12 @@ namespace Specs_for_Presenter
          using (Playback)
          {
             _presenter.DisplayIn(_windowManager);
-            _presenter.Start();
+            _presenter.Activate();
          }
       }
 
       [Test]
-      public void Show_the_window_if_the_presenter_has_started()
+      public void Show_the_window_if_the_presenter_has_been_activated()
       {
          using (Record)
          {
@@ -315,7 +349,7 @@ namespace Specs_for_Presenter
          }
          using (Playback)
          {
-            _presenter.Start();
+            _presenter.Activate();
             _presenter.DisplayIn(_windowManager);
          }
       }
@@ -332,7 +366,7 @@ namespace Specs_for_Presenter
          {
             Assert.AreEqual(0, _presenter.FinishCount);
             _presenter.DisplayIn(_windowManager);
-            _presenter.Start(_request);
+            _presenter.Activate(_request);
             _presenter.Finish();
          }
       }
@@ -361,6 +395,37 @@ namespace Specs_for_Presenter
          using (Playback)
          {
             _presenter.DisplayIn(_windowManager);
+         }
+      }
+   }
+
+   [TestFixture]
+   public class When_refreshing_child_presenters : Spec
+   {
+      private ExampleWidgetPresenter _presenter;
+      private IRefreshable _childPresenter1;
+      private IRefreshable _childPresenter2;
+
+      protected override void Before_each_spec()
+      {
+         _presenter = new ExampleWidgetPresenter();
+         _childPresenter1 = Mock<IRefreshable>();
+         _childPresenter2 = Mock<IRefreshable>(); 
+      }
+
+      [Test]
+      public void Refresh_each_registered_child_presenter()
+      {
+         using (Record)
+         {
+            _childPresenter1.Refresh();
+            _childPresenter2.Refresh();
+         }
+         using (Playback)
+         {
+            _presenter.Register(_childPresenter1);
+            _presenter.Register(_childPresenter2);
+            _presenter.RefreshAll();
          }
       }
    }

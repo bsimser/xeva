@@ -15,7 +15,7 @@ namespace BankTeller.UI.Smart.Presenters
          _profileService = profileService;
       }
 
-      protected override void CustomStart()
+      protected override void OnFirstActivation()
       {
          var tools = _profileService.GetShellTools();
 
