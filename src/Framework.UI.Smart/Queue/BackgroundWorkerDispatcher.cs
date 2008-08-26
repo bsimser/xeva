@@ -22,11 +22,7 @@ namespace XF.UI.Smart
       public void Enqueue(WorkItem item)
       {
          lock (_queueLock)
-         {
-            Debug.WriteLine("queued");
             _queue.Enqueue(item);
-            Debug.WriteLine(_queue.Count.ToString());
-         }
          StartOrContinueProcessing();
       }
 

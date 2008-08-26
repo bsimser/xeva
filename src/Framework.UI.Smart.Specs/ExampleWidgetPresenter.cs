@@ -8,52 +8,41 @@ namespace XF.UI.Smart
    public class ExampleWidgetPresenter : 
       Presenter<IExampleWidgetView, IExampleWidgetCallbacks>, IExampleWidgetPresenter
    {
-      private int _startCount = 0;
-      private int _initializeCount = 0;
       private string _requestData = string.Empty;
-      private int _finishCount = 0;
       private object _ui = new object();
 
-      protected override void InitializeRequest(IRequest request)
+      protected override void HandleRequest(IRequest request)
       {
          _requestData = request.GetRequiredItem<string>("data", string.Empty);
-         _initializeCount += 1;
+         HandleRequestCallCount += 1;
       }
 
-      public override void ReInitialize(IRequest request)
+      protected override void OnFirstActivation()
       {
-         _requestData = request.GetRequiredItem<string>("data", string.Empty);
-         _initializeCount += 1;
+         FirstActivationCallCount += 1;
       }
 
-      protected override void CustomStart()
+      protected override void OnEveryActivation()
       {
-         _startCount += 1;
+         EveryActivationCallCount += 1;
       }
 
-      protected override void CustomFinish()
+      protected override void OnFinish()
       {
-         _finishCount += 1;
+         FinishCount += 1;
       }
 
-      public int StartCount
-      {
-         get { return _startCount; }
-      }
+      public int FirstActivationCallCount { get; private set; }
 
-      public int InitializeCount
-      {
-         get { return _initializeCount; }
-      }
+      public int HandleRequestCallCount { get; private set; }
+
+      public int EveryActivationCallCount { get; private set; }
+
+      public int FinishCount { get; private set; }
 
       public string RequestDataFromCustomStartup
       {
          get { return _requestData; }
-      }
-
-      public int FinishCount
-      {
-         get { return _finishCount; }
       }
 
       public void SetNullWindowUI()

@@ -63,12 +63,12 @@ namespace XF.UI.Smart
 
       public void Start()
       {
-         Return.Start();
+         Return.Activate();
       }
 
       public void StartWith(IRequest request)
       {
-         Return.Start(request);
+         Return.Activate(request);
       }
 
       public IPresenterBuilder<T> ManagedBy<TWindowManager>()

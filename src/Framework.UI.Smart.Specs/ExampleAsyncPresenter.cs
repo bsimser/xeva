@@ -14,24 +14,18 @@ namespace XF.UI.Smart
       private int _finishCount = 0;
       private object _ui = new object();
 
-      protected override void InitializeRequest(IRequest request)
+      protected override void HandleRequest(IRequest request)
       {
          _requestData = request.GetRequiredItem<string>("data", string.Empty);
          _initializeCount += 1;
       }
 
-      public override void ReInitialize(IRequest request)
-      {
-         _requestData = request.GetRequiredItem<string>("data", string.Empty);
-         _initializeCount += 1;
-      }
-
-      protected override void CustomStart()
+      protected override void OnFirstActivation()
       {
          _startCount += 1;
       }
 
-      protected override void CustomFinish()
+      protected override void OnFinish()
       {
          _finishCount += 1;
       }

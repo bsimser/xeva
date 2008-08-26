@@ -32,7 +32,7 @@ namespace BankTeller.UI.Smart
                .Return; 
 
          _loginPresenter.LoginSuccess += ()=> _loginSuccess = true; 
-         _loginPresenter.Start();
+         _loginPresenter.Activate();
       }
 
       private void ShowShell()
@@ -40,7 +40,7 @@ namespace BankTeller.UI.Smart
          New.Presenter<IShellPresenter>()
             .ManagedBy(_windowManager)
             .Window.Size(800, 600).NotModal.ClosedCallback(OnShellWindowClosed)
-            .Return.Start();
+            .Return.Activate();
       }
 
       private void OnLoginWindowClosed()

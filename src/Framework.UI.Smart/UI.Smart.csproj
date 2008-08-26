@@ -67,6 +67,8 @@
     <Compile Include="Binding\BindingFilter.cs" />
     <Compile Include="Binding\BindingFilterExpression.cs" />
     <Compile Include="Binding\IBindingFilter.cs" />
+    <Compile Include="Presenter\IRefreshable.cs" />
+    <Compile Include="Presenter\IRefreshes.cs" />
     <Compile Include="Presenter\PresenterBuilder.cs" />
     <Compile Include="Exceptions\RequestItemAlreadySetException.cs" />
     <Compile Include="Exceptions\RequestItemRequiredException.cs" />
@@ -74,7 +76,6 @@
     <Compile Include="Exceptions\RequestItemTypeMismatchException.cs" />
     <Compile Include="Exceptions\ViewNotAvailableException.cs" />
     <Compile Include="IAsyncView.cs" />
-    <Compile Include="IAsyncWorker.cs" />
     <Compile Include="Queue\BackgroundWorkerDispatcher.cs" />
     <Compile Include="Queue\IWorkItemDispatcher.cs" />
     <Compile Include="Queue\SynchronousDispatcher.cs" />
