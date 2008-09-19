@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Threading;
 using BankTeller.UI.Smart.Services;
 using XF.UI.Smart;
