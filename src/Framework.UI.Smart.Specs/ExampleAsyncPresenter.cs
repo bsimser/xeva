@@ -14,7 +14,7 @@ namespace XF.UI.Smart
       private int _finishCount = 0;
       private object _ui = new object();
 
-      protected override void HandleRequest(IRequest request)
+      protected override void OnHandleRequest(IRequest request)
       {
          _requestData = request.GetRequiredItem<string>("data", string.Empty);
          _initializeCount += 1;

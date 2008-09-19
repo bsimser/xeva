@@ -49,7 +49,7 @@ namespace XF.UI.Smart
 
       public void Activate()
       {
-         Activate(new NullRequest());
+         Activate(_request ?? new NullRequest());
       }
 
       public void Activate(IRequest request)
@@ -57,14 +57,17 @@ namespace XF.UI.Smart
          _request = request;
 
          if (View == null) throw new ViewNotAvailableException();
+         
+         if (!_activated)
+         {
+            var callbacks = this as TCallbacks;
+            if (callbacks == null) throw new NoCallbacksImplementationException();
+            View.Attach(callbacks);
+         }
 
-         var callbacks = this as TCallbacks;
-         if (callbacks == null) throw new NoCallbacksImplementationException();
-
-         View.Attach(callbacks);
-
-         HandleRequest(request);
-         if (!_activated) OnFirstActivation();         
+         OnHandleRequest(request);
+         if (!_activated) OnFirstActivation();
+         OnEveryActivation();
 
          _activated = true;
  
@@ -101,7 +104,7 @@ namespace XF.UI.Smart
 
       #region Optional Lifecycle Hook Methods
 
-      protected virtual void HandleRequest(IRequest request) { }
+      protected virtual void OnHandleRequest(IRequest request) { }
 
       protected virtual void OnFirstActivation() { }
 

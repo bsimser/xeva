@@ -102,7 +102,7 @@ namespace Specs_for_Presenter
          Assert.AreEqual(0, _presenter.EveryActivationCallCount);
          _presenter.Activate(_request);
          _presenter.Activate(_request);
-         Assert.AreEqual(2, _presenter.HandleRequestCallCount);
+         Assert.AreEqual(2, _presenter.EveryActivationCallCount);
       }
    }
 
