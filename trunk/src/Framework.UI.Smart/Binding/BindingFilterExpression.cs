@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace XF.UI.Smart
 {
@@ -40,27 +41,29 @@ namespace XF.UI.Smart
          set { _isMatch = value; }
       }
 
-      public void EvaluateExpression(string compareValue)
+      public void EvaluateExpression(string compareValues)
       {
          switch (Operator.ToUpper())
          {
             case "EQUAL":
-               IsMatch = _expressionValues[0] == (compareValue != null ? compareValue.Replace("\n", "").Replace("\r", "") : "null");
+               IsMatch = _expressionValues[0] == (compareValues != null ? compareValues.Replace("\n", "").Replace("\r", "") : "null");
                break;
             case "=":
-               IsMatch = _expressionValues[0] == (compareValue != null ? compareValue.Replace("\n", "").Replace("\r", "") : "null");
+               IsMatch = _expressionValues[0] == (compareValues != null ? compareValues.Replace("\n", "").Replace("\r", "") : "null");
                break;
             case "!=":
-               IsMatch = _expressionValues[0] != (compareValue != null ? compareValue.Replace("\n", "").Replace("\r", "") : "null");
+               IsMatch = _expressionValues[0] != (compareValues != null ? compareValues.Replace("\n", "").Replace("\r", "") : "null");
                break;
             case "NOT IN":
-               IsMatch = !_expressionValues.Contains(compareValue);
+               //IsMatch = !_expressionValues.Contains(compareValues);
+               IsMatch = !_expressionValues.Intersect(compareValues.Split(',')).Any();
                break;
             case "IN":
-               IsMatch = _expressionValues.Contains(compareValue);
+               //IsMatch = _expressionValues.Contains(compareValues);
+               IsMatch = _expressionValues.Intersect(compareValues.Split(',')).Any();
                break;
             case "LIKE":
-               IsMatch = compareValue.Contains(_expressionValues[0]);
+               IsMatch = compareValues.Contains(_expressionValues[0]);
                break;
             default:
                IsMatch = false;

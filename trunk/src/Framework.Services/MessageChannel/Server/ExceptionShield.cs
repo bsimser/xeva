@@ -8,7 +8,7 @@ namespace XF.Services
    public class ExceptionShield
    {
       private const string _eventSource = "XEVA";
-      private const string _eventLogName = "XEVA";
+      private const string _eventLogName = "Application";
 
       private static object[] _parameters;
       private static Exception _exception;
@@ -47,11 +47,6 @@ namespace XF.Services
       public void Log()
       {
          EventLog eventLog = new EventLog();
-         if (!EventLog.SourceExists(_eventSource))
-         {
-            EventSourceCreationData srcData = new EventSourceCreationData(_eventSource, _eventLogName);
-            EventLog.CreateEventSource(srcData);
-         }
          eventLog.Source = _eventSource;
          eventLog.Log = _eventLogName;
          eventLog.WriteEntry(FormattedMessage(), EventLogEntryType.Error);

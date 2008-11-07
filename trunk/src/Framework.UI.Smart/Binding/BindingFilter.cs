@@ -50,8 +50,7 @@ namespace XF.UI.Smart
          }
 
          List<BindingFilterExpression> nonMatchedExpression =
-            _expressions.FindAll(delegate(BindingFilterExpression compare)
-                                    { return !compare.IsMatch; });
+            _expressions.FindAll(compare => !compare.IsMatch);
 
          return nonMatchedExpression.Count == 0;
       }

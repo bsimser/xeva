@@ -13,7 +13,7 @@ namespace XF.Validation
 
       public ValidationResult Validate(object[] targets, Dictionary<string, IValidationAware> validationObjects)
       {
-         ValidationResult result = new ValidationResult();
+         var result = new ValidationResult();
 
          foreach (object target in targets)
          {
@@ -39,7 +39,7 @@ namespace XF.Validation
          if (_attributeCache.ContainsKey(type))
             return _attributeCache[type];
 
-         List<ValidationAttribute> result = new List<ValidationAttribute>();
+         var result = new List<ValidationAttribute>();
 
          PropertyInfo[] properties = type.GetProperties();
 
@@ -49,7 +49,7 @@ namespace XF.Validation
 
             for (int c2 = 0; c2 < attributes.Length; c2++)
             {
-               ValidationAttribute attribute = (ValidationAttribute)attributes[c2];
+               var attribute = (ValidationAttribute)attributes[c2];
                // Set the attribute's "Property"
                attribute.Property = properties[c1];
                result.Add(attribute);
@@ -63,14 +63,11 @@ namespace XF.Validation
 
       private void DisplayErrorNotifications(ValidationResult validationResult, Dictionary<string, IValidationAware> validationObjects)
       {
-         List<ValidatonError> messages = new List<ValidatonError>(validationResult.Errors);
+         var messages = new List<ValidatonError>(validationResult.Errors);
 
          foreach (KeyValuePair<string, IValidationAware> validationObject in validationObjects)
          {
-            ValidatonError message = messages.Find(delegate(ValidatonError match)
-                                                           {
-                                                              return match.Property == validationObject.Key;
-                                                           });
+            ValidatonError message = messages.Find(match => match.Property == validationObject.Key);
 
             if (message != null)
                validationObject.Value.ShowError(message.Message);
