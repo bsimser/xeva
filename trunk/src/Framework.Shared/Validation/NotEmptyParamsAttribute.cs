@@ -20,9 +20,9 @@ namespace XF.Validation
          var selectedElement = new List<XElement>(from selected in parameters.Elements("Parameters").Elements("Selected").Elements("Params")
                                                    select selected);
 
-         if (!bool.Parse(allElement.Value) &&
+         if (allElement.Value == false.ToString() &&
              selectedElement.Count == 0)
-                  AddMessage(validationResult, "No parameters have been selected.");
+            AddMessage(validationResult, "No parameters have been selected.");
 
       }
 
