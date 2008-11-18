@@ -43,16 +43,21 @@ namespace XF.UI.Smart
 
       public void EvaluateExpression(string compareValues)
       {
+         compareValues = compareValues != null
+                       ? compareValues.Replace("\n", "")
+                                      .Replace("\r", "")
+                                      .Replace(", ", ",")
+                       : "null";
          switch (Operator.ToUpper())
          {
             case "EQUAL":
-               IsMatch = _expressionValues[0] == (compareValues != null ? compareValues.Replace("\n", "").Replace("\r", "") : "null");
+               IsMatch = _expressionValues[0] == compareValues;
                break;
             case "=":
-               IsMatch = _expressionValues[0] == (compareValues != null ? compareValues.Replace("\n", "").Replace("\r", "") : "null");
+               IsMatch = _expressionValues[0] == compareValues;
                break;
             case "!=":
-               IsMatch = _expressionValues[0] != (compareValues != null ? compareValues.Replace("\n", "").Replace("\r", "") : "null");
+               IsMatch = _expressionValues[0] != compareValues;
                break;
             case "NOT IN":
                //IsMatch = !_expressionValues.Contains(compareValues);
