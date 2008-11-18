@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -70,10 +71,40 @@ namespace XF.UI.Smart
             case "LIKE":
                IsMatch = compareValues.Contains(_expressionValues[0]);
                break;
+            case "<=":
+               IsMatch = EvaluateComparison(compareValues);
+               break;
+            case ">=":
+               IsMatch = EvaluateComparison(compareValues);
+               break;
             default:
                IsMatch = false;
                break;
          }
       }
+
+       private bool EvaluateComparison(string values)
+       {
+           DateTime evalDate;
+           DateTime existingDate;
+           if (DateTime.TryParse(values, out existingDate) && DateTime.TryParse(_expressionValues[0], out evalDate))
+           {
+               if (Operator=="<=")
+                   return evalDate <= existingDate;
+               if (Operator == ">=")
+                   return evalDate >= existingDate;
+           }
+
+           Decimal evalNumber;
+           Decimal existingNumber;
+           if (Decimal.TryParse(values,out existingNumber) && Decimal.TryParse(_expressionValues[0],out evalNumber))
+           {
+               if (Operator == "<=")
+                   return evalNumber <= existingNumber;
+               if (Operator == ">=")
+                   return evalNumber >= existingNumber;
+           }
+           return false;
+       }
    }
 }

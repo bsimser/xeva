@@ -70,21 +70,21 @@ namespace XF.UI.Smart
 
       public void ApplySort(ListSortDescriptionCollection sorts)
       {
-         string sort = string.Empty;
+         var sort = string.Empty;
          foreach (ListSortDescription sortDescription in sorts)
          {
             sort += sortDescription.PropertyDescriptor.Name + " " + 
                (sortDescription.SortDirection.ToString() == "Descending" ? "DESC" : "ASC") + ",";
          }
 
-         List<BindingType> sortedList = new List<BindingType>(base.Items);
-         DynamicComparer<BindingType> comparer = new DynamicComparer<BindingType>(sort.TrimEnd(','));
+         var sortedList = new List<BindingType>(base.Items);
+         var comparer = new DynamicComparer<BindingType>(sort.TrimEnd(','));
          sortedList.Sort(comparer);
 
          _internalList = sortedList;
 
          Clear();
-         foreach (BindingType type in _internalList)
+         foreach (var type in _internalList)
          {
             base.Items.Add(type);
          }

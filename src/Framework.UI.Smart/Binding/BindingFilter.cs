@@ -36,32 +36,28 @@ namespace XF.UI.Smart
 
       public bool IncludeItem(FilteredType item)
       {
-         foreach (PropertyDescriptor descriptor in _properties)
+         foreach (var descriptor in _properties)
          {
-            BindingFilterExpression expression = _expressions.Find(delegate(BindingFilterExpression match)
-                                                                      {
-                                                                         return match.Property == descriptor.Name;
-                                                                      });
-            if (expression != null)
-            {
-               string itemValue = descriptor.GetValue(item) != null ? descriptor.GetValue(item).ToString() : null;
-               expression.EvaluateExpression(itemValue);
-            }
+             _expressions.ForEach(exp =>
+                                      {
+                                          var itemValue = descriptor.GetValue(item) != null
+                                                              ? descriptor.GetValue(item).ToString()
+                                                              : null;
+                                          exp.EvaluateExpression(itemValue);
+                                      });           
          }
-
-         List<BindingFilterExpression> nonMatchedExpression =
-            _expressions.FindAll(compare => !compare.IsMatch);
-
+         var nonMatchedExpression = _expressions.FindAll(compare => !compare.IsMatch);
          return nonMatchedExpression.Count == 0;
       }
 
       private void ExtractPropertiesFromFilteredType()
       {
          _properties = new List<PropertyDescriptor>();
-         foreach (BindingFilterExpression expression in _expressions)
+         foreach (var expression in _expressions)
          {
-            PropertyDescriptor descriptor = TypeDescriptor.GetProperties(typeof(FilteredType))[expression.Property];
-            _properties.Add(descriptor);
+            var descriptor = TypeDescriptor.GetProperties(typeof(FilteredType))[expression.Property];
+            if (!_properties.Exists(match=> match.Name==descriptor.Name))
+                _properties.Add(descriptor);
          }
       }
 
@@ -69,41 +65,41 @@ namespace XF.UI.Smart
       {
          _expressions = new List<BindingFilterExpression>();
 
-         string[] entries = _filterString.Split(new string[3] { "and", "And", "AND" }, 100, StringSplitOptions.RemoveEmptyEntries);
-         foreach (string entry in entries)
+         var entries = _filterString.Split(new string[3] { "and", "And", "AND" }, 100, StringSplitOptions.RemoveEmptyEntries);
+         foreach (var entry in entries)
          {
-            string[] splitEntry = new string[3];
+            var splitEntry = new string[3];
             splitEntry = ExtractFilterProperty(entry);
 
-            string property = splitEntry[0];
-            string op = splitEntry[1];
-            string[] arguments = splitEntry[2].Split(',');
-            List<string> args = GetArgumentValues(arguments, 0);
+            var property = splitEntry[0];
+            var op = splitEntry[1];
+            var arguments = splitEntry[2].Split(',');
+            var args = GetArgumentValues(arguments, 0);
 
-            BindingFilterExpression expression = new BindingFilterExpression(property, op, args);
+            var expression = new BindingFilterExpression(property, op, args);
             _expressions.Add(expression);
          }
       }
 
       private List<string> GetArgumentValues(string[] arguments, int startPos)
       {
-         List<string> results = new List<string>();
-         for (int idx = startPos; idx < arguments.Length; idx++)
+         var results = new List<string>();
+         for (var idx = startPos; idx < arguments.Length; idx++)
          {
-            string argValue = arguments[idx].Replace("'", "").Replace("(", "").Replace(")", "").Replace(",", "");
+            var argValue = arguments[idx].Replace("'", "").Replace("(", "").Replace(")", "").Replace(",", "");
             results.Add(argValue.Trim());
          }
 
          return results;
       }
 
-      private string[] _operators = new string[] { " EQUAL ", " = ", " != ", " IN ", " NOT IN ", " LIKE " };
+      private readonly string[] _operators = new[] { " EQUAL ", " = ", " != ", " IN ", " NOT IN ", " LIKE ", " <= ", " >= "};
       private string[] ExtractFilterProperty(string entry)
       {
-         string[] result = new string[3];
+         var result = new string[3];
 
-         int operatorIndex = 1000;
-         foreach (string op in _operators)
+         var operatorIndex = 1000;
+         foreach (var op in _operators)
          {
             if (entry.IndexOf(op) != -1 && entry.IndexOf(op) < operatorIndex)
             {
@@ -111,10 +107,8 @@ namespace XF.UI.Smart
                result[1] = op.Trim();
             }
          }
-
          result[0] = entry.Substring(0, operatorIndex).Trim();
          result[2] = entry.Substring(operatorIndex + result[1].Length + 2, entry.Length - (operatorIndex + result[1].Length + 2)).Trim();
-
          return result;
       }
 
