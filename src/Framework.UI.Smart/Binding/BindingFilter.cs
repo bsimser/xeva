@@ -38,13 +38,10 @@ namespace XF.UI.Smart
       {
          foreach (var descriptor in _properties)
          {
-             _expressions.ForEach(exp =>
-                                      {
-                                          var itemValue = descriptor.GetValue(item) != null
-                                                              ? descriptor.GetValue(item).ToString()
+            var expressions = _expressions.FindAll(match => match.Property == descriptor.Name);
+            var itemValue = descriptor.GetValue(item) != null ? descriptor.GetValue(item).ToString()
                                                               : null;
-                                          exp.EvaluateExpression(itemValue);
-                                      });           
+            expressions.ForEach(exp => exp.EvaluateExpression(itemValue));
          }
          var nonMatchedExpression = _expressions.FindAll(compare => !compare.IsMatch);
          return nonMatchedExpression.Count == 0;
@@ -56,8 +53,8 @@ namespace XF.UI.Smart
          foreach (var expression in _expressions)
          {
             var descriptor = TypeDescriptor.GetProperties(typeof(FilteredType))[expression.Property];
-            if (!_properties.Exists(match=> match.Name==descriptor.Name))
-                _properties.Add(descriptor);
+            if (!_properties.Exists(match => match.Name == descriptor.Name))
+               _properties.Add(descriptor);
          }
       }
 
@@ -65,11 +62,10 @@ namespace XF.UI.Smart
       {
          _expressions = new List<BindingFilterExpression>();
 
-         var entries = _filterString.Split(new string[3] { "and", "And", "AND" }, 100, StringSplitOptions.RemoveEmptyEntries);
+         var entries = _filterString.Split(new string[] { "and", "And", "AND" }, 100, StringSplitOptions.RemoveEmptyEntries);
          foreach (var entry in entries)
          {
-            var splitEntry = new string[3];
-            splitEntry = ExtractFilterProperty(entry);
+            var splitEntry = ExtractFilterProperty(entry);
 
             var property = splitEntry[0];
             var op = splitEntry[1];
@@ -93,7 +89,7 @@ namespace XF.UI.Smart
          return results;
       }
 
-      private readonly string[] _operators = new[] { " EQUAL ", " = ", " != ", " IN ", " NOT IN ", " LIKE ", " <= ", " >= "};
+      private readonly string[] _operators = new[] { " EQUAL ", " = ", " != ", " IN ", " NOT IN ", " LIKE ", " <= ", " >= " };
       private string[] ExtractFilterProperty(string entry)
       {
          var result = new string[3];
