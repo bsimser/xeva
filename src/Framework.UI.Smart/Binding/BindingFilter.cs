@@ -82,7 +82,8 @@ namespace XF.UI.Smart
          var results = new List<string>();
          for (var idx = startPos; idx < arguments.Length; idx++)
          {
-            var argValue = arguments[idx].Replace("'", "").Replace("(", "").Replace(")", "").Replace(",", "");
+            //var argValue = arguments[idx].Replace("'", "").Replace("(", "").Replace(")", "").Replace(",", "");
+            var argValue = arguments[idx].Replace("(", "").Replace(")", "").Replace(",", ""); // Removed the "'" replace was not sure why it was there.
             results.Add(argValue.Trim());
          }
 
