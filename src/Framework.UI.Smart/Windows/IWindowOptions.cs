@@ -7,5 +7,8 @@ namespace XF.UI.Smart
       int Height { get; set; }
       int Left { get; set; }
       int Top { get; set; }
+      bool CloseConfirmation { get; set; }
+      string ConfirmationMessage { get; set; }
+      string ConfirmationCaption { get; set; }
    }
 }

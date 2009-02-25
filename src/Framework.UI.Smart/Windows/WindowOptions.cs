@@ -9,6 +9,9 @@ namespace XF.UI.Smart
       private int _width;
       private int _top;
       private int _left;
+      private bool _closeConfirmation;
+      private string _confirmationMessage;
+      private string _confirmationCaption;
 
       public WindowOptions(bool modal, int width, int height, int left, int top)
       {
@@ -78,6 +81,24 @@ namespace XF.UI.Smart
       {
          get { return _top; }
          set { _top = value; }
+      }
+
+      public bool CloseConfirmation
+      {
+         get { return _closeConfirmation; }
+         set { _closeConfirmation = value;}
+      }
+
+      public string ConfirmationMessage
+      {
+         get { return _confirmationMessage; }
+         set { _confirmationMessage = value; }
+      }
+
+      public string ConfirmationCaption
+      {
+         get { return _confirmationCaption; }
+         set { _confirmationCaption = value; }
       }
    }
 }
