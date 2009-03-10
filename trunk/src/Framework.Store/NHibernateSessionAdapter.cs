@@ -116,6 +116,32 @@ namespace XF.Store
          return result;
       }
 
+      public int GetScalar(INamedQuery query)
+      {
+         int result = 0;
+         NHQuery iQuery = _session.GetNamedQuery(query.Name);
+
+         foreach (var pair in query.Parameters)
+         {
+            Type type = pair.Value.GetType().GetInterface("IList");
+            if (type == typeof (IList))
+               iQuery.SetParameterList(pair.Key, (IList) pair.Value);
+            else
+               iQuery.SetParameter(pair.Key, pair.Value);
+         }
+
+
+         IEnumerator enumerator = iQuery.Enumerable().GetEnumerator();
+         if (enumerator.MoveNext())
+         {
+            if (enumerator.Current != null)
+            {
+               result = int.Parse(enumerator.Current.ToString());
+            }
+         }
+         return result;
+      }
+
       public IOrderedQueryable<TEntity> Query<TEntity>() where TEntity : IEntity
       {
          return _session.Linq<TEntity>();

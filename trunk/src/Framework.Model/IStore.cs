@@ -32,5 +32,6 @@ namespace XF.Model
       IOrderedQueryable<TEntity> Query<TEntity>() where TEntity : IEntity;
 
       ITransaction CreateTransaction();
+      int GetScalar(INamedQuery query);
    }
 }

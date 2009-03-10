@@ -37,6 +37,16 @@ namespace XF.Model
          return result;
       }
 
+      public virtual int GetScalar(INamedQuery query)
+      {
+         GuardStoreNotNull();
+         if (query == null)
+            throw new ArgumentNullException("query");
+
+         int result = Store.GetScalar(query);
+         return result;
+      }
+
       public virtual void Save(TEntity entity)
       {
          GuardStoreNotNull();
