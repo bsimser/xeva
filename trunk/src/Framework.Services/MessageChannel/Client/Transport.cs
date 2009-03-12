@@ -10,7 +10,7 @@ namespace XF.Services
 
       public virtual byte[] SendChannelRequest(byte[] requestMessage)
       {
-         if (_transport == null) Initialize();
+          if (_transport == null) Initialize();
 
          object[] requestPrams = new object[1] { requestMessage };
          return (byte[])_transport.GetType().GetMethod("SendChannelRequest").Invoke(_transport, requestPrams);
@@ -19,7 +19,7 @@ namespace XF.Services
       private void Initialize()
       {
          _transport = Locator.Resolve<TTransport>();
-         _transport.Timeout = 600000;
+         _transport.Timeout = 900000;
       }
    }
 }
