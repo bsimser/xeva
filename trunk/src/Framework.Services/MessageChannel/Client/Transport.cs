@@ -19,7 +19,7 @@ namespace XF.Services
       private void Initialize()
       {
          _transport = Locator.Resolve<TTransport>();
-         _transport.Timeout = 900000;
+         _transport.Timeout = 1200000;
       }
    }
 }
