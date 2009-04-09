@@ -10,5 +10,6 @@ namespace XF.UI.Smart
       bool CloseConfirmation { get; set; }
       string ConfirmationMessage { get; set; }
       string ConfirmationCaption { get; set; }
+      bool OpenInSecondMonitor { get; set; }
    }
 }

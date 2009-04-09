@@ -12,21 +12,29 @@ namespace XF.UI.Smart
       private bool _closeConfirmation;
       private string _confirmationMessage;
       private string _confirmationCaption;
+      private bool _openInSecondMonitor;
 
-      public WindowOptions(bool modal, int width, int height, int left, int top)
+      public WindowOptions(bool modal, int width, int height, int left, int top, bool openInSecondMonitor)
       {
          _modal = modal;
          _width = width;
          _height = height;
          _top = top;
          _left = left;
+         _openInSecondMonitor = openInSecondMonitor;
       }
 
-      public WindowOptions() : this (false, 800, 600, 0, 0)
+      public WindowOptions() : this (false, 800, 600, 0, 0, false)
       {
       }
 
-      public WindowOptions(bool modal, int width, int height): this (modal, width, height, 0, 0)
+      public WindowOptions(bool modal, int width, int height)
+         : this(modal, width, height, 0, 0, false)
+      {
+      }
+
+      public WindowOptions(bool modal, int width, int height, bool openInSecondMonitor)
+         : this(modal, width, height, 0, 0, openInSecondMonitor)
       {
       }
 
@@ -99,6 +107,12 @@ namespace XF.UI.Smart
       {
          get { return _confirmationCaption; }
          set { _confirmationCaption = value; }
+      }
+
+      public bool OpenInSecondMonitor
+      {
+         get { return _openInSecondMonitor; }
+         set { _openInSecondMonitor = value; }
       }
    }
 }
