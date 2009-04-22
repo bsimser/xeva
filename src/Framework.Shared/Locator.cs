@@ -33,6 +33,11 @@ namespace XF
          return Container.Resolve(component);
       }
 
+      public static void Release(object toRelease)
+      {
+         Container.Release(toRelease);
+      }
+
       public static void AddComponent(string componentKey, Type componentType)
       {
          try
