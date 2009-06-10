@@ -8,7 +8,7 @@ namespace XF.Services
    public class ExceptionShield
    {
       private const string _eventSource = "XEVA";
-      private const string _eventLogName = "Application";
+      private const string _eventLogName = "XEVA";
 
       private static object[] _parameters;
       private static Exception _exception;
