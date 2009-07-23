@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Linq;
 using XF.Model;
 
 namespace XF.Model
@@ -29,9 +30,10 @@ namespace XF.Model
 
       IList<TEntity> Query<TEntity>(INamedQuery query) where TEntity : IEntity;
       
-      IOrderedQueryable<TEntity> Query<TEntity>() where TEntity : IEntity;
-
       ITransaction CreateTransaction();
+
       int GetScalar(INamedQuery query);
+
+      INHibernateQueryable<TEntity> Query<TEntity>() where TEntity : IEntity;
    }
 }

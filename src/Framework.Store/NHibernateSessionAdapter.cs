@@ -142,7 +142,7 @@ namespace XF.Store
          return result;
       }
 
-      public IOrderedQueryable<TEntity> Query<TEntity>() where TEntity : IEntity
+      public INHibernateQueryable<TEntity> Query<TEntity>() where TEntity : IEntity
       {
          return _session.Linq<TEntity>();
       }
