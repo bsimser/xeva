@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate.Linq;
 using XF.Model;
 
 namespace XF.Model
@@ -8,7 +9,7 @@ namespace XF.Model
    public abstract class Repository<TEntity> : IRepository<TEntity>
       where TEntity : Entity
    {
-      public IQueryable<TEntity> All
+      public INHibernateQueryable<TEntity> All
       {
          get
          {
