@@ -16,7 +16,7 @@ namespace XF.Validation
 
          if (rawValue.GetType() == typeof (string))
          {
-            string theValue = (string)rawValue;
+            var theValue = (string)rawValue;
             if (string.IsNullOrEmpty(theValue))
             {
                AddMessage(validationResult, "String is empty.");
@@ -26,7 +26,7 @@ namespace XF.Validation
 
          if (rawValue.GetType() == typeof (Guid))
          {
-            Guid theValue = (Guid)rawValue;
+            var theValue = (Guid)rawValue;
             if (theValue == Guid.Empty)
             {
                AddMessage(validationResult, "Identifier is empty.");
@@ -36,10 +36,29 @@ namespace XF.Validation
 
          if (rawValue is ICollection)
          {
-            ICollection theValue = rawValue as ICollection;
+            var theValue = rawValue as ICollection;
             if (theValue.Count == 0)
             {
                AddMessage(validationResult, "Collection is empty.");
+               return;
+            }
+         }
+
+         if (rawValue.GetType() == typeof(decimal))
+         {
+            var theValue = (decimal) rawValue;
+            if (theValue == 0.0M)
+            {
+               AddMessage(validationResult,"Value is zero.");
+               return;
+            }
+         }
+
+         if (rawValue.GetType()== typeof(DateTime))
+         {
+            var theValue = (DateTime)rawValue;
+            if (theValue == DateTime.MaxValue) {
+               AddMessage(validationResult, "Value is not set.");
                return;
             }
          }
