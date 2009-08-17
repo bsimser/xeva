@@ -7,5 +7,6 @@ namespace XF.UI.Smart
    {
       void RegisterControl(string property, IControl control);
       void RegisterControl<TMessage>(Expression<Func<TMessage, Object>> expression, IControl control);
+      bool Validate(object target);
    }
 }
