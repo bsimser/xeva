@@ -168,8 +168,10 @@ namespace XF.UI.Smart
 
       public void RegisterControl<TMessage>(Expression<Func<TMessage, Object>> expression, IControl control)
       {
-         var mem = expression.Body as MemberExpression;
-         var property = mem.Member.Name;
+         var memberInfo = ExpressionsHelper.GetMemberInfo(expression);
+         if (memberInfo == null) return;
+
+         var property = memberInfo.Name;
          _controls.Add(property, control);
       }
 

@@ -9,9 +9,10 @@ namespace XF.Model
    public abstract class Repository<TEntity> : IRepository<TEntity>
       where TEntity : Entity
    {
-      public INHibernateQueryable<TEntity> All
+      public IOrderedQueryable<TEntity> All
       {
          get
+
          {
             GuardStoreNotNull();
             return Store.Query<TEntity>();

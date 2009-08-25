@@ -67,6 +67,7 @@
     <Compile Include="Binding\BindingFilter.cs" />
     <Compile Include="Binding\BindingFilterExpression.cs" />
     <Compile Include="Binding\IBindingFilter.cs" />
+    <Compile Include="Presenter\IHaveMessageToSave.cs" />
     <Compile Include="Presenter\IRefreshable.cs" />
     <Compile Include="Presenter\IRefreshes.cs" />
     <Compile Include="Presenter\PresenterBuilder.cs" />

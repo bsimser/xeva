@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NHibernate.Linq;
 using XF.Model;
 
@@ -7,7 +8,7 @@ namespace XF.Model
 {
    public interface IRepository<TEntity> where TEntity : IEntity
    {
-      INHibernateQueryable<TEntity> All { get; }
+      IOrderedQueryable<TEntity> All { get; }
 
       TEntity FindBy(Guid id);
 
