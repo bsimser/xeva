@@ -20,7 +20,7 @@ namespace XF.Model
 
       void Clear();
 
-      TEntity Load<TEntity>(Guid id) where TEntity : Entity;
+      TEntity Load<TEntity>(Guid id) where TEntity : IEntity;
 
       void Delete(object entity);
 

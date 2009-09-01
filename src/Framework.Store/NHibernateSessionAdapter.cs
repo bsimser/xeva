@@ -51,11 +51,11 @@ namespace XF.Store
          _session.Clear();
       }
 
-      public TEntity Load<TEntity>(Guid id) where TEntity : Entity
+      public TEntity Load<TEntity>(Guid id) where TEntity : IEntity
       {
          Open();
 
-         TEntity result = null;
+         TEntity result = default(TEntity);
 
          try
          {

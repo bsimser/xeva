@@ -62,7 +62,7 @@ namespace XF.UI.Smart
       {
          _expressions = new List<BindingFilterExpression>();
 
-         var entries = _filterString.Split(new string[] { "and", "And", "AND" }, 100, StringSplitOptions.RemoveEmptyEntries);
+         var entries = _filterString.Split(new string[] { " and ", " And ", " AND " }, 100, StringSplitOptions.RemoveEmptyEntries);
          foreach (var entry in entries)
          {
             var splitEntry = ExtractFilterProperty(entry);
