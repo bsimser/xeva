@@ -7,7 +7,7 @@ using XF.Model;
 namespace XF.Model
 {
    public abstract class Repository<TEntity> : IRepository<TEntity>
-      where TEntity : Entity
+      where TEntity : IEntity
    {
       public IOrderedQueryable<TEntity> All
       {
