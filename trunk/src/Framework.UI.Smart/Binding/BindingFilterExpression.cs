@@ -90,9 +90,9 @@ namespace XF.UI.Smart
            if (DateTime.TryParse(values, out existingDate) && DateTime.TryParse(_expressionValues[0], out evalDate))
            {
                if (Operator=="<=")
-                   return evalDate <= existingDate;
+                   return existingDate <= evalDate;
                if (Operator == ">=")
-                   return evalDate >= existingDate;
+                   return existingDate >= evalDate;
            }
 
            Decimal evalNumber;
@@ -100,9 +100,9 @@ namespace XF.UI.Smart
            if (Decimal.TryParse(values,out existingNumber) && Decimal.TryParse(_expressionValues[0],out evalNumber))
            {
                if (Operator == "<=")
-                   return evalNumber <= existingNumber;
+                   return existingNumber <= evalNumber;
                if (Operator == ">=")
-                   return evalNumber >= existingNumber;
+                   return existingNumber >= evalNumber;
            }
            return false;
        }
