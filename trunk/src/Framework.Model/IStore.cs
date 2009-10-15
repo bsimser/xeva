@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate;
 using NHibernate.Linq;
 using XF.Model;
 
@@ -35,5 +36,7 @@ namespace XF.Model
       int GetScalar(INamedQuery query);
 
       INHibernateQueryable<TEntity> Query<TEntity>() where TEntity : IEntity;
+
+      ICriteria CreateCriteria<TEntity>();
    }
 }

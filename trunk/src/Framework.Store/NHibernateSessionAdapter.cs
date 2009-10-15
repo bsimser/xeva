@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NHibernate;
 using NHibernate.Linq;
 using XF.Model;
 using ITransaction=XF.Model.ITransaction;
@@ -145,6 +146,11 @@ namespace XF.Store
       public INHibernateQueryable<TEntity> Query<TEntity>() where TEntity : IEntity
       {
          return _session.Linq<TEntity>();
+      }
+
+      public ICriteria CreateCriteria<TEntity>()
+      {
+         return _session.CreateCriteria(typeof (TEntity));
       }
 
       public ITransaction CreateTransaction()
