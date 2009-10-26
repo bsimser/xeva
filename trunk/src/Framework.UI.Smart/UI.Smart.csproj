@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1FB3293D-07F4-46FE-B86D-5897879CCB9C}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -67,6 +67,10 @@
     <Compile Include="Binding\BindingFilter.cs" />
     <Compile Include="Binding\BindingFilterExpression.cs" />
     <Compile Include="Binding\IBindingFilter.cs" />
+    <Compile Include="Controller\ActionController.cs" />
+    <Compile Include="Controller\ActionPropertyParameters.cs" />
+    <Compile Include="Controller\IActionCallbacks.cs" />
+    <Compile Include="Controller\IActionView.cs" />
     <Compile Include="Presenter\IHaveMessageToSave.cs" />
     <Compile Include="Presenter\IRefreshable.cs" />
     <Compile Include="Presenter\IRefreshes.cs" />

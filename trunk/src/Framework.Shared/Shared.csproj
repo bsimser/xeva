@@ -62,9 +62,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\ActionParameters.cs" />
+    <Compile Include="Action\IActionParameters.cs" />
+    <Compile Include="Action\IListMessage.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="ExpressionsHelper.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="Action\IActionableService.cs" />
     <Compile Include="ISecurityFilter.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="MessageChannel\ISessionTicket.cs" />
