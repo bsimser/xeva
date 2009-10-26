@@ -10,9 +10,10 @@ namespace XF.UI.Smart
    {
       private readonly TService _service;
       private readonly ActionPropertyParameters _actionPropertyRegistry = new ActionPropertyParameters();
-      private Func<TService, TInputMessage> _inputMethod;
-      private Func<TService, string> _updateMethod;
       private TInputMessage _inputMessage;
+      private MethodInfo _inputMethod;
+      private MethodInfo _updateMethod;
+      private IRequest _request;
 
       public ActionController(TService service, IActionView<TUpdateMessage> view)
       {
@@ -25,12 +26,17 @@ namespace XF.UI.Smart
       public event EventHandler ActionCanceled;
 
       public IActionView<TUpdateMessage> View { get; private set; }
-      public Guid EntityID { get; private set; }
+      public Guid EntityID { get; protected set; }
       public TUpdateMessage UpdateMessage { get; private set; }
+      public string ActionResults { get; private set; }
+      protected TService Service { get { return _service; } }
 
       public virtual void PerformAction()
       {
          UpdateMessage = View.RetrieveActionMessage();
+
+         if (_updateMethod != null)
+            ActionResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}).ToString();
 
          if (ActionComplete != null)
             ActionComplete(this, new EventArgs());
@@ -38,8 +44,15 @@ namespace XF.UI.Smart
 
       public void Activate()
       {
+         Activate(_request ?? new NullRequest());
+      }
+
+      public void Activate(IRequest request)
+      {
+         OnHandleRequest(request);
+
          if (_inputMethod != null)
-            _inputMessage = _inputMethod.Invoke(_service);
+            _inputMessage = (TInputMessage)_inputMethod.Invoke(_service, new object[]{EntityID});
 
          LoadActionPropertiesDefaultValues();
 
@@ -68,6 +81,8 @@ namespace XF.UI.Smart
          }
       }
 
+      protected virtual void OnHandleRequest(IRequest request) { }
+
       #region Mapping Code
 
       public ActionController<TService, TInputMessage, TUpdateMessage> ForEntity(Guid entityID)
@@ -76,15 +91,15 @@ namespace XF.UI.Smart
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Input(Func<TService, TInputMessage> inputMethod)
+      public ActionController<TService, TInputMessage, TUpdateMessage> Input<TArg>(Func<TArg, TInputMessage> inputMethod, TArg inputArg)
       {
-         _inputMethod = inputMethod;
+         _inputMethod = inputMethod.Method;
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TService, string> updateMethod)
+      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TUpdateMessage, string> updateMethod)
       {
-         _updateMethod = updateMethod;
+         _updateMethod = updateMethod.Method;
          return this;
       }
 
@@ -99,7 +114,7 @@ namespace XF.UI.Smart
       }
 
       public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField,
-                                                                      Expression<Func<TInputMessage, object>> inputField)
+                                                                           Expression<Func<TInputMessage, object>> inputField)
       {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
          var inputProperty = ExpressionsHelper.GetMemberInfo(inputField) as PropertyInfo;
@@ -111,8 +126,8 @@ namespace XF.UI.Smart
       }
 
       public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField,
-                                                                      Expression<Func<TInputMessage, object>> inputField,
-                                                                      Expression<Func<TInputMessage, object>> listOfValues)
+                                                                           Expression<Func<TInputMessage, object>> inputField,
+                                                                           Expression<Func<TInputMessage, object>> listOfValues)
       {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
          var inputProperty = ExpressionsHelper.GetMemberInfo(inputField) as PropertyInfo;
@@ -126,8 +141,8 @@ namespace XF.UI.Smart
       }
 
       public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField,
-                                                                      object value,
-                                                                      Expression<Func<TInputMessage, object>> listOfValues)
+                                                                           object value,
+                                                                           Expression<Func<TInputMessage, object>> listOfValues)
       {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
          var listProperty = ExpressionsHelper.GetMemberInfo(listOfValues) as PropertyInfo;
@@ -146,6 +161,7 @@ namespace XF.UI.Smart
          _actionPropertyRegistry.Add(new ActionPropertyParameters { Output = updateProperty });
          return this;
       }
+
       #endregion Mapping Code
 
    }
