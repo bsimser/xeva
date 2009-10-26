@@ -6,5 +6,6 @@ namespace XF
    {
       string Name { get; set; }
       Guid ID { get; set; }
+      string StatusColor { get; set; }
    }
 }

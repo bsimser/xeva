@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action\ActionParameters.cs" />
+    <Compile Include="Action\ActionPropertyAttribute.cs" />
+    <Compile Include="Action\EditableControl.cs" />
     <Compile Include="Action\IActionParameters.cs" />
     <Compile Include="Action\IListMessage.cs" />
     <Compile Include="EventArgs.cs" />
