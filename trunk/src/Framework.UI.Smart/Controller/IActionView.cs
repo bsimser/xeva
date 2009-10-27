@@ -7,7 +7,9 @@ namespace XF.UI.Smart
    {
       void Attach(IActionCallbacks callback);
       TUpdateMessage RetrieveActionMessage();
-      void AddControl(PropertyInfo output, object defaultValue, List<IListMessage> lookupList);
+      IControl AddControl(string propertyName, string controlName, object controlValue, 
+                          string controlLabel, EditableControl controlType, List<IListMessage> lookupList);
       void Show();
+      void Close();
    }
 }

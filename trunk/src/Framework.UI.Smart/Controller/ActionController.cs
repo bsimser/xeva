@@ -5,15 +5,16 @@ using System.Reflection;
 
 namespace XF.UI.Smart
 {
-   public class ActionController<TService, TInputMessage, TUpdateMessage> : IActionCallbacks 
-      where TService : IActionableService 
+   public class ActionController<TService, TInputMessage, TUpdateMessage> : IActionCallbacks, IActionController
+      where TService : IActionableService
    {
       private readonly TService _service;
       private readonly ActionPropertyParameters _actionPropertyRegistry = new ActionPropertyParameters();
+      private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
       private TInputMessage _inputMessage;
       private MethodInfo _inputMethod;
       private MethodInfo _updateMethod;
-      private IRequest _request;
+      private ControllerValidator _validator;
 
       public ActionController(TService service, IActionView<TUpdateMessage> view)
       {
@@ -36,7 +37,7 @@ namespace XF.UI.Smart
          UpdateMessage = View.RetrieveActionMessage();
 
          if (_updateMethod != null)
-            ActionResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}).ToString();
+            ActionResults = _updateMethod.Invoke(Service, new object[] { UpdateMessage }).ToString();
 
          if (ActionComplete != null)
             ActionComplete(this, new EventArgs());
@@ -46,11 +47,13 @@ namespace XF.UI.Smart
       {
          if (ActionCanceled != null)
             ActionCanceled(this, new EventArgs());
+
+         View.Close();
       }
 
       public void Activate()
       {
-         Activate(_request ?? new NullRequest());
+         Activate(new NullRequest());
       }
 
       public void Activate(IRequest request)
@@ -58,16 +61,22 @@ namespace XF.UI.Smart
          OnHandleRequest(request);
 
          if (_inputMethod != null)
-            _inputMessage = (TInputMessage)_inputMethod.Invoke(_service, new object[]{EntityID});
+            _inputMessage = (TInputMessage)_inputMethod.Invoke(_service, new object[] { EntityID });
 
          LoadActionPropertiesDefaultValues();
 
          foreach (var actionProperty in _actionPropertyRegistry)
          {
+            var controlValue = actionProperty.DefaultValue;
+            EditableControl controlType;
+            string propertyName, controlName, controlLabel;
+            PopulateArgsFromOutputProperty(actionProperty.Output, out propertyName, out controlName, out controlLabel, out controlType);
+
             var lookupList = actionProperty.ListOfValues != null
                                 ? actionProperty.ListOfValues.GetValue(_inputMessage, null) as List<IListMessage>
                                 : null;
-            View.AddControl(actionProperty.Output, actionProperty.DefaultValue, lookupList);
+            var control = View.AddControl(propertyName, controlName, controlValue, controlLabel, controlType, lookupList);
+            _controls.Add(propertyName, control);
          }
 
          View.Show();
@@ -87,7 +96,36 @@ namespace XF.UI.Smart
          }
       }
 
+      private void PopulateArgsFromOutputProperty(PropertyInfo outputInfo, out string propertyName, out string controlName,
+                                                   out string controlLabel, out EditableControl controlType)
+      {
+         propertyName = outputInfo.Name;
+         controlName = string.Format("_{0}Editor", outputInfo.Name);
+         var label = string.Empty;
+         var type = EditableControl.Unspecified;
+         foreach (ActionPropertyAttribute attribute in outputInfo.GetCustomAttributes(typeof(ActionPropertyAttribute), false))
+         {
+            label = attribute.Label;
+            type = attribute.EditorType;
+         }
+
+         controlLabel = !string.IsNullOrEmpty(label) ? label : outputInfo.Name;
+         controlType = type;
+      }
+
       protected virtual void OnHandleRequest(IRequest request) { }
+
+      protected bool Validate(object target)
+      {
+         if (_validator == null)
+            InitializeValidator(new ControllerValidator());
+         return _validator.Validate(new[] { target }, _controls);
+      }
+
+      private void InitializeValidator(ControllerValidator validator)
+      {
+         _validator = validator;
+      }
 
       #region Mapping Code
 
