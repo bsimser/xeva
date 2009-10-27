@@ -5,6 +5,8 @@ namespace XF
 {
    public interface IActionableService
    {
+      IUserAccount UserAccount { get; set; }
+
       void LogAction(IUserAccount performedBy, DateTime performedAt, Type actionType ,
                      List<IActionParameters> parameters);
    }
