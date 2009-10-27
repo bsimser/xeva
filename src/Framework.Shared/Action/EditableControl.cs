@@ -10,6 +10,7 @@ namespace XF
       EditableNumericEditor,
       EditableOptionToggle,
       EditableStatesComboEditor,
-      EditableTextbox
+      EditableTextbox, 
+      Unspecified
    }
 }

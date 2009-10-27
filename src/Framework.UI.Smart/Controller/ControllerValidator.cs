@@ -3,7 +3,7 @@ using XF.Validation;
 
 namespace XF.UI.Smart
 {
-   public class PresenterValidator : IPresenterValidator
+   public class ControllerValidator : IPresenterValidator
    {
       public virtual bool Validate(object[] targets, Dictionary<string, IControl> controls)
       {

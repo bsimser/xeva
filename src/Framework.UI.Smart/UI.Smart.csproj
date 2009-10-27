@@ -70,7 +70,9 @@
     <Compile Include="Controller\ActionController.cs" />
     <Compile Include="Controller\ActionPropertyParameters.cs" />
     <Compile Include="Controller\IActionCallbacks.cs" />
+    <Compile Include="Controller\IActionController.cs" />
     <Compile Include="Controller\IActionView.cs" />
+    <Compile Include="Controller\ControllerValidator.cs" />
     <Compile Include="Presenter\IHaveMessageToSave.cs" />
     <Compile Include="Presenter\IRefreshable.cs" />
     <Compile Include="Presenter\IRefreshes.cs" />
