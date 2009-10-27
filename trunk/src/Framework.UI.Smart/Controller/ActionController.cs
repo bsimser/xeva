@@ -42,6 +42,12 @@ namespace XF.UI.Smart
             ActionComplete(this, new EventArgs());
       }
 
+      public virtual void CancelAction()
+      {
+         if (ActionCanceled != null)
+            ActionCanceled(this, new EventArgs());
+      }
+
       public void Activate()
       {
          Activate(_request ?? new NullRequest());
