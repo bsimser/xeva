@@ -36,8 +36,11 @@ namespace XF.UI.Smart
       {
          UpdateMessage = View.RetrieveActionMessage();
 
-         if (_updateMethod != null)
+         if (UpdateMessage == null) return;
+
+         if (Validate(UpdateMessage))
             ActionResults = _updateMethod.Invoke(Service, new object[] { UpdateMessage }).ToString();
+            //Service.ClaimStageActionUpdate(message);
 
          if (ActionComplete != null)
             ActionComplete(this, new EventArgs());
