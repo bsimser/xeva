@@ -88,7 +88,12 @@ namespace XF.Specs.AutoMocking
 				get { return model; }
 			}
 
-			public object Resolve(CreationContext context, ISubDependencyResolver parentResolver, ComponentModel model, DependencyModel dependency)
+		   public Type Service
+		   {
+		      get { throw new System.NotImplementedException(); }
+		   }
+
+		   public object Resolve(CreationContext context, ISubDependencyResolver parentResolver, ComponentModel model, DependencyModel dependency)
 			{
 				throw new NotImplementedException();
 			}
