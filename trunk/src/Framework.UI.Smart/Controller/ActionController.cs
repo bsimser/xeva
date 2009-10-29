@@ -49,6 +49,7 @@ namespace XF.UI.Smart
             ActionCanceled(this, new EventArgs());
 
          View.Close();
+         Locator.Release(this);
       }
 
       public void Activate()
