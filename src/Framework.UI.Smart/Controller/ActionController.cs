@@ -29,21 +29,29 @@ namespace XF.UI.Smart
       public IActionView<TUpdateMessage> View { get; private set; }
       public Guid EntityID { get; protected set; }
       public TUpdateMessage UpdateMessage { get; private set; }
-      public string ActionResults { get; private set; }
+      public IActionResults ActionResults { get; private set; }
       protected TService Service { get { return _service; } }
 
       public virtual void PerformAction()
       {
          UpdateMessage = View.RetrieveActionMessage();
 
-         if (UpdateMessage == null) return;
+         if (Equals(UpdateMessage, default(TUpdateMessage))) return;
+
+         LoadEntityIntoUpdateMessage();
 
          if (Validate(UpdateMessage))
-            ActionResults = _updateMethod.Invoke(Service, new object[] { UpdateMessage }).ToString();
-            //Service.ClaimStageActionUpdate(message);
+            ActionResults = _updateMethod.Invoke(Service, new object[] { UpdateMessage }) as IActionResults;
 
          if (ActionComplete != null)
             ActionComplete(this, new EventArgs());
+      }
+
+      private void LoadEntityIntoUpdateMessage()
+      {
+         var entityProperty = UpdateMessage.GetType().GetProperty("EntityID");
+         if(entityProperty != null)
+            entityProperty.SetValue(UpdateMessage, EntityID, null);
       }
 
       public virtual void CancelAction()
@@ -145,7 +153,7 @@ namespace XF.UI.Smart
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TUpdateMessage, string> updateMethod)
+      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TUpdateMessage, IActionResults> updateMethod)
       {
          _updateMethod = updateMethod.Method;
          return this;
