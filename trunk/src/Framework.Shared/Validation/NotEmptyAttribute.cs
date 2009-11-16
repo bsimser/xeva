@@ -6,6 +6,8 @@ namespace XF.Validation
 {
    public class NotEmptyAttribute : ValidationAttribute
    {
+      public override string OptionalMessage { get; set; }
+
       protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
          if (rawValue == null)

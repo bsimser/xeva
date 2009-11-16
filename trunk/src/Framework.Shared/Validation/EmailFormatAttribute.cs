@@ -12,6 +12,8 @@ namespace XF.Validation
       + @"\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+"
       + @"[a-zA-Z]{2,}))$";
 
+      public override string OptionalMessage { get; set; }
+
       protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
 

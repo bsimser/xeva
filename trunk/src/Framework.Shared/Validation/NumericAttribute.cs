@@ -5,6 +5,8 @@ namespace XF.Validation
    {
       private const string ERROR_MESSAGE = "Value must be numeric.";
 
+      public override string OptionalMessage { get; set; }
+      
       protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
          if (rawValue == null) return;

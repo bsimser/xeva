@@ -40,8 +40,9 @@ namespace XF.UI.Smart
 
          LoadEntityIntoUpdateMessage();
 
-         if (Validate(UpdateMessage))
-            ActionResults = _updateMethod.Invoke(Service, new object[] { UpdateMessage }) as IActionResults;
+         if (!Validate(UpdateMessage)) return;
+
+         ActionResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}) as IActionResults;
 
          if (ActionComplete != null)
             ActionComplete(this, new EventArgs());
@@ -59,6 +60,12 @@ namespace XF.UI.Smart
          if (ActionCanceled != null)
             ActionCanceled(this, new EventArgs());
 
+         View.Close();
+         Locator.Release(this);
+      }
+
+      public virtual void Finish()
+      {
          View.Close();
          Locator.Release(this);
       }
@@ -140,6 +147,12 @@ namespace XF.UI.Smart
       }
 
       #region Mapping Code
+
+      public ActionController<TService, TInputMessage, TUpdateMessage> Titled(string title)
+      {
+         View.Title = title;
+         return this;
+      }
 
       public ActionController<TService, TInputMessage, TUpdateMessage> ForEntity(Guid entityID)
       {
