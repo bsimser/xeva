@@ -14,6 +14,8 @@ namespace XF.Validation
          _minimumLength = minimumLength;
       }
 
+      public override string OptionalMessage { get; set; }
+
       protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
          if (!(rawValue is string)) return;

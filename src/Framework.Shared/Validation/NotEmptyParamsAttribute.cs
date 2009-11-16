@@ -10,6 +10,8 @@ namespace XF.Validation
 {
    public class NotEmptyParamsAttribute : ValidationAttribute
    {
+      public override string OptionalMessage { get; set; }
+
       protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
          var parameters = XDocument.Parse(rawValue.ToString());

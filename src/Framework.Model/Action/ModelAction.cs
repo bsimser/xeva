@@ -13,6 +13,8 @@ namespace XF
       private PropertyInfo _entityIDProperty;
       private TEntity _entity;
       private readonly List<ModelActionParameter> _actionParameters = new List<ModelActionParameter>();
+      private PropertyInfo _childObjectProperty;
+      private object _childObject;
 
       public ModelAction(TRepository repository)
       {
@@ -25,7 +27,7 @@ namespace XF
       protected IUserAccount UserAccount { get; set; }
       protected DateTime UpdatedOn { get; set; }
 
-      protected TEntity Entity
+      protected TEntity Root
       {
          get
          {
@@ -52,13 +54,34 @@ namespace XF
          UpdatedOn = updatedOn;
       }
 
-      public ModelAction<TEntity, TRepository, TUpdateMessage> ForEntity(Expression<Func<TUpdateMessage, Guid>> entityIDExpression)
+      public ModelAction<TEntity, TRepository, TUpdateMessage> WithRoot(Expression<Func<TUpdateMessage, Guid>> entityIDExpression)
       {
          var entityProperty = ExpressionsHelper.GetMemberInfo(entityIDExpression) as PropertyInfo;
          if (entityProperty == null) return this;
 
          _entityIDProperty = entityProperty;
 
+         return this;
+      }
+
+      public ModelAction<TEntity, TRepository, TUpdateMessage> ForChild(Expression<Func<TEntity, object>> entityExpression)
+      {
+         var updateObject = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
+
+         if (updateObject == null) return this;
+         _childObjectProperty = updateObject;
+
+         return this;
+      }
+
+      public ModelAction<TEntity, TRepository, TUpdateMessage> Map(Expression<Func<TEntity, object>> entityExpression, 
+                                                                   object targetValue)
+      {
+         var entityProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
+
+         if (entityProperty == null) return this;
+
+         _actionParameters.Add(new ModelActionParameter { EntityProperty = entityProperty, EntityPropertyValue = targetValue });
          return this;
       }
 
@@ -82,51 +105,77 @@ namespace XF
          return this;
       }
 
-      public ModelAction<TEntity, TRepository, TUpdateMessage> Map<TChild>(Func<TChild, bool> target,
-                                                                           Expression<Func<TUpdateMessage, object>> updateExpression)
+      public void SetMethodTargetArgument<TChild>(Func<TChild, bool> target, TChild arg)
       {
-         var updateProperty = ExpressionsHelper.GetMemberInfo(updateExpression) as PropertyInfo;
-         if (updateProperty == null) return this;
+         _actionParameters.ForEach(param => { if (param.EntityMethod.Name == target.Method.Name)
+                                                     param.EntityPropertyValue = arg; } );
+      }
 
-         _actionParameters.Add(new ModelActionParameter { EntityMethod = target.Method, UpdateProperty = updateProperty });
-         return this;
+      public void SetPropertyTargetArgument(Expression<Func<TEntity, object>> entityExpression, object arg)
+      {
+         var entityProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
+         if (entityProperty == null) return;
+
+         _actionParameters.ForEach(param =>
+         {
+            if (param.EntityProperty.Name == entityProperty.Name)
+               param.EntityPropertyValue = arg;
+         });
       }
 
       public virtual IActionResults Execute()
       {
          if(EntityID == Guid.Empty) return default(IActionResults);
 
-         Entity = Repository.FindBy(EntityID);
+         Root = Repository.FindBy(EntityID);
 
-         var results =  UpdateEntityFromParameters();
+         if (_childObjectProperty != null)
+         {
+            _childObject = _childObjectProperty.GetValue(Root, null);
+            UpdateEntityFromParameters(_childObject);
+         }
+         else
+         {
+            UpdateEntityFromParameters(Root);
+         }
+
+         var results = CommitChangesToRoot();
 
          return results;
       }
 
-      protected IActionResults UpdateEntityFromParameters()
+      protected void UpdateEntityFromParameters(object updateEntity)
       {
          foreach (var actionParameter in _actionParameters)
          {
-            if (actionParameter.EntityProperty != null)
-               actionParameter.EntityProperty.SetValue(Entity, actionParameter.UpdateProperty.GetValue(UpdateMessage, null), null);
+            if (actionParameter.EntityProperty != null &&
+                actionParameter.UpdateProperty != null)
+               actionParameter.EntityProperty.SetValue(updateEntity, actionParameter.UpdateProperty.GetValue(UpdateMessage, null), null);
+
+            if (actionParameter.EntityProperty != null &&
+                actionParameter.EntityPropertyValue != null)
+               actionParameter.EntityProperty.SetValue(updateEntity, actionParameter.EntityPropertyValue, null);
 
             if (actionParameter.EntityMethod != null)
-               actionParameter.EntityMethod.Invoke(Entity, new[] {actionParameter.EntityPropertyValue});
+               actionParameter.EntityMethod.Invoke(updateEntity, new[] { actionParameter.EntityPropertyValue });
          }
+      }
 
+      protected IActionResults CommitChangesToRoot()
+      {
          var results = new ModelActionResults();
          try
          {
             using(UnitOfWork.Transact())
             {
-               Repository.Save(Entity);
+               Repository.Save(Root);
 
                UnitOfWork.Commit();
             }
 
-            results.ErrorCode = "Sucess";
+            results.ErrorCode = "Success";
             results.Message =
-               string.Format("Entity: {0} - ID={1} Was updated sucessfully.", typeof (TEntity).Name,
+               string.Format("Entity: {0} - ID={1} Was updated successfully.", typeof (TEntity).Name,
                              EntityID);
          }
          catch (Exception exp)

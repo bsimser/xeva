@@ -13,6 +13,8 @@ namespace XF.Validation
          _pattern = pattern;
       }
 
+      public override string OptionalMessage { get; set; }
+
       protected override void Validate(object target, object rawValue, ValidationResult validationResult)
       {
          string stringValue = rawValue as string;

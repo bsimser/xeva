@@ -16,7 +16,7 @@ namespace XF.Validation
 
       protected void AddMessage(ValidationResult validationResult, string message)
       {
-         validationResult.AddError(Property.Name, message);
+         validationResult.AddError(Property.Name, !string.IsNullOrEmpty(OptionalMessage) ? OptionalMessage : message);
       }
 
       protected abstract void Validate(object target, object rawValue, ValidationResult validationResult);
@@ -31,5 +31,7 @@ namespace XF.Validation
       {
          get { return _property.Name; }
       }
+
+      public abstract string OptionalMessage { get; set; }
    }
 }

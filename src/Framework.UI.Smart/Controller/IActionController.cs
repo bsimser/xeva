@@ -11,5 +11,6 @@ namespace XF.UI.Smart
       void CancelAction();
       void Activate();
       void Activate(IRequest request);
+      void Finish();
    }
 }
