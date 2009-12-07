@@ -119,6 +119,8 @@ namespace XF.Store
 
       public int GetScalar(INamedQuery query)
       {
+         Open();
+
          int result = 0;
          NHQuery iQuery = _session.GetNamedQuery(query.Name);
 
@@ -145,21 +147,29 @@ namespace XF.Store
 
       public INHibernateQueryable<TEntity> Query<TEntity>() where TEntity : IEntity
       {
+         Open();
+
          return _session.Linq<TEntity>();
       }
 
       public ICriteria CreateCriteria<TEntity>()
       {
-         return _session.CreateCriteria(typeof (TEntity));
+         Open();
+
+         return _session.CreateCriteria(typeof(TEntity));
       }
 
       public IQuery GetQueryByName(string queryName)
       {
+         Open();
+
          return _session.GetNamedQuery(queryName);
       }
 
       public IQuery CreateQuery(string queryText)
       {
+         Open();
+
          return _session.CreateQuery(queryText);
       }
 

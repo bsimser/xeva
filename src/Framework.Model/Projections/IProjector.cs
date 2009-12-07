@@ -2,7 +2,9 @@ namespace XF.Model
 {
    public interface IProjector
    {
-      int ProjectionIdx { get; set; }
+      int ParameterIdx { get; set; }
+      int JoinRefIdx { get; set; }
+      int EntityLevel { get; }
       void AddParameterPart(ProjectionPart parameterPart);
       void AddReferencePart(IReferencePart referencePart);
    }

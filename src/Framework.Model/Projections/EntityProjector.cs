@@ -26,7 +26,9 @@ namespace XF.Model
          _queryRepository = QueryRepository.Instance;
       }
 
-      public int ProjectionIdx { get; set; }
+      public int ParameterIdx { get; set; }
+      public int JoinRefIdx { get; set; }
+      public int EntityLevel { get { return 0; } }
 
       public EntityProjector<TEntity, TMessage> Key(Expression<Func<TEntity, object>> keyExpression,
                                                    Expression<Func<TMessage, object>> messageExpression)
@@ -41,8 +43,8 @@ namespace XF.Model
          {
             MessageProperty = messageProperty,
             EntityProperty = keyProperty.Name,
-            EntityName = typeof(TEntity).Name,
-            ProjectionIdx = ProjectionIdx++,
+            EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
+            ParameterIdx = ParameterIdx++,
             IsKey = true
          });
          return this;
@@ -62,7 +64,9 @@ namespace XF.Model
          var entity = referencePath.Parameters[0].Type.Name.ToLower();
          var messageInfo = ExpressionsHelper.GetMemberInfo(messageProperty) as PropertyInfo;
 
-         var mapper =  new ReferenceMapper<EntityProjector<TEntity, TMessage>, TRefEntity, TRefMessage>(this, messageInfo, entity, path);
+         JoinRefIdx++;
+         var mapper = new ReferenceMapper<EntityProjector<TEntity, TMessage>, TRefEntity, TRefMessage>(this, messageInfo, entity, path) 
+         { JoinRefIdx = JoinRefIdx, EntityLevel = JoinRefIdx};
          return mapper;
       }
 
@@ -79,7 +83,7 @@ namespace XF.Model
          {
             PropertyName = messageProperty.Name,
             PropertyPath = entityName.ToLower(),
-            EntityName = entityName,
+            EntityName = string.Format("{0}_{1}", entityName, 0),
             Operator = expressionOperator,
             Value = value
          });

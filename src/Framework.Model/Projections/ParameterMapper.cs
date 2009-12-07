@@ -49,11 +49,11 @@ namespace XF.Model
          var concatProperty = ExpressionsHelper.GetMemberInfo(concatExpression) as PropertyInfo;
          if (concatProperty == null) return this;
 
-         _concatenations.Add(string.Format(" {0}.{1}", _entityName.ToLower(), concatProperty.Name));
+         _concatenations.Add(string.Format(" {0}.{1}", string.Format("{0}_{1}", _entityName.ToLower(), _projector.JoinRefIdx), concatProperty.Name));
          return this;
       }
 
-      public TMapper AddProjection()
+      public TMapper Add()
       {
          _projector.AddParameterPart(new ProjectionPart
                                              {
@@ -64,8 +64,8 @@ namespace XF.Model
                                                                         ? _messageProperty.Name
                                                                         : string.Empty,
                                                 DefaultValue = _defaultValue,
-                                                EntityName = _entityName,
-                                                ProjectionIdx = _projector.ProjectionIdx++,
+                                                EntityName = string.Format("{0}_{1}", _entityName, _projector.JoinRefIdx),
+                                                ParameterIdx = _projector.ParameterIdx++,
                                                 Concatenations = _concatenations
                                              });
          return _projector;

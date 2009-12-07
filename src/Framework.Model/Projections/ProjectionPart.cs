@@ -12,7 +12,7 @@ namespace XF.Model
       public List<string> Concatenations { get; set; }
       public PropertyInfo MessageProperty { get; set; }
       public object Value { get; set; }
-      public int ProjectionIdx { get; set; }
+      public int ParameterIdx { get; set; }
       public bool IsKey { get; set; }
       public object DefaultValue { get; set; }
 
@@ -42,7 +42,7 @@ namespace XF.Model
 
       public void SetOutputValue(object output, object[] tuple)
       {
-         MessageProperty.SetValue(output, tuple[ProjectionIdx], null);
+         MessageProperty.SetValue(output, tuple[ParameterIdx], null);
       }
    }
 }

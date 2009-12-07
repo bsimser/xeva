@@ -53,7 +53,7 @@ namespace XF.Model
       private void BuildFromClause(Type entityType, StringBuilder queryBuilder, List<IReferencePart> references)
       {
          queryBuilder.Append(Environment.NewLine);
-         queryBuilder.Append(string.Format("from {0} as {1}", entityType.Name, entityType.Name.ToLower()));
+         queryBuilder.Append(string.Format("from {0} as {1}_0", entityType.Name, entityType.Name.ToLower()));
          references.ForEach(part => queryBuilder.Append(part.GetFromPart()));
       }
 

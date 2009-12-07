@@ -9,7 +9,7 @@ namespace XF.Model
    {
       string RootType { get; set; }
       string ReferencePath { get; set; }
-      Type RefEntityType { get; set; }
+      string RefEntityType { get; set; }
       Type MessageType { get; set; }
       ReferenceJoinType JoinType { get; set; }
       PropertyInfo SubProjection { get; set; }
