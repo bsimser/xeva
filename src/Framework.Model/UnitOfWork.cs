@@ -55,7 +55,7 @@ namespace XF.Model
          return;
       }
 
-      internal static IStore Store
+      public static IStore Store
       {
          get { return (IStore)Globals.Data[ModelConstants.STORE_KEY] ?? null; }
          private set { Globals.Data[ModelConstants.STORE_KEY] = value; }
