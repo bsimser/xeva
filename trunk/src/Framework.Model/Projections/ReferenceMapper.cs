@@ -29,10 +29,18 @@ namespace XF.Model
          _referencePath = referencePath.Substring(removeidx, referencePath.Length - removeidx);
       }
 
-      public int ProjectionIdx
+      public int EntityLevel { get; set; }
+
+      public int ParameterIdx
       {
-         get { return _projector.ProjectionIdx; }
-         set { _projector.ProjectionIdx = value; }
+         get { return _projector.ParameterIdx; }
+         set { _projector.ParameterIdx = value; }
+      }
+
+      public int JoinRefIdx
+      {
+         get { return _projector.JoinRefIdx; }
+         set { _projector.JoinRefIdx = value; }
       }
 
       public ReferenceMapper<TMapper, TEntity, TMessage> PartType(ReferenceType type)
@@ -66,7 +74,7 @@ namespace XF.Model
          {
             PropertyName = messageProperty.Name,
             PropertyPath = string.Format("{0}.{1}", _rootType, _referencePath),
-            EntityName = typeof(TEntity).Name,
+            EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, EntityLevel),
             Operator = expressionOperator,
             Value = value
          });
@@ -80,7 +88,9 @@ namespace XF.Model
          var entity = referencePath.Parameters[0].Type.Name.ToLower();
          var messageInfo = ExpressionsHelper.GetMemberInfo(messageProperty) as PropertyInfo;
 
-         var mapper = new ReferenceMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TRefEntity, TRefMessage>(this, messageInfo, entity, path);
+         JoinRefIdx++;
+         var mapper = new ReferenceMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TRefEntity, TRefMessage>(this, messageInfo, entity, path) 
+         { JoinRefIdx = JoinRefIdx, EntityLevel = JoinRefIdx };
          return mapper;
       }
 
@@ -88,10 +98,10 @@ namespace XF.Model
       {
          var part = ReferencePartFactory.GetReferencePart(_referenceType);
          part.ReferencePath = _referencePath;
-         part.RootType = _rootType;
-         part.RefEntityType = typeof (TEntity);
-         part.MessageType = typeof (TMessage);
+         part.RootType = string.Format("{0}_{1}", _rootType, _projector.EntityLevel);
+         part.RefEntityType = string.Format("{0}_{1}", typeof (TEntity).Name, EntityLevel);
          part.JoinType = _joinType;
+         part.MessageType = typeof (TMessage);
          part.SubProjection = _subProjection;
          part.Parameters = _parameters;
          part.References = _references;

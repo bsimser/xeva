@@ -10,7 +10,7 @@ namespace XF.Model
    {
       public string RootType { get; set; }
       public string ReferencePath { get; set; }
-      public Type RefEntityType { get; set; }
+      public string RefEntityType { get; set; }
       public Type MessageType { get; set; }
       public ReferenceJoinType JoinType { get; set; }
       public PropertyInfo SubProjection { get; set; }
@@ -32,7 +32,7 @@ namespace XF.Model
          result.Append(string.Format("{0} join ", JoinType != ReferenceJoinType.none
                                                      ? JoinType.ToString()
                                                      : string.Empty));
-         result.Append(string.Format("{0}.{1} as {2}", RootType, ReferencePath, RefEntityType.Name.ToLower()));
+         result.Append(string.Format("{0}.{1} as {2}", RootType, ReferencePath, RefEntityType.ToLower()));
          References.ForEach(part => result.Append(part.GetFromPart()));
          
          return result.ToString();
