@@ -153,6 +153,16 @@ namespace XF.Store
          return _session.CreateCriteria(typeof (TEntity));
       }
 
+      public IQuery GetQueryByName(string queryName)
+      {
+         return _session.GetNamedQuery(queryName);
+      }
+
+      public IQuery CreateQuery(string queryText)
+      {
+         return _session.CreateQuery(queryText);
+      }
+
       public ITransaction CreateTransaction()
       {
          Open();

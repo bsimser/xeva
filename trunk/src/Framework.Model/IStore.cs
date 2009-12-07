@@ -38,5 +38,9 @@ namespace XF.Model
       INHibernateQueryable<TEntity> Query<TEntity>() where TEntity : IEntity;
 
       ICriteria CreateCriteria<TEntity>();
+
+      IQuery GetQueryByName(string queryName);
+
+      IQuery CreateQuery(string queryText);
    }
 }
