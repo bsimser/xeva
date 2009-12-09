@@ -1,4 +1,3 @@
-using System;
 using System.Web.Services.Protocols;
 
 namespace XF.Services
@@ -10,10 +9,15 @@ namespace XF.Services
 
       public virtual byte[] SendChannelRequest(byte[] requestMessage)
       {
-          if (_transport == null) Initialize();
+         if (_transport == null) Initialize();
 
          object[] requestPrams = new object[1] { requestMessage };
-         return (byte[])_transport.GetType().GetMethod("SendChannelRequest").Invoke(_transport, requestPrams);
+
+         var requestResult = (byte[]) _transport.GetType().GetMethod("SendChannelRequest").Invoke(_transport, requestPrams);
+
+         var result = GZipHelper.IonicDecompress(requestResult);
+
+         return result;
       }
 
       private void Initialize()
