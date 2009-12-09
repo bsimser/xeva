@@ -23,7 +23,8 @@ namespace XF.Model
 
       public EntityProjector()
       {
-         _queryRepository = QueryRepository.Instance;
+         //_queryRepository = QueryRepository.Instance;
+         _queryRepository = new QueryRepository(UnitOfWork.Store);
       }
 
       public int ParameterIdx { get; set; }
@@ -67,6 +68,18 @@ namespace XF.Model
          JoinRefIdx++;
          var mapper = new ReferenceMapper<EntityProjector<TEntity, TMessage>, TRefEntity, TRefMessage>(this, messageInfo, entity, path) 
          { JoinRefIdx = JoinRefIdx, EntityLevel = JoinRefIdx};
+         return mapper;
+      }
+
+      public ReferenceMapper<EntityProjector<TEntity, TMessage>, TRefEntity, TRefMessage> Reference<TRefEntity, TRefMessage>
+         (Expression<Func<TEntity, object>> referencePath)
+      {
+         var path = referencePath.Body.ToString();
+         var entity = referencePath.Parameters[0].Type.Name.ToLower();
+
+         JoinRefIdx++;
+         var mapper = new ReferenceMapper<EntityProjector<TEntity, TMessage>, TRefEntity, TRefMessage>(this, null, entity, path) 
+         { JoinRefIdx = JoinRefIdx, EntityLevel = JoinRefIdx };
          return mapper;
       }
 

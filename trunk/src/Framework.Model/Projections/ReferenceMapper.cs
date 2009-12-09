@@ -94,6 +94,18 @@ namespace XF.Model
          return mapper;
       }
 
+      public ReferenceMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TRefEntity, TRefMessage>
+         Reference<TRefEntity, TRefMessage>(Expression<Func<TEntity, object>> referencePath)
+      {
+         var path = referencePath.Body.ToString();
+         var entity = referencePath.Parameters[0].Type.Name.ToLower();
+
+         JoinRefIdx++;
+         var mapper = new ReferenceMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TRefEntity, TRefMessage>(this, null, entity, path) 
+         { JoinRefIdx = JoinRefIdx, EntityLevel = JoinRefIdx };
+         return mapper;
+      }
+
       public TMapper AddReference()
       {
          var part = ReferencePartFactory.GetReferencePart(_referenceType);
