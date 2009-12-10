@@ -55,7 +55,11 @@ namespace XF.Model
 
       public void GenerateOutputReference(object output, object[] tuple)
       {
-         Parameters.ForEach(param => param.SetOutputValue(output, tuple));
+         var typePart = Activator.CreateInstance(MessageType);
+         Parameters.ForEach(param => param.SetOutputValue(typePart, tuple));
+         References.ForEach(reference => reference.GenerateOutputReference(typePart, tuple));
+
+         SubProjection.SetValue(output, typePart, null);
       }
    }
 }
