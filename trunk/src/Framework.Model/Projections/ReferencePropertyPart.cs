@@ -57,6 +57,7 @@ namespace XF.Model
       public void GenerateOutputReference(object output, object[] tuple)
       {
          Parameters.ForEach(param => param.SetOutputValue(output, tuple));
+         References.ForEach(reference => reference.GenerateOutputReference(output, tuple));
       }
    }
 }
