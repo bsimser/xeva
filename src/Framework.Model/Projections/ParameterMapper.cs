@@ -8,7 +8,7 @@ using XF.Model;
 namespace XF.Model
 {
    public class ParameterMapper<TMapper, TEntity, TMessage>
-      where TMapper : IProjector
+      where TMapper : IEntityMapper
    {
       private readonly TMapper _projector;
       private readonly PropertyInfo _messageProperty;

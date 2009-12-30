@@ -6,8 +6,8 @@ using XF;
 
 namespace XF.Model
 {
-   public class ReferenceMapper<TMapper, TEntity, TMessage> : IProjector
-      where TMapper : IProjector
+   public class ReferenceMapper<TMapper, TEntity, TMessage> : IEntityMapper
+      where TMapper : IEntityMapper
    {
       private readonly TMapper _projector;
       private readonly ProjectionPart _parameters = new ProjectionPart();
@@ -43,6 +43,11 @@ namespace XF.Model
          set { _projector.JoinRefIdx = value; }
       }
 
+      public List<IExpressionMapper> Citerion
+      {
+         get { return _projector.Citerion; }
+      }
+
       public ReferenceMapper<TMapper, TEntity, TMessage> PartType(ReferenceType type)
       {
          _referenceType = type;
@@ -73,12 +78,22 @@ namespace XF.Model
          _expressions.Add(new ReferenceExpression
          {
             PropertyName = messageProperty.Name,
-            PropertyPath = string.Format("{0}.{1}", _rootType, _referencePath),
+            //PropertyPath = string.Format("{0}.{1}", _rootType, _referencePath),
             EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, EntityLevel),
             Operator = expressionOperator,
             Value = value
          });
          return this;
+      }
+
+      public ExpressionMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity> Criteria()
+      {
+         var entityName = typeof(TEntity).Name;
+         var mapper = new ExpressionMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity>(this) 
+            { EntityName = string.Format("{0}_{1}", entityName, EntityLevel) };
+
+         Citerion.Add(mapper);
+         return mapper;
       }
 
       public ReferenceMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TRefEntity, TRefMessage>
@@ -132,6 +147,13 @@ namespace XF.Model
       {
          _references.Add(referencePart);
       }
+
+      public IDictionary<string, object> CriteriaParameters
+      {
+         get { return _projector.CriteriaParameters; }
+         set { _projector.CriteriaParameters = value; }
+      }
+
    }
 
    public enum ReferenceType

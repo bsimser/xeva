@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NHibernate;
+using NHibernate.Impl;
 using XF.Model;
 using System;
 
@@ -21,20 +22,23 @@ namespace XF.Model
       {
          get
          {
-            if(_instance == null)
+            if (_instance == null)
                _instance = new QueryRepository(UnitOfWork.Store);
             return _instance;
          }
       }
 
-      public IQuery GetQueryFor(Type message, Type entity, ProjectionPart parameters, List<IReferencePart> references, ReferenceExpression expressions)
+      public IQuery GetQueryFor(Type message, Type entity, IProjector projector)
       {
          if (_queries.ContainsKey((message.ToString()))) return _store.CreateQuery(_queries[message.ToString()]);
 
          var queryBuilder = new StringBuilder();
-         BuildSelectClause(queryBuilder, parameters, references);
-         BuildFromClause(entity, queryBuilder, references);
-         BuildWhereClause(queryBuilder, expressions, references);
+         BuildSelectClause(queryBuilder, projector.Parameters, projector.References);
+         BuildFromClause(entity, queryBuilder, projector.References);
+         if (projector.Citerion.IsEmpty())
+            BuildWhereClause(queryBuilder, projector.Expressions, projector.References);
+         else
+            BuildWhereClause(queryBuilder, projector.Citerion);
 
          var queryText = queryBuilder.ToString();
          _queries.Add(message.ToString(), queryText);
@@ -63,7 +67,25 @@ namespace XF.Model
          whereBldr.Append("where ");
          expressions.ForEach(exp => whereBldr.Append(exp.GetWherePart()));
          references.ForEach(reference => whereBldr.Append(reference.GetWhereParts()));
-         queryBuilder.Append(whereBldr.ToString().Trim('a','n','d'));
+         queryBuilder.Append(whereBldr.ToString().Trim('a', 'n', 'd'));
+      }
+
+      private void BuildWhereClause(StringBuilder queryBuilder, List<IExpressionMapper> expressions)
+      {
+         var whereBldr = new StringBuilder(Environment.NewLine);
+         whereBldr.Append("where ");
+         foreach (var criterion in expressions)
+         {
+            if(criterion.CriteriaList.IsEmpty()) continue;
+            if (whereBldr.Length > 8) whereBldr.Append(string.Format(" {0} ", criterion.ConjoinWith));
+            whereBldr.Append("(");
+            foreach (var criteria in criterion.CriteriaList)
+            {
+               whereBldr.Append(criteria);
+            }
+            whereBldr.Append(")");
+         }
+         queryBuilder.Append(whereBldr.ToString());
       }
 
    }
