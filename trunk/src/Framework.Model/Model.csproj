@@ -69,6 +69,10 @@
     <Compile Include="ModelConstants.cs" />
     <Compile Include="NamedQuery.cs" />
     <Compile Include="Projections\EntityProjector.cs" />
+    <Compile Include="Projections\ExpressionMapper.cs" />
+    <Compile Include="Projections\ExpressionPart.cs" />
+    <Compile Include="Projections\IExpressionMapper.cs" />
+    <Compile Include="Projections\IEntityMapper.cs" />
     <Compile Include="Projections\IProjector.cs" />
     <Compile Include="Projections\IReferencePart.cs" />
     <Compile Include="Projections\ParameterMapper.cs" />

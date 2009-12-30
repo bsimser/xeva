@@ -7,24 +7,47 @@ using NHibernate;
 
 namespace XF.Model
 {
-   public class EntityProjector<TEntity, TMessage> : IProjector
+   public class EntityProjector<TEntity, TMessage> : IProjector, IEntityMapper
    {
       private readonly ProjectionPart _parameters = new ProjectionPart();
+
       private readonly List<IReferencePart> _references = new List<IReferencePart>();
       private readonly ReferenceExpression _expressions = new ReferenceExpression();
+      private IDictionary<string, object> _criteriaParameters = new Dictionary<string, object>();
 
       private readonly List<TMessage> _messages = new List<TMessage>();
       private readonly QueryRepository _queryRepository;
+      private readonly List<IExpressionMapper> _citerion = new List<IExpressionMapper>();
+
+      public EntityProjector()
+      {
+         _queryRepository = new QueryRepository(UnitOfWork.Store);
+      }
+
+      public List<IExpressionMapper> Citerion
+      {
+         get { return _citerion; }
+      }
+
+      public IDictionary<string, object> CriteriaParameters
+      {
+         get { return _criteriaParameters; }
+         set { _criteriaParameters = value; }
+      }
 
       public ReferenceExpression Expressions
       {
          get { return _expressions; }
       }
 
-      public EntityProjector()
+      public ProjectionPart Parameters
       {
-         //_queryRepository = QueryRepository.Instance;
-         _queryRepository = new QueryRepository(UnitOfWork.Store);
+         get { return _parameters; }
+      }
+
+      public List<IReferencePart> References
+      {
+         get { return _references; }
       }
 
       public int ParameterIdx { get; set; }
@@ -84,8 +107,8 @@ namespace XF.Model
       }
 
       public EntityProjector<TEntity, TMessage> Where(Expression<Func<TEntity, object>> entityExpression,
-                                                     ReferenceExpressionOperator expressionOperator,
-                                                     object value)
+                                                      ReferenceExpressionOperator expressionOperator,
+                                                      object value)
       {
          var messageProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
 
@@ -95,12 +118,21 @@ namespace XF.Model
          _expressions.Add(new ReferenceExpression
          {
             PropertyName = messageProperty.Name,
-            PropertyPath = entityName.ToLower(),
             EntityName = string.Format("{0}_{1}", entityName, 0),
             Operator = expressionOperator,
             Value = value
          });
          return this;
+      }
+
+      public ExpressionMapper<EntityProjector<TEntity, TMessage>, TEntity> Criteria()
+      {
+         var entityName = typeof(TEntity).Name;
+         var mapper = new ExpressionMapper<EntityProjector<TEntity, TMessage>, TEntity>(this) 
+               { EntityName = string.Format("{0}_{1}", entityName, 0) };
+
+         Citerion.Add(mapper);
+         return mapper;
       }
 
       public void AddParameterPart(ProjectionPart parameterPart)
@@ -117,7 +149,7 @@ namespace XF.Model
       {
          try
          {
-            var iQuery = _queryRepository.GetQueryFor(typeof(TMessage), typeof(TEntity), _parameters, _references, _expressions);
+            var iQuery = _queryRepository.GetQueryFor(typeof(TMessage), typeof(TEntity), this);
             SetQueryParameterValues(iQuery);
 
             CreateOutputProjections(iQuery.Enumerable());
@@ -132,8 +164,14 @@ namespace XF.Model
 
       private void SetQueryParameterValues(IQuery query)
       {
-         _expressions.ForEach(exp => exp.SetParameter(query));
-         _references.ForEach(refpart => refpart.SetPartParameters(query));
+         if (_criteriaParameters.IsEmpty())
+         {
+            _expressions.ForEach(exp => exp.SetParameter(query));
+            _references.ForEach(refpart => refpart.SetPartParameters(query));
+         }
+         else
+            foreach (var criterion in _criteriaParameters)
+               query.SetParameter(criterion.Key, criterion.Value);
       }
 
       private void CreateOutputProjections(IEnumerable enumerable)

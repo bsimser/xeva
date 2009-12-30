@@ -124,7 +124,7 @@ namespace XF.UI.Smart
 
       private void InitializeBindingAdapter(IList<BindingType> list)
       {
-         _internalList = new List<BindingType>(list);
+         _internalList = list.IsNotEmpty() ? new List<BindingType>(list) : new List<BindingType>();
          _internalAdditions = new List<BindingType>();
          _internalDeletions = new List<BindingType>();
          _sortDescriptions = new ListSortDescriptionCollection();

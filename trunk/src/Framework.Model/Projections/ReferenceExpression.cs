@@ -10,7 +10,6 @@ namespace XF.Model
    {
       public string EntityName { get; set; }
       public string PropertyName { get; set; }
-      public string PropertyPath { get; set; }
       public PropertyInfo Property { get; set; }
       public ReferenceExpressionOperator Operator { get; set; }
       public object Value { get; set; }
