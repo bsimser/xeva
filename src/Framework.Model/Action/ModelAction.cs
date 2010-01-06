@@ -107,8 +107,12 @@ namespace XF
 
       public void SetMethodTargetArgument<TChild>(Func<TChild, bool> target, TChild arg)
       {
-         _actionParameters.ForEach(param => { if (param.EntityMethod.Name == target.Method.Name)
-                                                     param.EntityPropertyValue = arg; } );
+         var param = _actionParameters.Find(match => match.EntityMethod.Name == target.Method.Name);
+         if (param == null) return;
+
+         param.EntityPropertyValue = arg;
+         //_actionParameters.ForEach(param => { if (param.EntityMethod.Name == target.Method.Name)
+         //                                            param.EntityPropertyValue = arg; } );
       }
 
       public void SetPropertyTargetArgument(Expression<Func<TEntity, object>> entityExpression, object arg)
