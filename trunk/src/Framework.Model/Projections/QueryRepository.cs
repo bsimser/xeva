@@ -76,7 +76,7 @@ namespace XF.Model
          whereBldr.Append("where ");
          foreach (var criterion in expressions)
          {
-            if(criterion.CriteriaList.IsEmpty()) continue;
+            if (criterion.CriteriaList.IsEmpty()) continue;
             if (whereBldr.Length > 8) whereBldr.Append(string.Format(" {0} ", criterion.ConjoinWith));
             whereBldr.Append("(");
             foreach (var criteria in criterion.CriteriaList)
@@ -85,7 +85,8 @@ namespace XF.Model
             }
             whereBldr.Append(")");
          }
-         queryBuilder.Append(whereBldr.ToString());
+         if (whereBldr.Length > 10)
+            queryBuilder.Append(whereBldr.ToString());
       }
 
    }
