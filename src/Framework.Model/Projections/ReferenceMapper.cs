@@ -18,6 +18,8 @@ namespace XF.Model
       private readonly PropertyInfo _subProjection;
       private ReferenceJoinType _joinType = ReferenceJoinType.none;
       private ReferenceType _referenceType = ReferenceType.PropertyPart;
+      private bool _isKeyed;
+      private PropertyInfo _keyProperty;
 
       public ReferenceMapper(TMapper projector, PropertyInfo messageInfo, string entity, string referencePath)
       {
@@ -57,6 +59,28 @@ namespace XF.Model
       public ReferenceMapper<TMapper, TEntity, TMessage> JoinType(ReferenceJoinType type)
       {
          _joinType = type;
+         return this;
+      }
+
+      public ReferenceMapper<TMapper, TEntity, TMessage> Key(Expression<Func<TEntity, object>> keyExpression,
+                                                             Expression<Func<TMessage, object>> messageExpression)
+      {
+         var keyProperty = ExpressionsHelper.GetMemberInfo(keyExpression) as PropertyInfo;
+         var messageProperty = ExpressionsHelper.GetMemberInfo(messageExpression) as PropertyInfo;
+
+         if (keyProperty == null) return this;
+         if (messageProperty == null) return this;
+
+         _isKeyed = true;
+         _keyProperty = messageProperty;
+
+         _parameters.Add(new ProjectionPart
+         {
+            MessageProperty = messageProperty,
+            EntityProperty = keyProperty.Name,
+            EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
+            ParameterIdx = ParameterIdx++
+         });
          return this;
       }
 
@@ -133,6 +157,8 @@ namespace XF.Model
          part.Parameters = _parameters;
          part.References = _references;
          part.Expressions = _expressions;
+         part.IsKeyed = _isKeyed;
+         part.KeyProperty = _keyProperty;
 
          _projector.AddReferencePart(part);
          return _projector;
