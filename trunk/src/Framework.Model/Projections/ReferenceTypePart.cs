@@ -17,6 +17,8 @@ namespace XF.Model
       public ProjectionPart Parameters { get; set; }
       public List<IReferencePart> References { get; set; }
       public ReferenceExpression Expressions { get; set; }
+      public bool IsKeyed { get; set; }
+      public PropertyInfo KeyProperty { get; set; }
 
       public string GetSelectParts()
       {
@@ -58,6 +60,9 @@ namespace XF.Model
          var typePart = Activator.CreateInstance(MessageType);
          Parameters.ForEach(param => param.SetOutputValue(typePart, tuple));
          References.ForEach(reference => reference.GenerateOutputReference(typePart, tuple));
+
+         if (IsKeyed &&
+            ReferencePartHelper.IsDefaultValue(KeyProperty.GetValue(typePart, null), KeyProperty.PropertyType)) return;
 
          SubProjection.SetValue(output, typePart, null);
       }

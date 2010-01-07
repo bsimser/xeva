@@ -82,6 +82,7 @@
     <Compile Include="Projections\ReferenceExpression.cs" />
     <Compile Include="Projections\ReferenceMapper.cs" />
     <Compile Include="Projections\ReferencePartFactory.cs" />
+    <Compile Include="Projections\ReferencePartHelper.cs" />
     <Compile Include="Projections\ReferencePropertyPart.cs" />
     <Compile Include="Projections\ReferenceTypePart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
