@@ -68,7 +68,7 @@ namespace XF.Model
          expressions.ForEach(exp => whereBldr.Append(exp.GetWherePart()));
          references.ForEach(reference => whereBldr.Append(reference.GetWhereParts()));
 
-         if (whereBldr.Length > 7)
+         if (whereBldr.Length > 8)
             queryBuilder.Append(whereBldr.ToString().Trim('a', 'n', 'd'));
       }
 
