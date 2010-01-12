@@ -67,7 +67,9 @@ namespace XF.Model
          whereBldr.Append("where ");
          expressions.ForEach(exp => whereBldr.Append(exp.GetWherePart()));
          references.ForEach(reference => whereBldr.Append(reference.GetWhereParts()));
-         queryBuilder.Append(whereBldr.ToString().Trim('a', 'n', 'd'));
+
+         if (whereBldr.Length > 7)
+            queryBuilder.Append(whereBldr.ToString().Trim('a', 'n', 'd'));
       }
 
       private void BuildWhereClause(StringBuilder queryBuilder, List<IExpressionMapper> expressions)
