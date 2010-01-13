@@ -32,9 +32,15 @@ namespace XF.Model
          set { _mapper.CriteriaParameters = value; }
       }
 
-      public ExpressionMapper<TMapper, TEntity> AddWith(ExpressionConjunction conj)
+      public ExpressionMapper<TMapper, TEntity> AddWithOr()
       {
-         ConjoinWith = conj.ToString();
+         ConjoinWith = ExpressionConjunction.Or.ToString(); 
+         return this;
+      }
+
+      public ExpressionMapper<TMapper, TEntity> AddWithAnd()
+      {
+         ConjoinWith = ExpressionConjunction.And.ToString();
          return this;
       }
 
