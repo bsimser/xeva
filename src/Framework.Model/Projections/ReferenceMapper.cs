@@ -50,15 +50,39 @@ namespace XF.Model
          get { return _projector.Citerion; }
       }
 
-      public ReferenceMapper<TMapper, TEntity, TMessage> PartType(ReferenceType type)
+      public ReferenceMapper<TMapper, TEntity, TMessage> ReferenceAsProperty()
       {
-         _referenceType = type;
+         _referenceType = ReferenceType.PropertyPart;
          return this;
       }
 
-      public ReferenceMapper<TMapper, TEntity, TMessage> JoinType(ReferenceJoinType type)
+      public ReferenceMapper<TMapper, TEntity, TMessage> ReferenceAsType() 
       {
-         _joinType = type;
+         _referenceType = ReferenceType.TypePart;
+         return this;
+      }
+
+      public ReferenceMapper<TMapper, TEntity, TMessage> ReferenceAsCollection() 
+      {
+         _referenceType = ReferenceType.CollectionPart;
+         return this;
+      }
+
+      public ReferenceMapper<TMapper, TEntity, TMessage> Join()
+      {
+         _joinType = ReferenceJoinType.inner;
+         return this;
+      }
+
+      public ReferenceMapper<TMapper, TEntity, TMessage> JoinLeft() 
+      {
+         _joinType = ReferenceJoinType.left;
+         return this;
+      }
+
+      public ReferenceMapper<TMapper, TEntity, TMessage> JoinRight() 
+      {
+         _joinType = ReferenceJoinType.right;
          return this;
       }
 
