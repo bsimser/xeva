@@ -35,10 +35,8 @@ namespace XF.Model
          var queryBuilder = new StringBuilder();
          BuildSelectClause(queryBuilder, projector.Parameters, projector.References);
          BuildFromClause(entity, queryBuilder, projector.References);
-         if (projector.Citerion.IsEmpty())
-            BuildWhereClause(queryBuilder, projector.Expressions, projector.References);
-         else
-            BuildWhereClause(queryBuilder, projector.Citerion);
+
+         BuildWhereClause(queryBuilder, projector.Citerion);
 
          var queryText = queryBuilder.ToString();
          _queries.Add(message.ToString(), queryText);
@@ -59,17 +57,6 @@ namespace XF.Model
          queryBuilder.Append(Environment.NewLine);
          queryBuilder.Append(string.Format("from {0} as {1}_0", entityType.Name, entityType.Name.ToLower()));
          references.ForEach(part => queryBuilder.Append(part.GetFromPart()));
-      }
-
-      private void BuildWhereClause(StringBuilder queryBuilder, ReferenceExpression expressions, List<IReferencePart> references)
-      {
-         var whereBldr = new StringBuilder(Environment.NewLine);
-         whereBldr.Append("where ");
-         expressions.ForEach(exp => whereBldr.Append(exp.GetWherePart()));
-         references.ForEach(reference => whereBldr.Append(reference.GetWhereParts()));
-
-         if (whereBldr.Length > 8)
-            queryBuilder.Append(whereBldr.ToString().Trim('a', 'n', 'd'));
       }
 
       private void BuildWhereClause(StringBuilder queryBuilder, List<IExpressionMapper> expressions)
