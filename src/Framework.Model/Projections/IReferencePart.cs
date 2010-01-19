@@ -15,7 +15,6 @@ namespace XF.Model
       PropertyInfo SubProjection { get; set; }
       ProjectionPart Parameters { get; set; }
       List<IReferencePart> References { get; set; }
-      ReferenceExpression Expressions { get; set; }
       bool IsKeyed { get; set; }
       PropertyInfo KeyProperty { get; set; }
       string GetSelectParts();

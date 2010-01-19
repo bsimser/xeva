@@ -12,7 +12,6 @@ namespace XF.Model
       private readonly ProjectionPart _parameters = new ProjectionPart();
 
       private readonly List<IReferencePart> _references = new List<IReferencePart>();
-      private readonly ReferenceExpression _expressions = new ReferenceExpression();
       private IDictionary<string, object> _criteriaParameters = new Dictionary<string, object>();
 
       private readonly List<TMessage> _messages = new List<TMessage>();
@@ -33,11 +32,6 @@ namespace XF.Model
       {
          get { return _criteriaParameters; }
          set { _criteriaParameters = value; }
-      }
-
-      public ReferenceExpression Expressions
-      {
-         get { return _expressions; }
       }
 
       public ProjectionPart Parameters
@@ -106,25 +100,6 @@ namespace XF.Model
          return mapper;
       }
 
-      public EntityProjector<TEntity, TMessage> Where(Expression<Func<TEntity, object>> entityExpression,
-                                                      ReferenceExpressionOperator expressionOperator,
-                                                      object value)
-      {
-         var messageProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
-
-         if (messageProperty == null) return this;
-
-         var entityName = typeof(TEntity).Name;
-         _expressions.Add(new ReferenceExpression
-         {
-            PropertyName = messageProperty.Name,
-            EntityName = string.Format("{0}_{1}", entityName, 0),
-            Operator = expressionOperator,
-            Value = value
-         });
-         return this;
-      }
-
       public ExpressionMapper<EntityProjector<TEntity, TMessage>, TEntity> Criteria()
       {
          var entityName = typeof(TEntity).Name;
@@ -165,10 +140,7 @@ namespace XF.Model
       private void SetQueryParameterValues(IQuery query)
       {
          if (_criteriaParameters.IsEmpty())
-         {
-            _expressions.ForEach(exp => exp.SetParameter(query));
             _references.ForEach(refpart => refpart.SetPartParameters(query));
-         }
          else
             foreach (var criterion in _criteriaParameters)
                query.SetParameter(criterion.Key, criterion.Value);

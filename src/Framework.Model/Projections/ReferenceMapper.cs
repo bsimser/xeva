@@ -12,7 +12,6 @@ namespace XF.Model
       private readonly TMapper _projector;
       private readonly ProjectionPart _parameters = new ProjectionPart();
       private readonly List<IReferencePart> _references = new List<IReferencePart>();
-      private readonly ReferenceExpression _expressions = new ReferenceExpression();
       private readonly string _referencePath;
       private readonly string _rootType;
       private readonly PropertyInfo _subProjection;
@@ -116,24 +115,6 @@ namespace XF.Model
          return mapper;
       }
 
-      public ReferenceMapper<TMapper, TEntity, TMessage> Where(Expression<Func<TEntity, object>> entityExpression,
-                                                          ReferenceExpressionOperator expressionOperator, object value)
-      {
-         var messageProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
-
-         if (messageProperty == null) return this;
-
-         _expressions.Add(new ReferenceExpression
-         {
-            PropertyName = messageProperty.Name,
-            //PropertyPath = string.Format("{0}.{1}", _rootType, _referencePath),
-            EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, EntityLevel),
-            Operator = expressionOperator,
-            Value = value
-         });
-         return this;
-      }
-
       public ExpressionMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity> Criteria()
       {
          var entityName = typeof(TEntity).Name;
@@ -180,7 +161,6 @@ namespace XF.Model
          part.SubProjection = _subProjection;
          part.Parameters = _parameters;
          part.References = _references;
-         part.Expressions = _expressions;
          part.IsKeyed = _isKeyed;
          part.KeyProperty = _keyProperty;
 

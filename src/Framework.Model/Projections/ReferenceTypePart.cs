@@ -16,7 +16,6 @@ namespace XF.Model
       public PropertyInfo SubProjection { get; set; }
       public ProjectionPart Parameters { get; set; }
       public List<IReferencePart> References { get; set; }
-      public ReferenceExpression Expressions { get; set; }
       public bool IsKeyed { get; set; }
       public PropertyInfo KeyProperty { get; set; }
 
@@ -43,7 +42,6 @@ namespace XF.Model
       public string GetWhereParts()
       {
          var result = new StringBuilder();
-         Expressions.ForEach(exp => result.Append(exp.GetWherePart()));
          References.ForEach(reference => result.Append(reference.GetWhereParts()));
 
          return result.ToString();
@@ -51,7 +49,6 @@ namespace XF.Model
 
       public void SetPartParameters(IQuery query)
       {
-         Expressions.ForEach(exp => exp.SetParameter(query));
          References.ForEach(refpart => refpart.SetPartParameters(query));
       }
 
