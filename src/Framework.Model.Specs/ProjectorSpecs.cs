@@ -106,6 +106,21 @@ namespace XF.Model
                                  .AddReference();
       }
 
+      [Test]
+      public void Can_set_a_criteria_to_null()
+      {
+         var projector = new EntityProjector<MyEntity, MyMessage>()
+                              .Key(e => e.ID, mess => mess.ID)
+                              .Projection(mess => mess.Name).Add()
+                              .Reference<MyEntity2, MyMessage>(e => e.Entity2)
+                                 .ReferenceAsProperty()
+                                 .Projection(mess => mess.Age).Add()
+                                 .Projection(mess => mess.Sex).Add()
+                                 .Criteria().Where(e2 => e2.Sex).IsNull().AddCriteria()
+                                 .AddReference()
+                              .Project();
+      }
+
    }
 
    public class MyEntity : Entity
