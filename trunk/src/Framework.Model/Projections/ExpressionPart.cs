@@ -15,6 +15,22 @@ namespace XF.Model
          _criteria = criteria;
       }
 
+      public TMapper IsNull()
+      {
+         var criteria = string.Format("{0} is null ", _criteria);
+         UpdateExpression(null, null, criteria);
+
+         return _mapper;
+      }
+
+      public TMapper IsNotNull()
+      {
+         var criteria = string.Format("{0} is not null ", _criteria);
+         UpdateExpression(null, null, criteria);
+
+         return _mapper;
+      }
+
       public TMapper Eq(object value)
       {
          if (string.IsNullOrEmpty(value.ToString())) return _mapper;
@@ -64,6 +80,7 @@ namespace XF.Model
       private void UpdateExpression(object value, string paramName, string criteria)
       {
          _mapper.CriteriaList.Add(criteria);
+         if(paramName == null) return;
          _mapper.CriteriaParameters.Add(paramName, value);
       }
 
