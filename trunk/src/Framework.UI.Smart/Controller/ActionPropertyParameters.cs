@@ -9,5 +9,6 @@ namespace XF.UI.Smart
       public PropertyInfo Input { get; set; }
       public object DefaultValue { get; set; }
       public PropertyInfo ListOfValues { get; set; }
+      public bool IsPassthrough { get; set; }
    }
 }
