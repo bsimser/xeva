@@ -38,7 +38,9 @@ namespace XF.UI.Smart
 
          if (Equals(UpdateMessage, default(TUpdateMessage))) return;
 
-         LoadEntityIntoUpdateMessage();
+         LoadEntityIDIntoUpdateMessage();
+
+         LoadPassThroughPropertiesIntoUpdateMessage();
 
          if (!Validate(UpdateMessage)) return;
 
@@ -48,7 +50,19 @@ namespace XF.UI.Smart
             ActionComplete(this, new EventArgs());
       }
 
-      private void LoadEntityIntoUpdateMessage()
+      private void LoadPassThroughPropertiesIntoUpdateMessage()
+      {
+         var properties = new List<PropertyInfo>(typeof(TUpdateMessage).GetProperties());
+         _actionPropertyRegistry.ForEach(item =>
+         {           
+            if (item.IsPassthrough && properties.Exists(prop => prop.Name == item.Input.Name)) {
+               var prop = properties.Find(p => p.Name == item.Input.Name);
+               prop.SetValue(UpdateMessage, item.DefaultValue, null);
+            }
+         });
+      }
+
+      private void LoadEntityIDIntoUpdateMessage()
       {
          var entityProperty = UpdateMessage.GetType().GetProperty("EntityID");
          if(entityProperty != null)
@@ -86,6 +100,8 @@ namespace XF.UI.Smart
 
          foreach (var actionProperty in _actionPropertyRegistry)
          {
+            if (actionProperty.IsPassthrough) continue;
+
             var controlValue = actionProperty.DefaultValue;
             EditableControl controlType;
             string propertyName, controlName, controlLabel;
@@ -193,6 +209,19 @@ namespace XF.UI.Smart
          _actionPropertyRegistry.Add(new ActionPropertyParameters { Output = updateProperty, Input = inputProperty });
          return this;
       }
+
+      public ActionController<TService, TInputMessage, TUpdateMessage> MapPassthrough(Expression<Func<TUpdateMessage, object>> updateField,
+                                                                           Expression<Func<TInputMessage, object>> inputField) {
+         var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
+         var inputProperty = ExpressionsHelper.GetMemberInfo(inputField) as PropertyInfo;
+         if (updateProperty == null) return this;
+         if (inputProperty == null) return this;
+
+         _actionPropertyRegistry.Add(new ActionPropertyParameters { Output = updateProperty, Input = inputProperty, IsPassthrough = true });
+         return this;
+      }
+
+
 
       public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField,
                                                                            Expression<Func<TInputMessage, object>> inputField,
