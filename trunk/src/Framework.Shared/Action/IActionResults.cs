@@ -2,7 +2,7 @@ namespace XF
 {
    public interface IActionResults
    {
-      string ErrorCode { get; set; }
+      ActionResultCode ResultCode { get; set; }
       string Message { get; set; }
       string ErrorContent { get; set; }
    }
