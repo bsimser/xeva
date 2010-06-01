@@ -15,6 +15,7 @@ namespace XF {
       public ActionResultCode ResultCode { get; set; }
       public string Message { get; set; }
       public string ErrorContent { get; set; }
+      public object Data { get; set; }
 
       public static IActionResults NullInputResult {
          get { return new ModelActionResults { ResultCode = ActionResultCode.Failure, Message = "Action aborted null input" }; }

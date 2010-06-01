@@ -5,5 +5,6 @@ namespace XF
       ActionResultCode ResultCode { get; set; }
       string Message { get; set; }
       string ErrorContent { get; set; }
+      object Data { get; set; }
    }
 }
