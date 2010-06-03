@@ -89,13 +89,13 @@ namespace XF {
          return this;
       }
 
-      public ModelAction<TEntity, TRepository, TUpdateMessage> Map<TChild>(Func<TChild, IActionResults> target,
+      public ModelAction<TEntity, TRepository, TUpdateMessage> Map<TChild>(Func<TChild, IXFResults> target,
                                                                            object targetValue) {
          _actionParameters.Add(new ModelActionParameter { EntityMethod = target.Method, EntityPropertyValue = targetValue });
          return this;
       }
 
-      public void SetMethodTargetArgument<TChild>(Func<TChild, IActionResults> target, TChild arg) {
+      public void SetMethodTargetArgument<TChild>(Func<TChild, IXFResults> target, TChild arg) {
          var param = _actionParameters.Find(match => match.EntityMethod.Name == target.Method.Name);
          if (param == null) return;
 
@@ -110,20 +110,21 @@ namespace XF {
          if (param != null) param.EntityPropertyValue = arg;
       }
 
-      public void EntityUpdateMethod(Func<IActionResults> target) {
+      public void EntityUpdateMethod(Func<IXFResults> target) {
          _entityUpdateMethod = target.Method;
       }
 
-      public void ChildUpdateMethod(Func<IActionResults> target) {
+      public void ChildUpdateMethod(Func<IXFResults> target) {
          _entityUpdateMethod = target.Method;
       }
 
-      public virtual IActionResults Execute() {
+      public virtual IXFResults Execute() {
          if (EntityID == Guid.Empty) return ModelActionResults.InvalidEntityID;
 
          object updateObj;
 
          try {
+            //Note: must lock the entity 
             Root = Repository.FindBy(EntityID);
             updateObj = _childObjectProperty == null ? Root : _childObjectProperty.GetValue(Root, null);
          }
@@ -133,7 +134,7 @@ namespace XF {
                                                         typeof(TEntity).Name, EntityID));
          }
 
-         IActionResults results;
+         IXFResults results;
          try {
             results = UpdateEntity(updateObj);
          }
@@ -144,7 +145,7 @@ namespace XF {
          return results;
       }
 
-      protected IActionResults UpdateEntity(object updateEntity) {
+      protected IXFResults UpdateEntity(object updateEntity) {
          foreach (var actionParameter in _actionParameters) {
             if (actionParameter.EntityProperty != null &&
                 actionParameter.UpdateProperty != null)
@@ -155,44 +156,45 @@ namespace XF {
                actionParameter.EntityProperty.SetValue(updateEntity, actionParameter.EntityPropertyValue, null);
 
             if (actionParameter.EntityMethod != null) {
-               var results = actionParameter.EntityMethod.Invoke(updateEntity, new[] { actionParameter.EntityPropertyValue }) as IActionResults;
-               if (results.ResultCode != ActionResultCode.Success)
+               var results = actionParameter.EntityMethod.Invoke(updateEntity, new[] { actionParameter.EntityPropertyValue }) as IXFResults;
+               if (results.ResultCode != XFResultCode.Success)
                   throw new ActionFailueException(results.Message);
             }
          }
 
          if (_entityUpdateMethod != null) {
-            var results = _entityUpdateMethod.Invoke(Root, null) as IActionResults;
-            if (results.ResultCode != ActionResultCode.Success)
+            var results = _entityUpdateMethod.Invoke(Root, null) as IXFResults;
+            if (results.ResultCode != XFResultCode.Success)
                throw new ActionFailueException(results.Message);
          }
 
          if (_childUpdateMethod != null &&
              updateEntity.GetType() != Root.GetType()) {
-            var results = _entityUpdateMethod.Invoke(updateEntity, null) as IActionResults;
-            if (results.ResultCode != ActionResultCode.Success)
+            var results = _entityUpdateMethod.Invoke(updateEntity, null) as IXFResults;
+            if (results.ResultCode != XFResultCode.Success)
                throw new ActionFailueException(results.Message);
          }
 
          return CommitChangesToRoot();
       }
 
-      protected IActionResults CommitChangesToRoot() {
+      protected IXFResults CommitChangesToRoot() {
          var results = new ModelActionResults();
          try {
             using (UnitOfWork.Transact()) {
+               //Note: should this be an Update?
                Repository.Save(Root);
 
                UnitOfWork.Commit();
             }
 
-            results.ResultCode = ActionResultCode.Success;
+            results.ResultCode = XFResultCode.Success;
             results.Message =
                string.Format("Entity: {0} - ID={1} Was updated successfully.", typeof(TEntity).Name,
                              EntityID);
          }
          catch (Exception exp) {
-            results.ResultCode = ActionResultCode.Failure;
+            results.ResultCode = XFResultCode.Failure;
             results.Message =
                string.Format("Entity: {0} - ID={1} Update Failed.", typeof(TEntity).Name,
                              EntityID);

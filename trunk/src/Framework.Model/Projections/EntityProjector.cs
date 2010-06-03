@@ -68,6 +68,23 @@ namespace XF.Model
          return this;
       }
 
+      public EntityProjector<TEntity, TMessage> Version(Expression<Func<TEntity, object>> keyExpression,
+                                                   Expression<Func<TMessage, object>> messageExpression) {
+         var versionProperty = ExpressionsHelper.GetMemberInfo(keyExpression) as PropertyInfo;
+         var messageProperty = ExpressionsHelper.GetMemberInfo(messageExpression) as PropertyInfo;
+
+         if (versionProperty == null) return this;
+         if (messageProperty == null) return this;
+
+         _parameters.Add(new ProjectionPart {
+            MessageProperty = messageProperty,
+            EntityProperty = versionProperty.Name,
+            EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
+            ParameterIdx = ParameterIdx++,
+         });
+         return this;
+      }
+
       public ParameterMapper<EntityProjector<TEntity, TMessage>, TEntity, TMessage> Projection(Expression<Func<TMessage, object>> messageExpression)
       {
          var messageProperty = ExpressionsHelper.GetMemberInfo(messageExpression) as PropertyInfo;
@@ -120,21 +137,33 @@ namespace XF.Model
          _references.Add(referencePart);
       }
 
-      public List<TMessage> Project()
+      public ProjectionResults<TMessage> Project()
       {
+         var results = new ProjectionResults<TMessage>();
          try
          {
             var iQuery = _queryRepository.GetQueryFor(typeof(TMessage), typeof(TEntity), this);
             SetQueryParameterValues(iQuery);
 
             CreateOutputProjections(iQuery.Enumerable());
+            results.ResultCode = XFResultCode.Success;
+            results.Message = "Projection completed normally";
+            results.Projection = _messages;
          }
-         catch (Exception e)
+         catch (Exception exp)
          {
-            Console.WriteLine(e);
+            results.ResultCode = XFResultCode.Failure;
+            results.Message = string.Format("Type: {0} {1} {2}", exp.GetType().Name, Environment.NewLine, exp.Message);
+            results.ErrorContent = string.Format("{0} {1} {2}", exp.Message, 
+                                                                Environment.NewLine,
+                                                                exp.InnerException != null 
+                                                                  ? string.Format("{0} {1} {2}", exp.InnerException.GetType().Name,
+                                                                                                 Environment.NewLine,
+                                                                                                 exp.InnerException.Message)
+                                                                  : string.Empty);
          }
 
-         return _messages;
+         return results;
       }
 
       private void SetQueryParameterValues(IQuery query)

@@ -6,7 +6,7 @@ namespace XF.UI.Smart
    {
       event EventHandler ActionComplete;
       event EventHandler ActionCanceled;
-      IActionResults ActionResults { get; }
+      IXFResults IXFResults { get; }
       void PerformAction();
       void CancelAction();
       void Activate();

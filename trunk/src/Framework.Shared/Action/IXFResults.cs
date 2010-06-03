@@ -1,8 +1,8 @@
 namespace XF
 {
-   public interface IActionResults
+   public interface IXFResults
    {
-      ActionResultCode ResultCode { get; set; }
+      XFResultCode ResultCode { get; set; }
       string Message { get; set; }
       string ErrorContent { get; set; }
       object Data { get; set; }
