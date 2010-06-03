@@ -3,32 +3,30 @@ using System.Runtime.Serialization;
 
 namespace XF {
    [Serializable]
-   public class ModelActionResults : IActionResults {
+   public class ModelActionResults : IXFResults {
 
       public ModelActionResults() { }
 
       public ModelActionResults(bool succeeded, string message) {
-         ResultCode = succeeded ? ActionResultCode.Success : ActionResultCode.Failure;
+         ResultCode = succeeded ? XFResultCode.Success : XFResultCode.Failure;
          Message = message;
       }
 
-      public ActionResultCode ResultCode { get; set; }
+      public XFResultCode ResultCode { get; set; }
       public string Message { get; set; }
       public string ErrorContent { get; set; }
       public object Data { get; set; }
 
-      public static IActionResults NullInputResult {
-         get { return new ModelActionResults { ResultCode = ActionResultCode.Failure, Message = "Action aborted null input" }; }
+      public static IXFResults NullInputResult {
+         get { return new ModelActionResults { ResultCode = XFResultCode.Failure, Message = "Action aborted null input" }; }
       }
 
-      public static IActionResults InvalidEntityID {
+      public static IXFResults InvalidEntityID {
          get {
-            return new ModelActionResults { ResultCode = ActionResultCode.Failure, Message = "The entityID provided was invalid" };
+            return new ModelActionResults { ResultCode = XFResultCode.Failure, Message = "The entityID provided was invalid" };
          }
       }
    }
-
-   public enum ActionResultCode { Success, Failure }
 
    public class ActionFailueException : Exception {
 

@@ -68,9 +68,10 @@
   <ItemGroup>
     <Compile Include="Action\ActionParameters.cs" />
     <Compile Include="Action\ActionPropertyAttribute.cs" />
+    <Compile Include="Action\XFResultCode.cs" />
     <Compile Include="Action\EditableControl.cs" />
     <Compile Include="Action\IActionParameters.cs" />
-    <Compile Include="Action\IActionResults.cs" />
+    <Compile Include="Action\IXFResults.cs" />
     <Compile Include="Action\IListMessage.cs" />
     <Compile Include="Action\ModelActionResults.cs" />
     <Compile Include="EnumberableExtensions.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Action\IActionableService.cs" />
     <Compile Include="GZipHelper.cs" />
     <Compile Include="ISecurityFilter.cs" />
+    <Compile Include="ITrackableDTO.cs" />
     <Compile Include="Locator.cs" />
     <Compile Include="MessageChannel\ISessionTicket.cs" />
     <Compile Include="MessageChannel\IUserAccount.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="Validation\MatchPatternAttribute.cs" />
     <Compile Include="Validation\ValidationAttribute.cs" />
     <Compile Include="Validation\Validator.cs" />
+    <Compile Include="XFDTOBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -29,7 +29,7 @@ namespace XF.UI.Smart
       public IActionView<TUpdateMessage> View { get; private set; }
       public Guid EntityID { get; protected set; }
       public TUpdateMessage UpdateMessage { get; private set; }
-      public IActionResults ActionResults { get; private set; }
+      public IXFResults IXFResults { get; private set; }
       protected TService Service { get { return _service; } }
 
       public virtual void PerformAction()
@@ -44,7 +44,7 @@ namespace XF.UI.Smart
 
          if (!Validate(UpdateMessage)) return;
 
-         ActionResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}) as IActionResults;
+         IXFResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}) as IXFResults;
 
          if (ActionComplete != null)
             ActionComplete(this, new EventArgs());
@@ -182,7 +182,7 @@ namespace XF.UI.Smart
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TUpdateMessage, IActionResults> updateMethod)
+      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TUpdateMessage, IXFResults> updateMethod)
       {
          _updateMethod = updateMethod.Method;
          return this;

@@ -86,8 +86,7 @@ namespace XF.Model
       }
 
       public ReferenceMapper<TMapper, TEntity, TMessage> Key(Expression<Func<TEntity, object>> keyExpression,
-                                                             Expression<Func<TMessage, object>> messageExpression)
-      {
+                                                             Expression<Func<TMessage, object>> messageExpression) {
          var keyProperty = ExpressionsHelper.GetMemberInfo(keyExpression) as PropertyInfo;
          var messageProperty = ExpressionsHelper.GetMemberInfo(messageExpression) as PropertyInfo;
 
@@ -97,10 +96,29 @@ namespace XF.Model
          _isKeyed = true;
          _keyProperty = messageProperty;
 
-         _parameters.Add(new ProjectionPart
-         {
+         _parameters.Add(new ProjectionPart {
             MessageProperty = messageProperty,
             EntityProperty = keyProperty.Name,
+            EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
+            ParameterIdx = ParameterIdx++
+         });
+         return this;
+      }
+
+      public ReferenceMapper<TMapper, TEntity, TMessage> Version(Expression<Func<TEntity, object>> versionExpression,
+                                                            Expression<Func<TMessage, object>> messageExpression) {
+         var versionProperty = ExpressionsHelper.GetMemberInfo(versionExpression) as PropertyInfo;
+         var messageProperty = ExpressionsHelper.GetMemberInfo(messageExpression) as PropertyInfo;
+
+         if (versionProperty == null) return this;
+         if (messageProperty == null) return this;
+
+         _isKeyed = true;
+         _keyProperty = messageProperty;
+
+         _parameters.Add(new ProjectionPart {
+            MessageProperty = messageProperty,
+            EntityProperty = versionProperty.Name,
             EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
             ParameterIdx = ParameterIdx++
          });
