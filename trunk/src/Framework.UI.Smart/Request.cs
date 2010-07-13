@@ -64,6 +64,13 @@ namespace XF.UI.Smart
          _items.Add(key, value);
       }
 
+      public Request AddItem(string key, object value) {
+         if (_items.ContainsKey(key)) return this;
+         _items.Add(key, value);
+
+         return this;
+      }
+
       public void SetItem(object value)
       {
          string key = value.GetType().FullName;
