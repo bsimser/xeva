@@ -17,6 +17,10 @@ namespace XF {
       public string ErrorContent { get; set; }
       public object Data { get; set; }
 
+      public static IXFResults SuccessfulAction(string message) {
+         return new ModelActionResults { ResultCode = XFResultCode.Success, Message = "Action aborted null input" };
+      }
+
       public static IXFResults NullInputResult {
          get { return new ModelActionResults { ResultCode = XFResultCode.Failure, Message = "Action aborted null input" }; }
       }
