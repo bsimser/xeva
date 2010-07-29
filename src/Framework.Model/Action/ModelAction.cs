@@ -36,11 +36,21 @@ namespace XF {
          set { _entity = value; }
       }
 
+      /// <summary>
+      /// Preparing the Action with inputs
+      /// </summary>
+      /// <param name="message">The message providing updated state</param>
       public void InitializeAction(TUpdateMessage message) {
          UpdateMessage = message;
          EntityID = (Guid)_entityIDProperty.GetValue(UpdateMessage, null);
       }
 
+      /// <summary>
+      /// Preparing the Action with inputs
+      /// </summary>
+      /// <param name="message">The message providing updated state</param>
+      /// <param name="user">The user account performing the update</param>
+      /// <param name="updatedOn">Date and time update occured</param>
       public void InitializeAction(TUpdateMessage message, IUserAccount user, DateTime updatedOn) {
          UpdateMessage = message;
          EntityID = (Guid)_entityIDProperty.GetValue(UpdateMessage, null);
@@ -49,6 +59,11 @@ namespace XF {
          UpdatedOn = updatedOn;
       }
 
+      /// <summary>
+      /// Provides the ID value of the Root object
+      /// </summary>
+      /// <param name="entityIDExpression">Lamda specifing the ID property</param>
+      /// <returns>ModelAction</returns>
       public ModelAction<TEntity, TRepository, TUpdateMessage> WithRoot(Expression<Func<TUpdateMessage, Guid>> entityIDExpression) {
          var entityProperty = ExpressionsHelper.GetMemberInfo(entityIDExpression) as PropertyInfo;
          if (entityProperty == null) return this;
@@ -58,6 +73,11 @@ namespace XF {
          return this;
       }
 
+      /// <summary>
+      /// Signifies that the action is against a child of the aggregate root.
+      /// </summary>
+      /// <param name="entityExpression">Lamda specifing the path of the child</param>
+      /// <returns></returns>
       public ModelAction<TEntity, TRepository, TUpdateMessage> ForChild(Expression<Func<TEntity, object>> entityExpression) {
          var updateObject = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
 
@@ -67,6 +87,12 @@ namespace XF {
          return this;
       }
 
+      /// <summary>
+      /// Maps a property on the model to a static value.
+      /// </summary>
+      /// <param name="entityExpression">Lamda specifing the updated property</param>
+      /// <param name="targetValue">The static value</param>
+      /// <returns></returns>
       public ModelAction<TEntity, TRepository, TUpdateMessage> Map(Expression<Func<TEntity, object>> entityExpression,
                                                                    object targetValue) {
          var entityProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
@@ -77,6 +103,12 @@ namespace XF {
          return this;
       }
 
+      /// <summary>
+      /// Maps a property on the model to a property on the update message.
+      /// </summary>
+      /// <param name="entityExpression">Lamda specifing the updated propert</param>
+      /// <param name="updateExpression">Lamda specifing the message propert</param>
+      /// <returns></returns>
       public ModelAction<TEntity, TRepository, TUpdateMessage> Map(Expression<Func<TEntity, object>> entityExpression,
                                                                    Expression<Func<TUpdateMessage, object>> updateExpression) {
          var entityProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
@@ -89,12 +121,25 @@ namespace XF {
          return this;
       }
 
+      /// <summary>
+      /// Maps a specified type to a method or property on the aggregate root.
+      /// </summary>
+      /// <typeparam name="TChild">The type accepted by the aggregate root method</typeparam>
+      /// <param name="target">The method or property on the aggregate root</param>
+      /// <param name="targetValue">generally null; value is set during execution</param>
+      /// <returns></returns>
       public ModelAction<TEntity, TRepository, TUpdateMessage> Map<TChild>(Func<TChild, IXFResults> target,
                                                                            object targetValue) {
          _actionParameters.Add(new ModelActionParameter { EntityMethod = target.Method, EntityPropertyValue = targetValue });
          return this;
       }
 
+      /// <summary>
+      /// Used to set the value of a mapped type passed to a method
+      /// </summary>
+      /// <typeparam name="TChild">The type mapped</typeparam>
+      /// <param name="target">The method on the aggregate root</param>
+      /// <param name="arg">The value of the type</param>
       public void SetMethodTargetArgument<TChild>(Func<TChild, IXFResults> target, TChild arg) {
          var param = _actionParameters.Find(match => match.EntityMethod.Name == target.Method.Name);
          if (param == null) return;
@@ -102,6 +147,11 @@ namespace XF {
          param.EntityPropertyValue = arg;
       }
 
+      /// <summary>
+      /// Used to set the value of a mapped type passed to a property
+      /// </summary>
+      /// <param name="entityExpression">The property on the aggregate root</param>
+      /// <param name="arg">The value of the type</param>
       public void SetPropertyTargetArgument(Expression<Func<TEntity, object>> entityExpression, object arg) {
          var entityProperty = ExpressionsHelper.GetMemberInfo(entityExpression) as PropertyInfo;
          if (entityProperty == null) return;
@@ -110,15 +160,27 @@ namespace XF {
          if (param != null) param.EntityPropertyValue = arg;
       }
 
+      /// <summary>
+      /// A method to be called after new state has been mapped.
+      /// </summary>
+      /// <param name="target"></param>
       public void EntityUpdateMethod(Func<IXFResults> target) {
          _entityUpdateMethod = target.Method;
       }
 
+      /// <summary>
+      /// A method to be called after new state has been mapped.
+      /// </summary>
+      /// <param name="target"></param>
       public void ChildUpdateMethod(Func<IXFResults> target) {
          _entityUpdateMethod = target.Method;
       }
 
-      public virtual IXFResults Execute() {
+      /// <summary>
+      /// The Update method will located the aggregate root and update via mapped elements.
+      /// </summary>
+      /// <returns>IXFResults</returns>
+      public virtual IXFResults Update() {
          if (EntityID == Guid.Empty) return ModelActionResults.InvalidEntityID;
 
          object updateObj;
@@ -137,6 +199,25 @@ namespace XF {
          IXFResults results;
          try {
             results = UpdateEntity(updateObj);
+         }
+         catch (ActionFailueException ex) {
+            return new ModelActionResults(false, ex.Message);
+         }
+
+         return results;
+      }
+
+      /// <summary>
+      /// The Insert method will generate a new aggergate root object.
+      /// </summary>
+      /// <returns>IXFResults</returns>
+      public virtual IXFResults Insert() {
+
+         Root = Activator.CreateInstance<TEntity>();
+
+         IXFResults results;
+         try {
+            results = UpdateEntity(Root);
          }
          catch (ActionFailueException ex) {
             return new ModelActionResults(false, ex.Message);
