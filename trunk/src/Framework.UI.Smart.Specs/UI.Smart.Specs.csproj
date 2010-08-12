@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{66F0ECDF-F389-4CA8-84C1-91E9BE980314}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -97,6 +97,10 @@
     <ProjectReference Include="..\Framework.UI.Smart\UI.Smart.csproj">
       <Project>{1FB3293D-07F4-46FE-B86D-5897879CCB9C}</Project>
       <Name>UI.Smart</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\XF.Controls\XF.Controls.csproj">
+      <Project>{E28DDD03-037D-447E-8123-DB161D73EFFD}</Project>
+      <Name>XF.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

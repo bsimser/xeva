@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Reflection;
+using XF.Controls;
 
 namespace XF.UI.Smart
 {
@@ -145,7 +144,7 @@ namespace XF.UI.Smart
 
       public void DisplayIn(IWindowManager manager)
       {
-         this.DisplayIn(manager, manager.CreateDefaultWindowOptionsFor(this));
+         DisplayIn(manager, manager.CreateDefaultWindowOptionsFor(this));
       }
 
       private void OnWindowClosed(object sender, EventArgs e)

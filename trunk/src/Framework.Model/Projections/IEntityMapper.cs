@@ -11,5 +11,6 @@ namespace XF.Model
       void AddReferencePart(IReferencePart referencePart);
       IDictionary<string, object> CriteriaParameters { get; set; }
       List<IExpressionMapper> Citerion { get; }
+      List<IOrderingMapper> Ordering { get; }
    }
 }

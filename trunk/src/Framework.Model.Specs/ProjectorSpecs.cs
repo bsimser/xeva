@@ -121,6 +121,29 @@ namespace XF.Model
                               .Project();
       }
 
+      [Test]
+      public void Can_set_an_ordering_on_primary_object() {
+         var projector = new EntityProjector<MyEntity, MyMessage>()
+                              .Key(e => e.ID, mess => mess.ID)
+                              .Projection(mess => mess.Name).Add()
+                              .OrderBy().Field(e => e.Name).Asc()
+                              .Project();
+      }
+
+      [Test]
+      public void Can_set_an_ordering_on_primary_and_referenced_objects() {
+         var projector = new EntityProjector<MyEntity, MyMessage>()
+                              .Key(e => e.ID, mess => mess.ID)
+                              .Projection(mess => mess.Name).Add()
+                              .OrderBy().Field(e => e.Name).Asc()
+                              .Reference<MyEntity2, MyMessage>(e => e.Entity2)
+                                 .ReferenceAsProperty()
+                                 .Projection(mess => mess.Age).Add()
+                                 .Projection(mess => mess.Sex).Add()
+                                 .OrderBy().Field(e2 => e2.Age).Desc()
+                                 .AddReference()
+                              .Project();
+      }
    }
 
    public class MyEntity : Entity

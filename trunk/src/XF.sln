@@ -31,6 +31,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging", "Messaging\Mess
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store", "Framework.Store\Store.csproj", "{CBF62E2C-2924-416A-9AE9-4A2F1980D7DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF.Controls", "XF.Controls\XF.Controls.csproj", "{E28DDD03-037D-447E-8123-DB161D73EFFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF.Controls.Sandbox", "XF.Controls.Sandbox\XF.Controls.Sandbox.csproj", "{87382702-E730-44EA-814F-21E4AC03D34C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +97,14 @@ Global
 		{CBF62E2C-2924-416A-9AE9-4A2F1980D7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBF62E2C-2924-416A-9AE9-4A2F1980D7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBF62E2C-2924-416A-9AE9-4A2F1980D7DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E28DDD03-037D-447E-8123-DB161D73EFFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E28DDD03-037D-447E-8123-DB161D73EFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E28DDD03-037D-447E-8123-DB161D73EFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E28DDD03-037D-447E-8123-DB161D73EFFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87382702-E730-44EA-814F-21E4AC03D34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87382702-E730-44EA-814F-21E4AC03D34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87382702-E730-44EA-814F-21E4AC03D34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87382702-E730-44EA-814F-21E4AC03D34C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

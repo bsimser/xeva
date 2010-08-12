@@ -8,5 +8,6 @@ namespace XF.Model
       List<IExpressionMapper> Citerion { get; }
       ProjectionPart Parameters { get; }
       List<IReferencePart> References { get; }
+      List<IOrderingMapper> Ordering { get; }
    }
 }
