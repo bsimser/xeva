@@ -148,7 +148,7 @@ namespace XF.Model
       }
 
       public OrderingMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity> OrderBy() {
-         var entityName = string.Format("{0}_{1}", typeof(TEntity).Name, 0);
+         var entityName = string.Format("{0}_{1}", typeof(TEntity).Name, EntityLevel);
          var mapper = new OrderingMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity>(this, entityName);
 
          Ordering.Add(mapper);
