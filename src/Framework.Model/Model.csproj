@@ -73,8 +73,10 @@
     <Compile Include="Projections\ExpressionPart.cs" />
     <Compile Include="Projections\IExpressionMapper.cs" />
     <Compile Include="Projections\IEntityMapper.cs" />
+    <Compile Include="Projections\IOrderingMapper.cs" />
     <Compile Include="Projections\IProjector.cs" />
     <Compile Include="Projections\IReferencePart.cs" />
+    <Compile Include="Projections\OrderingMapper.cs" />
     <Compile Include="Projections\ParameterMapper.cs" />
     <Compile Include="Projections\ProjectionPart.cs" />
     <Compile Include="Projections\ProjectionResults.cs" />

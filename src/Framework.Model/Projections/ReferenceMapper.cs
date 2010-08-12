@@ -49,6 +49,10 @@ namespace XF.Model
          get { return _projector.Citerion; }
       }
 
+      public List<IOrderingMapper> Ordering {
+         get { return _projector.Ordering; }
+      }
+
       public ReferenceMapper<TMapper, TEntity, TMessage> ReferenceAsProperty()
       {
          _referenceType = ReferenceType.PropertyPart;
@@ -140,6 +144,14 @@ namespace XF.Model
             { EntityName = string.Format("{0}_{1}", entityName, EntityLevel) };
 
          Citerion.Add(mapper);
+         return mapper;
+      }
+
+      public OrderingMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity> OrderBy() {
+         var entityName = string.Format("{0}_{1}", typeof(TEntity).Name, 0);
+         var mapper = new OrderingMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity>(this, entityName);
+
+         Ordering.Add(mapper);
          return mapper;
       }
 

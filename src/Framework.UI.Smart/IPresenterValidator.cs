@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using XF.Controls;
 
 namespace XF.UI.Smart
 {

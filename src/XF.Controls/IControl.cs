@@ -1,6 +1,6 @@
 using XF.Validation;
 
-namespace XF.UI.Smart
+namespace XF.Controls
 {
    public interface IControl : IValidationAware
    {
