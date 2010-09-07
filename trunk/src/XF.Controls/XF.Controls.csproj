@@ -33,7 +33,10 @@
   <ItemGroup>
     <Reference Include="Infragistics2.Shared.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Infragistics2.Win.Misc.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics2.Win.UltraWinEditors.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics2.Win.UltraWinMaskedEdit.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Infragistics2.Win.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -53,29 +56,186 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlConstants.cs" />
+    <Compile Include="Editable\EditableCheckbox.Designer.cs" />
+    <Compile Include="Editable\EditableCheckbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableComboEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableComboEditor.Designer.cs">
+      <DependentUpon>EditableComboEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditableCurrencyEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableCurrencyEditor.Designer.cs">
+      <DependentUpon>EditableCurrencyEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditableDate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableDate.Designer.cs">
+      <DependentUpon>EditableDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditableMaskedTextbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableMaskedTextbox.Designer.cs">
+      <DependentUpon>EditableMaskedTextbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditableNumericEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableNumericEditor.Designer.cs">
+      <DependentUpon>EditableNumericEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditableOptionToggle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableOptionToggle.Designer.cs">
+      <DependentUpon>EditableOptionToggle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditablePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditablePanel.designer.cs">
+      <DependentUpon>EditablePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditablePanelDesigner.cs" />
+    <Compile Include="Editable\EditableStatesComboEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableStatesComboEditor.Designer.cs">
+      <DependentUpon>EditableStatesComboEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditableTextbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableTextbox.Designer.cs">
+      <DependentUpon>EditableTextbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editable\EditSaveCancel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditSaveCancel.Designer.cs">
+      <DependentUpon>EditSaveCancel.cs</DependentUpon>
+    </Compile>
     <Compile Include="General\AddressControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="General\AddressControl.designer.cs">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="IControl.cs" />
+    <Compile Include="General\LabelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="General\LabelControl.designer.cs">
+      <DependentUpon>LabelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="XFControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="XFControlBase.designer.cs">
+      <DependentUpon>XFControlBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IPropertyControlAdapter.cs" />
+    <Compile Include="IStyledControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolTipControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolTipControl.designer.cs">
+      <DependentUpon>ToolTipControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
       <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>
       <Name>Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Framework.UI.Smart\UI.Smart.csproj">
+      <Project>{1FB3293D-07F4-46FE-B86D-5897879CCB9C}</Project>
+      <Name>UI.Smart</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Editable\EditableCheckbox.resx">
+      <DependentUpon>EditableCheckbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableComboEditor.resx">
+      <DependentUpon>EditableComboEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableCurrencyEditor.resx">
+      <DependentUpon>EditableCurrencyEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableDate.resx">
+      <DependentUpon>EditableDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableMaskedTextbox.resx">
+      <DependentUpon>EditableMaskedTextbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableNumericEditor.resx">
+      <DependentUpon>EditableNumericEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableOptionToggle.resx">
+      <DependentUpon>EditableOptionToggle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditablePanel.resx">
+      <DependentUpon>EditablePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableStatesComboEditor.resx">
+      <DependentUpon>EditableStatesComboEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditableTextbox.resx">
+      <DependentUpon>EditableTextbox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editable\EditSaveCancel.resx">
+      <DependentUpon>EditSaveCancel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="General\AddressControl.resx">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="General\LabelControl.resx">
+      <DependentUpon>LabelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XFControlBase.resx">
+      <DependentUpon>XFControlBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="ToolTipControl.resx">
+      <DependentUpon>ToolTipControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Editable\" />
+    <None Include="Resources\edit_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cancel2-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ErrorCircle-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\garbage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loader.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trash_16.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

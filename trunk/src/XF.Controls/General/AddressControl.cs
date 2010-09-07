@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Infragistics.Win;
+using XF.UI.Smart;
 
 namespace XF.Controls {
    public partial class AddressControl : UserControl, IControl {

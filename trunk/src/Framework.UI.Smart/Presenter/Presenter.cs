@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using XF.Controls;
 
 namespace XF.UI.Smart
 {
