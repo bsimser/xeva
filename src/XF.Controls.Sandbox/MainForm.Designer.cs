@@ -28,7 +28,9 @@
          Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool1 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Controls");
          Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool2 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Controls");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool1 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Address");
+         Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool3 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Embedable Label");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool2 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Address");
+         Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool4 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Embedable Label");
          this._mainForm_Fill_Panel = new System.Windows.Forms.Panel();
          this._MainForm_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
          this._MainForm_Toolbars_Dock_Area_Right = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
@@ -42,9 +44,9 @@
          // 
          this._mainForm_Fill_Panel.Cursor = System.Windows.Forms.Cursors.Default;
          this._mainForm_Fill_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-         this._mainForm_Fill_Panel.Location = new System.Drawing.Point(0, 23);
+         this._mainForm_Fill_Panel.Location = new System.Drawing.Point(0, 48);
          this._mainForm_Fill_Panel.Name = "_mainForm_Fill_Panel";
-         this._mainForm_Fill_Panel.Size = new System.Drawing.Size(495, 216);
+         this._mainForm_Fill_Panel.Size = new System.Drawing.Size(495, 191);
          this._mainForm_Fill_Panel.TabIndex = 0;
          // 
          // _MainForm_Toolbars_Dock_Area_Left
@@ -53,9 +55,9 @@
          this._MainForm_Toolbars_Dock_Area_Left.BackColor = System.Drawing.Color.White;
          this._MainForm_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
          this._MainForm_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
-         this._MainForm_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 23);
+         this._MainForm_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 48);
          this._MainForm_Toolbars_Dock_Area_Left.Name = "_MainForm_Toolbars_Dock_Area_Left";
-         this._MainForm_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 216);
+         this._MainForm_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 191);
          this._MainForm_Toolbars_Dock_Area_Left.ToolbarsManager = this._toolbars;
          // 
          // _MainForm_Toolbars_Dock_Area_Right
@@ -64,9 +66,9 @@
          this._MainForm_Toolbars_Dock_Area_Right.BackColor = System.Drawing.Color.White;
          this._MainForm_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
          this._MainForm_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
-         this._MainForm_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(495, 23);
+         this._MainForm_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(495, 48);
          this._MainForm_Toolbars_Dock_Area_Right.Name = "_MainForm_Toolbars_Dock_Area_Right";
-         this._MainForm_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 216);
+         this._MainForm_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 191);
          this._MainForm_Toolbars_Dock_Area_Right.ToolbarsManager = this._toolbars;
          // 
          // _MainForm_Toolbars_Dock_Area_Top
@@ -77,7 +79,7 @@
          this._MainForm_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
          this._MainForm_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
          this._MainForm_Toolbars_Dock_Area_Top.Name = "_MainForm_Toolbars_Dock_Area_Top";
-         this._MainForm_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(495, 23);
+         this._MainForm_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(495, 48);
          this._MainForm_Toolbars_Dock_Area_Top.ToolbarsManager = this._toolbars;
          // 
          // _MainForm_Toolbars_Dock_Area_Bottom
@@ -106,11 +108,14 @@
             ultraToolbar1});
          popupMenuTool2.SharedProps.Caption = "Controls";
          popupMenuTool2.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool1});
+            buttonTool1,
+            buttonTool3});
          buttonTool2.SharedProps.Caption = "Address";
+         buttonTool4.SharedProps.Caption = "Embedable Label";
          this._toolbars.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             popupMenuTool2,
-            buttonTool2});
+            buttonTool2,
+            buttonTool4});
          this._toolbars.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.OnToolClick);
          // 
          // MainForm

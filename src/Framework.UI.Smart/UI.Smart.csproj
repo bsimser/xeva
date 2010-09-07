@@ -73,6 +73,11 @@
     <Compile Include="Controller\IActionController.cs" />
     <Compile Include="Controller\IActionView.cs" />
     <Compile Include="Controller\ControllerValidator.cs" />
+    <Compile Include="FieldsRegistry.cs" />
+    <Compile Include="IControl.cs" />
+    <Compile Include="IEditable.cs" />
+    <Compile Include="IFieldsRegistry.cs" />
+    <Compile Include="IFieldsRegistryList.cs" />
     <Compile Include="Presenter\IHaveMessageToSave.cs" />
     <Compile Include="Presenter\IRefreshable.cs" />
     <Compile Include="Presenter\IRefreshes.cs" />
@@ -114,10 +119,6 @@
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
       <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>
       <Name>Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\XF.Controls\XF.Controls.csproj">
-      <Project>{E28DDD03-037D-447E-8123-DB161D73EFFD}</Project>
-      <Name>XF.Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

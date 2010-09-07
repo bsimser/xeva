@@ -49,7 +49,6 @@
          this._valueLabel.Name = "_valueLabel";
          this._valueLabel.Size = new System.Drawing.Size(409, 46);
          this._valueLabel.TabIndex = 3;
-         this._valueLabel.Text = "Value Label";
          this._valueLabel.WrapText = false;
          // 
          // AddressControl
