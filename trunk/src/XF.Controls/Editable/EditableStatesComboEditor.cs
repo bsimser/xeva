@@ -6,17 +6,14 @@ using System.Windows.Forms;
 using Infragistics.Win;
 using XF;
 using XF.UI.Smart;
-using Color=System.Drawing.Color;
+using Color = System.Drawing.Color;
 
-namespace XF.Controls 
-{
-   public partial class EditableStatesComboEditor : UserControl , IEditable
-   {
+namespace XF.Controls {
+   public partial class EditableStatesComboEditor : UserControl, IEditable {
       private bool _required;
       private Mode _controlMode;
 
-      public EditableStatesComboEditor() 
-      {
+      public EditableStatesComboEditor() {
          InitializeComponent();
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 
@@ -26,16 +23,13 @@ namespace XF.Controls
 
       public event EventHandler EditClicked;
 
-      private void SetupControlMode() 
-      {
-         if (ControlMode == Mode.View) 
-         {
+      private void SetupControlMode() {
+         if (ControlMode == Mode.View) {
             _valueLabel.Visible = true;
             _comboValue.Visible = false;
             _requiredLabel.Visible = false;
-         } 
-         else if (ControlMode == Mode.Edit) 
-         {
+         }
+         else if (ControlMode == Mode.Edit) {
             _valueLabel.Visible = false;
             _comboValue.Visible = true;
             _requiredLabel.Visible = _required;
@@ -51,31 +45,30 @@ namespace XF.Controls
          if (isInEdit) _internalEdit.BringToFront();
       }
 
-      public void ResetValue()
-      {
+      public void SaveValue() {
+         InputValue = Value.ToString();
+      }
+
+      public void ResetValue() {
          Value = InputValue;
       }
 
-      public object EditedValue
-      {
+      public object EditedValue {
          get { return Value; }
       }
 
-      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList)
-      {
+      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList) {
          Label = controlLabel;
          Value = controlValue;
 
          return this;
       }
 
-      private void EditableResize(object sender, EventArgs e)
-      {
+      private void EditableResize(object sender, EventArgs e) {
          SetControlPositions();
       }
 
-      private void SetControlPositions()
-      {
+      private void SetControlPositions() {
          int left = _label.Width + _label.Left + (ControlConstants.LABEL_TO_CONTROL_SPACING);
 
          var valueLabel = _valueLabel as Control;
@@ -84,19 +77,17 @@ namespace XF.Controls
 
          var comboValue = _comboValue as Control;
          comboValue.Left = left;
-         comboValue.Width = Width - left - (ControlConstants.CONTROL_PADDING);                     
+         comboValue.Width = Width - left - (ControlConstants.CONTROL_PADDING);
       }
 
       public string InputValue { get; private set; }
 
       public bool IsDirty { get; private set; }
 
-      private void OnValueChanged(object sender, System.EventArgs e) 
-      {
+      private void OnValueChanged(object sender, System.EventArgs e) {
          if (_comboValue.Value == null && !IsDirty) return;
 
-         if (_comboValue.Value==null && string.IsNullOrEmpty(InputValue))
-         {
+         if (_comboValue.Value == null && string.IsNullOrEmpty(InputValue)) {
             IsDirty = false;
             _valueLabel.Text = string.Empty;
             return;
@@ -106,14 +97,12 @@ namespace XF.Controls
          _valueLabel.Text = _comboValue.Text;
       }
 
-      public void ShowError(string message)
-      {
+      public void ShowError(string message) {
          _errorProvider.SetError(this, message);
          _comboValue.BackColor = ValidationColor;
       }
 
-      public void ClearError()
-      {
+      public void ClearError() {
          _errorProvider.Clear();
          _comboValue.ResetBackColor();
       }
@@ -172,8 +161,7 @@ namespace XF.Controls
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public bool Required {
-         set
-         {
+         set {
             _required = value;
             if (ControlMode == Mode.Edit)
                _requiredLabel.Visible = value;
@@ -205,16 +193,13 @@ namespace XF.Controls
       public string DisplayMember { get; set; }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public string ValueMember { get; set;}
+      public string ValueMember { get; set; }
 
-      public object Value
-      {
-         get 
-         {
+      public object Value {
+         get {
             return _comboValue.Text;
          }
-         set 
-         {
+         set {
             if (value == null) return;
             InputValue = value.ToString();
             _valueLabel.Text = InputValue;
@@ -224,8 +209,7 @@ namespace XF.Controls
 
       public BindingSource BindingSource { set; private get; }
 
-      public void Bind() 
-      {
+      public void Bind() {
          _comboValue.DataSource = BindingSource;
          _comboValue.DisplayMember = DisplayMember;
          _comboValue.ValueMember = ValueMember;

@@ -63,6 +63,10 @@ namespace XF.Controls {
          if (isInEdit) _internalEdit.BringToFront();
       }
 
+      public void SaveValue() {
+         InputValue = Value != null ? ((DateTime)Value).ToShortDateString() : string.Empty;
+      }
+
       public void ResetValue() {
          Value = InputValue;
       }

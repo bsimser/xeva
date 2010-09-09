@@ -49,13 +49,13 @@ namespace XF.Controls {
       }
 
       private void OnInternalEditClick(object sender, EventArgs e) {
-         SetPanelToWait(false);
+         ResetControlVisability(false);
          if (EditClicked != null)
             EditClicked(this, new EventArgs());
       }
 
       private void OnCancelClick(object sender, EventArgs e) {
-         SetPanelToWait(true);
+         CancelPanelEdit(true);
          _internalEdit.Visible = true;
          if (CancelClicked != null)
             CancelClicked(this, new EventArgs());
@@ -64,7 +64,7 @@ namespace XF.Controls {
       private void OnSaveClick(object sender, EventArgs e) {
          if (!_registry.Validate()) return;
 
-         SetPanelToWait(true);
+         SavePanelEdit(true);
          _internalEdit.Visible = true;
          if (SaveClicked != null)
             SaveClicked(this, new EventArgs());
@@ -80,16 +80,40 @@ namespace XF.Controls {
          _toolTip.SetToolTip(_internalCancel, "Cancel");
       }
 
-      private void SetPanelToWait(bool isWaitingEdit) {
+      //private void SetPanelToWait(bool isWaitingEdit) {
+      //   ResetControlVisability(isWaitingEdit);
+      //   _registry.RegisteredControls.ForEach(cnt => {
+      //      cnt.SetToEdit(!isWaitingEdit);
+      //                                                 cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;});
+      //   _registry.EditControls.ForEach(cnt => {cnt.EnableEdit(!isWaitingEdit);
+      //                                          cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;});
+      //}
+
+      private void SavePanelEdit(bool isWaitingEdit) {
+         _registry.RegisteredControls.ForEach(cnt => cnt.SaveValue());
+         _registry.EditControls.ForEach(cnt => cnt.SaveValue());
+         ResetControlVisability(isWaitingEdit);
+      }
+
+      private void CancelPanelEdit(bool isWaitingEdit) {
+         _registry.RegisteredControls.ForEach(cnt => cnt.ResetValue());
+         _registry.EditControls.ForEach(cnt => cnt.ResetValue());
+         ResetControlVisability(isWaitingEdit);
+      }
+
+      private void ResetControlVisability(bool isWaitingEdit) {
          _internalBox.BackColor = isWaitingEdit ? Parent.BackColor : Color.LightYellow;
          _internalEdit.Visible = isWaitingEdit;
          _internalSave.Visible = !isWaitingEdit;
          _internalCancel.Visible = !isWaitingEdit;
-         _registry.RegisteredControls.ForEach(cnt => { cnt.SetToEdit(!isWaitingEdit);
-                                                       cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;});
-         _registry.EditControls.ForEach(cnt => {cnt.EnableEdit(!isWaitingEdit);
-                                                cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;});
+         _registry.RegisteredControls.ForEach(cnt => {
+            cnt.SetToEdit(!isWaitingEdit);
+            cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;
+         });
+         _registry.EditControls.ForEach(cnt => {
+            cnt.EnableEdit(!isWaitingEdit);
+            cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;
+         });
       }
-
    }
 }

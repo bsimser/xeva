@@ -10,6 +10,7 @@ namespace XF.UI.Smart
    {
       void SetToEdit(bool isInEdit);
       void EnableEdit(bool isInEdit);
+      void SaveValue();
       void ResetValue();
       object EditedValue { get; }
       IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList);

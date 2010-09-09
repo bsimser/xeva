@@ -54,6 +54,10 @@ namespace XF.Controls
          if (isInEdit) _internalEdit.BringToFront();
       }
 
+      public void SaveValue() {
+         InputValue = Value.ToString();
+      }
+
       public void ResetValue()
       {
          Value = InputValue;

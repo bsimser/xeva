@@ -7,15 +7,12 @@ using Infragistics.Win;
 using XF;
 using XF.UI.Smart;
 
-namespace XF.Controls 
-{
-   public partial class EditableCurrencyEditor : UserControl, IEditable
-   {
+namespace XF.Controls {
+   public partial class EditableCurrencyEditor : UserControl, IEditable {
       private bool _required;
       private Mode _controlMode;
 
-      public EditableCurrencyEditor() 
-      {
+      public EditableCurrencyEditor() {
          InitializeComponent();
          AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 
@@ -25,15 +22,13 @@ namespace XF.Controls
       }
 
       public event EventHandler EditClicked;
-      
-      public void ShowError(string message)
-      {
+
+      public void ShowError(string message) {
          _errorProvider.SetError(this, message);
-         _currencyEditor.BackColor = ValidationColor; 
+         _currencyEditor.BackColor = ValidationColor;
       }
 
-      public void ClearError()
-      {
+      public void ClearError() {
          _errorProvider.Clear();
          _currencyEditor.ResetBackColor();
       }
@@ -47,31 +42,30 @@ namespace XF.Controls
          if (isInEdit) _internalEdit.BringToFront();
       }
 
-      public void ResetValue()
-      {
+      public void SaveValue() {
+         InputValue = (decimal)Value;
+      }
+
+      public void ResetValue() {
          Value = InputValue;
       }
 
-      public object EditedValue
-      {
+      public object EditedValue {
          get { return Value; }
       }
 
-      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList)
-      {
+      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList) {
          Label = controlLabel;
          Value = controlValue;
 
          return this;
       }
 
-      private void EditableResize(object sender, EventArgs e) 
-      {
+      private void EditableResize(object sender, EventArgs e) {
          SetControlPositions();
       }
 
-      private void SetControlPositions() 
-      {
+      private void SetControlPositions() {
          int left = _label.Width + _label.Left + (ControlConstants.LABEL_TO_CONTROL_SPACING);
 
          var valueLabel = _valueLabel as Control;
@@ -87,8 +81,7 @@ namespace XF.Controls
 
       public bool IsDirty { get; private set; }
 
-      private void OnValueChanged(object sender, System.EventArgs e) 
-      {
+      private void OnValueChanged(object sender, System.EventArgs e) {
          //if (_currencyEditor.Value == null && !IsDirty) return;
 
          //if (_currencyEditor.Value == null && InputValue == null) {
@@ -111,17 +104,14 @@ namespace XF.Controls
 
       [Bindable(true)]
       //[Browsable(false)]
-      public object Value
-      {
-         get 
-         {
+      public object Value {
+         get {
             return _currencyEditor.Value;
          }
-         set 
-         {
+         set {
             if (value == null) return;
-            InputValue = Convert.ToDecimal(value.ToString().Replace("$","").Replace("_",""));
-            
+            InputValue = Convert.ToDecimal(value.ToString().Replace("$", "").Replace("_", ""));
+
             _valueLabel.Text = InputValue.ToString("c");
             _currencyEditor.Value = InputValue;
          }
@@ -217,8 +207,7 @@ namespace XF.Controls
 
       public bool ReadOnly { get; set; }
 
-      private void OnClicked(object sender, EventArgs e) 
-      {
+      private void OnClicked(object sender, EventArgs e) {
          _currencyEditor.Focus();
       }
 
@@ -227,7 +216,8 @@ namespace XF.Controls
             _valueLabel.Visible = true;
             _currencyEditor.Visible = false;
             _requiredLabel.Visible = false;
-         } else if (ControlMode == Mode.Edit) {
+         }
+         else if (ControlMode == Mode.Edit) {
             _valueLabel.Visible = false;
             _currencyEditor.Visible = true;
             _requiredLabel.Visible = _required;

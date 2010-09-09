@@ -8,16 +8,13 @@ using XF;
 using XF.UI.Smart;
 using Color = System.Drawing.Color;
 
-namespace XF.Controls
-{
-   public partial class EditableComboEditor : UserControl, IEditable
-   {
+namespace XF.Controls {
+   public partial class EditableComboEditor : UserControl, IEditable {
       private bool _required;
       private object _nullValue;
       private Mode _controlMode;
 
-      public EditableComboEditor()
-      {
+      public EditableComboEditor() {
          InitializeComponent();
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 
@@ -28,16 +25,13 @@ namespace XF.Controls
 
       public event EventHandler EditClicked;
 
-      private void SetupControlMode()
-      {
-         if (ControlMode == Mode.View)
-         {
+      private void SetupControlMode() {
+         if (ControlMode == Mode.View) {
             _valueLabel.Visible = true;
             _comboValue.Visible = false;
             _requiredLabel.Visible = false;
          }
-         else if (ControlMode == Mode.Edit)
-         {
+         else if (ControlMode == Mode.Edit) {
             _valueLabel.Visible = false;
             _comboValue.Visible = true;
             _requiredLabel.Visible = _required;
@@ -53,21 +47,21 @@ namespace XF.Controls
          if (isInEdit) _internalEdit.BringToFront();
       }
 
-      public void ResetValue()
-      {
+      public void ResetValue() {
          Value = InputValue;
       }
 
-      public object EditedValue
-      {
-         get
-         {
+      public void SaveValue() {
+         InputValue = _comboValue.SelectedItem.DisplayText;
+      }
+
+      public object EditedValue {
+         get {
             return _comboValue.SelectedItem != null ? _comboValue.SelectedItem.DataValue : Value;
          }
       }
 
-      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList)
-      {
+      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList) {
          Label = controlLabel;
          Value = controlValue;
          DisplayMember = "Name";
@@ -78,13 +72,11 @@ namespace XF.Controls
          return this;
       }
 
-      private void EditableResize(object sender, EventArgs e)
-      {
+      private void EditableResize(object sender, EventArgs e) {
          SetControlPositions();
       }
 
-      private void SetControlPositions()
-      {
+      private void SetControlPositions() {
          int left = _label.Width + _label.Left + (ControlConstants.LABEL_TO_CONTROL_SPACING);
 
          var valueLabel = _valueLabel as Control;
@@ -104,14 +96,12 @@ namespace XF.Controls
 
       public event EventHandler SelectionChanged;
 
-      private void OnSelectionChanged(object sender, EventArgs e)
-      {
+      private void OnSelectionChanged(object sender, EventArgs e) {
          if (_comboValue.SelectedItem == null) return;
 
          if (_comboValue.SelectedItem.DataValue == null && !IsDirty) return;
 
-         if (_comboValue.SelectedItem.DataValue == null && InputValue == null)
-         {
+         if (_comboValue.SelectedItem.DataValue == null && InputValue == null) {
             IsDirty = false;
             _valueLabel.Text = string.Empty;
             return;
@@ -124,12 +114,10 @@ namespace XF.Controls
             SelectionChanged(this, EventArgs.Empty);
       }
 
-      public void OnValueChanged(object sender, EventArgs e)
-      {
+      public void OnValueChanged(object sender, EventArgs e) {
          if (_comboValue.Value == null && !IsDirty) return;
 
-         if (_comboValue.Value == null && InputValue == null)
-         {
+         if (_comboValue.Value == null && InputValue == null) {
             IsDirty = false;
             _valueLabel.Text = string.Empty;
             return;
@@ -140,17 +128,14 @@ namespace XF.Controls
 
          if (ValueChanged != null)
             ValueChanged(this, EventArgs.Empty);
-
       }
 
-      public void ShowError(string message)
-      {
+      public void ShowError(string message) {
          _errorProvider.SetError(this, message);
          _comboValue.BackColor = ValidationColor;
       }
 
-      public void ClearError()
-      {
+      public void ClearError() {
          _errorProvider.Clear();
          _comboValue.ResetBackColor();
       }
@@ -161,48 +146,46 @@ namespace XF.Controls
 
       [Bindable(true)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public virtual string Label
-      {
+      public virtual string Label {
          get { return _label.Text; }
          set { _label.Text = value; }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public virtual Font LabelFont
-      {
+      public virtual Font LabelFont {
          get { return _label.Font; }
          set { _label.Font = value; }
       }
 
       [Bindable(true)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public string LabelText
-      {
+      public string LabelText {
          get { return _label.Text; }
          set { _label.Text = value; }
       }
 
       [Bindable(true)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public int LabelWidth
-      {
+      public int LabelWidth {
          get { return _label.Width; }
-         set
-         {
+         set {
             _label.Width = value;
             SetControlPositions();
          }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public Mode ControlMode
-      {
-         get
-         {
+      public HAlign ValueHAlign {
+         get { return _valueLabel.Appearance.TextHAlign; }
+         set { _valueLabel.Appearance.TextHAlign = value; }
+      }
+
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public Mode ControlMode {
+         get {
             return _controlMode;
          }
-         set
-         {
+         set {
             _controlMode = value;
             SetupControlMode();
          }
@@ -210,17 +193,14 @@ namespace XF.Controls
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       [DefaultValue(true)]
-      public bool LabelVisible
-      {
+      public bool LabelVisible {
          get { return _label.Visible; }
          set { _label.Visible = value; }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public bool Required
-      {
-         set
-         {
+      public bool Required {
+         set {
             _required = value;
             if (ControlMode == Mode.Edit)
                _requiredLabel.Visible = value;
@@ -228,22 +208,19 @@ namespace XF.Controls
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public HAlign EditorHorizontalAlignment
-      {
+      public HAlign EditorHorizontalAlignment {
          get { return _comboValue.Appearance.TextHAlign; }
          set { _comboValue.Appearance.TextHAlign = value; }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public Font ComboEditorFont
-      {
+      public Font ComboEditorFont {
          get { return _comboValue.Font; }
          set { _comboValue.Font = value; }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public Font ValueLabelFont
-      {
+      public Font ValueLabelFont {
          get { return _valueLabel.Font; }
          set { _valueLabel.Font = value; }
       }
@@ -259,49 +236,39 @@ namespace XF.Controls
 
       [Bindable(true)]
       [Browsable(false)]
-      public object Value
-      {
-         get
-         {
+      public object Value {
+         get {
             return _comboValue.SelectedItem != null ? _comboValue.SelectedItem.DataValue : NullValue;
          }
-         set
-         {
+         set {
             InputValue = value != null ? value.ToString() : string.Empty;
             _valueLabel.Text = InputValue;
          }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public object NullValue
-      {
-         get
-         {
+      public object NullValue {
+         get {
             return _nullValue;
          }
-         set
-         {
+         set {
             _nullValue = value;
          }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public string NullValueText
-      {
-         get
-         {
+      public string NullValueText {
+         get {
             return _comboValue.NullText;
          }
-         set
-         {
+         set {
             _comboValue.NullText = value;
          }
       }
 
       public BindingSource BindingSource { set; private get; }
 
-      public void Bind()
-      {
+      public void Bind() {
          _comboValue.DataSource = BindingSource;
          _comboValue.DisplayMember = DisplayMember;
          _comboValue.ValueMember = ValueMember;
@@ -311,13 +278,11 @@ namespace XF.Controls
 
       public bool ReadOnly { get; set; }
 
-      public void SetSelectedItem(string selection)
-      {
+      public void SetSelectedItem(string selection) {
          _comboValue.SelectedIndex = _comboValue.FindStringExact(selection);
       }
 
-      public void ClearControl()
-      {
+      public void ClearControl() {
          _comboValue.SelectedItem = null;
          _comboValue.DataSource = null;
       }
