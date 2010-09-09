@@ -7,15 +7,13 @@ using Infragistics.Win;
 using XF;
 using XF.UI.Smart;
 
-namespace XF.Controls
-{
-   public partial class EditableNumericEditor : UserControl, IEditable
-   {
+namespace XF.Controls {
+   public partial class EditableNumericEditor : UserControl, IEditable {
       private bool _required;
       private Mode _controlMode;
+      private string _numericType = "double";
 
-      public EditableNumericEditor() 
-      {
+      public EditableNumericEditor() {
          InitializeComponent();
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 
@@ -24,15 +22,13 @@ namespace XF.Controls
       }
 
       public event EventHandler EditClicked;
-      
-      public void ShowError(string message)
-      {
+
+      public void ShowError(string message) {
          _errorProvider.SetError(this, message);
-         _numericEditor.BackColor = ValidationColor; 
+         _numericEditor.BackColor = ValidationColor;
       }
 
-      public void ClearError()
-      {
+      public void ClearError() {
          _errorProvider.Clear();
          _numericEditor.ResetBackColor();
       }
@@ -46,31 +42,30 @@ namespace XF.Controls
          if (isInEdit) _internalEdit.BringToFront();
       }
 
-      public void ResetValue()
-      {
+      public void SaveValue() {
+         InputValue = decimal.Parse(Value.ToString());
+      }
+
+      public void ResetValue() {
          Value = InputValue;
       }
 
-      public object EditedValue
-      {
+      public object EditedValue {
          get { return Value; }
       }
 
-      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList)
-      {
+      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList) {
          Label = controlLabel;
          Value = controlValue;
 
          return this;
       }
 
-      private void EditableResize(object sender, EventArgs e) 
-      {
+      private void EditableResize(object sender, EventArgs e) {
          SetControlPositions();
       }
 
-      private void SetControlPositions() 
-      {
+      private void SetControlPositions() {
          int left = _label.Width + _label.Left + (ControlConstants.LABEL_TO_CONTROL_SPACING);
 
          var valueLabel = _valueLabel as Control;
@@ -86,8 +81,7 @@ namespace XF.Controls
 
       public bool IsDirty { get; private set; }
 
-      private void OnValueChanged(object sender, System.EventArgs e) 
-      {
+      private void OnValueChanged(object sender, System.EventArgs e) {
          //if (_currencyEditor.Value == null && !IsDirty) return;
 
          //if (_currencyEditor.Value == null && InputValue == null) {
@@ -101,6 +95,17 @@ namespace XF.Controls
          _valueLabel.Text = _numericEditor.Value.ToString();
       }
 
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public virtual string NumericType {
+         get { return _numericType; }
+         set {
+            _numericType = value;
+            _numericEditor.NumericType = _numericType == "int"
+                                            ? Infragistics.Win.UltraWinEditors.NumericType.Integer
+                                            : Infragistics.Win.UltraWinEditors.NumericType.Double;
+         }
+      }
+
       [Bindable(true)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public virtual string Label {
@@ -110,18 +115,24 @@ namespace XF.Controls
 
       //[Browsable(false)]
       [Bindable(true)]
-      public object Value
-      {
-         get 
-         {
-            return _numericEditor.Value;
+      public object Value {
+         get {
+            switch (_numericType.ToLower()) {
+               case "double":
+                  return double.Parse(_numericEditor.Value.ToString());
+               case "decimal":
+                  return decimal.Parse(_numericEditor.Value.ToString());
+               case "int":
+                  return int.Parse(_numericEditor.Value.ToString());
+               default:
+                  return _numericEditor.Value;
+            }
          }
-         set 
-         {
+         set {
             if (value == null) return;
             var toParse = value.ToString().Replace("_", "");
             InputValue = Convert.ToDecimal(toParse);
-            
+
             _valueLabel.Text = InputValue.ToString();
             _numericEditor.Value = InputValue;
          }
@@ -205,8 +216,7 @@ namespace XF.Controls
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public Mode ControlMode 
-      {
+      public Mode ControlMode {
          get {
             return _controlMode;
          }
@@ -218,18 +228,17 @@ namespace XF.Controls
 
       public bool ReadOnly { get; set; }
 
-      private void OnClicked(object sender, EventArgs e) 
-      {
+      private void OnClicked(object sender, EventArgs e) {
          _numericEditor.Focus();
       }
 
-      private void SetupControlMode() 
-      {
+      private void SetupControlMode() {
          if (ControlMode == Mode.View) {
             _valueLabel.Visible = true;
             _numericEditor.Visible = false;
             _requiredLabel.Visible = false;
-         } else if (ControlMode == Mode.Edit) {
+         }
+         else if (ControlMode == Mode.Edit) {
             _valueLabel.Visible = false;
             _numericEditor.Visible = true;
             _requiredLabel.Visible = _required;

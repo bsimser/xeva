@@ -95,6 +95,7 @@ namespace XF.Controls
          this._numericEditor.Name = "_numericEditor";
          this._numericEditor.Size = new System.Drawing.Size(215, 21);
          this._numericEditor.TabIndex = 6;
+         this._numericEditor.ValueChanged += new System.EventHandler(this.OnValueChanged);
          this._numericEditor.Click += new System.EventHandler(this.OnClicked);
          // 
          // _internalEdit

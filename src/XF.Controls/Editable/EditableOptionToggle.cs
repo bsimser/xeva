@@ -49,6 +49,11 @@ namespace XF.Controls {
          if (isInEdit) _internalEdit.BringToFront();
       }
 
+      public void SaveValue() {
+         InputValue = _optionToggle.CheckedItem.DisplayText;
+         _valueLabel.Text = _optionToggle.CheckedItem.DisplayText;
+      }
+
       public void ResetValue() {
          _optionToggle.CheckedIndex = 0;
       }
@@ -185,6 +190,12 @@ namespace XF.Controls {
             _controlMode = value;
             SetupControlMode();
          }
+      }
+
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public HAlign ValueHAlign {
+         get { return _valueLabel.Appearance.TextHAlign; }
+         set { _valueLabel.Appearance.TextHAlign = value; }
       }
 
       public bool ReadOnly { get; set; }

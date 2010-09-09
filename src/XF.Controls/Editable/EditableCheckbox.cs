@@ -7,17 +7,14 @@ using Infragistics.Win;
 using XF;
 using XF.UI.Smart;
 
-namespace XF.Controls
-{
+namespace XF.Controls {
    [ToolboxItem(true)]
-   public partial class EditableCheckbox : UserControl, IEditable
-   {
+   public partial class EditableCheckbox : UserControl, IEditable {
       private Color _validationColor;
       private bool _required;
       private Mode _controlMode;
 
-      public EditableCheckbox() 
-      {
+      public EditableCheckbox() {
          InitializeComponent();
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 
@@ -26,14 +23,12 @@ namespace XF.Controls
       }
 
       public event EventHandler EditClicked;
-      
-      private void EditableResize(object sender, EventArgs e)
-      {
+
+      private void EditableResize(object sender, EventArgs e) {
          SetControlPositions();
       }
 
-      private void SetControlPositions()
-      {
+      private void SetControlPositions() {
          int left = _label.Width + _label.Left + (ControlConstants.LABEL_TO_CONTROL_SPACING);
 
          var valueLabel = _valueLabel as Control;
@@ -42,53 +37,51 @@ namespace XF.Controls
 
          var checkboxValue = _checkboxValue as Control;
          checkboxValue.Left = left;
-         checkboxValue.Width = Width - left - (ControlConstants.CONTROL_PADDING);                     
-      }         
+         checkboxValue.Width = Width - left - (ControlConstants.CONTROL_PADDING);
+      }
 
-      private void SetupControlMode()
-      {
+      private void SetupControlMode() {
          if (ControlMode == Mode.View) {
             _valueLabel.Visible = true;
             _checkboxValue.Visible = false;
             _requiredLabel.Visible = false;
-         } else if (ControlMode == Mode.Edit) {
+         }
+         else if (ControlMode == Mode.Edit) {
             _valueLabel.Visible = false;
             _checkboxValue.Visible = true;
             _requiredLabel.Visible = _required;
          }
       }
 
-      public void SetToEdit(bool isInEdit)
-      {
+      public void SetToEdit(bool isInEdit) {
          ControlMode = isInEdit ? Mode.Edit : Mode.View;
       }
 
-      public void EnableEdit(bool isInEdit)
-      {
+      public void EnableEdit(bool isInEdit) {
          _internalEdit.Visible = isInEdit;
          if (isInEdit) _internalEdit.BringToFront();
       }
 
-      public void ResetValue()
-      {
+      public void SaveValue() {
+         InputValue = _checkboxValue.Checked;
+      }
+
+      public void ResetValue() {
          Value = InputValue;
       }
 
-      public object EditedValue
-      {
+      public object EditedValue {
          get { return Value; }
       }
 
-      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList)
-      {
+      public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList) {
          Label = controlLabel;
          Value = controlValue;
 
          return this;
       }
 
-      public Color ControlBackcolor
-      {
+      public Color ControlBackcolor {
          set { BackColor = value; }
       }
 
@@ -96,23 +89,20 @@ namespace XF.Controls
 
       public bool IsDirty { get; private set; }
 
-      private void OnValueChanged(object sender, EventArgs e) 
-      {
+      private void OnValueChanged(object sender, EventArgs e) {
          if (InputValue == _checkboxValue.Checked && !IsDirty) return;
 
          IsDirty = true;
-         
+
          _valueLabel.Text = ResolveBool(_checkboxValue.Checked);
       }
 
-      public void ShowError(string message) 
-      {
+      public void ShowError(string message) {
          _errorProvider.SetError(this, message);
          _checkboxValue.BackColor = _validationColor;
       }
 
-      public void ClearError() 
-      {
+      public void ClearError() {
          _errorProvider.Clear();
          _checkboxValue.ResetBackColor();
       }
@@ -165,9 +155,8 @@ namespace XF.Controls
          set { _label.Visible = value; }
       }
 
-      [Category(ControlConstants.PROPERTY_CATEGORY)]   
-      public bool Required
-      {
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public bool Required {
          set {
             _required = value;
             if (ControlMode == Mode.Edit)
@@ -200,15 +189,13 @@ namespace XF.Controls
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public HAlign LabelHAlign
-      {
+      public HAlign LabelHAlign {
          get { return _label.Appearance.TextHAlign; }
          set { _label.Appearance.TextHAlign = value; }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public HAlign ValueHAlign
-      {
+      public HAlign ValueHAlign {
          get { return _valueLabel.Appearance.TextHAlign; }
          set { _valueLabel.Appearance.TextHAlign = value; }
       }
@@ -216,23 +203,19 @@ namespace XF.Controls
       public bool ReadOnly { get; set; }
 
       [Bindable(true)]
-      public object Value 
-      {
-         get
-         {
+      public object Value {
+         get {
             return _checkboxValue.Checked;
-         }  
-         set
-         {
+         }
+         set {
             if (value == null) return;
-            InputValue = (bool) value;
+            InputValue = (bool)value;
             _valueLabel.Text = ResolveBool(InputValue);
             _checkboxValue.Checked = InputValue;
          }
       }
 
-      private string ResolveBool(bool inputValue)
-      {
+      private string ResolveBool(bool inputValue) {
          return inputValue ? "Yes" : "No";
       }
 
