@@ -48,6 +48,12 @@ namespace XF.Controls {
          PanelConfigured = true;
       }
 
+      public void BeginEdit() {
+         ResetControlVisability(false);
+         if (EditClicked != null)
+            EditClicked(this, new EventArgs());
+      }
+
       private void OnInternalEditClick(object sender, EventArgs e) {
          ResetControlVisability(false);
          if (EditClicked != null)
