@@ -13,6 +13,9 @@ namespace XF.Controls.Sandbox {
             case "Address":
                LaunchAddressControl();
                break;
+            case "Calculator":
+               LaunchCalculatorControl();
+               break;
          }
       }
 
@@ -25,6 +28,11 @@ namespace XF.Controls.Sandbox {
          control.Dock = DockStyle.Fill;
          _mainForm_Fill_Panel.Controls.Clear();
          _mainForm_Fill_Panel.Controls.Add(control);
+      }
+
+      private void LaunchCalculatorControl() {
+         var calc = new CalculatorSample();
+         calc.Show();
       }
    }
 }

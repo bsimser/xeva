@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Algorithm xmlns="http://tempuri.org/Algorithm.xsd">
+	<algorithmobject>
+		<step>
+			<computation>
+				<input name="Input1A" parameter="0" />
+				<input name="Input1B" parameter="1" />
+				<output>Output1</output>
+				<tool>
+					<toolName>Add</toolName>
+				</tool>
+			</computation>
+		</step>
+		<step>
+			<computation>
+				<input name="Input2A" parameter="0" />
+				<input name="Input2B" parameter="1" />
+				<output>Output2</output>
+				<tool>
+					<toolName>Multiply</toolName>
+				</tool>
+			</computation>
+		</step>
+		<step>
+			<computation>
+				<input name="Output1" parameter="0" />
+				<input name="Output2" parameter="1" />
+				<output>Output3</output>
+				<tool>
+					<toolName>Add</toolName>
+				</tool>
+			</computation>
+		</step>
+		<step>
+			<controlflow>
+				<input name="Output1" parameter="0" />
+				<input name="Output2" parameter="1" />
+				<output>CF1</output>
+				<tool>
+					<toolName>LE</toolName>
+				</tool>
+				<skipTo>Output5</skipTo>
+			</controlflow>
+		</step>
+		<step>
+			<computation>
+				<input name="Output3" parameter="0" />
+				<input name="Input4B" parameter="1" />
+				<output>Output4</output>
+				<tool>
+					<toolName>MultiplyByPercent</toolName>
+				</tool>
+			</computation>
+		</step>
+		<step>
+			<computation>
+				<input name="Output1" parameter="0" />
+				<input name="Output2" parameter="0" />
+				<input name="Output3" parameter="0" />
+				<output>Output5</output>
+				<tool>
+					<toolName>Add</toolName>
+				</tool>
+			</computation>
+		</step>
+		<step>			
+			<computation>
+				<input name="SumList" parameter="0" />
+				<output>SumTotal</output>
+				<tool>
+					<toolName>SumOfObjects</toolName>
+					<toolAddin>
+						<addinName>SomeAddin</addinName>
+						<addinNamespace>Model</addinNamespace>
+						<addinAssembly>Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</addinAssembly>
+					</toolAddin>
+				</tool>
+			</computation>
+			<comment>This is an example of an addin</comment>
+		</step>
+	</algorithmobject>
+</Algorithm>
+

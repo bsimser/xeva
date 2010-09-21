@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Algorithm"
+    targetNamespace="http://tempuri.org/Algorithm.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/Algorithm.xsd"
+    xmlns:mstns="http://tempuri.org/Algorithm.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- Type definitions -->
+	<xs:element name="algorithmobject">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="step" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:choice minOccurs="1">
+								<xs:element ref="computation" />
+								<xs:element ref="controlflow" />
+							</xs:choice>
+							<xs:element ref="mstns:comment" minOccurs="0" maxOccurs="1"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name='computation'>
+		<xs:complexType mixed='true'>
+			<xs:sequence>
+				<xs:element ref='input' minOccurs='1' maxOccurs="unbounded"/>
+				<xs:element ref='output' minOccurs='1' maxOccurs="1"/>
+				<xs:element ref='tool' minOccurs='1' maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name='controlflow'>
+		<xs:complexType mixed='true'>
+			<xs:sequence>
+				<xs:element ref='input' minOccurs='1' maxOccurs="unbounded"/>
+				<xs:element ref='output' minOccurs='1' maxOccurs="1"/>
+				<xs:element ref='tool' minOccurs='1' maxOccurs="1"/>
+				<xs:element ref='skipTo' minOccurs='1' maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name='input'>
+		<xs:complexType mixed='true'>
+			<xs:sequence>
+			</xs:sequence>
+			<xs:attribute name="name" use="required" />
+			<xs:attribute name="parameter" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name='output'>
+		<xs:simpleType>
+			<xs:restriction base='xs:string'>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name='skipTo'>
+		<xs:simpleType>
+			<xs:restriction base='xs:string'>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name="tool">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref='toolName' maxOccurs="1"/>
+				<xs:element ref='toolAddin' maxOccurs="1" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name='comment'>
+		<xs:simpleType>
+			<xs:restriction base='xs:string'>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name="toolName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="MultiplyByPercent"/>
+				<xs:enumeration value="SumOfObjects"/>
+				<xs:enumeration value="Add"/>
+				<xs:enumeration value="Multiply"/>
+				<xs:enumeration value="Subtract"/>
+				<xs:enumeration value="Divide"/>
+				<xs:enumeration value="Max"/>
+				<xs:enumeration value="Min"/>
+				<xs:enumeration value="GE"/>
+				<xs:enumeration value="GT"/>
+				<xs:enumeration value="LE"/>
+				<xs:enumeration value="LT"/>
+				<xs:enumeration value="EQ"/>
+				<xs:enumeration value="NE"/>
+				<xs:enumeration value="AND"/>
+				<xs:enumeration value="OR"/>
+				<xs:enumeration value="NOT"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name="toolAddin">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name='addinName' maxOccurs="1"/>
+				<xs:element name='addinNamespace' maxOccurs="1" minOccurs="0"/>
+				<xs:element name='addinAssembly' maxOccurs="1" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name='Algorithm'>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="algorithmobject" minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
