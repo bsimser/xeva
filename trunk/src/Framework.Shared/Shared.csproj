@@ -78,6 +78,19 @@
     <Compile Include="Action\IXFResults.cs" />
     <Compile Include="Action\IListMessage.cs" />
     <Compile Include="Action\ModelActionResults.cs" />
+    <Compile Include="Calculator\IToolKitAddin.cs" />
+    <Compile Include="Calculator\XFCalculator.cs" />
+    <Compile Include="Calculator\XFCalculatorException.cs" />
+    <Compile Include="Calculator\XFCalculatorFactory.cs" />
+    <Compile Include="Calculator\XFCalculatorInput.cs" />
+    <Compile Include="Calculator\XFCalculatorStep.cs" />
+    <Compile Include="Calculator\XFCalculatorTool.cs" />
+    <Compile Include="Calculator\XFCalculatorToolAddin.cs" />
+    <Compile Include="Calculator\XFCalculatorToolKit.cs" />
+    <Compile Include="Calculator\XFCalculatorVariable.cs" />
+    <Compile Include="Calculator\XFComputation.cs" />
+    <Compile Include="Calculator\XFControlFlow.cs" />
+    <Compile Include="Calculator\XFExecutionBase.cs" />
     <Compile Include="XFExtensions.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="ExpressionsHelper.cs" />
@@ -106,6 +119,12 @@
     <Compile Include="Validation\ValidationAttribute.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="XFDTOBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Calculator\Algorithm.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Calculator\Sample1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
