@@ -4,17 +4,20 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using Infragistics.Win;
+using Infragistics.Win.UltraWinEditors;
 using XF;
 using XF.UI.Smart;
 using Color = System.Drawing.Color;
 
 namespace XF.Controls {
-   public partial class EditableComboEditor : UserControl, IEditable {
+   public partial class EditableMaskedControl : UserControl, IEditable {
       private bool _required;
-      private object _nullValue;
       private Mode _controlMode;
+      private MaskedType _maskType;
+      private IMaskedType _maskImpl;
 
-      public EditableComboEditor() {
+
+      public EditableMaskedControl() {
          InitializeComponent();
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 
@@ -23,24 +26,24 @@ namespace XF.Controls {
          this.Resize += (EditableResize);
       }
 
+      public event EventHandler EditorButtonClicked;
       public event EventHandler EditClicked;
 
       private void SetupControlMode() {
          if (ControlMode == Mode.View) {
             _valueLabel.Visible = true;
-            _comboValue.Visible = false;
+            _maskedValue.Visible = false;
             _requiredLabel.Visible = false;
          }
          else if (ControlMode == Mode.Edit) {
             _valueLabel.Visible = false;
-            _comboValue.Visible = true;
+            _maskedValue.Visible = true;
             _requiredLabel.Visible = _required;
          }
       }
+
       public void SetToEdit(bool isInEdit) {
          ControlMode = isInEdit ? Mode.Edit : Mode.View;
-         if (ControlMode == Mode.Edit)
-            _comboValue.SelectedIndex = _comboValue.FindStringExact(InputValue);
       }
 
       public void EnableEdit(bool isInEdit) {
@@ -48,28 +51,19 @@ namespace XF.Controls {
          if (isInEdit) _internalEdit.BringToFront();
       }
 
+      public void SaveValue() {
+         InputValue = Value.ToString();
+      }
+
       public void ResetValue() {
          Value = InputValue;
       }
 
-      public void SaveValue() {
-         InputValue = _comboValue.SelectedItem.DisplayText;
-      }
-
       public object EditedValue {
-         get {
-            return _comboValue.SelectedItem != null ? _comboValue.SelectedItem.DataValue : Value;
-         }
+         get { return Value; }
       }
 
       public IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList) {
-         Label = controlLabel;
-         Value = controlValue;
-         DisplayMember = "Name";
-         ValueMember = "ID";
-         BindingSource = new BindingSource { DataSource = lookupList };
-         Bind();
-
          return this;
       }
 
@@ -84,61 +78,48 @@ namespace XF.Controls {
          valueLabel.Left = left;
          valueLabel.Width = Width - left - (ControlConstants.CONTROL_PADDING);
 
-         var comboValue = _comboValue as Control;
-         comboValue.Left = left;
-         comboValue.Width = Width - left - (ControlConstants.CONTROL_PADDING);
+         var maskedValue = _maskedValue as Control;
+         maskedValue.Left = left;
+         maskedValue.Width = Width - left - (ControlConstants.CONTROL_PADDING);
+      }
+
+      [Category(ControlConstants.PROPERTY_CATEGORY),
+       DefaultValue(MaskedType.ControlNum),
+       Description("Select a mask")]
+      public MaskedType MaskType {
+         get { return _maskType; }
+         set {
+            _maskType = value;
+            _maskImpl = MaskFactory.GetMaskImpl(value);
+         }
       }
 
       public string InputValue { get; private set; }
 
       public bool IsDirty { get; private set; }
 
-      public event EventHandler ValueChanged;
+      private void OnValueChanged(object sender, EventArgs e) {
+         if (_maskedValue.Value == null && !IsDirty) return;
 
-      public event EventHandler SelectionChanged;
-
-      private void OnSelectionChanged(object sender, EventArgs e) {
-         if (_comboValue.SelectedItem == null) return;
-
-         if (_comboValue.SelectedItem.DataValue == null && !IsDirty) return;
-
-         if (_comboValue.SelectedItem.DataValue == null && InputValue == null) {
+         if (_maskedValue.Value == null && string.IsNullOrEmpty(InputValue)) {
             IsDirty = false;
             _valueLabel.Text = string.Empty;
             return;
          }
 
          IsDirty = true;
-         _valueLabel.Text = _comboValue.SelectedItem.DisplayText;
-
-         if (SelectionChanged != null)
-            SelectionChanged(this, EventArgs.Empty);
-      }
-
-      public void OnValueChanged(object sender, EventArgs e) {
-         if (_comboValue.Value == null && !IsDirty) return;
-
-         if (_comboValue.Value == null && InputValue == null) {
-            IsDirty = false;
-            _valueLabel.Text = string.Empty;
-            return;
-         }
-
-         IsDirty = true;
-         _valueLabel.Text = _comboValue.Text;
-
-         if (ValueChanged != null)
-            ValueChanged(this, EventArgs.Empty);
+         var value = _maskedValue.Value != null ? _maskedValue.Value.ToString() : string.Empty;
+         _valueLabel.Text =  value;
       }
 
       public void ShowError(string message) {
          _errorProvider.SetError(this, message);
-         _comboValue.BackColor = ValidationColor;
+         _maskedValue.BackColor = ValidationColor;
       }
 
       public void ClearError() {
          _errorProvider.Clear();
-         _comboValue.ResetBackColor();
+         _maskedValue.ResetBackColor();
       }
 
       public Color ControlBackcolor {
@@ -176,12 +157,6 @@ namespace XF.Controls {
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public HAlign ValueHAlign {
-         get { return _valueLabel.Appearance.TextHAlign; }
-         set { _valueLabel.Appearance.TextHAlign = value; }
-      }
-
-      [Category(ControlConstants.PROPERTY_CATEGORY)]
       public Mode ControlMode {
          get {
             return _controlMode;
@@ -210,14 +185,14 @@ namespace XF.Controls {
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public HAlign EditorHorizontalAlignment {
-         get { return _comboValue.Appearance.TextHAlign; }
-         set { _comboValue.Appearance.TextHAlign = value; }
+         get { return _maskedValue.Appearance.TextHAlign; }
+         set { _maskedValue.Appearance.TextHAlign = value; }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public Font ComboEditorFont {
-         get { return _comboValue.Font; }
-         set { _comboValue.Font = value; }
+      public Font TextBoxFont {
+         get { return _maskedValue.Font; }
+         set { _maskedValue.Font = value; }
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
@@ -230,62 +205,47 @@ namespace XF.Controls {
       public Color ValidationColor { get; set; }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public string DisplayMember { get; set; }
+      public string InputFormat {
+         set { _maskedValue.InputMask = value; }
+      }
 
-      [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public string ValueMember { get; set; }
-
+      //[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
       [Bindable(true)]
-      [Browsable(false)]
       public object Value {
          get {
-            return _comboValue.SelectedItem != null ? _comboValue.SelectedItem.DataValue : NullValue;
+            return _maskImpl.ClearMask(_maskedValue.Text);
          }
          set {
-            InputValue = value != null ? value.ToString() : string.Empty;
-            _valueLabel.Text = InputValue;
-         }
-      }
+            _maskedValue.InputMask = _maskImpl.InputMask;
 
-      [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public object NullValue {
-         get {
-            return _nullValue;
-         }
-         set {
-            _nullValue = value;
-         }
-      }
+            if (value == null) return;
 
-      [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public string NullValueText {
-         get {
-            return _comboValue.NullText;
-         }
-         set {
-            _comboValue.NullText = value;
-         }
-      }
+            if (string.IsNullOrEmpty(value.ToString())) return;
 
-      public BindingSource BindingSource { set; private get; }
-
-      public void Bind() {
-         _comboValue.DataSource = BindingSource;
-         _comboValue.DisplayMember = DisplayMember;
-         _comboValue.ValueMember = ValueMember;
-         _comboValue.Value = null;
-         _comboValue.DataBind();
+            InputValue = value.ToString();
+            _maskedValue.Text = _maskImpl.CorrectedLength(InputValue);
+            _valueLabel.Text = _maskImpl.GetFormattedLabel(InputValue);
+         }
       }
 
       public bool ReadOnly { get; set; }
 
-      public void SetSelectedItem(string selection) {
-         _comboValue.SelectedIndex = _comboValue.FindStringExact(selection);
+      private void OnClick(object sender, EventArgs e) {
+
       }
 
-      public void ClearControl() {
-         _comboValue.SelectedItem = null;
-         _comboValue.DataSource = null;
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+      public EditorButtonsCollection ButtonsRight {
+         get {
+            return _maskedValue.ButtonsRight;
+         }
+      }
+
+      private void OnEditorButtonClick(object sender, EditorButtonEventArgs e) {
+         if (EditorButtonClicked != null) {
+            EditorButtonClicked(this, new EditorButtonEventArgs(e.Button, e.Context));
+         }
       }
 
       private void OnEditClick(object sender, EventArgs e) {

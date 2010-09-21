@@ -34,6 +34,7 @@
     <Reference Include="Infragistics2.Shared.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Infragistics2.Win.Misc.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Infragistics2.Win.UltraWinEditors.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics2.Win.UltraWinGrid.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
     <Reference Include="Infragistics2.Win.UltraWinMaskedEdit.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Infragistics2.Win.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Microsoft.VisualBasic" />
@@ -78,6 +79,7 @@
     <Compile Include="Editable\EditableDate.Designer.cs">
       <DependentUpon>EditableDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editable\EditableGridHelper.cs" />
     <Compile Include="Editable\EditableMaskedTextbox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -133,6 +135,19 @@
     <Compile Include="General\LabelControl.designer.cs">
       <DependentUpon>LabelControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Masked\BlankMaskType.cs" />
+    <Compile Include="Masked\EditableMaskedControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Masked\EditableMaskedControl.designer.cs">
+      <DependentUpon>EditableMaskedControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Masked\EINMaskType.cs" />
+    <Compile Include="Masked\IMaskedType.cs" />
+    <Compile Include="Masked\MaskedType.cs" />
+    <Compile Include="Masked\MaskFactory.cs" />
+    <Compile Include="Masked\PhoneMaskType.cs" />
+    <Compile Include="Masked\SSNMaskType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -203,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="General\LabelControl.resx">
       <DependentUpon>LabelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Masked\EditableMaskedControl.resx">
+      <DependentUpon>EditableMaskedControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
