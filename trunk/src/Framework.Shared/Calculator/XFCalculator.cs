@@ -62,7 +62,7 @@ namespace Model {
          }
       }
 
-      public void SkipForward(string tag) {
+      public void SkipTo(string tag) {
          if (string.IsNullOrEmpty(tag)) return;
          var skipIdx = _steps.FindIndex(_idx+1, step => step.Tag.Equals(tag));
          if (skipIdx == -1) return;
@@ -74,7 +74,7 @@ namespace Model {
          var pair = Step.Compute(_variables, _toolKit);
          _variables.Add(pair);
 
-         if (Step.Executor is XFControlFlow) SkipForward(pair.Value.ToString());
+         if (Step.Executor is XFControlFlow) SkipTo(pair.Value.ToString());
 
          return pair;
       }
