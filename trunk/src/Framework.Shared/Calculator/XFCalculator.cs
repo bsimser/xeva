@@ -64,13 +64,10 @@ namespace Model {
 
       public void SkipForward(string tag) {
          if (string.IsNullOrEmpty(tag)) return;
-
-         var skip = _steps.Find(step => step.Tag.Equals(tag));
-         if (skip != null) {
-            var skipIdx = _steps.IndexOf(skip);
-            if (skipIdx >= _idx)
-               _idx = _steps.IndexOf(skip) - 1;
-         }
+         var skipIdx = _steps.FindIndex(_idx+1, step => step.Tag.Equals(tag));
+         if (skipIdx == -1) return;
+         // decrement skipIdx so NextStep's _idx++ positions index on correct step
+         _idx = --skipIdx ;
       }
 
       public KeyValuePair<string, object> ExecuteStep() {
