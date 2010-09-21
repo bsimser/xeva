@@ -95,7 +95,7 @@ namespace XF.Controls {
          if (!string.IsNullOrEmpty(address2)) address.AppendLine(address2);
          address.Append(string.Format("{0}, {1} {2}", city, state, zip));
 
-         _valueLabel.Text = address.ToString();
+         _valueLabel.Text = address.Length > 5 ? address.ToString() : string.Empty;
       }
    }
 }

@@ -62,7 +62,6 @@ namespace XF.Controls {
 
       private void OnCancelClick(object sender, EventArgs e) {
          CancelPanelEdit(true);
-         _internalEdit.Visible = true;
          if (CancelClicked != null)
             CancelClicked(this, new EventArgs());
       }
@@ -71,7 +70,6 @@ namespace XF.Controls {
          if (!_registry.Validate()) return;
 
          SavePanelEdit(true);
-         _internalEdit.Visible = true;
          if (SaveClicked != null)
             SaveClicked(this, new EventArgs());
       }
@@ -85,15 +83,6 @@ namespace XF.Controls {
          _toolTip.SetToolTip(_internalSave, "Save");
          _toolTip.SetToolTip(_internalCancel, "Cancel");
       }
-
-      //private void SetPanelToWait(bool isWaitingEdit) {
-      //   ResetControlVisability(isWaitingEdit);
-      //   _registry.RegisteredControls.ForEach(cnt => {
-      //      cnt.SetToEdit(!isWaitingEdit);
-      //                                                 cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;});
-      //   _registry.EditControls.ForEach(cnt => {cnt.EnableEdit(!isWaitingEdit);
-      //                                          cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;});
-      //}
 
       private void SavePanelEdit(bool isWaitingEdit) {
          _registry.RegisteredControls.ForEach(cnt => cnt.SaveValue());
@@ -109,7 +98,7 @@ namespace XF.Controls {
 
       private void ResetControlVisability(bool isWaitingEdit) {
          _internalBox.BackColor = isWaitingEdit ? Parent.BackColor : Color.LightYellow;
-         _internalEdit.Visible = isWaitingEdit;
+         _internalEdit.Visible = Editable ? isWaitingEdit : false;
          _internalSave.Visible = !isWaitingEdit;
          _internalCancel.Visible = !isWaitingEdit;
          _registry.RegisteredControls.ForEach(cnt => {
