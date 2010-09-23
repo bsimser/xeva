@@ -90,6 +90,7 @@
 			<xs:restriction base="xs:string">
 				<xs:enumeration value="MultiplyByPercent"/>
 				<xs:enumeration value="SumOfObjects"/>
+				<xs:enumeration value="CopyObject"/>
 				<xs:enumeration value="Add"/>
 				<xs:enumeration value="Multiply"/>
 				<xs:enumeration value="Subtract"/>

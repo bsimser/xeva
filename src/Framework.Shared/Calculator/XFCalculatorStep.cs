@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Model {
+namespace XF {
    [XmlRoot("step")]
    public class XFCalculatorStep {
       public string Tag {

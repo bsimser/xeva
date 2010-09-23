@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Model {
+namespace XF {
    public class XFCalculatorToolKit {
       private readonly IDictionary<string, MethodInfo> _tools = new Dictionary<string, MethodInfo>();
       private readonly IDictionary<string, object> _addins = new Dictionary<string, object>();

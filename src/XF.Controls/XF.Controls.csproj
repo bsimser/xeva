@@ -129,11 +129,24 @@
     <Compile Include="General\AddressControl.designer.cs">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="General\DropdownSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="General\DropdownSelector.Designer.cs">
+      <DependentUpon>DropdownSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\DropdownButtonDrawFilter.cs" />
     <Compile Include="General\LabelControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="General\LabelControl.designer.cs">
       <DependentUpon>LabelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\PlaceHolderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="General\PlaceHolderControl.designer.cs">
+      <DependentUpon>PlaceHolderControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Masked\BlankMaskType.cs" />
     <Compile Include="Masked\EditableMaskedControl.cs">
@@ -216,8 +229,14 @@
     <EmbeddedResource Include="General\AddressControl.resx">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="General\DropdownSelector.resx">
+      <DependentUpon>DropdownSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="General\LabelControl.resx">
       <DependentUpon>LabelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\PlaceHolderControl.resx">
+      <DependentUpon>PlaceHolderControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Masked\EditableMaskedControl.resx">
       <DependentUpon>EditableMaskedControl.cs</DependentUpon>
@@ -253,6 +272,7 @@
     <None Include="Resources\loader.gif" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\XF.LookupMessage.datasource" />
     <None Include="Resources\trash_16.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

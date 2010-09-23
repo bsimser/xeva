@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace Model {
+namespace XF {
    [XmlRoot("Input")]
    public class XFCalculatorInput {
       [XmlAttribute(AttributeName = "name", DataType = "string")]

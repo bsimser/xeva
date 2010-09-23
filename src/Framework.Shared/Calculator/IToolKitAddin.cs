@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Model {
+namespace XF {
    public interface IToolKitAddin {
       MethodInfo GetMethodByName(string name);
    }

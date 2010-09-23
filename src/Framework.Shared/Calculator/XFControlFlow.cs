@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Model {
+namespace XF {
    [XmlRoot("controlflow")]
    public class XFControlFlow : XFExecutionBase {
       public override object Execute(XFCalculatorToolKit toolKit, IDictionary<string, object> variables) {

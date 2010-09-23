@@ -18,7 +18,6 @@ namespace XF.Controls {
          DoubleBuffered = true;
       }
 
-
       [DefaultValue(false)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public bool HotTrack {

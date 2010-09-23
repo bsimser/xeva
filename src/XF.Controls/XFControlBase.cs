@@ -16,8 +16,8 @@ namespace XF.Controls {
 
       public XFControlBase() {
          InitializeComponent();
-         this.AutoScaleMode = AutoScaleMode.Inherit;
-         this.Resize += new EventHandler(InputControlBase_Resize);
+         AutoScaleMode = AutoScaleMode.Inherit;
+         Resize += InputControlBase_Resize;
       }
 
       public event EventHandler ValueChanged;
@@ -69,6 +69,12 @@ namespace XF.Controls {
          set { }
       }
 
+      protected Control LabelControl {
+         get {
+            return _label;
+         }
+      }
+
       protected virtual bool LabelBold {
          get { return _label.Appearance.FontData.Bold == DefaultableBoolean.True ? true : false; }
          set { _label.Appearance.FontData.Bold = value ? DefaultableBoolean.True : DefaultableBoolean.False; }
@@ -91,7 +97,7 @@ namespace XF.Controls {
       private void InputControlBase_Resize(object sender, EventArgs e) {
          if (_control == null)
             return;
-         this.SetEditorControlPosition();
+         SetEditorControlPosition();
       }
 
       protected virtual void OnValueChanged() {
@@ -100,15 +106,10 @@ namespace XF.Controls {
       }
 
       protected virtual void SetEditorControlPosition() {
-         if (_control == null)
-            return;
+         if (_control == null) return;
 
-         int left =
-            _label.Width + _label.Left + (ControlConstants.LABEL_TO_CONTROL_SPACING);
-
-         _control.Left = left;
-
-         _control.Width = this.Width - left - (ControlConstants.CONTROL_PADDING);
+         _control.Left = _label.Width + _label.Left + (ControlConstants.LABEL_TO_CONTROL_SPACING); ;
+         _control.Width = Width - _control.Left - (ControlConstants.CONTROL_PADDING);
       }
 
       protected void SetLabelStyle(string styleSetName) {

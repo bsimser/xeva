@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Model {
+namespace XF {
    [XmlRoot("Algorithm", Namespace = "http://tempuri.org/Algorithm.xsd")]
    public class XFCalculator {
       private readonly IDictionary<string, object> _results = new Dictionary<string, object>();
+
+      [XmlAttribute(AttributeName = "name", DataType = "string")]
+      public string Name { get; set; }
 
       [XmlElement("algorithmobject", Type = typeof(Algorithm))]
       public Algorithm Algorithm { get; set; }
