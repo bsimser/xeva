@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Model {
+namespace XF {
    public abstract class XFExecutionBase {
       private List<XFCalculatorInput> _inputs = new List<XFCalculatorInput>();
 

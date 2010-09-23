@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Model {
+namespace XF {
    public class XFCalculatorVariable {
       private readonly IDictionary<string, object> _variables = new Dictionary<string, object>();
 

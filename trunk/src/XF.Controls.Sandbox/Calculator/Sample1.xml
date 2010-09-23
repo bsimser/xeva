@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Algorithm xmlns="http://tempuri.org/Algorithm.xsd">
+<Algorithm xmlns="http://tempuri.org/Algorithm.xsd" name="Sample">
 	<algorithmobject>
 		<step>
 			<computation>

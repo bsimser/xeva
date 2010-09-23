@@ -1,6 +1,6 @@
 using System.Xml.Serialization;
 
-namespace Model {
+namespace XF {
    [XmlRoot("ToolAddin")]
    public class XFCalculatorToolAddin {
       [XmlElement("addinName")]

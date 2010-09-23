@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace Model {
+namespace XF {
    public sealed class XFCalculatorFactory {
       public static XFCalculator BuildCalculator(string calcPath, XFCalculatorVariable input) {
          var serializer = new XmlSerializer(typeof(XFCalculator));
