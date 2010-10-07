@@ -34,6 +34,10 @@ namespace XF.Controls {
          var buttonLabel = !string.IsNullOrEmpty(label) ? string.Format("[{0}]", label.ToLower()) : string.Empty;
          row.Cells[colName].Value = buttonLabel;
       }
+
+      public static void CreateAddRow(UltraGrid grid) {
+         grid.DisplayLayout.Bands[0].AddNew();
+      }
    }
 
    public enum GridButton {
