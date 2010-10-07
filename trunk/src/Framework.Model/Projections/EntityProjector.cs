@@ -162,8 +162,15 @@ namespace XF.Model {
          if (_criteriaParameters.IsEmpty())
             _references.ForEach(refpart => refpart.SetPartParameters(query));
          else
-            foreach (var criterion in _criteriaParameters)
-               query.SetParameter(criterion.Key, criterion.Value);
+            foreach (var criterion in _criteriaParameters) {
+               if (criterion.Value.GetType().GetInterface("IList") != null)
+                  if (((IList)criterion.Value).Count > 0) // Note: this check ensures that no exception will be thrown if the input list is empty.
+                     query.SetParameterList(criterion.Key, (IList)criterion.Value);
+                  else
+                     query.SetParameter(criterion.Key, DBNull.Value);
+               else
+                  query.SetParameter(criterion.Key, criterion.Value);
+            }
       }
 
       private void CreateOutputProjections(IEnumerable enumerable) {
