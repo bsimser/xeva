@@ -58,11 +58,31 @@ namespace XF.Model {
          return _mapper;
       }
 
+      public TMapper GE(object value) {
+         if (string.IsNullOrEmpty(value.ToString())) return _mapper;
+
+         var paramName = SetParameterName(_propertyName);
+         var criteria = string.Format("{0} >= :{1} ", _criteria, paramName);
+         UpdateExpression(value, paramName, criteria);
+
+         return _mapper;
+      }
+
       public TMapper LT(object value) {
          if (string.IsNullOrEmpty(value.ToString())) return _mapper;
 
          var paramName = SetParameterName(_propertyName);
          var criteria = string.Format("{0} < :{1} ", _criteria, paramName);
+         UpdateExpression(value, paramName, criteria);
+
+         return _mapper;
+      }
+
+      public TMapper LE(object value) {
+         if (string.IsNullOrEmpty(value.ToString())) return _mapper;
+
+         var paramName = SetParameterName(_propertyName);
+         var criteria = string.Format("{0} <= :{1} ", _criteria, paramName);
          UpdateExpression(value, paramName, criteria);
 
          return _mapper;
