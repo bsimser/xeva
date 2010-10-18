@@ -5,9 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Infragistics.Win.UltraWinEditors;
-using XF;
 using XF.UI.Smart;
-using Color = System.Drawing.Color;
 
 namespace XF.Controls {
    public partial class EditableMaskedControl : UserControl, IEditable {
@@ -19,26 +17,28 @@ namespace XF.Controls {
 
       public EditableMaskedControl() {
          InitializeComponent();
-         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+         AutoScaleMode = AutoScaleMode.Inherit;
 
          ControlMode = Mode.View;
 
-         this.Resize += (EditableResize);
+         Resize += (EditableResize);
       }
 
       public event EventHandler EditorButtonClicked;
       public event EventHandler EditClicked;
 
       private void SetupControlMode() {
-         if (ControlMode == Mode.View) {
-            _valueLabel.Visible = true;
-            _maskedValue.Visible = false;
-            _requiredLabel.Visible = false;
-         }
-         else if (ControlMode == Mode.Edit) {
-            _valueLabel.Visible = false;
-            _maskedValue.Visible = true;
-            _requiredLabel.Visible = _required;
+         switch (ControlMode) {
+            case Mode.View:
+               _valueLabel.Visible = true;
+               _maskedValue.Visible = false;
+               _requiredLabel.Visible = false;
+               break;
+            case Mode.Edit:
+               _valueLabel.Visible = false;
+               _maskedValue.Visible = true;
+               _requiredLabel.Visible = _required;
+               break;
          }
       }
 
@@ -109,7 +109,7 @@ namespace XF.Controls {
 
          IsDirty = true;
          var value = _maskedValue.Value != null ? _maskedValue.Value.ToString() : string.Empty;
-         _valueLabel.Text =  value;
+         _valueLabel.Text = value;
       }
 
       public void ShowError(string message) {
@@ -158,9 +158,7 @@ namespace XF.Controls {
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public Mode ControlMode {
-         get {
-            return _controlMode;
-         }
+         get { return _controlMode; }
          set {
             _controlMode = value;
             SetupControlMode();
@@ -212,9 +210,7 @@ namespace XF.Controls {
       //[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
       [Bindable(true)]
       public object Value {
-         get {
-            return _maskImpl.ClearMask(_maskedValue.Text);
-         }
+         get { return _maskImpl.ClearMask(_maskedValue.Text); }
          set {
             _maskedValue.InputMask = _maskImpl.InputMask;
 
@@ -230,16 +226,10 @@ namespace XF.Controls {
 
       public bool ReadOnly { get; set; }
 
-      private void OnClick(object sender, EventArgs e) {
-
-      }
-
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
       public EditorButtonsCollection ButtonsRight {
-         get {
-            return _maskedValue.ButtonsRight;
-         }
+         get { return _maskedValue.ButtonsRight; }
       }
 
       private void OnEditorButtonClick(object sender, EditorButtonEventArgs e) {

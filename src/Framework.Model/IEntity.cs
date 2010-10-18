@@ -6,5 +6,6 @@ namespace XF.Model
    {
       Guid ID { get; set; }
       int Version { get; set; }
+      Entity Clone();
    }
 }
