@@ -43,5 +43,9 @@ namespace XF.Model
       }
 
       public virtual void Validate(ValidationResult validationResults) {}
+
+      public virtual Entity Clone() {
+         return default(Entity);
+      }
    }
 }
