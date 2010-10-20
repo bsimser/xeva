@@ -91,8 +91,6 @@
     <Compile Include="Calculator\XFComputation.cs" />
     <Compile Include="Calculator\XFControlFlow.cs" />
     <Compile Include="Calculator\XFExecutionBase.cs" />
-    <Compile Include="Clone\CopyMethod.cs" />
-    <Compile Include="Clone\EntityCloneAttribute.cs" />
     <Compile Include="LookupMessage.cs" />
     <Compile Include="XFExtensions.cs" />
     <Compile Include="EventArgs.cs" />

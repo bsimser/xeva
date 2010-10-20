@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="Action\ModelAction.cs" />
     <Compile Include="Action\ModelActionParameter.cs" />
+    <Compile Include="Clone\CloningTool.cs" />
+    <Compile Include="Clone\ModelCopyAttribute.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Exceptions\StoreClosedException.cs" />
