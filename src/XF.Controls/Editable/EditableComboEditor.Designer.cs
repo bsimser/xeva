@@ -88,6 +88,7 @@
          this._comboValue.TabIndex = 9;
          this._comboValue.SelectionChanged += new System.EventHandler(this.OnSelectionChanged);
          this._comboValue.ValueChanged += new System.EventHandler(this.OnValueChanged);
+         this._comboValue.BeforeDropDown += new System.ComponentModel.CancelEventHandler(this.OnControlDroppingDown);
          // 
          // _errorProvider
          // 

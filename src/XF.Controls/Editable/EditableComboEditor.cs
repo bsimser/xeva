@@ -24,6 +24,9 @@ namespace XF.Controls {
       }
 
       public event EventHandler EditClicked;
+      public event EventHandler DroppingDown;
+      public event EventHandler ValueChanged;
+      public event EventHandler SelectionChanged;
 
       private void SetupControlMode() {
          if (ControlMode == Mode.View) {
@@ -92,10 +95,6 @@ namespace XF.Controls {
       public string InputValue { get; private set; }
 
       public bool IsDirty { get; private set; }
-
-      public event EventHandler ValueChanged;
-
-      public event EventHandler SelectionChanged;
 
       private void OnSelectionChanged(object sender, EventArgs e) {
          if (_comboValue.SelectedItem == null) return;
@@ -267,7 +266,13 @@ namespace XF.Controls {
          }
       }
 
-      public BindingSource BindingSource { set; private get; }
+      private BindingSource _bindingSource;
+
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public BindingSource BindingSource {
+         get { return _bindingSource; }
+         set { _bindingSource = value; }
+      }
 
       public void Bind() {
          _comboValue.DataSource = BindingSource;
@@ -291,6 +296,11 @@ namespace XF.Controls {
       private void OnEditClick(object sender, EventArgs e) {
          if (EditClicked != null)
             EditClicked(this, new EventArgs());
+      }
+
+      private void OnControlDroppingDown(object sender, CancelEventArgs e) {
+         if (DroppingDown != null)
+            DroppingDown(this, new EventArgs());
       }
    }
 }
