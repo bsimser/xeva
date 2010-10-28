@@ -249,5 +249,9 @@ namespace XF.Controls {
          if (EditClicked != null)
             EditClicked(this, new EventArgs());
       }
+
+      private void OnEnter(object sender, EventArgs e) {
+         _numericEditor.SelectAll();
+      }
    }
 }

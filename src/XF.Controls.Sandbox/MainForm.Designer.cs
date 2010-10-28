@@ -31,10 +31,12 @@
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool1 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Address");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool3 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Embedable Label");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool7 = new Infragistics.Win.UltraWinToolbars.ButtonTool("DropDownButton");
+         Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool9 = new Infragistics.Win.UltraWinToolbars.ButtonTool("CurrencyEditor");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool2 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Address");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool4 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Embedable Label");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool6 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Calculator");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool8 = new Infragistics.Win.UltraWinToolbars.ButtonTool("DropDownButton");
+         Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool10 = new Infragistics.Win.UltraWinToolbars.ButtonTool("CurrencyEditor");
          this._mainForm_Fill_Panel = new System.Windows.Forms.Panel();
          this._MainForm_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
          this._MainForm_Toolbars_Dock_Area_Right = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
@@ -116,18 +118,21 @@
          popupMenuTool2.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool1,
             buttonTool3,
-            buttonTool7});
+            buttonTool7,
+            buttonTool9});
          buttonTool2.SharedProps.Caption = "Address";
          buttonTool4.SharedProps.Caption = "Embedable Label";
          buttonTool6.SharedProps.Caption = "Calculator";
          buttonTool6.SharedProps.DisplayStyle = Infragistics.Win.UltraWinToolbars.ToolDisplayStyle.TextOnlyAlways;
          buttonTool8.SharedProps.Caption = "Drop Down Button";
+         buttonTool10.SharedProps.Caption = "Currency Editor";
          this._toolbars.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             popupMenuTool2,
             buttonTool2,
             buttonTool4,
             buttonTool6,
-            buttonTool8});
+            buttonTool8,
+            buttonTool10});
          this._toolbars.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.OnToolClick);
          // 
          // MainForm

@@ -48,6 +48,10 @@ namespace XF.Controls {
          PanelConfigured = true;
       }
 
+      public void Clear() {
+         _registry.RegisteredControls.ForEach(cntrl => cntrl.Value = null);
+      }
+
       public void BeginEdit() {
          ResetControlVisability(false);
          if (EditClicked != null)

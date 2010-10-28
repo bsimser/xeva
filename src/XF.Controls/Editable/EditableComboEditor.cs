@@ -56,6 +56,7 @@ namespace XF.Controls {
       }
 
       public void SaveValue() {
+         if(_comboValue.SelectedItem == null) return;
          InputValue = _comboValue.SelectedItem.DisplayText;
       }
 
