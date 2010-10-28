@@ -21,7 +21,16 @@ namespace XF.Controls.Sandbox {
             case "Calculator":
                LaunchCalculatorControl();
                break;
+            case "CurrencyEditor":
+               LaunchCurrencyEditor();
+               break;
          }
+      }
+
+      private void LaunchCurrencyEditor() {
+         var control = new EditableCurrencyEditor();
+         control.SetToEdit(true);
+         LoadControlImpl(control);
       }
 
       private void LaunchAddressControl() {

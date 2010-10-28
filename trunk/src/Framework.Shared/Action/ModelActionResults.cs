@@ -12,13 +12,24 @@ namespace XF {
          Message = message;
       }
 
+      public ModelActionResults(XFResultCode resultCode, string message, object data) {
+         ResultCode = resultCode;
+         Message = message;
+         Data = data;
+      }
+
       public XFResultCode ResultCode { get; set; }
       public string Message { get; set; }
       public string ErrorContent { get; set; }
       public object Data { get; set; }
 
       public static IXFResults SuccessfulAction(string message) {
-         return new ModelActionResults { ResultCode = XFResultCode.Success, Message = "Action aborted null input" };
+         return new ModelActionResults { ResultCode = XFResultCode.Success, Message = "Action completed normally" };
+      }
+
+      public static IXFResults InvalidStateTransition(string stateType) {
+         return new ModelActionResults
+                {ResultCode = XFResultCode.Failure, Message = string.Format("Unable to transition to specified state: {0}", stateType)};
       }
 
       public static IXFResults NullInputResult {

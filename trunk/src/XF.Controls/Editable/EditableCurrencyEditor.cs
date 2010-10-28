@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using Infragistics.Win;
+using Infragistics.Win.UltraWinEditors;
 using XF;
 using XF.UI.Smart;
 
@@ -227,6 +228,10 @@ namespace XF.Controls {
       private void OnEditClick(object sender, EventArgs e) {
          if (EditClicked != null)
             EditClicked(this, new EventArgs());
+      }
+
+      private void OnEnterControl(object sender, EventArgs e) {
+         _currencyEditor.SelectAll();
       }
    }
 }

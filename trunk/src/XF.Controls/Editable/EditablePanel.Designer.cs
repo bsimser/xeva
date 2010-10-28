@@ -61,6 +61,7 @@
          this._internalEdit.ShowOutline = false;
          this._internalEdit.Size = new System.Drawing.Size(21, 22);
          this._internalEdit.TabIndex = 1;
+         this._internalEdit.TabStop = false;
          this._internalEdit.UseAppStyling = false;
          this._internalEdit.UseOsThemes = Infragistics.Win.DefaultableBoolean.False;
          this._internalEdit.Click += new System.EventHandler(this.OnInternalEditClick);
@@ -77,6 +78,7 @@
          this._internalCancel.ShowOutline = false;
          this._internalCancel.Size = new System.Drawing.Size(25, 24);
          this._internalCancel.TabIndex = 3;
+         this._internalCancel.TabStop = false;
          this._internalCancel.UseAppStyling = false;
          this._internalCancel.UseOsThemes = Infragistics.Win.DefaultableBoolean.False;
          this._internalCancel.Visible = false;
@@ -96,6 +98,7 @@
          this._internalSave.ShowOutline = false;
          this._internalSave.Size = new System.Drawing.Size(25, 24);
          this._internalSave.TabIndex = 0;
+         this._internalSave.TabStop = false;
          this._internalSave.UseAppStyling = false;
          this._internalSave.UseOsThemes = Infragistics.Win.DefaultableBoolean.False;
          this._internalSave.Visible = false;

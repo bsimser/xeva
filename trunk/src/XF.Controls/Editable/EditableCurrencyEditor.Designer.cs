@@ -91,8 +91,9 @@
          this._currencyEditor.MaskInput = "{currency:9.2}";
          this._currencyEditor.Name = "_currencyEditor";
          this._currencyEditor.Size = new System.Drawing.Size(215, 21);
-         this._currencyEditor.TabIndex = 6;
+         this._currencyEditor.TabIndex = 0;
          this._currencyEditor.ValueChanged += new System.EventHandler(this.OnValueChanged);
+         this._currencyEditor.Enter += new System.EventHandler(this.OnEnterControl);
          this._currencyEditor.Click += new System.EventHandler(this.OnClicked);
          // 
          // _errorProvider
@@ -112,6 +113,7 @@
          this._internalEdit.ShowOutline = false;
          this._internalEdit.Size = new System.Drawing.Size(21, 22);
          this._internalEdit.TabIndex = 7;
+         this._internalEdit.TabStop = false;
          this._internalEdit.UseAppStyling = false;
          this._internalEdit.UseOsThemes = Infragistics.Win.DefaultableBoolean.False;
          this._internalEdit.Visible = false;

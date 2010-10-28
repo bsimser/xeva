@@ -93,9 +93,11 @@ namespace XF.Controls
          // 
          this._numericEditor.Location = new System.Drawing.Point(109, 0);
          this._numericEditor.Name = "_numericEditor";
+         this._numericEditor.PromptChar = ' ';
          this._numericEditor.Size = new System.Drawing.Size(215, 21);
          this._numericEditor.TabIndex = 6;
          this._numericEditor.ValueChanged += new System.EventHandler(this.OnValueChanged);
+         this._numericEditor.Enter += new System.EventHandler(this.OnEnter);
          this._numericEditor.Click += new System.EventHandler(this.OnClicked);
          // 
          // _internalEdit
