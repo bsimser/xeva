@@ -58,6 +58,10 @@ namespace XF.Controls {
             EditClicked(this, new EventArgs());
       }
 
+      public void ShowCancel(bool showCancel) {
+         _internalCancel.Visible = showCancel;
+      }
+
       private void OnInternalEditClick(object sender, EventArgs e) {
          ResetControlVisability(false);
          if (EditClicked != null)
@@ -74,6 +78,7 @@ namespace XF.Controls {
          if (!_registry.Validate()) return;
 
          SavePanelEdit(true);
+         base.TabIndex = 0;
          if (SaveClicked != null)
             SaveClicked(this, new EventArgs());
       }
