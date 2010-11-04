@@ -97,7 +97,7 @@
          this._internalSave.Name = "_internalSave";
          this._internalSave.ShowOutline = false;
          this._internalSave.Size = new System.Drawing.Size(25, 24);
-         this._internalSave.TabIndex = 0;
+         this._internalSave.TabIndex = 99;
          this._internalSave.UseAppStyling = false;
          this._internalSave.UseOsThemes = Infragistics.Win.DefaultableBoolean.False;
          this._internalSave.Visible = false;

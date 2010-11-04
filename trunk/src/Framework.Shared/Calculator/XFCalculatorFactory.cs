@@ -16,5 +16,19 @@ namespace XF {
             throw new XFCalculatorException("Unable to build calculator", ex);
          }         
       }
+
+      public static XFCalculator BuildCalculator(StringReader reader, XFCalculatorVariable input) {
+         var serializer = new XmlSerializer(typeof(XFCalculator));
+         try {
+            var calculator = serializer.Deserialize(reader) as XFCalculator;
+            calculator.Initialize(input, new XFCalculatorToolKit());
+
+            return calculator;
+         }
+         catch (Exception ex) {
+            throw new XFCalculatorException("Unable to build calculator", ex);
+         }
+      }
+
    }
 }

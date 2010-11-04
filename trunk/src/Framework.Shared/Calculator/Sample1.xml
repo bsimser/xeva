@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Algorithm xmlns="http://tempuri.org/Algorithm.xsd">
+<XFCalculator xmlns="http://tempuri.org/XFCalculator.xsd">
 	<algorithmobject>
 		<step>
 			<computation>
@@ -79,5 +79,5 @@
 			<comment>This is an example of an addin</comment>
 		</step>
 	</algorithmobject>
-</Algorithm>
+</XFCalculator>
 

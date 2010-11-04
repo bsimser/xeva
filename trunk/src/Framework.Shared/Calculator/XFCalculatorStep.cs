@@ -4,6 +4,12 @@ using System.Xml.Serialization;
 namespace XF {
    [XmlRoot("step")]
    public class XFCalculatorStep {
+      [XmlAttribute(AttributeName = "name", DataType = "string")]
+      public string Name { get; set; }
+
+      [XmlAttribute(AttributeName = "can-exclude", DataType = "boolean")]
+      public bool CanExclude { get; set; }
+
       public string Tag {
          get { return Executor != null ? Executor.Output : string.Empty; }
       }

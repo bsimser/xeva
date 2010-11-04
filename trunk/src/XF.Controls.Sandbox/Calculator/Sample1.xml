@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Algorithm xmlns="http://tempuri.org/Algorithm.xsd" name="Sample">
+<XFCalculator xmlns="http://tempuri.org/XFCalculator.xsd" name="Sample">
 	<algorithmobject>
 		<step>
 			<computation>
@@ -64,5 +64,5 @@
 			</computation>
 		</step>
 	</algorithmobject>
-</Algorithm>
+</XFCalculator>
 
