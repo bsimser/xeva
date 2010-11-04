@@ -24,6 +24,9 @@ namespace XF.Controls.Sandbox {
             case "CurrencyEditor":
                LaunchCurrencyEditor();
                break;
+            case "EditablePanel":
+               LaunchEditablePanel();
+               break;
          }
       }
 
@@ -56,6 +59,11 @@ namespace XF.Controls.Sandbox {
       private void LaunchCalculatorControl() {
          var calc = new CalculatorSample();
          calc.Show();
+      }
+
+      private void LaunchEditablePanel() {
+         var panel = new EditablePanel {Editable = true, Dock = DockStyle.Fill};
+         LoadControlImpl(panel);
       }
    }
 }

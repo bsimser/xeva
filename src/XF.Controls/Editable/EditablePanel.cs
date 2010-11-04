@@ -75,7 +75,7 @@ namespace XF.Controls {
       }
 
       private void OnSaveClick(object sender, EventArgs e) {
-         if (!_registry.Validate()) return;
+         if (_registry == null || !_registry.Validate()) return;
 
          SavePanelEdit(true);
          base.TabIndex = 0;
@@ -94,12 +94,16 @@ namespace XF.Controls {
       }
 
       private void SavePanelEdit(bool isWaitingEdit) {
+         if (_registry == null) return;
+
          _registry.RegisteredControls.ForEach(cnt => cnt.SaveValue());
          _registry.EditControls.ForEach(cnt => cnt.SaveValue());
          ResetControlVisability(isWaitingEdit);
       }
 
       private void CancelPanelEdit(bool isWaitingEdit) {
+         if(_registry == null) return;
+
          _registry.RegisteredControls.ForEach(cnt => cnt.ResetValue());
          _registry.EditControls.ForEach(cnt => cnt.ResetValue());
          ResetControlVisability(isWaitingEdit);
@@ -110,6 +114,7 @@ namespace XF.Controls {
          _internalEdit.Visible = Editable ? isWaitingEdit : false;
          _internalSave.Visible = !isWaitingEdit;
          _internalCancel.Visible = !isWaitingEdit;
+         if(_registry == null) return;
          _registry.RegisteredControls.ForEach(cnt => {
             cnt.SetToEdit(!isWaitingEdit);
             cnt.ControlBackcolor = !isWaitingEdit ? Color.LightYellow : Parent.BackColor;

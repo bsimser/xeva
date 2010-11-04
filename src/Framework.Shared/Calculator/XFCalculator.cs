@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace XF {
-   [XmlRoot("Algorithm", Namespace = "http://tempuri.org/Algorithm.xsd")]
+   [XmlRoot("XFCalculator", Namespace = "http://tempuri.org/XFCalculator.xsd")]
    public class XFCalculator {
       private readonly IDictionary<string, object> _results = new Dictionary<string, object>();
 
