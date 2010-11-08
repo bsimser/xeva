@@ -17,6 +17,10 @@ namespace XF {
          Algorithm.ToolKit = toolKit;
       }
 
+      public void RemoveExcludedStep(string stepName) {
+         Algorithm.RemoveStep(stepName);
+      }
+
       public IDictionary<string, object> Run() {
          while (Algorithm.NextStep) {
             var stepResult = Algorithm.ExecuteStep();
@@ -80,6 +84,10 @@ namespace XF {
          if (Step.Executor is XFControlFlow) SkipTo(pair.Value.ToString());
 
          return pair;
+      }
+
+      public void RemoveStep(string stepName) {
+         _steps.RemoveAll(m => m.Name == stepName);
       }
    }
 }
