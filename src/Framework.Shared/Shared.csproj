@@ -81,9 +81,11 @@
     <Compile Include="Action\ModelActionResults.cs" />
     <Compile Include="Calculator\IToolKitAddin.cs" />
     <Compile Include="Calculator\XFCalculator.cs" />
+    <Compile Include="Calculator\XFCalculatorAlgorithm.cs" />
     <Compile Include="Calculator\XFCalculatorException.cs" />
     <Compile Include="Calculator\XFCalculatorFactory.cs" />
     <Compile Include="Calculator\XFCalculatorInput.cs" />
+    <Compile Include="Calculator\XFCalculatorOutput.cs" />
     <Compile Include="Calculator\XFCalculatorStep.cs" />
     <Compile Include="Calculator\XFCalculatorTool.cs" />
     <Compile Include="Calculator\XFCalculatorToolAddin.cs" />

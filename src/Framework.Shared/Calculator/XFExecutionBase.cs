@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -11,8 +12,11 @@ namespace XF {
          set { _inputs = value; }
       }
 
-      [XmlElement("output")]
-      public string Output { get; set; }
+      //[XmlElement("output")]
+      //public string Output { get; set; }
+
+      [XmlElement("output", Type = typeof(XFCalculatorOutput))]
+      public XFCalculatorOutput Output { get; set; }
 
       [XmlElement("skipTo")]
       public string SkipTo { get; set; }
@@ -22,6 +26,12 @@ namespace XF {
 
       [XmlElement("comment")]
       public string Comment { get; set; }
+
+      public KeyValuePair<string, object> KeyValue {
+         get {
+            return new KeyValuePair<string, object>(Output.Name, Output.Value);
+         }
+      }
 
       public virtual object Execute(XFCalculatorToolKit toolKit, IDictionary<string, object> variables) {
          var isDecimalList = toolKit.IsDecimalList(Tool.Name);
@@ -34,7 +44,12 @@ namespace XF {
          try {
             inputs.Sort((a, b) => a.Parameter.CompareTo(b.Parameter));
             var list = new List<decimal>();
-            inputs.ForEach(inp => list.Add((decimal)variables[inp.Name]));
+            inputs.ForEach(inp => {
+               if (!variables.ContainsKey(inp.Name) &&
+                  inp.Optional) return;
+
+               list.Add((decimal)variables[inp.Name]);
+            });
             return new[] { list };
          }
          catch (KeyNotFoundException ex) {
@@ -43,10 +58,20 @@ namespace XF {
       }
 
       protected object[] PrepareDiscreteArguments(List<XFCalculatorInput> inputs, IDictionary<string, object> variables) {
-         inputs.Sort((a, b) => a.Parameter.CompareTo(b.Parameter));
-         var results = new List<object>();
-         inputs.ForEach(inp => results.Add(variables[inp.Name]));
-         return results.ToArray();
+         try {
+            inputs.Sort((a, b) => a.Parameter.CompareTo(b.Parameter));
+            var results = new List<object>();
+            inputs.ForEach(inp => {
+               if (!variables.ContainsKey(inp.Name) &&
+                   inp.Optional) return;
+
+               results.Add(variables[inp.Name]);
+            });
+            return results.ToArray();
+         }
+         catch (Exception exp) {
+            throw (exp);
+         }
       }
 
    }
