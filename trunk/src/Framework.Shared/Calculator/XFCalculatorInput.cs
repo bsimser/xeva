@@ -8,5 +8,9 @@ namespace XF {
 
       [XmlAttribute(AttributeName = "parameter", DataType = "string")]
       public string Parameter { get; set; }
+
+      [XmlAttribute(AttributeName = "optional", DataType = "boolean")]
+      public bool Optional { get; set; }
+
    }
 }

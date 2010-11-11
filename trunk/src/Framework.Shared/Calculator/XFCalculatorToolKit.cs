@@ -80,6 +80,10 @@ namespace XF {
          return values.Min();
       }
 
+      public object CopyObject(object input) {
+         return input;
+      }
+
       public bool GE(decimal operand1, decimal operand2) {
          return (operand1 >= operand2);
       }
