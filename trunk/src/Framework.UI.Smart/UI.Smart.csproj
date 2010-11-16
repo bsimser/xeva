@@ -55,6 +55,7 @@
       <HintPath>..\..\lib\dynamiccomparer\DynamicSorting.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -74,6 +75,9 @@
     <Compile Include="Controller\IActionView.cs" />
     <Compile Include="Controller\ControllerValidator.cs" />
     <Compile Include="FieldsRegistry.cs" />
+    <Compile Include="FileAdapter\FileAdapterFactory.cs" />
+    <Compile Include="FileAdapter\SimpleFileAdapter.cs" />
+    <Compile Include="FileAdapter\IXFFileAdapter.cs" />
     <Compile Include="IControl.cs" />
     <Compile Include="IEditable.cs" />
     <Compile Include="IFieldsRegistry.cs" />
