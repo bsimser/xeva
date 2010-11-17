@@ -59,6 +59,7 @@ namespace XF.Model {
             EntityProperty = keyProperty.Name,
             EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
             ParameterIdx = ParameterIdx++,
+            MaskType = MaskedType.None,
             IsKey = true
          });
          return this;
@@ -77,6 +78,7 @@ namespace XF.Model {
             EntityProperty = versionProperty.Name,
             EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
             ParameterIdx = ParameterIdx++,
+            MaskType = MaskedType.None
          });
          return this;
       }

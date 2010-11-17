@@ -16,6 +16,7 @@ namespace XF.Model
       private string _entityProperty;
       private object _defaultValue;
       private readonly List<string >_concatenations = new List<string>();
+      private MaskedType _maskType = MaskedType.None;
 
       public ParameterMapper(TMapper projector, PropertyInfo messageProperty)
       {
@@ -35,6 +36,11 @@ namespace XF.Model
       public ParameterMapper<TMapper, TEntity, TMessage> DefaultValue(object defaultValue)
       {
          _defaultValue = defaultValue;
+         return this;
+      }
+
+      public ParameterMapper<TMapper, TEntity, TMessage> FormatAs(MaskedType maskType) {
+         _maskType = maskType;
          return this;
       }
 
@@ -66,6 +72,7 @@ namespace XF.Model
                                                 DefaultValue = _defaultValue,
                                                 EntityName = string.Format("{0}_{1}", _entityName, _projector.JoinRefIdx),
                                                 ParameterIdx = _projector.ParameterIdx++,
+                                                MaskType = _maskType,
                                                 Concatenations = _concatenations
                                              });
          return _projector;

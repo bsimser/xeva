@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace XF.Controls {
+namespace XF {
    public class PhoneMaskType : IMaskedType {
       public Type InputType {
          get {
@@ -13,7 +13,9 @@ namespace XF.Controls {
          get { return "(###) ###-####"; }
       }
 
-      public string GetFormattedLabel(object input) {
+      public string GetFormattedValue(object input) {
+         if (string.IsNullOrEmpty(input.ToString())) return string.Empty;
+
          var mask = GetLabelMask(input.ToString().Length);
          var convertedInput = Convert.ToInt64(input);
          return string.Format("{0:" + mask + "}", convertedInput).Replace("()", "");
@@ -46,8 +48,7 @@ namespace XF.Controls {
          return result;
       }
 
-      public string CorrectedLength(string inputValue)
-      {
+      public string CorrectedLength(string inputValue) {
          if (inputValue.Length == 7) return string.Format("    {0}", inputValue);
          return inputValue;
       }

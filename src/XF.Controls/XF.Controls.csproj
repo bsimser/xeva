@@ -148,19 +148,12 @@
     <Compile Include="General\PlaceHolderControl.designer.cs">
       <DependentUpon>PlaceHolderControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Masked\BlankMaskType.cs" />
     <Compile Include="Masked\EditableMaskedControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Masked\EditableMaskedControl.designer.cs">
       <DependentUpon>EditableMaskedControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Masked\EINMaskType.cs" />
-    <Compile Include="Masked\IMaskedType.cs" />
-    <Compile Include="Masked\MaskedType.cs" />
-    <Compile Include="Masked\MaskFactory.cs" />
-    <Compile Include="Masked\PhoneMaskType.cs" />
-    <Compile Include="Masked\SSNMaskType.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,5 +1,5 @@
-namespace XF.Controls {
-   internal static class MaskFactory {
+namespace XF {
+   public sealed class MaskFactory {
       public static IMaskedType GetMaskImpl(MaskedType type) {
          switch (type)
          {

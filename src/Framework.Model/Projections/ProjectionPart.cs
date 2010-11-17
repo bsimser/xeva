@@ -13,6 +13,7 @@ namespace XF.Model {
       public int ParameterIdx { get; set; }
       public bool IsKey { get; set; }
       public object DefaultValue { get; set; }
+      public MaskedType MaskType { get; set; }
 
       public string GetSelectPart() {
          if (DefaultValue != null) return string.Empty;
@@ -38,8 +39,27 @@ namespace XF.Model {
       }
 
       public void SetOutputValue(object output, object[] tuple) {
+         var value = default(object);
+         switch (MaskType) {
+            case MaskedType.EIN:
+               var einImpl = MaskFactory.GetMaskImpl(MaskType);
+               value = einImpl.GetFormattedValue(tuple[ParameterIdx]);
+               break;
+            case MaskedType.SSN:
+               var ssnImpl = MaskFactory.GetMaskImpl(MaskType);
+               value = ssnImpl.GetFormattedValue(tuple[ParameterIdx]);
+               break;
+            case MaskedType.Phone:
+               var phoneImpl = MaskFactory.GetMaskImpl(MaskType);
+               value = phoneImpl.GetFormattedValue(tuple[ParameterIdx]);
+               break;
+            default:
+               value = tuple[ParameterIdx];
+               break;
+         }
+         
          if (DefaultValue == null)
-            MessageProperty.SetValue(output, tuple[ParameterIdx], null);
+            MessageProperty.SetValue(output, value, null);
          else
             MessageProperty.SetValue(output, DefaultValue, null);
       }

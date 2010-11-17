@@ -1,12 +1,12 @@
 using System;
 
-namespace XF.Controls
+namespace XF
 {
    public interface IMaskedType
    {
       Type InputType { get; }
       string InputMask { get; }
-      string GetFormattedLabel(object input);
+      string GetFormattedValue(object input);
       object ClearMask(string output);
       string CorrectedLength(string inputValue);
    }
