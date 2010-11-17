@@ -220,7 +220,7 @@ namespace XF.Controls {
 
             InputValue = value.ToString();
             _maskedValue.Text = _maskImpl.CorrectedLength(InputValue);
-            _valueLabel.Text = _maskImpl.GetFormattedLabel(InputValue);
+            _valueLabel.Text = _maskImpl.GetFormattedValue(InputValue);
          }
       }
 

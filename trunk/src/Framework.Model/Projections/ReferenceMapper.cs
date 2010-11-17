@@ -104,7 +104,8 @@ namespace XF.Model
             MessageProperty = messageProperty,
             EntityProperty = keyProperty.Name,
             EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
-            ParameterIdx = ParameterIdx++
+            ParameterIdx = ParameterIdx++,
+            MaskType = MaskedType.None
          });
          return this;
       }
@@ -124,7 +125,8 @@ namespace XF.Model
             MessageProperty = messageProperty,
             EntityProperty = versionProperty.Name,
             EntityName = string.Format("{0}_{1}", typeof(TEntity).Name, JoinRefIdx),
-            ParameterIdx = ParameterIdx++
+            ParameterIdx = ParameterIdx++,
+            MaskType = MaskedType.None
          });
          return this;
       }
