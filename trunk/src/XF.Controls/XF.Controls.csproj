@@ -57,6 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlConstants.cs" />
+    <Compile Include="Editable\EditableComboBoxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditableComboBoxEditor.Designer.cs">
+      <DependentUpon>EditableComboBoxEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editable\EditableCheckbox.Designer.cs" />
     <Compile Include="Editable\EditableCheckbox.cs">
       <SubType>UserControl</SubType>
@@ -186,6 +192,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Editable\EditableComboBoxEditor.resx">
+      <DependentUpon>EditableComboBoxEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editable\EditableCheckbox.resx">
       <DependentUpon>EditableCheckbox.cs</DependentUpon>
     </EmbeddedResource>
