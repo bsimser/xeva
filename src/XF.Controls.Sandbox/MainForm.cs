@@ -27,6 +27,9 @@ namespace XF.Controls.Sandbox {
             case "EditablePanel":
                LaunchEditablePanel();
                break;
+            case "ComboBoxEditor":
+               LaunchComboBoxEditor();
+               break;
          }
       }
 
@@ -47,6 +50,18 @@ namespace XF.Controls.Sandbox {
                                              new LookupMessage{DisplayOrder = 1, ID=Guid.NewGuid(), Name="NJ"},
                                              new LookupMessage{DisplayOrder = 0, ID=Guid.NewGuid(), Name="PA"}};
          control.Items = items;
+         LoadControlImpl(control);
+      }
+
+      private void LaunchComboBoxEditor() {
+         var control = new EditableComboBoxEditor {DisplayMember = "Name", ValueMember = "ID", LabelText = "ComboBox"};
+         var items = new List<LookupMessage>{new LookupMessage{DisplayOrder = 2, ID=Guid.NewGuid(), Name="N                Y"},
+                                             new LookupMessage{DisplayOrder = 1, ID=Guid.NewGuid(), Name="N                J"},
+                                             new LookupMessage{DisplayOrder = 0, ID=Guid.NewGuid(), Name="P                A"}};
+         var bs = new BindingSource {DataSource = items};
+         control.BindingSource = bs;
+         control.Bind();
+         control.SetToEdit(true);
          LoadControlImpl(control);
       }
 
