@@ -11,5 +11,6 @@ namespace XF.UI.Smart
                           string controlLabel, EditableControl controlType, List<IListMessage> lookupList);
       void Show();
       void Close();
+      void ShowMessage(string message);
    }
 }

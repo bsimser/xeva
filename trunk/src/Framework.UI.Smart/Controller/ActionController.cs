@@ -46,8 +46,17 @@ namespace XF.UI.Smart
 
          IXFResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}) as IXFResults;
 
+         switch (IXFResults.ResultCode) {
+            case XFResultCode.Success:
          if (ActionComplete != null)
             ActionComplete(this, new EventArgs());
+               break;
+            case XFResultCode.Failure:
+               View.ShowMessage(string.Format("Action failed: {0}", IXFResults.Message));
+               if (ActionCanceled != null)
+                  ActionCanceled(this, new EventArgs());
+               break;
+         }
       }
 
       private void LoadPassThroughPropertiesIntoUpdateMessage()
