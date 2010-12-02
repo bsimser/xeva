@@ -135,6 +135,12 @@
     <Compile Include="General\AddressControl.designer.cs">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="General\DeleteCancelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="General\DeleteCancelControl.designer.cs">
+      <DependentUpon>DeleteCancelControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="General\DropdownSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -153,6 +159,18 @@
     </Compile>
     <Compile Include="General\PlaceHolderControl.designer.cs">
       <DependentUpon>PlaceHolderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\SaveCancelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="General\SaveCancelControl.designer.cs">
+      <DependentUpon>SaveCancelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\SaveDeleteCancelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="General\SaveDeleteCancelControl.designer.cs">
+      <DependentUpon>SaveDeleteCancelControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Masked\EditableMaskedControl.cs">
       <SubType>UserControl</SubType>
@@ -231,6 +249,9 @@
     <EmbeddedResource Include="General\AddressControl.resx">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="General\DeleteCancelControl.resx">
+      <DependentUpon>DeleteCancelControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="General\DropdownSelector.resx">
       <DependentUpon>DropdownSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -239,6 +260,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="General\PlaceHolderControl.resx">
       <DependentUpon>PlaceHolderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\SaveCancelControl.resx">
+      <DependentUpon>SaveCancelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\SaveDeleteCancelControl.resx">
+      <DependentUpon>SaveDeleteCancelControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Masked\EditableMaskedControl.resx">
       <DependentUpon>EditableMaskedControl.cs</DependentUpon>
