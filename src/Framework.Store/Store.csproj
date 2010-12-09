@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CBF62E2C-2924-416A-9AE9-4A2F1980D7DD}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -63,6 +63,7 @@
       <HintPath>..\..\lib\NHibernate-2.1.0.GA-bin\NHibernate.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -70,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditEventListener.cs" />
     <Compile Include="NHibernateSessionAdapter.cs" />
     <Compile Include="NHibernateTransactionWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +80,10 @@
     <ProjectReference Include="..\Framework.Model\Model.csproj">
       <Project>{A4046AC3-E67C-47B0-883E-7B07484E6A03}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.Services\Services.csproj">
+      <Project>{568B6293-E3CC-4E1F-AECC-D8996821BE02}</Project>
+      <Name>Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
       <Project>{0F2672A8-E39C-477F-AEB8-52CD7CCA1A3B}</Project>

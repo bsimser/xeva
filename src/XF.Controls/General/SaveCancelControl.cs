@@ -25,6 +25,15 @@ namespace XF.Controls
       public event EventHandler SaveClick;
       public event EventHandler CancelClick;
 
+      public string SaveLabel {
+         get {
+            return _saveButton.Text;
+         }
+         set {
+            _saveButton.Text = value;
+         }
+      }
+
       private void OnSaveClick(object sender, System.EventArgs e)
       {
          if (SaveClick != null)
