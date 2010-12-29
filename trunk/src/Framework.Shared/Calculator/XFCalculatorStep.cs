@@ -13,6 +13,9 @@ namespace XF {
       [XmlAttribute(AttributeName = "is-a-total", DataType = "boolean")]
       public bool IsATotal { get; set; }
 
+      [XmlAttribute(AttributeName = "exclude-output", DataType = "boolean")]
+      public bool ExcludeOutout { get; set; }
+
       public string Tag {
          get { return Executor != null ? Executor.Output.Name : string.Empty; }
       }

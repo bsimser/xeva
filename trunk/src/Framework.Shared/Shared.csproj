@@ -94,6 +94,8 @@
     <Compile Include="Calculator\XFComputation.cs" />
     <Compile Include="Calculator\XFControlFlow.cs" />
     <Compile Include="Calculator\XFExecutionBase.cs" />
+    <Compile Include="ConfigFileHelper.cs" />
+    <Compile Include="IConfigInfo.cs" />
     <Compile Include="LookupMessage.cs" />
     <Compile Include="Masking\BlankMaskType.cs" />
     <Compile Include="Masking\EINMaskType.cs" />
