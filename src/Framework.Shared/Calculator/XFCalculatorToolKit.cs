@@ -6,23 +6,26 @@ using System.Reflection;
 namespace XF {
    public class XFCalculatorToolKit {
       private readonly IDictionary<string, MethodInfo> _tools = new Dictionary<string, MethodInfo>();
-      private readonly IDictionary<string, object> _addins = new Dictionary<string, object>();
+      private readonly IDictionary<string, IToolKitAddin> _addins = new Dictionary<string, IToolKitAddin>();
 
       public void Initialize(List<XFCalculatorStep> steps) {
          GetType().GetMethods().ToList().ForEach(tool => _tools.Add(tool.Name, tool));
          steps.ForEach(step => {
             if (step.Executor.Tool == null) return;
             if (step.Executor.Tool.Addin == null) return;
-            var addin = step.Executor.Tool.Addin;
-            if (_addins.ContainsKey(addin.Name)) return;
-            var type = Type.GetType(string.Format("{0}.{1}, {2}", addin.Namespace, addin.Name, addin.Assembly));
-            var toolAddin = Activator.CreateInstance(type);
-            _addins.Add(addin.Name, toolAddin);
+            if (_tools.ContainsKey(step.Executor.Tool.Name)) return;
 
-            if (!_tools.ContainsKey(step.Executor.Tool.Name)) {
-               var tool = ((IToolKitAddin)toolAddin).GetMethodByName(step.Executor.Tool.Name);
-               _tools.Add(step.Executor.Tool.Name, tool);
+            var addin = step.Executor.Tool.Addin;
+            var addinTool = default(IToolKitAddin);
+            if (!_addins.ContainsKey(addin.Name)) {
+               var type = Type.GetType(string.Format("{0}.{1}, {2}", addin.Namespace, addin.Name, addin.Assembly));
+               addinTool = Activator.CreateInstance(type) as IToolKitAddin;
+               _addins.Add(addin.Name, addinTool);
             }
+
+            addinTool = _addins[addin.Name];
+            var tool = addinTool.GetMethodByName(step.Executor.Tool.Name);
+            _tools.Add(step.Executor.Tool.Name, tool);
          });
       }
 
@@ -36,7 +39,7 @@ namespace XF {
       public object InvokeTool(string name, object[] args) {
          if (!_tools.ContainsKey(name)) return null;
          var tool = _tools[name];
-         var obj = _addins.ContainsKey(tool.DeclaringType.Name) ? _addins[tool.DeclaringType.Name] : this;
+         var obj = _addins.ContainsKey(tool.DeclaringType.Name) ? (object)_addins[tool.DeclaringType.Name] : this;
          return _tools[name].Invoke(obj, args);
       }
 
