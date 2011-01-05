@@ -19,9 +19,14 @@ namespace XF {
       }
 
       public XFResultCode ResultCode { get; set; }
+      public bool Success { get { return ResultCode == XFResultCode.Success; } }
       public string Message { get; set; }
       public string ErrorContent { get; set; }
       public object Data { get; set; }
+
+      public TData GetData<TData>() {
+         return (TData)Data;
+      }
 
       public static IXFResults SuccessfulAction(string message) {
          return new ModelActionResults { ResultCode = XFResultCode.Success, Message = "Action completed normally" };
@@ -41,17 +46,27 @@ namespace XF {
             return new ModelActionResults { ResultCode = XFResultCode.Failure, Message = "The entityID provided was invalid" };
          }
       }
+
+      public static void ThrowNullInputs() {
+         throw new ActionFailueException("Null inputs were detected");
+      }
    }
 
    public class ActionFailueException : Exception {
 
       public ActionFailueException(string message)
-         : this(message, null) {
+         : this(message, null, null) {
 
       }
 
-      public ActionFailueException(string message, Exception exception)
+      public ActionFailueException(string message, IXFResults results)
+         : this(message, results, null) {
+
+      }
+
+      public ActionFailueException(string message, IXFResults results, Exception exception)
          : base(message, exception) {
+         Data.Add("results", results);
       }
    }
 }
