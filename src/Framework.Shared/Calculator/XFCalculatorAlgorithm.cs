@@ -52,6 +52,9 @@ namespace XF {
          if (string.IsNullOrEmpty(tag)) return;
          var skipIdx = _steps.FindIndex(_idx+1, step => step.Tag.Equals(tag));
          if (skipIdx == -1) return;
+         for (var i = _idx+1; i < skipIdx; i++) {
+            _steps[i].IsSkipped = true;
+         }
          // decrement skipIdx so NextStep's _idx++ positions index on correct step
          _idx = --skipIdx ;
       }
