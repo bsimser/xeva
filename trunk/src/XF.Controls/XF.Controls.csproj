@@ -36,6 +36,7 @@
     <Reference Include="Infragistics2.Win.UltraWinEditors.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Infragistics2.Win.UltraWinGrid.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
     <Reference Include="Infragistics2.Win.UltraWinMaskedEdit.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
+    <Reference Include="Infragistics2.Win.UltraWinTabControl.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL" />
     <Reference Include="Infragistics2.Win.v8.1, Version=8.1.20081.1000, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -172,6 +173,7 @@
     <Compile Include="General\SaveDeleteCancelControl.designer.cs">
       <DependentUpon>SaveDeleteCancelControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="General\TabControlDrawFilter.cs" />
     <Compile Include="Masked\EditableMaskedControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
