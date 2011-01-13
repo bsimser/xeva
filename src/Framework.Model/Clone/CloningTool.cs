@@ -10,34 +10,39 @@ namespace XF.Model {
          var properties = new List<PropertyInfo>(entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance));
 
          properties.ForEach(property => {
-            if (property.DeclaringType != entityType) return;
+            try {
+               if (property.DeclaringType != entityType) return;
 
-            var attrs = property.GetCustomAttributes(typeof(ModelCopyAttribute), true);
-            ModelCopyAttribute copyAttr;
+               var attrs = property.GetCustomAttributes(typeof(ModelCopyAttribute), true);
+               ModelCopyAttribute copyAttr;
 
-            if (attrs == null || attrs.Length == 0)
-               copyAttr = new ModelCopyAttribute { Method = CopyMethod.Copy };
-            else
-               copyAttr = attrs[0] as ModelCopyAttribute;
+               if (attrs == null || attrs.Length == 0)
+                  copyAttr = new ModelCopyAttribute { Method = CopyMethod.Copy };
+               else
+                  copyAttr = attrs[0] as ModelCopyAttribute;
 
 
-            switch (copyAttr.Method) {
-               case CopyMethod.Parent:
-                  CopyMethodParent(newEntity, parent, property);
-                  break;
-               case CopyMethod.Copy:
-                  CopyMethodCopy(newEntity, origEntity, property);
-                  break;
-               case CopyMethod.Generate:
-                  CopyMethodGenerate(newEntity, copyAttr, property);
-                  break;
-               case CopyMethod.Clone:
-                  if (!property.IsCollection() && property.PropertyType.BaseType != typeof(Entity)) return;
-                  if (property.IsCollection())
-                     CopyMethodCloneAsList(newEntity, origEntity, property);
-                  else
-                     CopyMethodCloneAsEntity(newEntity, origEntity, property);
-                  break;
+               switch (copyAttr.Method) {
+                  case CopyMethod.Parent:
+                     CopyMethodParent(newEntity, parent, property);
+                     break;
+                  case CopyMethod.Copy:
+                     CopyMethodCopy(newEntity, origEntity, property);
+                     break;
+                  case CopyMethod.Generate:
+                     CopyMethodGenerate(newEntity, copyAttr, property);
+                     break;
+                  case CopyMethod.Clone:
+                     if (!property.IsCollection() && property.PropertyType.BaseType != typeof(Entity)) return;
+                     if (property.IsCollection())
+                        CopyMethodCloneAsList(newEntity, origEntity, property);
+                     else
+                        CopyMethodCloneAsEntity(newEntity, origEntity, property);
+                     break;
+               }
+            }
+            catch (Exception e) {
+               throw;
             }
          });
          return newEntity;
