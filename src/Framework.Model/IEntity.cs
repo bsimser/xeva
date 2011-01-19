@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace XF.Model
 {
@@ -6,7 +7,8 @@ namespace XF.Model
    {
       Guid ID { get; set; }
       int Version { get; set; }
-      Entity Clone();
-      Entity Clone(Entity parent);
+      Entity TemplateCopy();
+      Entity TemplateCopy(List<KeyValuePair<Action<object>, object>> copyActions);
+      Entity TemplateCopy(Entity parent, List<KeyValuePair<Action<object>, object>> copyActions);
    }
 }

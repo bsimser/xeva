@@ -18,6 +18,6 @@ namespace XF.Model  {
    }
 
    public enum CopyMethod {
-      Copy, Clone, Parent, Generate, None
+      Copy, Template, Parent, Generate, None
    }
 }
