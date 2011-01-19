@@ -32,6 +32,11 @@ namespace XF {
          return results;
       }
 
+      public static bool ContainsType(this PropertyInfo property, Type type) {
+         var interfaces = new List<Type>(property.PropertyType.GetInterfaces());
+         return interfaces.Exists(m => m.Name == type.Name);
+      }
+
       public static bool IsCollection(this PropertyInfo property) {
          return property.PropertyType.Name.Contains("List`1") ||
                 property.PropertyType.Name.Contains("IList`1") ||

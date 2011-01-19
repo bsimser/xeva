@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Reflection;
 
 namespace XF.Model {
-   public sealed class CloningTool {
-      public static Entity GenerateEntityClone(Type entityType, Entity origEntity, Entity parent) {
+   public sealed class TemplateCopyTool {
+
+      public static Entity GenerateTemplateCopy(Type entityType, Entity origEntity, Entity parent,
+                                               List<KeyValuePair<Action<object>, object>> copyActions) {
          var newEntity = Activator.CreateInstance(entityType) as Entity;
          var properties = new List<PropertyInfo>(entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance));
 
@@ -32,18 +34,25 @@ namespace XF.Model {
                   case CopyMethod.Generate:
                      CopyMethodGenerate(newEntity, copyAttr, property);
                      break;
-                  case CopyMethod.Clone:
-                     if (!property.IsCollection() && property.PropertyType.BaseType != typeof(Entity)) return;
+                  case CopyMethod.Template:
+                     if (!property.IsCollection() && !property.ContainsType(typeof(IEntity))) return;
                      if (property.IsCollection())
-                        CopyMethodCloneAsList(newEntity, origEntity, property);
+                        CopyMethodTemplateAsList(newEntity, origEntity, property, copyActions);
                      else
-                        CopyMethodCloneAsEntity(newEntity, origEntity, property);
+                        CopyMethodTemplateAsEntity(newEntity, origEntity, property, copyActions);
                      break;
                }
             }
             catch (Exception e) {
                throw;
             }
+         });
+         if (copyActions == null) return newEntity;
+
+         copyActions.ForEach(action => {
+            var method = newEntity.GetType().GetMethod(action.Key.Method.Name);
+            if (method == null) return;
+            method.Invoke(newEntity, new[] { action.Value });
          });
          return newEntity;
       }
@@ -60,12 +69,22 @@ namespace XF.Model {
          property.SetValue(newEntity, copyAttr.Generate(), null);
       }
 
-      private static void CopyMethodCloneAsEntity(Entity newEntity, Entity origEntity, PropertyInfo property) {
+      private static void CopyMethodTemplateAsEntity(Entity newEntity, Entity origEntity, PropertyInfo property,
+                                                 List<KeyValuePair<Action<object>, object>> copyActions) {
          var propValue = property.GetValue(origEntity, null) as Entity;
-         property.SetValue(newEntity, propValue.Clone(newEntity), null);
+         var template = propValue.TemplateCopy(newEntity, copyActions);
+         property.SetValue(newEntity, template, null);
+         if (copyActions == null) return;
+
+         copyActions.ForEach(action => {
+            var method = template.GetType().GetMethod(action.Key.Method.Name);
+            if (method == null) return;
+            method.Invoke(template, new[] { action.Value });
+         });
       }
 
-      private static void CopyMethodCloneAsList(Entity newEntity, Entity origEntity, PropertyInfo property) {
+      private static void CopyMethodTemplateAsList(Entity newEntity, Entity origEntity, PropertyInfo property,
+                                                List<KeyValuePair<Action<object>, object>> copyActions) {
          var propValue = property.GetValue(origEntity, null) as IEnumerable;
          if (propValue == null) return;
 
@@ -75,10 +94,15 @@ namespace XF.Model {
 
          property.SetValue(newEntity, enumerable, null);
          foreach (var child in propValue) {
-            if (child is Entity)
-               addMethod.Invoke(enumerable, new[] { ((Entity)child).Clone(newEntity) });
-            else
-               addMethod.Invoke(enumerable, new[] { child });
+            var copy = child is Entity ? ((Entity)child).TemplateCopy(newEntity, copyActions) : child;
+            addMethod.Invoke(enumerable, new[] { copy });
+            if (copyActions == null) continue;
+
+            copyActions.ForEach(action => {
+               var method = copy.GetType().GetMethod(action.Key.Method.Name);
+               if (method == null) return;
+               method.Invoke(copy, new[] { action.Value });
+            });
          }
       }
 

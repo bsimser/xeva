@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using XF.Validation;
 
 namespace XF.Model
@@ -44,12 +45,16 @@ namespace XF.Model
 
       public virtual void Validate(ValidationResult validationResults) {}
 
-      public virtual Entity Clone() {
-         return CloningTool.GenerateEntityClone(GetType(), this, null);
+      public virtual Entity TemplateCopy() {
+         return TemplateCopyTool.GenerateTemplateCopy(GetType(), this, null, null);
       }
 
-      public virtual Entity Clone(Entity parent) {
-         return CloningTool.GenerateEntityClone(GetType(), this, parent);
+      public virtual Entity TemplateCopy(List<KeyValuePair<Action<object>, object>> copyActions) {
+         return TemplateCopyTool.GenerateTemplateCopy(GetType(), this, null, copyActions);
+      }
+
+      public virtual Entity TemplateCopy(Entity parent, List<KeyValuePair<Action<object>, object>> copyActions) {
+         return TemplateCopyTool.GenerateTemplateCopy(GetType(), this, parent, copyActions);
       }
 
    }
