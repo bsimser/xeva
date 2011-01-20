@@ -114,12 +114,15 @@ namespace XF.UI.Smart
             var controlValue = actionProperty.DefaultValue;
             EditableControl controlType;
             string propertyName, controlName, controlLabel;
-            PopulateArgsFromOutputProperty(actionProperty.Output, out propertyName, out controlName, out controlLabel, out controlType);
+            bool controlIsReadonly;
+            PopulateArgsFromOutputProperty(actionProperty.Output, out propertyName, out controlName, out controlLabel, 
+                                           out controlType, out controlIsReadonly);
 
             var lookupList = actionProperty.ListOfValues != null
                                 ? actionProperty.ListOfValues.GetValue(_inputMessage, null) as List<IListMessage>
                                 : null;
-            var control = View.AddControl(propertyName, controlName, controlValue, controlLabel, controlType, lookupList);
+            var control = View.AddControl(propertyName, controlName, controlValue, 
+                                          controlLabel, controlType, lookupList, controlIsReadonly);
             _controls.Add(propertyName, control);
          }
 
@@ -141,20 +144,23 @@ namespace XF.UI.Smart
       }
 
       private void PopulateArgsFromOutputProperty(PropertyInfo outputInfo, out string propertyName, out string controlName,
-                                                   out string controlLabel, out EditableControl controlType)
+                                                   out string controlLabel, out EditableControl controlType, out bool controlIsReadOnly)
       {
          propertyName = outputInfo.Name;
          controlName = string.Format("_{0}Editor", outputInfo.Name);
          var label = string.Empty;
          var type = EditableControl.Unspecified;
+         var isReadOnly = false;
          foreach (ActionPropertyAttribute attribute in outputInfo.GetCustomAttributes(typeof(ActionPropertyAttribute), false))
          {
             label = attribute.Label;
             type = attribute.EditorType;
+            isReadOnly = attribute.IsReadOnly;
          }
 
          controlLabel = !string.IsNullOrEmpty(label) ? label : outputInfo.Name;
          controlType = type;
+         controlIsReadOnly = isReadOnly;
       }
 
       protected virtual void OnHandleRequest(IRequest request) { }

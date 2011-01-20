@@ -15,5 +15,6 @@ namespace XF.UI.Smart
       object EditedValue { get; }
       IEditable ToIEditable(string controlLabel, object controlValue, List<IListMessage> lookupList);
       Color ControlBackcolor { set; }
+      string Name { get; set; }
    }
 }

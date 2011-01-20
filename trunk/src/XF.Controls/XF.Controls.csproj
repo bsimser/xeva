@@ -200,6 +200,7 @@
     <Compile Include="ToolTipControl.designer.cs">
       <DependentUpon>ToolTipControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="XFSmartControlFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Shared\Shared.csproj">
