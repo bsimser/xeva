@@ -8,7 +8,8 @@ namespace XF.UI.Smart
       void Attach(IActionCallbacks callback);
       TUpdateMessage RetrieveActionMessage();
       IControl AddControl(string propertyName, string controlName, object controlValue, 
-                          string controlLabel, EditableControl controlType, List<IListMessage> lookupList);
+                          string controlLabel, EditableControl controlType, List<IListMessage> lookupList,
+                          bool isReadOnly);
       void Show();
       void Close();
       void ShowMessage(string message);

@@ -235,7 +235,14 @@ namespace XF.Controls {
          }
       }
 
-      public bool ReadOnly { get; set; }
+      public bool ReadOnly {
+         get {
+            return _textboxValue.ReadOnly;
+         }
+         set {
+            _textboxValue.ReadOnly = value;
+         }
+      }
 
       private void OnClicked(object sender, EventArgs e) {
          _textboxValue.Focus();

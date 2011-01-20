@@ -203,7 +203,7 @@ namespace XF.Controls {
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public Color ValidationColor { get; set; }
 
-      public bool ReadOnly { get; set; }
+      public bool ReadOnly { get { return _dateValue.ReadOnly; } set { _dateValue.ReadOnly = value; } }
 
       [Bindable(true)]
       public object Value {

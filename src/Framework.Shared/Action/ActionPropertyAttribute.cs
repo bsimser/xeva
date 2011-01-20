@@ -7,6 +7,7 @@ namespace XF
    {
       public string Label { get; set; }
       public EditableControl EditorType { get; set; }
+      public bool IsReadOnly { get; set; }
    }
 
 }
