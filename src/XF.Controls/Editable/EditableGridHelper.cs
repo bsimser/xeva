@@ -12,7 +12,9 @@ namespace XF.Controls {
                            ? 34
                            : button == GridButton.Delete
                                 ? 46
-                                : 50;
+                                : button == GridButton.Override
+                                     ? 60
+                                     : 50;
             
          if (grid.DisplayLayout.Bands[band].Columns.IndexOf(colName) != -1) return;
 
@@ -65,7 +67,7 @@ namespace XF.Controls {
    }
 
    public enum GridButton {
-      Add, Edit, Delete, Remove
+      Add, Edit, Delete, Remove, Override
    }
 
 }

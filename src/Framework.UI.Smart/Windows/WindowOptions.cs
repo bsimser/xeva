@@ -24,7 +24,7 @@ namespace XF.UI.Smart
          _openInSecondMonitor = openInSecondMonitor;
       }
 
-      public WindowOptions() : this (false, 800, 600, 0, 0, false)
+      public WindowOptions() : this (false, 900, 700, 0, 0, false)
       {
       }
 
