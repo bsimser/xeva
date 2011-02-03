@@ -144,6 +144,20 @@ namespace XF.Model
                                  .AddReference()
                               .Project();
       }
+
+      [Test]
+      public void Can_add_with_on_join() {
+         var projector = new EntityProjector<MyEntity, MyMessage>()
+                           .Key(e => e.ID, mess => mess.ID)
+                           .Projection(mess => mess.Name).Add()
+                           .OrderBy().Field(e => e.Name).Asc()
+                           .Reference<MyEntity2, MyMessage>(e => e.Entity2)
+                              .ReferenceAsProperty()
+                              .ConstructJoin().Inner().With(me2 => me2.Age).Join()
+                              .AddReference()
+                           .Project();
+      
+      }
    }
 
    public class MyEntity : Entity

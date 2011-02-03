@@ -77,6 +77,12 @@ namespace XF.Model
          return this;
       }
 
+      public JoinMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity> ConstructJoin() {
+         var result = new JoinMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity>(this);
+
+         return result;
+      }
+
       public ReferenceMapper<TMapper, TEntity, TMessage> JoinLeft() 
       {
          _joinType = ReferenceJoinType.left;

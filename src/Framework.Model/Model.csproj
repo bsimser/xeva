@@ -78,6 +78,7 @@
     <Compile Include="Projections\IOrderingMapper.cs" />
     <Compile Include="Projections\IProjector.cs" />
     <Compile Include="Projections\IReferencePart.cs" />
+    <Compile Include="Projections\JoinMapper.cs" />
     <Compile Include="Projections\OrderingMapper.cs" />
     <Compile Include="Projections\ParameterMapper.cs" />
     <Compile Include="Projections\ProjectionPart.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Projections\ReferencePartHelper.cs" />
     <Compile Include="Projections\ReferencePropertyPart.cs" />
     <Compile Include="Projections\ReferenceTypePart.cs" />
+    <Compile Include="Projections\WithPart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="TransactionElection.cs" />
