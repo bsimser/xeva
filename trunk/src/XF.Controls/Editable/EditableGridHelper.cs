@@ -47,6 +47,14 @@ namespace XF.Controls {
          row.Cells[colName].Value = buttonLabel;
       }
 
+      public static void SetButtonText(UltraGridRow row, GridButton button, string text) {
+         var colName = button.ToString();
+         if (row.Cells.IndexOf(colName) == -1) return;
+
+         var buttonLabel = !string.IsNullOrEmpty(text) ? string.Format("[{0}]", text.ToLower()) : string.Empty;
+         row.Cells[colName].Value = buttonLabel;
+      }
+
       public static void CreateAddRow(UltraGrid grid) {
          grid.DisplayLayout.Bands[0].AddNew();
       }

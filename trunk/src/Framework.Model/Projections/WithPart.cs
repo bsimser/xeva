@@ -1,12 +1,10 @@
-using System.Reflection;
-
 namespace XF.Model {
-   public class ExpressionPart<TMapper> where TMapper : IExpressionMapper {
+   public class WithPart<TMapper> where TMapper : IJoinMapper {
       private readonly TMapper _mapper;
       private readonly string _propertyName;
       private readonly string _criteria;
 
-      public ExpressionPart(TMapper mapper, string propertyName, string criteria) {
+      public WithPart(TMapper mapper, string propertyName, string criteria) {
          _mapper = mapper;
          _propertyName = propertyName;
          _criteria = criteria;
@@ -96,16 +94,16 @@ namespace XF.Model {
 
       private string SetParameterName(string propertyName) {
          var pramName = string.Format("{0}{1}",
-                              _mapper.EntityName.ToLower(),
-                              propertyName);
+                                      _mapper.EntityName.ToLower(),
+                                      propertyName);
 
          for (int idx = 0; idx < 10; idx++) {
             if (!_mapper.CriteriaParameters.ContainsKey(pramName))
                break;
             var propName = propertyName + idx;
             pramName = string.Format("{0}{1}",
-                                         _mapper.EntityName.ToLower(),
-                                         propName);
+                                     _mapper.EntityName.ToLower(),
+                                     propName);
          }
 
          return pramName;
