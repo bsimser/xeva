@@ -6,12 +6,12 @@ namespace XF.Model
       public static IReferencePart GetReferencePart(ReferenceType referenceType)
       {
          if (referenceType == ReferenceType.CollectionPart)
-            return new ReferenceCollectionPart();
+            return new ReferencePartCollection();
 
          if (referenceType == ReferenceType.PropertyPart)
-            return new ReferencePropertyPart();
+            return new ReferencePartProperty();
 
-         return new ReferenceTypePart();
+         return new ReferencePartType();
       }
    }
 }

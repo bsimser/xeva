@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 namespace XF.Model {
-   public class ExpressionMapper<TMapper, TEntity> : IExpressionMapper where TMapper : IEntityMapper {
+   public class ExpressionMapper<TMapper, TEntity> : IExpressionMapper where TMapper : IHaveCriteriaMapper {
       private readonly TMapper _mapper;
       private readonly List<string> _criteriaList = new List<string>();
 

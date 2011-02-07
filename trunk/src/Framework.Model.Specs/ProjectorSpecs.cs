@@ -150,14 +150,35 @@ namespace XF.Model
          var projector = new EntityProjector<MyEntity, MyMessage>()
                            .Key(e => e.ID, mess => mess.ID)
                            .Projection(mess => mess.Name).Add()
-                           .OrderBy().Field(e => e.Name).Asc()
+                           .Criteria().Where(m => m.ID).Eq(Guid.Empty)
+                                      .And(m => m.Hired).LT(DateTime.Today).AddCriteria()
                            .Reference<MyEntity2, MyMessage>(e => e.Entity2)
                               .ReferenceAsProperty()
-                              .ConstructJoin().Inner().With(me2 => me2.Age).Join()
+                              .Join().Inner().With().Where(x => x.Age).Eq(54)
+                                                    .And(x => x.Sex).Eq("male").AddWith()
+                                 .AddJoin()
+                              .Criteria().AddWithAnd().Where(x => x.Sex).Eq("Male").AddCriteria()
+                              .AddReference()
+                           .Project();      
+      }
+
+      [Test]
+      public void Can_add_with_on_join_outer() {
+         var projector = new EntityProjector<MyEntity, MyMessage>()
+                           .Key(e => e.ID, mess => mess.ID)
+                           .Projection(mess => mess.Name).Add()
+                           .Criteria().Where(m => m.ID).Eq(Guid.Empty)
+                                      .And(m => m.Hired).LT(DateTime.Today).AddCriteria()
+                           .Reference<MyEntity2, MyMessage>(e => e.Entity2)
+                              .ReferenceAsProperty()
+                              .Join().Left().With().Where(x => x.Age).Eq(54)
+                                                    .And(x => x.Sex).Eq("male").AddWith()
+                                 .AddJoin()
+                              .Criteria().AddWithAnd().Where(x => x.Sex).Eq("Male").AddCriteria()
                               .AddReference()
                            .Project();
-      
       }
+
    }
 
    public class MyEntity : Entity
