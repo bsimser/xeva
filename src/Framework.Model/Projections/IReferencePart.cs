@@ -17,6 +17,7 @@ namespace XF.Model
       List<IReferencePart> References { get; set; }
       bool IsKeyed { get; set; }
       PropertyInfo KeyProperty { get; set; }
+      JoinPart JoinDefinition { get; set; }
       string GetSelectParts();
       string GetFromPart();
       string GetWhereParts();
