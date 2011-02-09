@@ -16,6 +16,9 @@ namespace XF {
       [XmlAttribute(AttributeName = "exclude-output", DataType = "boolean")]
       public bool ExcludeOutout { get; set; }
 
+      [XmlAttribute(AttributeName = "final-output", DataType = "boolean")]
+      public bool FinalOutout { get; set; }
+
       public bool IsSkipped { get; set; }
 
       public string Tag {

@@ -22,7 +22,8 @@
 						<xs:attribute name="can-exclude" use="required" type="xs:boolean"/>
 						<xs:attribute name="input-by-tag" use="optional" type="xs:boolean"/>
 						<xs:attribute name="is-a-total" use="optional" type="xs:boolean"/>
-						<xs:attribute name="exclude-output" use="required" type="xs:boolean"/>
+						<xs:attribute name="exclude-output" use="optional" type="xs:boolean"/>
+						<xs:attribute name="final-output" use="optional" type="xs:boolean"/>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
