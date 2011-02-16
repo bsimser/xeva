@@ -58,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlConstants.cs" />
+    <Compile Include="Editable\EditablePercentageEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editable\EditablePercentageEditor.Designer.cs">
+      <DependentUpon>EditablePercentageEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editable\EditableComboBoxEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -213,6 +219,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Editable\EditablePercentageEditor.resx">
+      <DependentUpon>EditablePercentageEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editable\EditableComboBoxEditor.resx">
       <DependentUpon>EditableComboBoxEditor.cs</DependentUpon>
     </EmbeddedResource>

@@ -34,6 +34,7 @@
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool9 = new Infragistics.Win.UltraWinToolbars.ButtonTool("CurrencyEditor");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool11 = new Infragistics.Win.UltraWinToolbars.ButtonTool("EditablePanel");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool13 = new Infragistics.Win.UltraWinToolbars.ButtonTool("ComboBoxEditor");
+         Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool15 = new Infragistics.Win.UltraWinToolbars.ButtonTool("PercentageEditor");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool2 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Address");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool4 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Embedable Label");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool6 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Calculator");
@@ -41,6 +42,7 @@
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool10 = new Infragistics.Win.UltraWinToolbars.ButtonTool("CurrencyEditor");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool12 = new Infragistics.Win.UltraWinToolbars.ButtonTool("EditablePanel");
          Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool14 = new Infragistics.Win.UltraWinToolbars.ButtonTool("ComboBoxEditor");
+         Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool16 = new Infragistics.Win.UltraWinToolbars.ButtonTool("PercentageEditor");
          this._mainForm_Fill_Panel = new System.Windows.Forms.Panel();
          this._MainForm_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
          this._toolbars = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
@@ -54,9 +56,9 @@
          // 
          this._mainForm_Fill_Panel.Cursor = System.Windows.Forms.Cursors.Default;
          this._mainForm_Fill_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-         this._mainForm_Fill_Panel.Location = new System.Drawing.Point(0, 48);
+         this._mainForm_Fill_Panel.Location = new System.Drawing.Point(0, 23);
          this._mainForm_Fill_Panel.Name = "_mainForm_Fill_Panel";
-         this._mainForm_Fill_Panel.Size = new System.Drawing.Size(495, 203);
+         this._mainForm_Fill_Panel.Size = new System.Drawing.Size(495, 228);
          this._mainForm_Fill_Panel.TabIndex = 0;
          // 
          // _MainForm_Toolbars_Dock_Area_Left
@@ -65,9 +67,9 @@
          this._MainForm_Toolbars_Dock_Area_Left.BackColor = System.Drawing.Color.White;
          this._MainForm_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
          this._MainForm_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
-         this._MainForm_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 48);
+         this._MainForm_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 23);
          this._MainForm_Toolbars_Dock_Area_Left.Name = "_MainForm_Toolbars_Dock_Area_Left";
-         this._MainForm_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 203);
+         this._MainForm_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 228);
          this._MainForm_Toolbars_Dock_Area_Left.ToolbarsManager = this._toolbars;
          // 
          // _toolbars
@@ -92,7 +94,8 @@
             buttonTool7,
             buttonTool9,
             buttonTool11,
-            buttonTool13});
+            buttonTool13,
+            buttonTool15});
          buttonTool2.SharedProps.Caption = "Address";
          buttonTool4.SharedProps.Caption = "Embedable Label";
          buttonTool6.SharedProps.Caption = "Calculator";
@@ -101,6 +104,7 @@
          buttonTool10.SharedProps.Caption = "Currency Editor";
          buttonTool12.SharedProps.Caption = "Editable Panel";
          buttonTool14.SharedProps.Caption = "ComboBox Editor";
+         buttonTool16.SharedProps.Caption = "Percentage Editor";
          this._toolbars.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             popupMenuTool2,
             buttonTool2,
@@ -109,7 +113,8 @@
             buttonTool8,
             buttonTool10,
             buttonTool12,
-            buttonTool14});
+            buttonTool14,
+            buttonTool16});
          this._toolbars.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.OnToolClick);
          // 
          // _MainForm_Toolbars_Dock_Area_Right
@@ -118,9 +123,9 @@
          this._MainForm_Toolbars_Dock_Area_Right.BackColor = System.Drawing.Color.White;
          this._MainForm_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
          this._MainForm_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
-         this._MainForm_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(495, 48);
+         this._MainForm_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(495, 23);
          this._MainForm_Toolbars_Dock_Area_Right.Name = "_MainForm_Toolbars_Dock_Area_Right";
-         this._MainForm_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 203);
+         this._MainForm_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 228);
          this._MainForm_Toolbars_Dock_Area_Right.ToolbarsManager = this._toolbars;
          // 
          // _MainForm_Toolbars_Dock_Area_Top
@@ -131,7 +136,7 @@
          this._MainForm_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
          this._MainForm_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
          this._MainForm_Toolbars_Dock_Area_Top.Name = "_MainForm_Toolbars_Dock_Area_Top";
-         this._MainForm_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(495, 48);
+         this._MainForm_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(495, 23);
          this._MainForm_Toolbars_Dock_Area_Top.ToolbarsManager = this._toolbars;
          // 
          // _MainForm_Toolbars_Dock_Area_Bottom

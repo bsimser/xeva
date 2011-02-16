@@ -30,6 +30,9 @@ namespace XF.Controls.Sandbox {
             case "ComboBoxEditor":
                LaunchComboBoxEditor();
                break;
+            case "PercentageEditor":
+               LaunchPercentageEditor();
+               break;
          }
       }
 
@@ -80,5 +83,14 @@ namespace XF.Controls.Sandbox {
          var panel = new EditablePanel {Editable = true, Dock = DockStyle.Fill};
          LoadControlImpl(panel);
       }
+
+      private void LaunchPercentageEditor() {
+         var control = new EditablePercentageEditor { Value = .25m, ControlMode = Mode.View };
+         LoadControlImpl(control);
+         //var text = .26m;
+         //var control = new Infragistics.Win.Misc.UltraLabel {Text = text.ToString("p")};
+         //_mainForm_Fill_Panel.Controls.Add(control);
+      }
+
    }
 }
