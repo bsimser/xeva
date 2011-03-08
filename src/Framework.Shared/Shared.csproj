@@ -97,7 +97,7 @@
     <Compile Include="Calculator\XFExecutionBase.cs" />
     <Compile Include="ConfigFileHelper.cs" />
     <Compile Include="IConfigInfo.cs" />
-    <Compile Include="LookupHelper.cs" />
+    <Compile Include="DateTimeHelper.cs" />
     <Compile Include="LookupMessage.cs" />
     <Compile Include="Masking\BlankMaskType.cs" />
     <Compile Include="Masking\EINMaskType.cs" />
