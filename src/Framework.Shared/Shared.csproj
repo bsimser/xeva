@@ -58,6 +58,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\DotNetZipLib\Ionic.Zlib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -96,6 +97,7 @@
     <Compile Include="Calculator\XFExecutionBase.cs" />
     <Compile Include="ConfigFileHelper.cs" />
     <Compile Include="IConfigInfo.cs" />
+    <Compile Include="LookupHelper.cs" />
     <Compile Include="LookupMessage.cs" />
     <Compile Include="Masking\BlankMaskType.cs" />
     <Compile Include="Masking\EINMaskType.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Masking\MaskFactory.cs" />
     <Compile Include="Masking\PhoneMaskType.cs" />
     <Compile Include="Masking\SSNMaskType.cs" />
+    <Compile Include="SimpleLookupMessage.cs" />
     <Compile Include="XFExtensions.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="ExpressionsHelper.cs" />
