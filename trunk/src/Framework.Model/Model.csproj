@@ -68,7 +68,11 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="IStore.cs" />
     <Compile Include="ITransaction.cs" />
+    <Compile Include="Math\Money.cs" />
+    <Compile Include="Math\RoundMethods.cs" />
+    <Compile Include="Math\XFMath.cs" />
     <Compile Include="ModelConstants.cs" />
+    <Compile Include="MoneyUserType.cs" />
     <Compile Include="NamedQuery.cs" />
     <Compile Include="Projections\EntityProjector.cs" />
     <Compile Include="Projections\ExpressionMapper.cs" />
