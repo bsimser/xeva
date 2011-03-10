@@ -57,11 +57,21 @@ namespace XF.Model {
                value = tuple[ParameterIdx];
                break;
          }
-         
-         if (DefaultValue == null)
+
+         if (DefaultValue == null) {
+            if (value != null && MessageProperty.PropertyType != value.GetType())
+               value = ConvertToMessagePropertyType(MessageProperty.PropertyType, value);
             MessageProperty.SetValue(output, value, null);
+         }
          else
             MessageProperty.SetValue(output, DefaultValue, null);
+      }
+
+      private object ConvertToMessagePropertyType(Type type, object value) {
+         if (type == typeof(decimal) && value.GetType() == typeof(Money))
+            return ((Money) value).Amount;
+
+         return Activator.CreateInstance(type);
       }
    }
 }
