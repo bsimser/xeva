@@ -14,9 +14,16 @@ namespace XF.Model {
       public bool IsKey { get; set; }
       public object DefaultValue { get; set; }
       public MaskedType MaskType { get; set; }
+      public Func<object, object> ValueConversion { get; set; }
+      public object OutputValue { get; set; }
+      public string Name { get; set; }
+      public List<string> NamedArguments { get; set; }
+      public Func<object[], object> ComputationTool { get; set; }
+      public IArgumentSource ArgumentSource { get; set; }
 
       public string GetSelectPart() {
-         if (DefaultValue != null) return string.Empty;
+         if (DefaultValue != null ||
+             ComputationTool != null) return string.Empty;
 
          var result = new StringBuilder();
          result.Append(AddEntityPropertyToSelect());
@@ -39,39 +46,45 @@ namespace XF.Model {
       }
 
       public void SetOutputValue(object output, object[] tuple) {
-         var value = default(object);
+         OutputValue = DefaultValue ?? GetTupleValue(tuple);
+
+         if (ValueConversion != null)
+            OutputValue = ValueConversion(OutputValue);
+         if (ComputationTool != null)
+            OutputValue = ComputationTool(GatherNamedArguments());
+
+         MessageProperty.SetValue(output, OutputValue, null);
+      }
+
+      private object[] GatherNamedArguments() {
+         if (ArgumentSource.NamedArguments == null ||
+            ArgumentSource.NamedArguments.IsEmpty()) return null;
+
+         var results = new List<object>();
+         NamedArguments.ForEach(arg => {
+            if (ArgumentSource.NamedArguments.ContainsKey(arg))
+               results.Add(ArgumentSource.NamedArguments[arg].OutputValue);
+         });
+         return results.ToArray();
+      }
+
+      protected object GetTupleValue(object[] tuple) {
+         if (tuple.Length <= ParameterIdx) return null;
+         if (MaskType == MaskedType.None) return tuple[ParameterIdx];
+
          switch (MaskType) {
             case MaskedType.EIN:
                var einImpl = MaskFactory.GetMaskImpl(MaskType);
-               value = einImpl.GetFormattedValue(tuple[ParameterIdx]);
-               break;
+               return einImpl.GetFormattedValue(tuple[ParameterIdx]);
             case MaskedType.SSN:
                var ssnImpl = MaskFactory.GetMaskImpl(MaskType);
-               value = ssnImpl.GetFormattedValue(tuple[ParameterIdx]);
-               break;
+               return ssnImpl.GetFormattedValue(tuple[ParameterIdx]);
             case MaskedType.Phone:
                var phoneImpl = MaskFactory.GetMaskImpl(MaskType);
-               value = phoneImpl.GetFormattedValue(tuple[ParameterIdx]);
-               break;
+               return phoneImpl.GetFormattedValue(tuple[ParameterIdx]);
             default:
-               value = tuple[ParameterIdx];
-               break;
+               return tuple[ParameterIdx];
          }
-
-         if (DefaultValue == null) {
-            if (value != null && MessageProperty.PropertyType != value.GetType())
-               value = ConvertToMessagePropertyType(MessageProperty.PropertyType, value);
-            MessageProperty.SetValue(output, value, null);
-         }
-         else
-            MessageProperty.SetValue(output, DefaultValue, null);
-      }
-
-      private object ConvertToMessagePropertyType(Type type, object value) {
-         if (type == typeof(decimal) && value.GetType() == typeof(Money))
-            return ((Money) value).Amount;
-
-         return Activator.CreateInstance(type);
       }
    }
 }

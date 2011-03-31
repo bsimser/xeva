@@ -179,6 +179,23 @@ namespace XF.Model
                            .Project();
       }
 
+      [Test]
+      public void Can_add_with_a_computation() {
+         var projector = new EntityProjector<MyEntity, MyMessage>()
+                           .Key(e => e.ID, mess => mess.ID)
+                           .Projection(mess => mess.Name).Named().Add()
+                           .Projection(mess => mess.Title)
+                              .Compute(RunComputation)
+                                 .NamedArgument<MyMessage>(a => a.Age)
+                                 .NamedArgument<MyMessage>(a => a.Hired)
+                                 .AddComputation()
+                              .Add()
+                           .Project();
+      }
+
+      private object RunComputation(object[] arg) {
+         return new object();
+      }
    }
 
    public class MyEntity : Entity
