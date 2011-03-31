@@ -6,11 +6,12 @@ using System.Reflection;
 using NHibernate;
 
 namespace XF.Model {
-   public class EntityProjector<TEntity, TMessage> : IProjector, IEntityMapper {
+   public class EntityProjector<TEntity, TMessage> : IProjector, IEntityMapper, IArgumentSource {
       private readonly ProjectionPart _parameters = new ProjectionPart();
 
       private readonly List<IReferencePart> _references = new List<IReferencePart>();
       private IDictionary<string, object> _criteriaParameters = new Dictionary<string, object>();
+      private IDictionary<string, ProjectionPart> _namedArguments = new Dictionary<string, ProjectionPart>();
 
       private readonly List<TMessage> _messages = new List<TMessage>();
       private readonly QueryRepository _queryRepository;
@@ -28,6 +29,9 @@ namespace XF.Model {
       public IDictionary<string, object> CriteriaParameters {
          get { return _criteriaParameters; }
          set { _criteriaParameters = value; }
+      }
+      public IDictionary<string, ProjectionPart> NamedArguments {
+         get { return _namedArguments; }
       }
 
       public ProjectionPart Parameters {
@@ -126,8 +130,9 @@ namespace XF.Model {
          return mapper;
       }
 
-      public void AddParameterPart(ProjectionPart parameterPart) {
+      public void AddParameterPart(ProjectionPart parameterPart, bool isNamed) {
          _parameters.Add(parameterPart);
+         if (isNamed) NamedArguments.Add(parameterPart.Name, parameterPart);
       }
 
       public void AddReferencePart(IReferencePart referencePart) {

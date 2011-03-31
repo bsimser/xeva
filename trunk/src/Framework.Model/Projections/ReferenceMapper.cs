@@ -5,8 +5,8 @@ using System.Reflection;
 using XF;
 
 namespace XF.Model {
-   public class ReferenceMapper<TMapper, TEntity, TMessage> : IEntityMapper, IReferenceMapper
-      where TMapper : IEntityMapper {
+   public class ReferenceMapper<TMapper, TEntity, TMessage> : IEntityMapper, IReferenceMapper, IArgumentSource
+      where TMapper : IEntityMapper, IArgumentSource {
       private readonly TMapper _projector;
       private readonly ProjectionPart _parameters = new ProjectionPart();
       private readonly List<IReferencePart> _references = new List<IReferencePart>();
@@ -50,6 +50,10 @@ namespace XF.Model {
          get { return _projector.Ordering; }
       }
 
+      public IDictionary<string, ProjectionPart> NamedArguments {
+         get { return _projector.NamedArguments; }
+      }
+      
       public ReferenceMapper<TMapper, TEntity, TMessage> ReferenceAsProperty() {
          _referenceType = ReferenceType.PropertyPart;
          return this;
@@ -185,8 +189,9 @@ namespace XF.Model {
          return _projector;
       }
 
-      public void AddParameterPart(ProjectionPart parameterPart) {
+      public void AddParameterPart(ProjectionPart parameterPart, bool isNamed) {
          _parameters.Add(parameterPart);
+         if(isNamed)NamedArguments.Add(parameterPart.Name, parameterPart);
       }
 
       public void AddReferencePart(IReferencePart referencePart) {

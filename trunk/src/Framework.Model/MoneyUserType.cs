@@ -6,23 +6,23 @@ using NHibernate.UserTypes;
 
 namespace XF.Model {
    public class MoneyUserType : IUserType {
-      private static readonly NHibernate.SqlTypes.SqlType[] SQL_TYPES = { NHibernateUtil.Decimal.SqlType };
+      private static readonly SqlType[] SQL_TYPES = { NHibernateUtil.Decimal.SqlType };
       public SqlType[] SqlTypes { get { return SQL_TYPES; } }
       public Type ReturnedType { get { return typeof(Money); } }
       public bool IsMutable { get { return false; } } 
 
       public new bool Equals(object x, object y) {
-         if (object.ReferenceEquals(x, y)) return true;
+         if (ReferenceEquals(x, y)) return true;
          if (x == null || y == null) return false;
          return x.Equals(y);
       }
 
       public int GetHashCode(object x) {
-         throw new System.NotImplementedException();
+         throw new NotImplementedException();
       }
 
       public object DeepCopy(object value) {
-         return new Money().SetInitialAmount(((Money)value).Amount);
+         return value != null ? new Money().SetInitialAmount(((Money)value).Amount) : null;
       }
 
       public object NullSafeGet(IDataReader dr, string[] names, object owner) {
@@ -43,7 +43,7 @@ namespace XF.Model {
       }
 
       public object Replace(object original, object target, object owner) {
-         throw new System.NotImplementedException();
+         throw new NotImplementedException();
       }
 
       public object Assemble(object cached, object owner) {

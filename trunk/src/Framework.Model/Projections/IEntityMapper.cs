@@ -7,7 +7,7 @@ namespace XF.Model
       int ParameterIdx { get; set; }
       int JoinRefIdx { get; set; }
       int EntityLevel { get; }
-      void AddParameterPart(ProjectionPart parameterPart);
+      void AddParameterPart(ProjectionPart parameterPart, bool isNamed);
       void AddReferencePart(IReferencePart referencePart);
       List<IExpressionMapper> Citerion { get; }
       List<IOrderingMapper> Ordering { get; }
