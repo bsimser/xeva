@@ -152,6 +152,11 @@ namespace XF.Store
          return _session.Linq<TEntity>();
       }
 
+      public IQueryable<T> Queryable<T>() {
+         Open();
+         return _session.Linq<T>();
+      }
+
       public ICriteria CreateCriteria<TEntity>()
       {
          Open();

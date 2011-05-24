@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF.Controls", "XF.Controls\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF.Controls.Sandbox", "XF.Controls.Sandbox\XF.Controls.Sandbox.csproj", "{87382702-E730-44EA-814F-21E4AC03D34C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelProjection", "ModelProjection\ModelProjection.csproj", "{20DF98E9-982B-48F0-BDBB-093F883FCBF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{87382702-E730-44EA-814F-21E4AC03D34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87382702-E730-44EA-814F-21E4AC03D34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87382702-E730-44EA-814F-21E4AC03D34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20DF98E9-982B-48F0-BDBB-093F883FCBF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20DF98E9-982B-48F0-BDBB-093F883FCBF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20DF98E9-982B-48F0-BDBB-093F883FCBF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20DF98E9-982B-48F0-BDBB-093F883FCBF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
