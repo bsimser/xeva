@@ -185,7 +185,7 @@ namespace XF.Model {
          var results = new Dictionary<object, TMessage>();
 
          foreach (object[] tuple in enumerable) {
-            var keyValue = (Guid)tuple[keyIdx];
+            var keyValue = tuple[keyIdx];
 
             var result = results.ContainsKey(keyValue) ? results[keyValue] : Activator.CreateInstance<TMessage>();
             _parameters.ForEach(param => param.SetOutputValue(result, tuple));

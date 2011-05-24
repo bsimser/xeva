@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Linq;
+using System.Reflection;
 
 namespace XF.Model
 {
@@ -17,6 +20,10 @@ namespace XF.Model
             default:
                return false;
          }
+      }
+
+      public static bool CollectionContainsKey(IList collection, object keyValue, PropertyInfo keyProperty) {
+         return collection.Cast<object>().Any(item => keyProperty.GetValue(item, null).ToString().ToLower() == keyValue.ToString().ToLower());
       }
    }
 }

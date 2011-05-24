@@ -53,7 +53,7 @@ namespace XF.Model {
       public IDictionary<string, ProjectionPart> NamedArguments {
          get { return _projector.NamedArguments; }
       }
-      
+
       public ReferenceMapper<TMapper, TEntity, TMessage> ReferenceAsProperty() {
          _referenceType = ReferenceType.PropertyPart;
          return this;
@@ -70,7 +70,7 @@ namespace XF.Model {
       }
 
       public JoinMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity> Join() {
-         var result = new JoinMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity>(this){EntityLevel = this.EntityLevel};
+         var result = new JoinMapper<ReferenceMapper<TMapper, TEntity, TMessage>, TEntity>(this) { EntityLevel = this.EntityLevel };
 
          return result;
       }
@@ -191,7 +191,7 @@ namespace XF.Model {
 
       public void AddParameterPart(ProjectionPart parameterPart, bool isNamed) {
          _parameters.Add(parameterPart);
-         if(isNamed)NamedArguments.Add(parameterPart.Name, parameterPart);
+         if (isNamed) NamedArguments.Add(parameterPart.Name, parameterPart);
       }
 
       public void AddReferencePart(IReferencePart referencePart) {
@@ -202,6 +202,7 @@ namespace XF.Model {
          get { return _projector.CriteriaParameters; }
          set { _projector.CriteriaParameters = value; }
       }
+
    }
 
    public enum ReferenceType {
