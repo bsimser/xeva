@@ -37,5 +37,11 @@ namespace XF.Model {
          if (arg == null || arg.GetType() != typeof(decimal)) return null;
          return new Money().SetInitialAmount((decimal)arg);
       }
+
+      public static object ToDecimal(object arg) {
+         if (arg == null || arg.GetType() != typeof(Money)) return default(decimal);
+         return ((Money)arg).Amount;
+      }
+
    }
 }

@@ -6,7 +6,7 @@ using XF;
 using XF.Model;
 
 namespace XF.Model {
-   public class ParameterMapper<TMapper, TEntity, TMessage> 
+   public class ParameterMapper<TMapper, TEntity, TMessage> : IParameterMapper
       where TMapper : IEntityMapper, IArgumentSource {
       private readonly TMapper _projector;
       private readonly PropertyInfo _messageProperty;
@@ -73,6 +73,11 @@ namespace XF.Model {
          return compTool;
       }
 
+      //public CaseMapper<ParameterMapper<TMapper, TEntity, TMessage>, TEntity> Case() {
+      //   var caseTool = new CaseMapper<ParameterMapper<TMapper, TEntity, TMessage>, TEntity>(this);
+      //   return caseTool;
+      //}
+
       public TMapper Add() {
          var part = new ProjectionPart {
             MessageProperty = _messageProperty,
@@ -83,7 +88,7 @@ namespace XF.Model {
                                      : string.Empty,
             DefaultValue = _defaultValue,
             EntityName = string.Format("{0}_{1}", _entityName, _projector.JoinRefIdx),
-            ParameterIdx = _projector.ParameterIdx++,
+            ParameterIdx = _compTool == null ? _projector.ParameterIdx++ : -1,
             MaskType = _maskType,
             Concatenations = _concatenations,
             ValueConversion = _valueConversion,
@@ -95,5 +100,9 @@ namespace XF.Model {
          _projector.AddParameterPart(part, !string.IsNullOrEmpty(Name));
          return _projector;
       }
+   }
+
+   public interface IParameterMapper {
+      List<string> NamedArguments { get; set; }
    }
 }

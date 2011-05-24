@@ -53,7 +53,12 @@ namespace XF.Model {
          if (ComputationTool != null)
             OutputValue = ComputationTool(GatherNamedArguments());
 
-         MessageProperty.SetValue(output, OutputValue, null);
+         try {
+            MessageProperty.SetValue(output, OutputValue, null);
+         }
+         catch (Exception e) {
+            throw;
+         }
       }
 
       private object[] GatherNamedArguments() {
@@ -69,7 +74,7 @@ namespace XF.Model {
       }
 
       protected object GetTupleValue(object[] tuple) {
-         if (tuple.Length <= ParameterIdx) return null;
+         if (ParameterIdx == -1 || tuple.Length <= ParameterIdx) return null;
          if (MaskType == MaskedType.None) return tuple[ParameterIdx];
 
          switch (MaskType) {

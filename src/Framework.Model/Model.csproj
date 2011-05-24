@@ -74,6 +74,7 @@
     <Compile Include="ModelConstants.cs" />
     <Compile Include="MoneyUserType.cs" />
     <Compile Include="NamedQuery.cs" />
+    <Compile Include="Projections\CaseMapper.cs" />
     <Compile Include="Projections\ComputationMapper.cs" />
     <Compile Include="Projections\EntityProjector.cs" />
     <Compile Include="Projections\ExpressionMapper.cs" />

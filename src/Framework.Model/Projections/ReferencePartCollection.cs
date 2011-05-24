@@ -14,8 +14,9 @@ namespace XF.Model
          Parameters.ForEach(param => param.SetOutputValue(listPart, tuple));
          References.ForEach(reference => reference.GenerateOutputReference(listPart, tuple));
 
-         if(IsKeyed && 
-            ReferencePartHelper.IsDefaultValue(KeyProperty.GetValue(listPart, null), KeyProperty.PropertyType)) return;
+         var keyValue = KeyProperty.GetValue(listPart, null);
+         if(ReferencePartHelper.CollectionContainsKey(collection, keyValue, KeyProperty)) return;
+         if(IsKeyed && ReferencePartHelper.IsDefaultValue(keyValue, KeyProperty.PropertyType)) return;
 
          collection.Add(listPart);
       }
