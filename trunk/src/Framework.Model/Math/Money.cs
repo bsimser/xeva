@@ -4,7 +4,7 @@ namespace XF.Model {
    public class Money {
       private readonly int _cents;
 
-      public Money() {}
+      public Money() { }
 
       public Money(decimal amount) {
          Amount = XFMath.Round((RoundMethods)Globals.Data["RoundMethod"], amount);
@@ -13,13 +13,12 @@ namespace XF.Model {
 
       public decimal Amount { get; private set; }
       public int Cents { get { return _cents; } }
+      public string Formatted { get { return string.Format("{0:C}", Amount); } }
 
-      public virtual bool Equals(Money obj) {
-         if (ReferenceEquals(null, obj))
-            return false;
-         if (ReferenceEquals(this, obj))
-            return true;
-         return obj.Amount == this.Amount;
+      public new bool Equals(object obj) {
+         if (ReferenceEquals(null, obj)) return false;
+         if (!ReferenceEquals(this, obj)) return false;
+         return ((Money)obj).Amount == this.Amount;
       }
 
       public override int GetHashCode() {
@@ -27,10 +26,29 @@ namespace XF.Model {
             return (Amount.GetHashCode() * 397);
          }
       }
-      
+
       public Money SetInitialAmount(decimal amount) {
          Amount = amount;
          return this;
+      }
+
+      public Money Add(Money money) {
+         if (money == null) return this;
+         return new Money().SetInitialAmount(this.Amount + money.Amount);
+      }
+
+      public Money Subtract(Money money) {
+         if (money == null) return this;
+         return new Money().SetInitialAmount(this.Amount - money.Amount);
+      }
+
+      public Money Negate() {
+         return new Money().SetInitialAmount(Amount * -1);
+      }
+
+      public static string ToFormatted(object arg) {
+         if (arg == null || arg.GetType() != typeof(Money)) return null;
+         return ((Money)arg).Formatted;
       }
 
       public static Money ToMoney(object arg) {

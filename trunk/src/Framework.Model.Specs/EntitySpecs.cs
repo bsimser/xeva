@@ -91,5 +91,13 @@ namespace Specs_for_Entity
 
          Assert.AreEqual(id.ToString(), entity.ToString());
       }
+
+      [Test]
+      public void Can_produce_a_formatted_money_string() {
+         XFMath.Assign(RoundMethods.HalfUp);
+         var mon = new Money(18.25m);
+         var val = mon.Formatted;
+      }
    }
+
 }

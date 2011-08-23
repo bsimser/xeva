@@ -12,13 +12,18 @@ namespace XF.Model
 
          var listPart = Activator.CreateInstance(MessageType);
          Parameters.ForEach(param => param.SetOutputValue(listPart, tuple));
-         References.ForEach(reference => reference.GenerateOutputReference(listPart, tuple));
 
          var keyValue = KeyProperty.GetValue(listPart, null);
-         if(ReferencePartHelper.CollectionContainsKey(collection, keyValue, KeyProperty)) return;
          if(IsKeyed && ReferencePartHelper.IsDefaultValue(keyValue, KeyProperty.PropertyType)) return;
 
-         collection.Add(listPart);
+         if(ReferencePartHelper.CollectionContainsKey(collection, keyValue, KeyProperty)) {
+            listPart = ReferencePartHelper.GetCollectionItem(collection, keyValue, KeyProperty);
+            References.ForEach(reference => reference.GenerateOutputReference(listPart, tuple));
+         }
+         else {
+            References.ForEach(reference => reference.GenerateOutputReference(listPart, tuple));
+            collection.Add(listPart);            
+         }
       }
    }
 }

@@ -25,5 +25,10 @@ namespace XF.Model
       public static bool CollectionContainsKey(IList collection, object keyValue, PropertyInfo keyProperty) {
          return collection.Cast<object>().Any(item => keyProperty.GetValue(item, null).ToString().ToLower() == keyValue.ToString().ToLower());
       }
+
+      public static object GetCollectionItem(IList collection, object keyValue, PropertyInfo keyProperty) {
+         return collection.Cast<object>().First(item => keyProperty.GetValue(item, null).ToString().ToLower() == keyValue.ToString().ToLower());
+      }
+
    }
 }
