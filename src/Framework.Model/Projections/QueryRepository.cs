@@ -22,7 +22,7 @@ namespace XF.Model {
          }
       }
 
-      public IQuery GetQueryFor(Type message, Type entity, IProjector projector) {
+      public IQuery GetQueryFor(Type message, Type entity, IProjector projector, int rows) {
          if (_queries.ContainsKey((message.ToString()))) return _store.CreateQuery(_queries[message.ToString()]);
 
          var queryBuilder = new StringBuilder();
@@ -34,7 +34,11 @@ namespace XF.Model {
          var queryText = queryBuilder.ToString();
          _queries.Add(message.ToString(), queryText);
 
-         return _store.CreateQuery(queryBuilder.ToString());
+         var query = _store.CreateQuery(queryBuilder.ToString());
+         if (rows != 0)
+            query.SetMaxResults(rows);
+
+         return query;
       }
 
       private void BuildSelectClause(StringBuilder queryBuilder, ProjectionPart parameters, List<IReferencePart> references) {

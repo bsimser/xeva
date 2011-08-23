@@ -17,6 +17,7 @@ namespace XF.Model {
       private readonly QueryRepository _queryRepository;
       private readonly List<IExpressionMapper> _citerion = new List<IExpressionMapper>();
       private readonly List<IOrderingMapper> _orderingList = new List<IOrderingMapper>();
+      private int Rows { get; set; }
 
       public EntityProjector() {
          _queryRepository = new QueryRepository(UnitOfWork.Store);
@@ -87,6 +88,12 @@ namespace XF.Model {
          return this;
       }
 
+      public EntityProjector<TEntity, TMessage> Limit(int rows) {
+         Rows = rows;
+         return this;
+      }
+
+
       public ParameterMapper<EntityProjector<TEntity, TMessage>, TEntity, TMessage> Projection(Expression<Func<TMessage, object>> messageExpression) {
          var messageProperty = ExpressionsHelper.GetMemberInfo(messageExpression) as PropertyInfo;
          var mapper = new ParameterMapper<EntityProjector<TEntity, TMessage>, TEntity, TMessage>(this, messageProperty);
@@ -142,7 +149,7 @@ namespace XF.Model {
       public ProjectionResults<TMessage> Project() {
          var results = new ProjectionResults<TMessage>();
          try {
-            var iQuery = _queryRepository.GetQueryFor(typeof(TMessage), typeof(TEntity), this);
+            var iQuery = _queryRepository.GetQueryFor(typeof(TMessage), typeof(TEntity), this, Rows);
             SetQueryParameterValues(iQuery);
 
             CreateOutputProjections(iQuery.Enumerable());

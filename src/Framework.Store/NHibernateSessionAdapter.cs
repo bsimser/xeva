@@ -178,6 +178,12 @@ namespace XF.Store
          return _session.CreateQuery(queryText);
       }
 
+      public IQuery CreateSqlQuery(string queryText) {
+         Open();
+
+         return _session.CreateSQLQuery(queryText);
+      }
+
       public ITransaction CreateTransaction()
       {
          Open();

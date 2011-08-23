@@ -27,5 +27,6 @@ namespace XF.Model {
       ICriteria CreateCriteria<TEntity>();
       IQuery GetQueryByName(string queryName);
       IQuery CreateQuery(string queryText);
+      IQuery CreateSqlQuery(string queryText);
    }
 }
