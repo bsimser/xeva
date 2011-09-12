@@ -49,6 +49,10 @@ namespace XF.Model
          return TemplateCopyTool.GenerateTemplateCopy(GetType(), this, null, null);
       }
 
+      public virtual Entity TemplateCopy(Type newType) {
+         return TemplateCopyTool.GenerateTemplateCopy(newType, this, null, null);
+      }
+
       public virtual Entity TemplateCopy(List<KeyValuePair<Action<object>, object>> copyActions) {
          return TemplateCopyTool.GenerateTemplateCopy(GetType(), this, null, copyActions);
       }

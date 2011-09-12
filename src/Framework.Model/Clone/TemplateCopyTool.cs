@@ -9,27 +9,27 @@ namespace XF.Model {
       public static Entity GenerateTemplateCopy(Type entityType, Entity origEntity, Entity parent,
                                                List<KeyValuePair<Action<object>, object>> copyActions) {
          var newEntity = Activator.CreateInstance(entityType) as Entity;
-         var properties = new List<PropertyInfo>(entityType.GetProperties(BindingFlags.Public | BindingFlags.Instance));
+         var properties = new List<PropertyInfo>(origEntity.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance));
 
          properties.ForEach(property => {
             try {
-               if (property.DeclaringType != entityType) return;
+               //if (property.DeclaringType != entityType) return;
 
                var attrs = property.GetCustomAttributes(typeof(ModelCopyAttribute), true);
-               ModelCopyAttribute copyAttr;
-
-               if (attrs == null || attrs.Length == 0)
-                  copyAttr = new ModelCopyAttribute { Method = CopyMethod.Copy };
-               else
-                  copyAttr = attrs[0] as ModelCopyAttribute;
-
+               var copyAttr = attrs == null || attrs.Length == 0
+                  ? new ModelCopyAttribute { Method = CopyMethod.Copy }
+                  : attrs[0] as ModelCopyAttribute;
 
                switch (copyAttr.Method) {
                   case CopyMethod.Parent:
                      CopyMethodParent(newEntity, parent, property);
                      break;
                   case CopyMethod.Copy:
-                     CopyMethodCopy(newEntity, origEntity, property);
+                     var value = property.GetValue(origEntity, null);
+                     var copyProperty = newEntity.GetType() == origEntity.GetType()
+                        ? property
+                        : newEntity.GetType().GetProperty(property.Name, BindingFlags.Public | BindingFlags.Instance);
+                     CopyMethodCopy(newEntity, value, copyProperty);
                      break;
                   case CopyMethod.Generate:
                      CopyMethodGenerate(newEntity, copyAttr, property);
@@ -57,12 +57,17 @@ namespace XF.Model {
          return newEntity;
       }
 
+      private static object GetPropertyAndValueFromOriginalEntity(PropertyInfo property, Entity origEntity) {
+         var origProperty = origEntity.GetType().GetProperty(property.Name, BindingFlags.Public | BindingFlags.Instance);
+         return origProperty.GetValue(origEntity, null);
+      }
+
       private static void CopyMethodParent(Entity newEntity, Entity parent, PropertyInfo property) {
          property.SetValue(newEntity, parent, null);
       }
 
-      private static void CopyMethodCopy(Entity newEntity, Entity origEntity, PropertyInfo property) {
-         property.SetValue(newEntity, property.GetValue(origEntity, null), null);
+      private static void CopyMethodCopy(Entity newEntity, object value, PropertyInfo property) {
+         property.SetValue(newEntity, value, null);
       }
 
       private static void CopyMethodGenerate(Entity newEntity, ModelCopyAttribute copyAttr, PropertyInfo property) {
