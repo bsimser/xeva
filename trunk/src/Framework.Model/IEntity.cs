@@ -10,5 +10,6 @@ namespace XF.Model
       Entity TemplateCopy();
       Entity TemplateCopy(List<KeyValuePair<Action<object>, object>> copyActions);
       Entity TemplateCopy(Entity parent, List<KeyValuePair<Action<object>, object>> copyActions);
+      Entity TemplateCopy(Type newType);
    }
 }

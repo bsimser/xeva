@@ -146,7 +146,7 @@ namespace XF.Model
       }
 
       [Test]
-      public void Can_add_with_on_join() {
+      public void Can_add_with_on_join_statement() {
          var projector = new EntityProjector<MyEntity, MyMessage>()
                            .Key(e => e.ID, mess => mess.ID)
                            .Projection(mess => mess.Name).Add()
