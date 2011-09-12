@@ -34,7 +34,10 @@ namespace XF {
       }
 
       public static void Release(object toRelease) {
-         Container.Release(toRelease);
+         try {
+            Container.Release(toRelease);
+         }
+         catch (Exception) {}
       }
 
       public static void Register(IRegistration[] registrations) {
