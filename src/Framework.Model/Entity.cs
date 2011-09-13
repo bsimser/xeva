@@ -11,12 +11,14 @@ namespace XF.Model
 
       public Entity() {}
 
+      [ModelCopy(Method = CopyMethod.None)]
       public virtual Guid ID
       {
          get { return _id; }
          set { _id = value; }
       }
 
+      [ModelCopy(Method = CopyMethod.None)]
       public virtual int Version
       {
          get { return _version; }

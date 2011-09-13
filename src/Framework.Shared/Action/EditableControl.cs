@@ -11,6 +11,7 @@ namespace XF
       EditableOptionToggle,
       EditableStatesComboEditor,
       EditableTextbox, 
-      Unspecified
+      Unspecified,
+      LabelControl
    }
 }

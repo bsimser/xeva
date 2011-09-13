@@ -9,10 +9,15 @@ namespace XF.Controls {
                                                    EditableControl controlType, List<IListMessage> lookupList,
                                                    bool isReadOnly) {
          var type = controlType != EditableControl.EditableTextbox ? controlType.ToString() : typeof(EditableTextbox).Name;
-         var control = Activator.CreateInstance(Type.GetType("XF.Controls." + type), null) as IEditable;
+         var control =  Activator.CreateInstance(Type.GetType("XF.Controls." + type), null) as IEditable;
          control.Name = controlName;
          control.ReadOnly = isReadOnly;
          return control.ToIEditable(controlLabel, controlValue, lookupList);
       }
+
+      public static LabelControl BuildLabelControl(string controlName, string controlLabel, object controlValue) {
+         return new LabelControl{Name = controlName, Label = controlLabel, Value = controlValue};
+      }
+
    }
 }

@@ -2,44 +2,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace XF.Model {
    public sealed class TemplateCopyTool {
 
-      public static Entity GenerateTemplateCopy(Type entityType, Entity origEntity, Entity parent,
+      public static Entity GenerateTemplateCopy(Type copyType, Entity origEntity, Entity parent,
                                                List<KeyValuePair<Action<object>, object>> copyActions) {
-         var newEntity = Activator.CreateInstance(entityType) as Entity;
-         var properties = new List<PropertyInfo>(origEntity.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance));
+         var copyEntity = Activator.CreateInstance(copyType) as Entity;
+         var origProperties = new List<PropertyInfo>(origEntity.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance));
 
-         properties.ForEach(property => {
+         origProperties.ForEach(origProperty => {
             try {
-               //if (property.DeclaringType != entityType) return;
 
-               var attrs = property.GetCustomAttributes(typeof(ModelCopyAttribute), true);
-               var copyAttr = attrs == null || attrs.Length == 0
-                  ? new ModelCopyAttribute { Method = CopyMethod.Copy }
-                  : attrs[0] as ModelCopyAttribute;
+               var origValue = origProperty.GetValue(origEntity, null);
+               var attrs = origProperty.GetCustomAttributes(typeof(ModelCopyAttribute), true).ToList();
+               var copyAttr = attrs.IsNotEmpty()
+                  ? attrs.First() as ModelCopyAttribute
+                  : new ModelCopyAttribute { Method = CopyMethod.Copy };
+               var copyProperty = copyEntity.GetType().GetProperty(origProperty.Name,
+                                                               BindingFlags.Public | BindingFlags.Instance);
+               if(origValue == null ||copyProperty == null) return;
 
                switch (copyAttr.Method) {
-                  case CopyMethod.Parent:
-                     CopyMethodParent(newEntity, parent, property);
-                     break;
                   case CopyMethod.Copy:
-                     var value = property.GetValue(origEntity, null);
-                     var copyProperty = newEntity.GetType() == origEntity.GetType()
-                        ? property
-                        : newEntity.GetType().GetProperty(property.Name, BindingFlags.Public | BindingFlags.Instance);
-                     CopyMethodCopy(newEntity, value, copyProperty);
+                     CopyMethodCopy(copyEntity, copyProperty, origValue);
+                     break;
+                  case CopyMethod.Parent:
+                     CopyMethodParent(copyEntity, copyProperty, parent);
                      break;
                   case CopyMethod.Generate:
-                     CopyMethodGenerate(newEntity, copyAttr, property);
+                     CopyMethodGenerate(copyEntity, copyProperty, copyAttr);
                      break;
                   case CopyMethod.Template:
-                     if (!property.IsCollection() && !property.ContainsType(typeof(IEntity))) return;
-                     if (property.IsCollection())
-                        CopyMethodTemplateAsList(newEntity, origEntity, property, copyActions);
+                     if (!origProperty.IsCollection() && !origProperty.ContainsType(typeof(IEntity))) return;
+                     if (origProperty.IsCollection())
+                        CopyMethodTemplateAsList(copyEntity, copyProperty, origValue as IEnumerable, copyActions);
                      else
-                        CopyMethodTemplateAsEntity(newEntity, origEntity, property, copyActions);
+                        CopyMethodTemplateAsEntity(copyEntity, copyProperty, origValue as Entity, copyActions);
                      break;
                }
             }
@@ -47,37 +47,31 @@ namespace XF.Model {
                throw;
             }
          });
-         if (copyActions == null) return newEntity;
+         if (copyActions == null) return copyEntity;
 
          copyActions.ForEach(action => {
-            var method = newEntity.GetType().GetMethod(action.Key.Method.Name);
+            var method = copyEntity.GetType().GetMethod(action.Key.Method.Name);
             if (method == null) return;
-            method.Invoke(newEntity, new[] { action.Value });
+            method.Invoke(copyEntity, new[] { action.Value });
          });
-         return newEntity;
+         return copyEntity;
       }
 
-      private static object GetPropertyAndValueFromOriginalEntity(PropertyInfo property, Entity origEntity) {
-         var origProperty = origEntity.GetType().GetProperty(property.Name, BindingFlags.Public | BindingFlags.Instance);
-         return origProperty.GetValue(origEntity, null);
-      }
-
-      private static void CopyMethodParent(Entity newEntity, Entity parent, PropertyInfo property) {
-         property.SetValue(newEntity, parent, null);
-      }
-
-      private static void CopyMethodCopy(Entity newEntity, object value, PropertyInfo property) {
+      private static void CopyMethodCopy(Entity newEntity, PropertyInfo property, object value) {
          property.SetValue(newEntity, value, null);
       }
 
-      private static void CopyMethodGenerate(Entity newEntity, ModelCopyAttribute copyAttr, PropertyInfo property) {
+      private static void CopyMethodParent(Entity newEntity, PropertyInfo property, Entity parent) {
+         property.SetValue(newEntity, parent, null);
+      }
+
+      private static void CopyMethodGenerate(Entity newEntity, PropertyInfo property, ModelCopyAttribute copyAttr) {
          property.SetValue(newEntity, copyAttr.Generate(), null);
       }
 
-      private static void CopyMethodTemplateAsEntity(Entity newEntity, Entity origEntity, PropertyInfo property,
+      private static void CopyMethodTemplateAsEntity(Entity newEntity, PropertyInfo property, Entity value,
                                                  List<KeyValuePair<Action<object>, object>> copyActions) {
-         var propValue = property.GetValue(origEntity, null) as Entity;
-         var template = propValue.TemplateCopy(newEntity, copyActions);
+         var template = value.TemplateCopy(newEntity, copyActions);
          property.SetValue(newEntity, template, null);
          if (copyActions == null) return;
 
@@ -88,17 +82,16 @@ namespace XF.Model {
          });
       }
 
-      private static void CopyMethodTemplateAsList(Entity newEntity, Entity origEntity, PropertyInfo property,
+      private static void CopyMethodTemplateAsList(Entity newEntity, PropertyInfo property, IEnumerable value,
                                                 List<KeyValuePair<Action<object>, object>> copyActions) {
-         var propValue = property.GetValue(origEntity, null) as IEnumerable;
-         if (propValue == null) return;
+         if (value == null) return;
 
          var enumerable = Activator.CreateInstance(property.PropertyFQN());
          var addMethod = enumerable.GetType().GetMethod("Add", BindingFlags.Public | BindingFlags.Instance);
          if (addMethod == null) return;
 
          property.SetValue(newEntity, enumerable, null);
-         foreach (var child in propValue) {
+         foreach (var child in value) {
             var copy = child is Entity ? ((Entity)child).TemplateCopy(newEntity, copyActions) : child;
             addMethod.Invoke(enumerable, new[] { copy });
             if (copyActions == null) continue;

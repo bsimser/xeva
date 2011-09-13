@@ -1,6 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace XF.Model  {
+   public enum CopyMethod {
+      Copy, Template, Parent, Generate, None
+   }
+
    public class ModelCopyAttribute : Attribute{
       public CopyMethod Method { get; set; }
       public Type GenerateAs { get; set; }
@@ -15,9 +21,5 @@ namespace XF.Model  {
                return null;
          }
       }
-   }
-
-   public enum CopyMethod {
-      Copy, Template, Parent, Generate, None
    }
 }
