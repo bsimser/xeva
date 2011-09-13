@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DifferentEntity.cs" />
+    <Compile Include="EntityCopySpecs.cs" />
     <Compile Include="EntitySpecs.cs" />
     <Compile Include="FakeEntity.cs" />
     <Compile Include="FakeRepository.cs" />
