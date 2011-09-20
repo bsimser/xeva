@@ -67,6 +67,18 @@ namespace XF.Controls {
          set { _valueLabel.Font = value; }
       }
 
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public bool WrapText {
+         get { return _valueLabel.WrapText; }
+         set { _valueLabel.WrapText = value; }
+      }
+
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public VAlign VTextAlign {
+         get { return _valueLabel.Appearance.TextVAlign; }
+         set { _valueLabel.Appearance.TextVAlign = value; }
+      }
+
       private void OnLabelClick(object sender, EventArgs e) {
          if (_valueLabel.Text == String.Empty) return;
 
