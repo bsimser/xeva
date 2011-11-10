@@ -7,6 +7,10 @@ using Iesi.Collections.Generic;
 
 namespace XF {
    public static class XFExtensions {
+      public static bool IsZero(this decimal num) {
+         return num == 0;
+      }
+
       public static bool IsEmpty<T>(this IEnumerable<T> collection) {
          return collection.Count() == 0;
       }
