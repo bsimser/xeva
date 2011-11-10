@@ -14,6 +14,7 @@ namespace XF.Model {
       public decimal Amount { get; private set; }
       public int Cents { get { return _cents; } }
       public string Formatted { get { return string.Format("{0:C}", Amount); } }
+      public bool IsZero { get { return Amount == 0; } }
 
       public new bool Equals(object obj) {
          if (ReferenceEquals(null, obj)) return false;
@@ -44,6 +45,14 @@ namespace XF.Model {
 
       public Money Negate() {
          return new Money().SetInitialAmount(Amount * -1);
+      }
+
+      public bool IsGreaterThan(Money compare) {
+         return Amount > compare.Amount;
+      }
+
+      public bool IsLessThan(Money compare) {
+         return Amount < compare.Amount;
       }
 
       public static string ToFormatted(object arg) {

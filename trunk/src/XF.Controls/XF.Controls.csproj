@@ -57,6 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContactControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContactControl.Designer.cs">
+      <DependentUpon>ContactControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ControlConstants.cs" />
     <Compile Include="Editable\EditablePercentageEditor.cs">
       <SubType>UserControl</SubType>
@@ -142,6 +148,7 @@
     <Compile Include="General\AddressControl.designer.cs">
       <DependentUpon>AddressControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ContactMessage.cs" />
     <Compile Include="General\DeleteCancelControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -219,6 +226,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ContactControl.resx">
+      <DependentUpon>ContactControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editable\EditablePercentageEditor.resx">
       <DependentUpon>EditablePercentageEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -315,6 +325,9 @@
   <ItemGroup>
     <None Include="Properties\DataSources\XF.LookupMessage.datasource" />
     <None Include="Resources\trash_16.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\envelope_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -18,6 +18,9 @@ namespace XF.Controls {
          DoubleBuffered = true;
       }
 
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public virtual string TipType { get; set; }
+
       [DefaultValue(false)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public bool HotTrack {
@@ -80,22 +83,34 @@ namespace XF.Controls {
       }
 
       private void OnLabelClick(object sender, EventArgs e) {
-         if (_valueLabel.Text == String.Empty) return;
+         if (string.IsNullOrEmpty(TipType)) {
+            if (_valueLabel.Text == String.Empty) return;
 
-         CloseToolTip();
+            CloseToolTip();
 
-         _toolTip = new ToolTipControl {
-            Text = base.LabelText,
-            ToolTip = _valueLabel.Text,
-            StartPosition = FormStartPosition.Manual,
-            Location = new Point(Cursor.Position.X + 15, Cursor.Position.Y + 15)
-         };
+            _toolTip = new ToolTipControl {
+               Text = base.LabelText,
+               ToolTip = _valueLabel.Text,
+               StartPosition = FormStartPosition.Manual,
+               Location = new Point(Cursor.Position.X + 15, Cursor.Position.Y + 15)
+            };
 
-         _toolTip.Show();
+            _toolTip.Show();
+         }
+         else {
+            if (_valueLabel.Text == String.Empty) return;
+
+            var control = new ContactControl(Tag as ContactMessage) {
+               StartPosition = FormStartPosition.Manual,
+               Location = new Point(Cursor.Position.X + 15, Cursor.Position.Y + 15)
+            };
+
+            control.Show();
+         }
       }
 
       private void OnLabelMouseLeave(object sender, EventArgs e) {
-         CloseToolTip();
+         if (string.IsNullOrEmpty(TipType)) CloseToolTip();
       }
 
       private void CloseToolTip() {
