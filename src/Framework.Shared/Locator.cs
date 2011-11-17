@@ -28,6 +28,11 @@ namespace XF {
          return Container.Resolve<T>(name);
       }
 
+      public static object Resolve(Type service) {
+         GuardContainerInitialized();
+         return Container.Resolve(service);
+      }
+
       public static object Resolve(string component) {
          GuardContainerInitialized();
          return Container.Resolve(component);

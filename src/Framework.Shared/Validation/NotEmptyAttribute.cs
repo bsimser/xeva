@@ -59,7 +59,8 @@ namespace XF.Validation
          if (rawValue.GetType()== typeof(DateTime))
          {
             var theValue = (DateTime)rawValue;
-            if (theValue == DateTime.MaxValue) {
+            if (theValue == DateTime.MaxValue ||
+                theValue == DateTime.MinValue) {
                AddMessage(validationResult, "Value is not set.");
                return;
             }
