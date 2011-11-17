@@ -30,6 +30,7 @@ namespace XF.UI.Smart
       public Guid EntityID { get; protected set; }
       public TUpdateMessage UpdateMessage { get; private set; }
       public IXFResults IXFResults { get; private set; }
+      protected bool Validated { get; set; }
       protected TService Service { get { return _service; } }
 
       public virtual void PerformAction()
@@ -42,7 +43,8 @@ namespace XF.UI.Smart
 
          LoadPassThroughPropertiesIntoUpdateMessage();
 
-         if (!Validate(UpdateMessage)) return;
+         Validated = Validate(UpdateMessage);
+         if (!Validated) return;
 
          IXFResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}) as IXFResults;
 
