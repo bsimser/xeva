@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace XF.UI.Smart
-{
+namespace XF.UI.Smart {
    public class ActionController<TService, TInputMessage, TUpdateMessage> : IActionCallbacks, IActionController
-      where TService : IActionableService
-   {
+      where TService : IActionableService {
       private readonly TService _service;
       private readonly ActionPropertyParameters _actionPropertyRegistry = new ActionPropertyParameters();
       private readonly Dictionary<string, IControl> _controls = new Dictionary<string, IControl>();
@@ -15,9 +13,9 @@ namespace XF.UI.Smart
       private MethodInfo _inputMethod;
       private MethodInfo _updateMethod;
       private ControllerValidator _validator;
+      private string _title;
 
-      public ActionController(TService service, IActionView<TUpdateMessage> view)
-      {
+      public ActionController(TService service, IActionView<TUpdateMessage> view) {
          _service = service;
          View = view;
          View.Attach(this);
@@ -30,28 +28,35 @@ namespace XF.UI.Smart
       public Guid EntityID { get; protected set; }
       public TUpdateMessage UpdateMessage { get; private set; }
       public IXFResults IXFResults { get; private set; }
+      protected IActionContract ActionContract { get; set; }
+      private IRefreshable Refreshable { get; set; }
       protected bool Validated { get; set; }
       protected TService Service { get { return _service; } }
 
-      public virtual void PerformAction()
-      {
+      public virtual void PerformAction() {
+         SetStatusVisability();
+
+         View.Hide();
          UpdateMessage = View.RetrieveActionMessage();
 
          if (Equals(UpdateMessage, default(TUpdateMessage))) return;
 
          LoadEntityIDIntoUpdateMessage();
-
          LoadPassThroughPropertiesIntoUpdateMessage();
+         SetStatusProgress(10);
 
          Validated = Validate(UpdateMessage);
          if (!Validated) return;
+         SetStatusProgress(20);
 
-         IXFResults = _updateMethod.Invoke(Service, new object[] {UpdateMessage}) as IXFResults;
+         IXFResults = _updateMethod.Invoke(Service, new object[] { UpdateMessage }) as IXFResults;
+         SetStatusProgress(90);
 
          switch (IXFResults.ResultCode) {
             case XFResultCode.Success:
-         if (ActionComplete != null)
-            ActionComplete(this, new EventArgs());
+               if (ActionComplete != null)
+                  ActionComplete(this, new EventArgs());
+               ClearStatusVisability();
                break;
             case XFResultCode.Failure:
                View.ShowMessage(string.Format("Action failed: {0}", IXFResults.Message));
@@ -59,13 +64,30 @@ namespace XF.UI.Smart
                   ActionCanceled(this, new EventArgs());
                break;
          }
+
       }
 
-      private void LoadPassThroughPropertiesIntoUpdateMessage()
-      {
+      private void SetStatusVisability() {
+         if (ActionContract == null) return;
+
+         ActionContract.StatusBarOpen(_title);
+      }
+
+      private void ClearStatusVisability() {
+         if (ActionContract == null) return;
+
+         ActionContract.StatusBarClose();
+      }
+
+      private void SetStatusProgress(int progress) {
+         if (ActionContract == null) return;
+
+         ActionContract.StatusbarProgress(progress);
+      }
+
+      private void LoadPassThroughPropertiesIntoUpdateMessage() {
          var properties = new List<PropertyInfo>(typeof(TUpdateMessage).GetProperties());
-         _actionPropertyRegistry.ForEach(item =>
-         {           
+         _actionPropertyRegistry.ForEach(item => {
             if (item.IsPassthrough && properties.Exists(prop => prop.Name == item.Input.Name)) {
                var prop = properties.Find(p => p.Name == item.Input.Name);
                prop.SetValue(UpdateMessage, item.DefaultValue, null);
@@ -73,15 +95,13 @@ namespace XF.UI.Smart
          });
       }
 
-      private void LoadEntityIDIntoUpdateMessage()
-      {
+      private void LoadEntityIDIntoUpdateMessage() {
          var entityProperty = UpdateMessage.GetType().GetProperty("EntityID");
-         if(entityProperty != null)
+         if (entityProperty != null)
             entityProperty.SetValue(UpdateMessage, EntityID, null);
       }
 
-      public virtual void CancelAction()
-      {
+      public virtual void CancelAction() {
          if (ActionCanceled != null)
             ActionCanceled(this, new EventArgs());
 
@@ -89,19 +109,16 @@ namespace XF.UI.Smart
          Locator.Release(this);
       }
 
-      public virtual void Finish()
-      {
+      public virtual void Finish() {
          View.Close();
          Locator.Release(this);
       }
 
-      public void Activate()
-      {
+      public void Activate() {
          Activate(new NullRequest());
       }
 
-      public void Activate(IRequest request)
-      {
+      public void Activate(IRequest request) {
          OnHandleRequest(request);
 
          if (_inputMethod != null)
@@ -109,21 +126,20 @@ namespace XF.UI.Smart
 
          LoadActionPropertiesDefaultValues();
 
-         foreach (var actionProperty in _actionPropertyRegistry)
-         {
+         foreach (var actionProperty in _actionPropertyRegistry) {
             if (actionProperty.IsPassthrough) continue;
 
             var controlValue = actionProperty.DefaultValue;
             EditableControl controlType;
             string propertyName, controlName, controlLabel;
             bool controlIsReadonly;
-            PopulateArgsFromOutputProperty(actionProperty.Output, out propertyName, out controlName, out controlLabel, 
+            PopulateArgsFromOutputProperty(actionProperty.Output, out propertyName, out controlName, out controlLabel,
                                            out controlType, out controlIsReadonly);
 
             var lookupList = actionProperty.ListOfValues != null
                                 ? actionProperty.ListOfValues.GetValue(_inputMessage, null) as List<IListMessage>
                                 : null;
-            var control = View.AddControl(propertyName, controlName, controlValue, 
+            var control = View.AddControl(propertyName, controlName, controlValue,
                                           controlLabel, controlType, lookupList, controlIsReadonly);
             _controls.Add(propertyName, control);
          }
@@ -131,10 +147,8 @@ namespace XF.UI.Smart
          View.Show();
       }
 
-      private void LoadActionPropertiesDefaultValues()
-      {
-         foreach (var actionProperty in _actionPropertyRegistry)
-         {
+      private void LoadActionPropertiesDefaultValues() {
+         foreach (var actionProperty in _actionPropertyRegistry) {
             if (actionProperty.DefaultValue != null) continue;
 
             if (actionProperty.Input == null)
@@ -146,15 +160,13 @@ namespace XF.UI.Smart
       }
 
       private void PopulateArgsFromOutputProperty(PropertyInfo outputInfo, out string propertyName, out string controlName,
-                                                   out string controlLabel, out EditableControl controlType, out bool controlIsReadOnly)
-      {
+                                                   out string controlLabel, out EditableControl controlType, out bool controlIsReadOnly) {
          propertyName = outputInfo.Name;
          controlName = string.Format("_{0}Editor", outputInfo.Name);
          var label = string.Empty;
          var type = EditableControl.Unspecified;
          var isReadOnly = false;
-         foreach (ActionPropertyAttribute attribute in outputInfo.GetCustomAttributes(typeof(ActionPropertyAttribute), false))
-         {
+         foreach (ActionPropertyAttribute attribute in outputInfo.GetCustomAttributes(typeof(ActionPropertyAttribute), false)) {
             label = attribute.Label;
             type = attribute.EditorType;
             isReadOnly = attribute.IsReadOnly;
@@ -167,46 +179,40 @@ namespace XF.UI.Smart
 
       protected virtual void OnHandleRequest(IRequest request) { }
 
-      protected bool Validate(object target)
-      {
+      protected bool Validate(object target) {
          if (_validator == null)
             InitializeValidator(new ControllerValidator());
          return _validator.Validate(new[] { target }, _controls);
       }
 
-      private void InitializeValidator(ControllerValidator validator)
-      {
+      private void InitializeValidator(ControllerValidator validator) {
          _validator = validator;
       }
 
       #region Mapping Code
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Titled(string title)
-      {
-         View.Title = title;
+      public ActionController<TService, TInputMessage, TUpdateMessage> Titled(string title) {
+         _title = title;
+         View.Title = _title;
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> ForEntity(Guid entityID)
-      {
+      public ActionController<TService, TInputMessage, TUpdateMessage> ForEntity(Guid entityID) {
          EntityID = entityID;
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Input<TArg>(Func<TArg, TInputMessage> inputMethod, TArg inputArg)
-      {
+      public ActionController<TService, TInputMessage, TUpdateMessage> Input<TArg>(Func<TArg, TInputMessage> inputMethod, TArg inputArg) {
          _inputMethod = inputMethod.Method;
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TUpdateMessage, IXFResults> updateMethod)
-      {
+      public ActionController<TService, TInputMessage, TUpdateMessage> Update(Func<TUpdateMessage, IXFResults> updateMethod) {
          _updateMethod = updateMethod.Method;
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField, object value)
-      {
+      public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField, object value) {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
 
          if (updateProperty == null) return this;
@@ -216,8 +222,7 @@ namespace XF.UI.Smart
       }
 
       public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField,
-                                                                           Expression<Func<TInputMessage, object>> inputField)
-      {
+                                                                           Expression<Func<TInputMessage, object>> inputField) {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
          var inputProperty = ExpressionsHelper.GetMemberInfo(inputField) as PropertyInfo;
          if (updateProperty == null) return this;
@@ -242,8 +247,7 @@ namespace XF.UI.Smart
 
       public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField,
                                                                            Expression<Func<TInputMessage, object>> inputField,
-                                                                           Expression<Func<TInputMessage, object>> listOfValues)
-      {
+                                                                           Expression<Func<TInputMessage, object>> listOfValues) {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
          var inputProperty = ExpressionsHelper.GetMemberInfo(inputField) as PropertyInfo;
          var listProperty = ExpressionsHelper.GetMemberInfo(listOfValues) as PropertyInfo;
@@ -257,8 +261,7 @@ namespace XF.UI.Smart
 
       public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField,
                                                                            object value,
-                                                                           Expression<Func<TInputMessage, object>> listOfValues)
-      {
+                                                                           Expression<Func<TInputMessage, object>> listOfValues) {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
          var listProperty = ExpressionsHelper.GetMemberInfo(listOfValues) as PropertyInfo;
          if (updateProperty == null) return this;
@@ -268,8 +271,7 @@ namespace XF.UI.Smart
          return this;
       }
 
-      public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField)
-      {
+      public ActionController<TService, TInputMessage, TUpdateMessage> Map(Expression<Func<TUpdateMessage, object>> updateField) {
          var updateProperty = ExpressionsHelper.GetMemberInfo(updateField) as PropertyInfo;
          if (updateProperty == null) return this;
 

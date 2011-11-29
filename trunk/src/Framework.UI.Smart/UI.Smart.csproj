@@ -78,6 +78,7 @@
     <Compile Include="FileAdapter\FileAdapterFactory.cs" />
     <Compile Include="FileAdapter\SimpleFileAdapter.cs" />
     <Compile Include="FileAdapter\IXFFileAdapter.cs" />
+    <Compile Include="IActionContract.cs" />
     <Compile Include="IControl.cs" />
     <Compile Include="IEditable.cs" />
     <Compile Include="IFieldsRegistry.cs" />
