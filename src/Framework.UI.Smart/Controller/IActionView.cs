@@ -13,5 +13,6 @@ namespace XF.UI.Smart
       void Show();
       void Close();
       void ShowMessage(string message);
+      void Hide();
    }
 }

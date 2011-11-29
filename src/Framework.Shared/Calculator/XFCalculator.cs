@@ -6,6 +6,9 @@ namespace XF {
    public class XFCalculator {
       private readonly IDictionary<string, object> _results = new Dictionary<string, object>();
 
+      [XmlAttribute(AttributeName = "version", DataType = "string")]
+      public string Version { get; set; }
+
       [XmlAttribute(AttributeName = "name", DataType = "string")]
       public string Name { get; set; }
 

@@ -14,10 +14,10 @@ namespace XF {
       public bool IsATotal { get; set; }
 
       [XmlAttribute(AttributeName = "exclude-output", DataType = "boolean")]
-      public bool ExcludeOutout { get; set; }
+      public bool ExcludeOutput { get; set; }
 
       [XmlAttribute(AttributeName = "final-output", DataType = "boolean")]
-      public bool FinalOutout { get; set; }
+      public bool FinalOutput { get; set; }
 
       public bool IsSkipped { get; set; }
 
