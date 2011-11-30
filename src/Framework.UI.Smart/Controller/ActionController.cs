@@ -56,7 +56,6 @@ namespace XF.UI.Smart {
             case XFResultCode.Success:
                if (ActionComplete != null)
                   ActionComplete(this, new EventArgs());
-               ClearStatusVisability();
                break;
             case XFResultCode.Failure:
                View.ShowMessage(string.Format("Action failed: {0}", IXFResults.Message));
@@ -64,6 +63,7 @@ namespace XF.UI.Smart {
                   ActionCanceled(this, new EventArgs());
                break;
          }
+         ClearStatusVisability();
 
       }
 
