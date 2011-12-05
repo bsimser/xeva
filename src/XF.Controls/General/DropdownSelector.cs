@@ -43,6 +43,12 @@ namespace XF.Controls {
          }
       }
 
+      public void SetInitialSelection(LookupMessage message) {
+         _itemsGrid.ActiveRow = _itemsGrid.Rows.Cast<UltraGridRow>().Where(r => (string)r.Cells["Name"].Value == message.Name).FirstOrDefault();
+         Value = message.Name;
+         RaiseItemSelected();
+      }
+
       [Bindable(true)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]
       public override object Value {
