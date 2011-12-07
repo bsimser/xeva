@@ -55,6 +55,10 @@ namespace XF.Model {
          return Amount < compare.Amount;
       }
 
+      public decimal ToDecimal() {
+         return Amount;
+      }
+
       public static string ToFormatted(object arg) {
          if (arg == null || arg.GetType() != typeof(Money)) return null;
          return ((Money)arg).Formatted;
