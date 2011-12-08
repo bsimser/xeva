@@ -47,7 +47,7 @@
          this._name.TabIndex = 0;
          this._name.Value = "Value";
          this._name.ValueLabelFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this._name.VTextAlign = Infragistics.Win.VAlign.Middle;
+         this._name.ValueVAlign = Infragistics.Win.VAlign.Middle;
          this._name.WrapText = false;
          // 
          // _address
@@ -64,7 +64,7 @@
          this._address.TabIndex = 1;
          this._address.Value = "Value";
          this._address.ValueLabelFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this._address.VTextAlign = Infragistics.Win.VAlign.Top;
+         this._address.ValueVAlign = Infragistics.Win.VAlign.Top;
          this._address.WrapText = false;
          // 
          // _phone1
@@ -138,7 +138,7 @@
          this._email.TabIndex = 5;
          this._email.Value = "Value";
          this._email.ValueLabelFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-         this._email.VTextAlign = Infragistics.Win.VAlign.Middle;
+         this._email.ValueVAlign = Infragistics.Win.VAlign.Middle;
          this._email.WrapText = false;
          // 
          // ultraButton1

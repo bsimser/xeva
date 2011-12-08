@@ -77,9 +77,15 @@ namespace XF.Controls {
       }
 
       [Category(ControlConstants.PROPERTY_CATEGORY)]
-      public VAlign VTextAlign {
+      public VAlign ValueVAlign {
          get { return _valueLabel.Appearance.TextVAlign; }
          set { _valueLabel.Appearance.TextVAlign = value; }
+      }
+
+      [Category(ControlConstants.PROPERTY_CATEGORY)]
+      public HAlign ValueHAlign {
+         get { return _valueLabel.Appearance.TextHAlign; }
+         set { _valueLabel.Appearance.TextHAlign = value; }
       }
 
       private void OnLabelClick(object sender, EventArgs e) {
