@@ -46,7 +46,11 @@ namespace XF.UI.Smart {
          SetStatusProgress(10);
 
          Validated = Validate(UpdateMessage);
-         if (!Validated) return;
+         if (!Validated) {
+            View.UnHide();
+            ClearStatusVisability();
+            return;
+         }
          SetStatusProgress(20);
 
          IXFResults = _updateMethod.Invoke(Service, new object[] { UpdateMessage }) as IXFResults;
