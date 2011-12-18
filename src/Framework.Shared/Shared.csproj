@@ -106,6 +106,7 @@
     <Compile Include="Masking\MaskFactory.cs" />
     <Compile Include="Masking\PhoneMaskType.cs" />
     <Compile Include="Masking\SSNMaskType.cs" />
+    <Compile Include="ParameterNameID.cs" />
     <Compile Include="PropertyHelper.cs" />
     <Compile Include="SimpleLookupMessage.cs" />
     <Compile Include="XFExtensions.cs" />
