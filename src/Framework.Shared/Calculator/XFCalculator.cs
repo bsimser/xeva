@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -11,6 +12,9 @@ namespace XF {
 
       [XmlAttribute(AttributeName = "name", DataType = "string")]
       public string Name { get; set; }
+
+      [XmlAttribute(AttributeName = "rounding", DataType = "string")]
+      public string Rounding { get; set; }
 
       [XmlElement("algorithmobject", Type = typeof(XFCalculatorAlgorithm))]
       public XFCalculatorAlgorithm Algorithm { get; set; }
@@ -31,5 +35,9 @@ namespace XF {
          }
          return _results;
       }
+   }
+
+   public enum XFCalculatorRound {
+      ToEven, AwayFromZero, ToWhole, None, TruncateToWhole
    }
 }

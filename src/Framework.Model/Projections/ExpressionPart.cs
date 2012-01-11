@@ -38,6 +38,16 @@ namespace XF.Model {
          return _mapper;
       }
 
+      public TMapper NEq(object value) {
+         if (string.IsNullOrEmpty(value.ToString())) return _mapper;
+
+         var paramName = SetParameterName(_propertyName);
+         var criteria = string.Format("{0} <> (:{1}) ", _criteria, paramName);
+         UpdateExpression(value, paramName, criteria);
+
+         return _mapper;
+      }
+
       public TMapper In(object value) {
          if (string.IsNullOrEmpty(value.ToString())) return _mapper;
 
