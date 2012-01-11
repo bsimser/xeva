@@ -64,6 +64,17 @@
 	<xs:element name='output'>
 		<xs:complexType mixed='true'>
 			<xs:attribute name="name" use="required"/>
+			<xs:attribute name="rounding">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ToEven"/>
+						<xs:enumeration value="AwayFromZero"/>
+						<xs:enumeration value="ToWhole"/>
+						<xs:enumeration value="None"/>
+						<xs:enumeration value="TruncateToWhole"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 
@@ -111,6 +122,16 @@
 				<xs:enumeration value="AND"/>
 				<xs:enumeration value="OR"/>
 				<xs:enumeration value="NOT"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name="roundMethod">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="ToEven"/>
+				<xs:enumeration value="AwayFromZero"/>
+				<xs:enumeration value="None"/>
 			</xs:restriction>
 		</xs:simpleType>
 	</xs:element>
