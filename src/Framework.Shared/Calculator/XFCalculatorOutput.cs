@@ -32,7 +32,7 @@ namespace XF {
             case XFCalculatorRound.AwayFromZero:
                return Math.Round(operand, 2, MidpointRounding.AwayFromZero);
             case XFCalculatorRound.ToWhole:
-               return Math.Round(operand, 0, MidpointRounding.ToEven);
+               return Math.Round(operand, 0, MidpointRounding.AwayFromZero);
             case XFCalculatorRound.TruncateToWhole:
                return decimal.Truncate(operand);
             case XFCalculatorRound.None:
