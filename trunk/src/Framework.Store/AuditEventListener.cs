@@ -59,13 +59,36 @@ namespace XF.Store {
       private void SetAuditProperties(AbstractPreDatabaseOperationEvent @event,  IEntityPersister persister, 
                                       object[] state, IUserAccount auditUser, DateTime auditDate) {
          foreach (var propertyPair in _auditProperties) {
-            if (propertyPair.Key.Contains("By")) {
+            if (propertyPair.Key.Contains(ModelConstants.UPDATEDBY)) {
                propertyPair.Value.SetValue(@event.Entity, auditUser, null);
                Set(persister, state, propertyPair.Key, auditUser);
             }
-            if (propertyPair.Key.Contains("On")) {
+            if (propertyPair.Key.Contains(ModelConstants.UPDATEDON)) {
                propertyPair.Value.SetValue(@event.Entity, auditDate, null);
                Set(persister, state, propertyPair.Key, auditDate);
+            }
+            if (propertyPair.Key.Contains(ModelConstants.CREATEDBY)) {
+               var currentValue = (IUserAccount)propertyPair.Value.GetValue(@event.Entity, null);
+               if(currentValue == null) {
+                  propertyPair.Value.SetValue(@event.Entity, auditUser, null);
+                  Set(persister, state, propertyPair.Key, auditUser);
+               }
+               else {
+                  propertyPair.Value.SetValue(@event.Entity, currentValue, null);
+                  Set(persister, state, propertyPair.Key, currentValue);
+               }
+            }
+            if (propertyPair.Key.Contains(ModelConstants.CREATEDON)) {
+               var currentValue = (DateTime?)propertyPair.Value.GetValue(@event.Entity, null);
+               if(currentValue == null ||
+                  !((DateTime)currentValue).IsBetween(DateTime.Parse("1/1/1900"), DateTime.Parse("1/1/3000"))) {
+                  propertyPair.Value.SetValue(@event.Entity, auditDate, null);
+                  Set(persister, state, propertyPair.Key, auditDate);
+               }
+               else {
+                  propertyPair.Value.SetValue(@event.Entity, currentValue, null);
+                  Set(persister, state, propertyPair.Key, currentValue);
+               }
             }
          }
       }

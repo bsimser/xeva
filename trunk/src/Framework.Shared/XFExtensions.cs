@@ -54,6 +54,15 @@ namespace XF {
          return results;
       }
 
+      public static bool IsBetween(this DateTime compare, DateTime start, DateTime end) {
+         //Recreating the dates eliminates the time component.
+         if (compare.Year == 1) return false;
+         compare = DateTime.Parse(string.Format("{0}/{1}/{2}", compare.Month, compare.Day, compare.Year));
+         start = DateTime.Parse(string.Format("{0}/{1}/{2}", start.Month, start.Day, start.Year));
+         end = DateTime.Parse(string.Format("{0}/{1}/{2}", end.Month, end.Day, end.Year));
+         return compare >= start && compare <= end;
+      }
+      
       public static bool ContainsType(this PropertyInfo property, Type type) {
          var interfaces = new List<Type>(property.PropertyType.GetInterfaces());
          return interfaces.Exists(m => m.Name == type.Name);
