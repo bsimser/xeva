@@ -56,7 +56,15 @@ namespace XF.Validation
             }
          }
 
-         if (rawValue.GetType()== typeof(DateTime))
+         if (rawValue.GetType() == typeof(int)) {
+            var theValue = (int)rawValue;
+            if (theValue == 0) {
+               AddMessage(validationResult, "Value is zero.");
+               return;
+            }
+         }
+
+         if (rawValue.GetType() == typeof(DateTime))
          {
             var theValue = (DateTime)rawValue;
             if (theValue == DateTime.MaxValue ||
