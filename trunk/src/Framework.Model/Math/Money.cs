@@ -51,8 +51,16 @@ namespace XF.Model {
          return Amount > compare.Amount;
       }
 
+      public bool IsGreaterET(Money compare) {
+         return Amount >= compare.Amount;
+      }
+
       public bool IsLessThan(Money compare) {
          return Amount < compare.Amount;
+      }
+
+      public bool IsLessET(Money compare) {
+         return Amount <= compare.Amount;
       }
 
       public decimal ToDecimal() {
