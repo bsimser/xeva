@@ -62,7 +62,23 @@ namespace XF {
          end = DateTime.Parse(string.Format("{0}/{1}/{2}", end.Month, end.Day, end.Year));
          return compare >= start && compare <= end;
       }
-      
+
+      public static bool IsGreater(this DateTime compare, DateTime start) {
+         return compare > start;
+      }
+
+      public static bool IsGreaterEt(this DateTime compare, DateTime start) {
+         return compare >= start;
+      }
+
+      public static bool IsLess(this DateTime compare, DateTime start) {
+         return compare < start;
+      }
+
+      public static bool IsLessEt(this DateTime compare, DateTime start) {
+         return compare <= start;
+      }
+
       public static bool ContainsType(this PropertyInfo property, Type type) {
          var interfaces = new List<Type>(property.PropertyType.GetInterfaces());
          return interfaces.Exists(m => m.Name == type.Name);
