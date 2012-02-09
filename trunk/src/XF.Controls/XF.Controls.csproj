@@ -190,6 +190,7 @@
       <DependentUpon>SaveDeleteCancelControl.cs</DependentUpon>
     </Compile>
     <Compile Include="General\TabControlDrawFilter.cs" />
+    <Compile Include="GridHeaderCheckbox.cs" />
     <Compile Include="Masked\EditableMaskedControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
