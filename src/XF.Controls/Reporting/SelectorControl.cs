@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using Infragistics.Win.UltraWinGrid;
 using XF.UI.Smart;
 
@@ -14,7 +10,7 @@ namespace XF.Controls {
    public partial class SelectorControl : UserControl, IControl {
       private const string NAME_PARAM = "Name";
       private const string ID_PARAM = "Id";
-      private List<ParameterNameID> _parameters = new List<ParameterNameID>();
+      private List<LookupMessage> _parameters = new List<LookupMessage>();
       private string _parameter = NAME_PARAM;
 
       public SelectorControl() {
@@ -56,7 +52,7 @@ namespace XF.Controls {
          set { _parameter = value; }
       }
 
-      public List<ParameterNameID> Parameters {
+      public List<LookupMessage> Parameters {
          set {
             _parameters = value;
 
@@ -72,8 +68,8 @@ namespace XF.Controls {
          get { return SelectedRow != null ? SelectedRow.Cells[NAME_PARAM].Value.ToString() : string.Empty; }
       }
 
-      public string SelectedIDParameter {
-         get { return SelectedRow != null ? SelectedRow.Cells[ID_PARAM].Value.ToString() : string.Empty; }
+      public Guid SelectedIDParameter {
+         get { return SelectedRow != null ? (Guid)SelectedRow.Cells[ID_PARAM].Value : Guid.Empty; }
       }
 
       public string ButtonText {
@@ -106,7 +102,7 @@ namespace XF.Controls {
 
          _paramaterButton.Left = left;
 
-         _paramaterButton.Width = this.Width - left - (ControlConstants.CONTROL_PADDING);
+         _paramaterButton.Width = Width - left - (ControlConstants.CONTROL_PADDING);
       }
 
       private void OnResized(object sender, EventArgs e) {

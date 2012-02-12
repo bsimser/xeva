@@ -26,10 +26,12 @@ namespace XF.Controls {
       private void InitializeComponent() {
          this.components = new System.ComponentModel.Container();
          Infragistics.Win.Appearance appearance14 = new Infragistics.Win.Appearance();
-         Infragistics.Win.UltraWinGrid.UltraGridBand ultraGridBand1 = new Infragistics.Win.UltraWinGrid.UltraGridBand("ParameterNameID", -1);
-         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn1 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Name");
-         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn2 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("ID");
-         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn3 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Selected", 0);
+         Infragistics.Win.UltraWinGrid.UltraGridBand ultraGridBand1 = new Infragistics.Win.UltraWinGrid.UltraGridBand("LookupMessage", -1);
+         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn1 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("ID");
+         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn2 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("StatusColor");
+         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn3 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Name");
+         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn4 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("DisplayOrder");
+         Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn5 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("Selected", 0);
          Infragistics.Win.Appearance appearance15 = new Infragistics.Win.Appearance();
          Infragistics.Win.Appearance appearance16 = new Infragistics.Win.Appearance();
          Infragistics.Win.Appearance appearance17 = new Infragistics.Win.Appearance();
@@ -86,31 +88,37 @@ namespace XF.Controls {
          this._parameterGrid.DisplayLayout.Appearance = appearance14;
          this._parameterGrid.DisplayLayout.AutoFitStyle = Infragistics.Win.UltraWinGrid.AutoFitStyle.ResizeAllColumns;
          ultraGridBand1.ColHeadersVisible = false;
-         ultraGridColumn1.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
-         ultraGridColumn1.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.RowSelect;
-         ultraGridColumn1.Header.VisiblePosition = 1;
-         ultraGridColumn1.RowLayoutColumnInfo.OriginX = 1;
-         ultraGridColumn1.RowLayoutColumnInfo.OriginY = 0;
-         ultraGridColumn1.RowLayoutColumnInfo.SpanX = 2;
-         ultraGridColumn1.RowLayoutColumnInfo.SpanY = 2;
-         ultraGridColumn1.Width = 213;
-         ultraGridColumn2.Header.VisiblePosition = 2;
+         ultraGridColumn1.Header.VisiblePosition = 3;
+         ultraGridColumn1.Hidden = true;
+         ultraGridColumn1.Width = 214;
+         ultraGridColumn2.Header.VisiblePosition = 1;
          ultraGridColumn2.Hidden = true;
-         ultraGridColumn2.Width = 214;
+         ultraGridColumn3.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
          ultraGridColumn3.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.RowSelect;
-         ultraGridColumn3.DataType = typeof(bool);
-         ultraGridColumn3.Header.Caption = "";
-         ultraGridColumn3.Header.VisiblePosition = 0;
-         ultraGridColumn3.RowLayoutColumnInfo.OriginX = 0;
+         ultraGridColumn3.Header.VisiblePosition = 2;
+         ultraGridColumn3.RowLayoutColumnInfo.OriginX = 1;
          ultraGridColumn3.RowLayoutColumnInfo.OriginY = 0;
-         ultraGridColumn3.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(43, 0);
-         ultraGridColumn3.RowLayoutColumnInfo.SpanX = 1;
+         ultraGridColumn3.RowLayoutColumnInfo.SpanX = 2;
          ultraGridColumn3.RowLayoutColumnInfo.SpanY = 2;
-         ultraGridColumn3.Width = 86;
+         ultraGridColumn3.Width = 213;
+         ultraGridColumn4.Header.VisiblePosition = 4;
+         ultraGridColumn4.Hidden = true;
+         ultraGridColumn5.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.RowSelect;
+         ultraGridColumn5.DataType = typeof(bool);
+         ultraGridColumn5.Header.Caption = "";
+         ultraGridColumn5.Header.VisiblePosition = 0;
+         ultraGridColumn5.RowLayoutColumnInfo.OriginX = 0;
+         ultraGridColumn5.RowLayoutColumnInfo.OriginY = 0;
+         ultraGridColumn5.RowLayoutColumnInfo.PreferredCellSize = new System.Drawing.Size(43, 0);
+         ultraGridColumn5.RowLayoutColumnInfo.SpanX = 1;
+         ultraGridColumn5.RowLayoutColumnInfo.SpanY = 2;
+         ultraGridColumn5.Width = 86;
          ultraGridBand1.Columns.AddRange(new object[] {
             ultraGridColumn1,
             ultraGridColumn2,
-            ultraGridColumn3});
+            ultraGridColumn3,
+            ultraGridColumn4,
+            ultraGridColumn5});
          ultraGridBand1.Override.AllowAddNew = Infragistics.Win.UltraWinGrid.AllowAddNew.No;
          ultraGridBand1.Override.AllowDelete = Infragistics.Win.DefaultableBoolean.False;
          ultraGridBand1.Override.MaxSelectedRows = 1;
@@ -177,7 +185,7 @@ namespace XF.Controls {
          // 
          // _parameterBindingSource
          // 
-         this._parameterBindingSource.DataSource = typeof(ParameterNameID);
+         this._parameterBindingSource.DataSource = typeof(XF.LookupMessage);
          // 
          // _label
          // 
