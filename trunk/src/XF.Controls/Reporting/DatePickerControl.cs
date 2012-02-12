@@ -41,7 +41,7 @@ namespace XF.Controls {
 
          _datePicker.Left = left;
 
-         _datePicker.Width = this.Width - left - (ControlConstants.CONTROL_PADDING);
+         _datePicker.Width = Width - left - (ControlConstants.CONTROL_PADDING);
       }
 
       public void ShowError(string message) {

@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using Infragistics.Win;
 using Infragistics.Win.UltraWinGrid;
 using XF.UI.Smart;
 
@@ -20,7 +19,7 @@ namespace XF.Controls {
       private const string PARAMS = "Params";
       private const string SELECTED = "Selected";
       private const string UNIVERSAL = "Universal";
-      private List<ParameterNameID> _parameters;
+      private List<LookupMessage> _parameters;
       private string _parameter = NAME_PARAM;
 
       public ParameterListControl() {
@@ -63,13 +62,13 @@ namespace XF.Controls {
          set { _parameter = value; }
       }
 
-      public List<ParameterNameID> Parameters {
+      public List<LookupMessage> Parameters {
          set {
             InitializeParameterList();
             _parameters.AddRange(value);
 
             _parameterBindingSource.SuspendBinding();
-            _parameterBindingSource.DataSource = new BindingAdapter<ParameterNameID>(_parameters);
+            _parameterBindingSource.DataSource = new BindingAdapter<LookupMessage>(_parameters);
             _parameterBindingSource.ResumeBinding();
 
             ButtonText = string.Empty;
@@ -78,7 +77,7 @@ namespace XF.Controls {
 
       public void ClearParameters() {
          _parameters.Clear();
-         _parameters.Add(new ParameterNameID { Name = ALL_PARAM, ID = "all" });
+         _parameters.Add(new LookupMessage { Name = ALL_PARAM, ID = Guid.Empty });
       }
 
       public XElement IDParameterList {
@@ -89,13 +88,13 @@ namespace XF.Controls {
          get { return BuildXElementParameterList(NAME_PARAM); }
       }
 
-      public List<string> SelectedIDLIST {
+      public List<Guid> SelectedIDLIST {
          get {
-            var result = new List<string>();
+            var result = new List<Guid>();
             foreach (var row in _parameterGrid.Rows) {
                if (row.Cells[NAME_PARAM].Value.ToString() != ALL_PARAM &&
                    (bool)row.Cells[SELECTED].Value)
-                  result.Add(row.Cells[ID_PARAM].Value.ToString());
+                  result.Add((Guid)row.Cells[ID_PARAM].Value);
             }
             return result;
          }
@@ -192,7 +191,7 @@ namespace XF.Controls {
       }
 
       private void InitializeParameterList() {
-         _parameters = new List<ParameterNameID> { new ParameterNameID { Name = ALL_PARAM, ID = "all" } };
+         _parameters = new List<LookupMessage> { new LookupMessage{ Name = ALL_PARAM, ID = Guid.Empty } };
       }
 
       private void OnClosedUp(object sender, EventArgs e) {
@@ -262,8 +261,8 @@ namespace XF.Controls {
       }
 
       private void OnMouseDown(object sender, MouseEventArgs e) {
-         Point gridPoint = new Point(e.X, e.Y);
-         UIElement uiElement = _parameterGrid.DisplayLayout.UIElement.ElementFromPoint(gridPoint);
+         var gridPoint = new Point(e.X, e.Y);
+         var uiElement = _parameterGrid.DisplayLayout.UIElement.ElementFromPoint(gridPoint);
          _parameterGrid.ActiveRow = uiElement.GetContext(typeof(UltraGridRow), true) as UltraGridRow;
 
          if (_parameterGrid.ActiveRow == null) return;
