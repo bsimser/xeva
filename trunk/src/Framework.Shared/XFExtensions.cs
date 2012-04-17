@@ -11,6 +11,10 @@ namespace XF {
          return num == 0;
       }
 
+      public static bool IsZero(this int num) {
+         return num == 0;
+      }
+
       public static bool IsEmpty<T>(this IEnumerable<T> collection) {
          return collection.Count() == 0;
       }
@@ -52,6 +56,14 @@ namespace XF {
          }
 
          return results;
+      }
+
+      public static DateTime AsUntil(this DateTime current) {
+         return current.AddDays(-1);
+      }
+
+      public static bool IsSameDayAs(this DateTime compare, DateTime start) {
+         return compare.ToShortDateString().Equals(start.ToShortDateString());
       }
 
       public static bool IsBetween(this DateTime compare, DateTime start, DateTime end) {

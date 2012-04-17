@@ -25,7 +25,7 @@ namespace XF.Controls {
       }
 
       private void HeaderCheckBoxClicked(object sender, HeaderCheckBoxEventArgs e) {
-         if (e.Header.Column.DataType != typeof (bool)) return;
+         if (e.Header.Column.DataType != typeof(bool)) return;
 
          foreach (UltraGridRow row in e.Rows) {
             if (row.ChildBands != null) {
@@ -39,7 +39,8 @@ namespace XF.Controls {
 
       private void ToggleChildBandRows(UltraGridRow parentRow, CheckState checkState) {
          foreach (UltraGridRow row in parentRow.ChildBands[0].Rows) {
-            row.Cells["Selected"].Value = (checkState == CheckState.Checked);
+            if (row.Cells.Exists("Selected"))
+               row.Cells["Selected"].Value = (checkState == CheckState.Checked);
          }
       }
 
@@ -95,11 +96,11 @@ namespace XF.Controls {
 
             parent.ChildElements.Add(checkBoxUIElement);
 
-            var x = (parent.Rect.Width - checkBoxUIElement.CheckSize.Width) / 2;
+            var x = ((parent.Rect.Width - checkBoxUIElement.CheckSize.Width) / 2) + parent.Rect.X;
             var y = (parent.Rect.Height - checkBoxUIElement.CheckSize.Height) / 2;
-            checkBoxUIElement.Rect = new Rectangle(x,y,checkBoxUIElement.CheckSize.Width, checkBoxUIElement.CheckSize.Height); 
+            checkBoxUIElement.Rect = new Rectangle(x, y, checkBoxUIElement.CheckSize.Width, checkBoxUIElement.CheckSize.Height);
 
-            textUIElment.Rect = new Rectangle(checkBoxUIElement.Rect.Right + 3, textUIElment.Rect.Y, 
+            textUIElment.Rect = new Rectangle(checkBoxUIElement.Rect.Right + 3, textUIElment.Rect.Y,
                                               parent.Rect.Width - (checkBoxUIElement.Rect.Right - parent.Rect.X), textUIElment.Rect.Height);
          }
          else {

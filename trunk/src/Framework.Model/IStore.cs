@@ -28,5 +28,6 @@ namespace XF.Model {
       IQuery GetQueryByName(string queryName);
       IQuery CreateQuery(string queryText);
       IQuery CreateSqlQuery(string queryText);
+      void Evict(object entity);
    }
 }
