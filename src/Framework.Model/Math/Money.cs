@@ -48,6 +48,10 @@ namespace XF.Model {
          return new Money().SetInitialAmount(Amount * -1);
       }
 
+      public bool IsEqual(Money compare) {
+         return Amount == compare.Amount;
+      }
+
       public bool IsGreaterThan(Money compare) {
          return Amount > compare.Amount;
       }
@@ -69,6 +73,7 @@ namespace XF.Model {
       }
 
       public static Money Empty { get {return new Money(0);}}
+      public static Money Zero { get { return Money.Empty; } }
 
       public static string ToFormatted(object arg) {
          if (arg == null || arg.GetType() != typeof(Money)) return null;
