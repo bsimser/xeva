@@ -28,7 +28,7 @@ namespace XF.Controls {
          set {
             _items = value;
 
-            _items.Sort((a,b) => a.DisplayOrder.CompareTo(b.DisplayOrder));
+            _items.Sort((a, b) => a.DisplayOrder.CompareTo(b.DisplayOrder));
             _itemsBS.SuspendBinding();
             _itemsBS.DataSource = new BindingAdapter<LookupMessage>(_items ?? new List<LookupMessage>());
             _itemsBS.ResumeBinding();
@@ -147,7 +147,7 @@ namespace XF.Controls {
 
       private void OnItemSelected(object sender, AfterSelectChangeEventArgs e) {
          if (_itemsGrid.Selected.Rows.Count != 0)
-             _itemsGrid.ActiveRow = _itemsGrid.Selected.Rows[0];
+            _itemsGrid.ActiveRow = _itemsGrid.Selected.Rows[0];
 
          if (!_internalButton.IsDroppedDown) {
             SetButtonText();
@@ -155,7 +155,11 @@ namespace XF.Controls {
             return;
          }
 
-         _internalButton.CloseUp();
+         if (_internalButton.IsDroppedDown) {
+            _internalButton.CloseUp();
+            return;
+         }
+
       }
    }
 }

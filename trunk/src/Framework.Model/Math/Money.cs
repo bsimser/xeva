@@ -15,6 +15,7 @@ namespace XF.Model {
       public int Cents { get { return _cents; } }
       public string Formatted { get { return string.Format("{0:C}", Amount); } }
       public bool IsZero { get { return Amount == 0; } }
+      public bool IsNotZero { get { return Amount != 0; } }
       public bool IsNegative { get { return Amount < 0; } }
 
       public new bool Equals(object obj) {

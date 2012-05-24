@@ -7,6 +7,10 @@ using Iesi.Collections.Generic;
 
 namespace XF {
    public static class XFExtensions {
+      public static bool IsMoreThan1(this decimal num) {
+         return num > 1m;
+      }
+
       public static bool IsZero(this decimal num) {
          return num == 0;
       }
