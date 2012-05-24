@@ -30,7 +30,8 @@ namespace XF {
             case XFCalculatorRound.ToEven:
                return Math.Round(operand, 2, MidpointRounding.ToEven);
             case XFCalculatorRound.AwayFromZero:
-               return Math.Round(operand, 2, MidpointRounding.AwayFromZero);
+               var step1 = Math.Round(operand, 1, MidpointRounding.AwayFromZero);
+               return Math.Round(step1, 0, MidpointRounding.AwayFromZero);
             case XFCalculatorRound.ToWhole:
                return Math.Round(operand, 0, MidpointRounding.AwayFromZero);
             case XFCalculatorRound.TruncateToWhole:
