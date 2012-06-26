@@ -69,11 +69,21 @@ namespace XF.Model {
          return Amount <= compare.Amount;
       }
 
+      public bool BelowOneDollar() {
+         return Amount.IsLessThanOneDollar();
+      }
+
+      public bool BelowOneDollarNegative() {
+         return Amount.IsLessThanOneDollarNegative();
+      }
+
       public decimal ToDecimal() {
          return Amount;
       }
 
       public static Money Empty { get {return new Money(0);}}
+      public static Money OneDollar { get { return new Money(1); } }
+      public static Money OneDollarNegative { get { return new Money(-1); } }
       public static Money Zero { get { return Money.Empty; } }
 
       public static string ToFormatted(object arg) {
