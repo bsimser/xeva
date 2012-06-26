@@ -12,7 +12,11 @@ namespace XF {
       }
 
       public static bool IsLessThanOneDollar(this decimal amount) {
-         return (amount > 0 && amount < 1) || (amount < 0 && amount > -1);
+         return amount < 1;
+      }
+
+      public static bool IsLessThanOneDollarNegative(this decimal amount) {
+         return amount > -1;
       }
 
       public static bool IsZero(this decimal num) {
