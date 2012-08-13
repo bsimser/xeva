@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Iesi.Collections.Generic;
+using Microsoft.VisualBasic;
 
 namespace XF {
    public static class XFExtensions {
@@ -101,6 +102,10 @@ namespace XF {
 
       public static bool IsLessEt(this DateTime compare, DateTime start) {
          return compare <= start;
+      }
+
+      public static bool IsOneYearTo(this DateTime start, DateTime until) {
+         return DateAndTime.DateDiff(DateInterval.Year, start, until, FirstDayOfWeek.System, FirstWeekOfYear.System) == 1;
       }
 
       public static bool ContainsType(this PropertyInfo property, Type type) {

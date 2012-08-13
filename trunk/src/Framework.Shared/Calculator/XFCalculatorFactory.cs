@@ -10,12 +10,13 @@ namespace XF {
             using (var fs = File.OpenRead(calcPath)) {
                var calculator = serializer.Deserialize(fs) as XFCalculator;
                calculator.InitializeToolKit(new XFCalculatorToolKit());
+               fs.Close();
 
                return calculator;
             }
          }
          catch (Exception ex) {
-            throw new XFCalculatorException("Unable to build calculator", ex);
+            throw new XFCalculatorException(string.Format("Unable to build calculator: {0}", ex.Message), ex);
          }
       }
 
@@ -26,12 +27,13 @@ namespace XF {
                var calculator = serializer.Deserialize(fs) as XFCalculator;
                calculator.InitializeToolKit(new XFCalculatorToolKit());
                calculator.InitializeInput(input);
+               fs.Close();
 
                return calculator;
             }
          }
          catch (Exception ex) {
-            throw new XFCalculatorException("Unable to build calculator", ex);
+            throw new XFCalculatorException(string.Format("Unable to build calculator: {0}", ex.Message), ex);
          }
       }
 
@@ -45,7 +47,7 @@ namespace XF {
             return calculator;
          }
          catch (Exception ex) {
-            throw new XFCalculatorException("Unable to build calculator", ex);
+            throw new XFCalculatorException(string.Format("Unable to build calculator: {0}", ex.Message), ex);
          }
       }
 

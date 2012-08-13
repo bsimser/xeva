@@ -40,9 +40,19 @@ namespace XF.Model {
          return new Money().SetInitialAmount(this.Amount + money.Amount);
       }
 
+      public void AddTo(Money money) {
+         if (money == null) return;
+         Amount = Amount + money.Amount;
+      }
+
       public Money Subtract(Money money) {
          if (money == null) return this;
          return new Money().SetInitialAmount(this.Amount - money.Amount);
+      }
+
+      public void SubtractFrom(Money money) {
+         if (money == null) return;
+         Amount = Amount - money.Amount;
       }
 
       public Money Negate() {
