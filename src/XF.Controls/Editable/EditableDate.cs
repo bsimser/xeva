@@ -24,6 +24,7 @@ namespace XF.Controls {
 
       public event EventHandler EditorButtonClicked;
       public event EventHandler EditClicked;
+      public event EventHandler<EventArgs<DateTime>> DateChanged;
 
       private void EditableResize(object sender, EventArgs e) {
          SetControlPositions();
@@ -97,6 +98,14 @@ namespace XF.Controls {
 
          IsDirty = true;
          _valueLabel.Text = _dateValue.Value != null ? ((DateTime)_dateValue.Value).ToShortDateString() : string.Empty;
+         DateTime result;
+         if (DateTime.TryParse(_valueLabel.Text, out result)) RaiseDateChanged();
+
+      }
+
+      private void RaiseDateChanged() {
+         if(DateChanged != null)
+            DateChanged(this, new EventArgs<DateTime>((DateTime)_dateValue.Value));
       }
 
       public void ShowError(string message) {
