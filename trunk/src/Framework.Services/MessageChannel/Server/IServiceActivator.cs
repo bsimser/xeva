@@ -11,5 +11,6 @@ namespace XF.Services
       void ProcessPreFilters();
       void InvokeServiceMethod();
       void ProcessPostFilters();
+      void Release();
    }
 }

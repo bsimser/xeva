@@ -214,7 +214,11 @@ namespace XF.Controls {
          set {
             _maskedValue.InputMask = _maskImpl.InputMask;
 
-            if (value == null) return;
+            if (value == null) {
+               _maskedValue.Text = string.Empty;
+               _valueLabel.Text = string.Empty;
+               return;
+            }
 
             if (string.IsNullOrEmpty(value.ToString())) return;
 

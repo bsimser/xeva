@@ -26,6 +26,11 @@ namespace XF.Services
          _serviceResponse = response;
       }
 
+      public void Release() {
+         Locator.Release(_serviceRequest.Service);
+         Locator.Release(this);
+      }
+
       public void ProcessPreFilters()
       {
          try

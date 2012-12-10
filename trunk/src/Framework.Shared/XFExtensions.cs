@@ -106,7 +106,7 @@ namespace XF {
 
       public static bool IsOneYearTo(this DateTime start, DateTime until) {
          var dayDiff =DateAndTime.DateDiff(DateInterval.Day, start, until, FirstDayOfWeek.System, FirstWeekOfYear.System);
-         return dayDiff == 356 || dayDiff == 366;
+         return dayDiff == 365 || dayDiff == 366;
       }
 
       public static bool ContainsType(this PropertyInfo property, Type type) {

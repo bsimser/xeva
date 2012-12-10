@@ -78,6 +78,13 @@ namespace XF.Controls {
          _itemsGrid.Width = _internalButton.Width;
       }
 
+      public void Clear() {
+         _items = null;
+         _itemsBS.SuspendBinding();
+         _itemsBS.Clear();
+         _internalButton.Text = string.Empty;
+      }
+
       public override void ClearError() {
          _errorProvider.Clear();
       }
