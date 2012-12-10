@@ -7,13 +7,13 @@ namespace XF {
       public static XFCalculator BuildCalculator(string calcPath) {
          var serializer = new XmlSerializer(typeof(XFCalculator));
          try {
+            var calculator = default(XFCalculator);
             using (var fs = File.OpenRead(calcPath)) {
-               var calculator = serializer.Deserialize(fs) as XFCalculator;
+               calculator = serializer.Deserialize(fs) as XFCalculator;
                calculator.InitializeToolKit(new XFCalculatorToolKit());
                fs.Close();
-
-               return calculator;
             }
+            return calculator;
          }
          catch (Exception ex) {
             throw new XFCalculatorException(string.Format("Unable to build calculator: {0}", ex.Message), ex);
@@ -23,14 +23,14 @@ namespace XF {
       public static XFCalculator BuildCalculator(string calcPath, XFCalculatorVariable input) {
          var serializer = new XmlSerializer(typeof(XFCalculator));
          try {
+            var calculator = default(XFCalculator);
             using (var fs = File.OpenRead(calcPath)) {
-               var calculator = serializer.Deserialize(fs) as XFCalculator;
+               calculator = serializer.Deserialize(fs) as XFCalculator;
                calculator.InitializeToolKit(new XFCalculatorToolKit());
                calculator.InitializeInput(input);
                fs.Close();
-
-               return calculator;
             }
+            return calculator;
          }
          catch (Exception ex) {
             throw new XFCalculatorException(string.Format("Unable to build calculator: {0}", ex.Message), ex);

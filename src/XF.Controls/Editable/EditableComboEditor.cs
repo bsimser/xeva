@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Infragistics.Win;
 using XF;
@@ -287,6 +288,13 @@ namespace XF.Controls {
 
       public void SetSelectedItem(string selection) {
          _comboValue.SelectedIndex = _comboValue.FindStringExact(selection);
+      }
+
+      public void SetSelectedByPartialMatch(string selection) {
+         _comboValue.SelectedIndex =
+            _comboValue.Items.IndexOf(
+               _comboValue.Items.Cast<ValueListItem>().FirstOrDefault(x => x.DisplayText.Contains(selection)));
+
       }
 
       public void ClearControl() {

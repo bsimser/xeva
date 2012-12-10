@@ -94,7 +94,11 @@ namespace XF.Controls {
          //IsDirty = true;
          //var value = _currencyEditor.Value != null ? _currencyEditor.Value.ToString() : string.Empty;
          _valueLabel.Text = _currencyEditor.Value.ToString("c");
+         if (ValueChanged != null)
+            ValueChanged(this, new EventArgs<decimal>(_currencyEditor.Value));
       }
+
+      public event EventHandler<EventArgs<decimal>> ValueChanged;
 
       [Bindable(true)]
       [Category(ControlConstants.PROPERTY_CATEGORY)]

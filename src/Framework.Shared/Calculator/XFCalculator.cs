@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
 namespace XF {
    [XmlRoot("XFCalculator", Namespace = "http://tempuri.org/XFCalculator.xsd")]
-   public class XFCalculator {
+   public class XFCalculator : IDisposable {
       private readonly IDictionary<string, object> _results = new Dictionary<string, object>();
 
       [XmlAttribute(AttributeName = "version", DataType = "string")]
@@ -34,6 +35,10 @@ namespace XF {
             _results.Add(stepResult);
          }
          return _results;
+      }
+
+      public void Dispose() {
+         GC.SuppressFinalize(this);
       }
    }
 
